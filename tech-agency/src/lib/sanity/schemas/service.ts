@@ -1,0 +1,20 @@
+export const service = {
+  name: "service",
+  title: "Service",
+  type: "document",
+  fields: [
+    { name: "title", title: "Title", type: "string", validation: (R: any) => R.required() },
+    { name: "slug", title: "Slug", type: "slug", options: { source: "title" } },
+    { name: "tagline", title: "Tagline", type: "string" },
+    { name: "icon", title: "Icon (Tabler name)", type: "string" },
+    { name: "tag", title: "Badge Tag", type: "string" },
+    { name: "color", title: "Accent Color", type: "string", options: { list: ["teal", "amber", "coral"] } },
+    { name: "description", title: "Description", type: "text" },
+    { name: "features", title: "Features", type: "array", of: [{ type: "string" }] },
+    { name: "techStack", title: "Tech Stack", type: "array", of: [{ type: "string" }] },
+    { name: "process", title: "Process Steps", type: "array", of: [{ type: "string" }] },
+    { name: "startingPrice", title: "Starting Price", type: "string" },
+    { name: "deliveryTime", title: "Delivery Time", type: "string" },
+    { name: "order", title: "Display Order", type: "number" },
+  ],
+};
