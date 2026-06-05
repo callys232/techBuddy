@@ -1,0 +1,57 @@
+/* Design tokens — single source of truth for all theme values */
+
+:root {
+  /* --- Brand Colors --- */
+  --color-bg-primary: #0D0D0F;
+  --color-text-primary: #F2F0EB;
+  --color-accent-teal: #00E5C0;
+  --color-accent-amber: #F5A623;
+  --color-accent-coral: #FF5C4D;
+  --color-surface-dark: #1A202C;
+  --color-border-subtle: #2D3748;
+
+  /* --- Semantic (dark default) --- */
+  --bg: var(--color-bg-primary);
+  --fg: var(--color-text-primary);
+  --surface: var(--color-surface-dark);
+  --border: var(--color-border-subtle);
+  --primary: var(--color-accent-teal);
+  --secondary: var(--color-accent-amber);
+  --danger: var(--color-accent-coral);
+
+  /* --- Typography scale --- */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-display: clamp(3rem, 7vw, 6rem);
+
+  /* --- Spacing --- */
+  --section-y: clamp(4rem, 8vw, 8rem);
+  --container-px: clamp(1rem, 4vw, 2rem);
+
+  /* --- Transitions --- */
+  --ease-card: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-button: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* --- Shadows --- */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow-teal: 0 0 24px rgba(0, 229, 192, 0.25);
+  --shadow-glow-amber: 0 0 24px rgba(245, 166, 35, 0.25);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --bg: #F8F8F6;
+  --fg: #0D0D0F;
+  --surface: #FFFFFF;
+  --border: #E2E8F0;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+}

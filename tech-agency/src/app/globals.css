@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme {
+  /* Brand color utilities */
+  --color-bg-primary: #0D0D0F;
+  --color-text-primary: #F2F0EB;
+  --color-accent-teal: #00E5C0;
+  --color-accent-amber: #F5A623;
+  --color-accent-coral: #FF5C4D;
+  --color-surface-dark: #1A202C;
+  --color-border-subtle: #2D3748;
+
+  /* Font families */
+  --font-display: var(--font-syne), "Syne", sans-serif;
+  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+::selection {
+  background-color: #00E5C0;
+  color: #0D0D0F;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* Grain texture for hero sections */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(26, 32, 44, 0.6);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(45, 55, 72, 0.8);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
