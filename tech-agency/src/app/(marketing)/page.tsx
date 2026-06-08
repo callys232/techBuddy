@@ -8,9 +8,19 @@ import { InvestTeaser } from "@/components/sections/InvestTeaser";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 
 export const metadata: Metadata = {
-  title: "TechAgency — We Build What Africa Does Business With",
+  title: "TechAgency — Digital Product Studio for African Businesses",
   description:
-    "Web apps, mobile, DevOps, security — end-to-end digital products for serious African businesses.",
+    "We engineer scalable web apps, mobile products, fintech integrations and DevOps systems for Nigerian and African businesses. Lagos-based, NDPR-compliant, built to last.",
+  keywords: [
+    "web development Nigeria", "software agency Lagos",
+    "mobile app development Africa", "fintech developer Nigeria",
+    "tech startup MVP Africa", "NDPR compliant software",
+  ],
+  openGraph: {
+    title: "TechAgency — Digital Product Studio for African Businesses",
+    description:
+      "End-to-end engineering for businesses that want to grow. Web · Mobile · Fintech · DevOps.",
+  },
 };
 
 export default function HomePage() {

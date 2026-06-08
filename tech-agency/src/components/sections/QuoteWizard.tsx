@@ -6,27 +6,19 @@ import { StepWizard } from "@/components/ui/StepWizard";
 import { TemplateCard } from "@/components/ui/TemplateCard";
 import { ToastNotification, ToastContainer } from "@/components/ui/ToastNotification";
 import { IconCheck } from "@tabler/icons-react";
-
-const STEPS = [
-  { label: "Pain Points" },
-  { label: "Template" },
-  { label: "Scope" },
-  { label: "Contact" },
-];
-
-const PAIN_CHIPS = [
-  "Slow site", "No app", "Security issues", "Need to scale",
-  "New product", "E-commerce", "Fintech", "WhatsApp integration",
-];
-
-const TEMPLATES = [
-  { name: "LaunchPad", type: "landing", price: "From ₦180k", features: ["Hero", "Pricing", "FAQ"], image: "/placeholder.png" },
-  { name: "SaaSify", type: "saas", price: "From ₦350k", features: ["Auth", "Dashboard", "Billing"], image: "/placeholder.png" },
-  { name: "MarketPro", type: "ecommerce", price: "From ₦400k", features: ["Catalog", "Cart", "Checkout"], image: "/placeholder.png" },
-  { name: "AdminKit", type: "dashboard", price: "From ₦300k", features: ["Tables", "Charts", "Users"], image: "/placeholder.png" },
-];
-
-const FEATURES = ["CMS", "Auth", "Payments", "Admin panel", "API", "Multilingual", "Offline mode"];
+import {
+  WIZARD_STEPS,
+  PAIN_CHIPS,
+  SCOPE_FEATURES,
+  TIMELINE_OPTIONS,
+  CONTACT_METHODS,
+  REFERRAL_SOURCES,
+  QUOTE_TEMPLATES,
+  BUDGET_MIN,
+  BUDGET_MAX,
+  BUDGET_STEP,
+  BUDGET_DEFAULT,
+} from "@/mock/quote";
 
 interface FormData {
   pains: string[];
@@ -51,15 +43,15 @@ export function QuoteWizard() {
   const [form, setForm] = useState<FormData>({
     pains: [],
     template: "",
-    budget: 1000000,
-    timeline: "1-3 months",
+    budget: BUDGET_DEFAULT,
+    timeline: TIMELINE_OPTIONS[1],
     features: [],
     name: "",
     email: "",
     whatsapp: "",
     company: "",
     source: "",
-    contactMethod: "whatsapp",
+    contactMethod: CONTACT_METHODS[1],
   });
 
   const togglePain = (chip: string) =>
@@ -79,9 +71,7 @@ export function QuoteWizard() {
     }));
 
   const budgetDisplay = (v: number) =>
-    v >= 50_000_000
-      ? "₦50M+"
-      : `₦${(v / 1_000_000).toFixed(1)}M`;
+    v >= BUDGET_MAX ? "₦50M+" : `₦${(v / 1_000_000).toFixed(1)}M`;
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -102,7 +92,7 @@ export function QuoteWizard() {
   return (
     <>
       <div className="glass rounded-2xl border border-[var(--border)] p-8">
-        <StepWizard steps={STEPS} currentStep={step} onStepChange={setStep}>
+        <StepWizard steps={WIZARD_STEPS} currentStep={step} onStepChange={setStep}>
           {/* Step 0 — Pain Points */}
           {step === 0 && (
             <div className="space-y-6">
@@ -116,6 +106,7 @@ export function QuoteWizard() {
                 {PAIN_CHIPS.map((chip) => (
                   <button
                     key={chip}
+                    type="button"
                     onClick={() => togglePain(chip)}
                     className={[
                       "rounded-full border px-4 py-1.5 text-sm font-medium transition-all active:scale-95",
@@ -146,17 +137,21 @@ export function QuoteWizard() {
                 <p className="text-sm text-[var(--fg)]/50">Or go fully custom.</p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                {TEMPLATES.map((t) => (
+                {QUOTE_TEMPLATES.map((t) => (
                   <div key={t.name} className="relative">
                     {form.template === t.name && (
                       <span className="absolute -top-2 -right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--primary)]">
                         <IconCheck size={13} className="text-[var(--bg)]" />
                       </span>
                     )}
-                    <TemplateCard {...t} onSelect={() => setForm((f) => ({ ...f, template: t.name }))} />
+                    <TemplateCard
+                      {...t}
+                      onSelect={() => setForm((f) => ({ ...f, template: t.name }))}
+                    />
                   </div>
                 ))}
                 <button
+                  type="button"
                   onClick={() => setForm((f) => ({ ...f, template: "custom" }))}
                   className={[
                     "flex flex-col items-center justify-center rounded-[var(--radius-card)] border border-dashed p-8 transition-all",
@@ -176,17 +171,18 @@ export function QuoteWizard() {
             <div className="space-y-8">
               <h2 className="font-display text-2xl font-bold text-[var(--fg)]">Scope & Budget</h2>
 
-              {/* Budget slider */}
               <div>
                 <label className="text-sm font-semibold text-[var(--fg)] block mb-3">
                   Budget: <span className="text-[var(--primary)]">{budgetDisplay(form.budget)}</span>
                 </label>
                 <input
                   type="range"
-                  min={500000}
-                  max={50000000}
-                  step={500000}
+                  min={BUDGET_MIN}
+                  max={BUDGET_MAX}
+                  step={BUDGET_STEP}
                   value={form.budget}
+                  title="Budget range"
+                  aria-label="Budget range"
                   onChange={(e) => setForm((f) => ({ ...f, budget: Number(e.target.value) }))}
                   className="w-full accent-[var(--primary)]"
                 />
@@ -195,13 +191,13 @@ export function QuoteWizard() {
                 </div>
               </div>
 
-              {/* Timeline */}
               <div>
                 <label className="text-sm font-semibold text-[var(--fg)] block mb-3">Timeline</label>
                 <div className="flex flex-wrap gap-2">
-                  {["ASAP", "1-3 months", "3-6 months", "No rush"].map((t) => (
+                  {TIMELINE_OPTIONS.map((t) => (
                     <button
                       key={t}
+                      type="button"
                       onClick={() => setForm((f) => ({ ...f, timeline: t }))}
                       className={[
                         "rounded-full border px-4 py-1.5 text-sm font-medium transition-all",
@@ -216,13 +212,13 @@ export function QuoteWizard() {
                 </div>
               </div>
 
-              {/* Features */}
               <div>
                 <label className="text-sm font-semibold text-[var(--fg)] block mb-3">Features needed</label>
                 <div className="flex flex-wrap gap-2">
-                  {FEATURES.map((feat) => (
+                  {SCOPE_FEATURES.map((feat) => (
                     <button
                       key={feat}
+                      type="button"
                       onClick={() => toggleFeature(feat)}
                       className={[
                         "rounded-full border px-4 py-1.5 text-sm font-medium transition-all",
@@ -242,7 +238,9 @@ export function QuoteWizard() {
           {/* Step 3 — Contact */}
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="font-display text-2xl font-bold text-[var(--fg)]">Almost done — who are we talking to?</h2>
+              <h2 className="font-display text-2xl font-bold text-[var(--fg)]">
+                Almost done — who are we talking to?
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <input
                   value={form.name}
@@ -272,22 +270,23 @@ export function QuoteWizard() {
               </div>
               <select
                 value={form.source}
+                aria-label="How did you hear about us?"
+                title="How did you hear about us?"
                 onChange={(e) => setForm((f) => ({ ...f, source: e.target.value }))}
                 className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--fg)] focus:border-[var(--primary)] focus:outline-none transition-colors"
               >
                 <option value="">How did you hear about us?</option>
-                <option value="google">Google</option>
-                <option value="twitter">Twitter / X</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="referral">Referral</option>
-                <option value="other">Other</option>
+                {REFERRAL_SOURCES.map((s) => (
+                  <option key={s.value} value={s.value}>{s.label}</option>
+                ))}
               </select>
               <div>
                 <label className="text-sm font-semibold text-[var(--fg)] block mb-3">Preferred contact</label>
                 <div className="flex gap-2">
-                  {["email", "whatsapp", "call"].map((m) => (
+                  {CONTACT_METHODS.map((m) => (
                     <button
                       key={m}
+                      type="button"
                       onClick={() => setForm((f) => ({ ...f, contactMethod: m }))}
                       className={[
                         "rounded-full border px-4 py-1.5 text-sm font-medium capitalize transition-all",
@@ -308,14 +307,16 @@ export function QuoteWizard() {
         {/* Navigation */}
         <div className="mt-8 flex items-center justify-between">
           <button
+            type="button"
             onClick={() => setStep((s) => Math.max(0, s - 1))}
             disabled={step === 0}
             className="h-10 rounded-full border border-[var(--border)] px-5 text-sm font-semibold text-[var(--fg)] disabled:opacity-30 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
           >
             Back
           </button>
-          {step < STEPS.length - 1 ? (
+          {step < WIZARD_STEPS.length - 1 ? (
             <button
+              type="button"
               onClick={() => setStep((s) => s + 1)}
               className="h-10 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95"
             >
@@ -323,6 +324,7 @@ export function QuoteWizard() {
             </button>
           ) : (
             <button
+              type="button"
               onClick={handleSubmit}
               disabled={submitting || !form.name || !form.email || !form.whatsapp}
               className="h-10 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95 disabled:opacity-40"

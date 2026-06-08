@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
+import { DEVOPS_SERVICES, DEVOPS_STACK } from "@/mock/services";
 
 export const metadata: Metadata = {
-  title: "DevOps & CI/CD",
+  title: "DevOps & CI/CD — Production-Grade Infrastructure for African Systems",
   description:
-    "Automated pipelines, containers, GitOps, monitoring, and disaster recovery for production-grade systems.",
+    "Automated CI/CD pipelines, Docker & Kubernetes containerisation, GitOps, Terraform infrastructure-as-code, Grafana monitoring and disaster recovery for systems serving the African market.",
+  keywords: [
+    "DevOps Nigeria", "CI/CD Africa", "Kubernetes Nigeria",
+    "cloud infrastructure Lagos", "Docker containerisation Nigeria",
+    "Terraform Africa", "site reliability engineering Nigeria",
+  ],
+  openGraph: {
+    title: "DevOps & CI/CD Infrastructure for African Businesses | TechAgency",
+    description:
+      "Ship faster and break nothing — automated pipelines, containers and full observability.",
+  },
 };
-
-const SERVICES = [
-  "CI/CD Pipelines",
-  "Containerization (Docker / K8s)",
-  "GitOps & Infrastructure as Code",
-  "Monitoring & Alerting",
-  "Disaster Recovery",
-  "Cloud Cost Audits",
-];
-
-const STACK = [
-  "Docker", "Kubernetes", "Terraform", "GitHub Actions", "Grafana", "AWS", "GCP", "Azure",
-];
 
 export default function DevOpsPage() {
   return (
@@ -40,7 +38,7 @@ export default function DevOpsPage() {
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <h2 className="font-display text-3xl font-bold text-[var(--fg)] mb-8">Services</h2>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s) => (
+          {DEVOPS_SERVICES.map((s) => (
             <li
               key={s}
               className="glass rounded-[var(--radius-card)] p-5 text-[var(--fg)] font-medium"
@@ -56,7 +54,7 @@ export default function DevOpsPage() {
           Infrastructure Stack
         </h2>
         <div className="flex flex-wrap gap-3">
-          {STACK.map((tech) => (
+          {DEVOPS_STACK.map((tech) => (
             <span
               key={tech}
               className="font-mono text-sm rounded-[var(--radius-badge)] border border-[var(--border)] px-3 py-1.5 text-[var(--fg)]/70"

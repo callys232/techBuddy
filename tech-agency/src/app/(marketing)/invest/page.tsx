@@ -1,48 +1,22 @@
 import type { Metadata } from "next";
 import { InvestCard } from "@/components/ui/InvestCard";
+import { INVEST_SCHEMES } from "@/mock/invest";
 
 export const metadata: Metadata = {
-  title: "Investment & Schemes",
-  description: "We invest in ideas worth building. Equity builds, revenue share, incubation, and partnerships.",
+  title: "Investment & Incubation — We Co-Build With African Founders",
+  description:
+    "Equity builds, revenue-share development, incubation support and grant navigation for African startup founders. We build your product while you grow your business.",
+  keywords: [
+    "startup equity Nigeria", "co-build Africa",
+    "tech incubation Nigeria", "revenue share software Africa",
+    "African founder investment", "non-dilutive grant Nigeria",
+  ],
+  openGraph: {
+    title: "We Invest in Ideas Worth Building | TechAgency Africa",
+    description:
+      "Equity, revenue share, incubation and advisory for African founders building serious products.",
+  },
 };
-
-const SCHEMES = [
-  {
-    name: "Equity Build",
-    type: "Equity",
-    description: "We build your product in exchange for an equity stake. Best for strong ideas with traction.",
-    eligibility: "Early-stage startups with validated idea",
-    ctaText: "Express interest",
-  },
-  {
-    name: "Revenue Share",
-    type: "Revenue",
-    description: "We build now, you pay from revenue. Zero upfront cost for vetted founders.",
-    eligibility: "Founders with clear revenue model",
-    ctaText: "Express interest",
-  },
-  {
-    name: "Incubation Support",
-    type: "Incubation",
-    description: "Tech support at reduced rates for accelerator cohort companies.",
-    eligibility: "Accelerator cohort members",
-    ctaText: "Apply now",
-  },
-  {
-    name: "Grant Navigator",
-    type: "Advisory",
-    description: "Advisory for available grants — we help you find and apply for non-dilutive funding.",
-    eligibility: "All founders",
-    ctaText: "Learn more",
-  },
-  {
-    name: "Tech Partnership",
-    type: "Partnership",
-    description: "Long-term co-building arrangements for established companies expanding their tech.",
-    eligibility: "Established businesses",
-    ctaText: "Partner with us",
-  },
-];
 
 export default function InvestPage() {
   return (
@@ -58,7 +32,7 @@ export default function InvestPage() {
 
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SCHEMES.map((scheme) => (
+          {INVEST_SCHEMES.map((scheme) => (
             <InvestCard key={scheme.name} {...scheme} />
           ))}
         </div>

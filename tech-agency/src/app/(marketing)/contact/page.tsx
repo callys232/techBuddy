@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import { TeamCard } from "@/components/ui/TeamCard";
+import { ContactForm } from "@/components/sections/ContactForm";
+import { TEAM_MEMBERS } from "@/mock/team";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Book a discovery call, send a message, or reach us on WhatsApp.",
+  title: "Contact — Work With Nigeria's Leading Product Studio",
+  description:
+    "Book a 30-minute discovery call or send a message. Lagos-based, globally accessible. We reply within 24 hours. Talk to real engineers — no account managers.",
+  keywords: [
+    "contact tech agency Nigeria", "hire Nigerian developers",
+    "Lagos software company contact", "book discovery call Africa",
+  ],
+  openGraph: {
+    title: "Let's Build Together | Contact TechAgency Africa",
+    description:
+      "Lagos-based product studio. Book a call or drop a message — we reply within 24 hours.",
+  },
 };
-
-const TEAM = [
-  { name: "Caleb Flaka", role: "Founder & CEO", photo: "/placeholder.png", linkedin: "#", twitter: "#" },
-  { name: "Tech Lead", role: "Head of Engineering", photo: "/placeholder.png", linkedin: "#", twitter: "#" },
-  { name: "Design Lead", role: "Head of Design", photo: "/placeholder.png", linkedin: "#", twitter: "#" },
-];
 
 export default function ContactPage() {
   return (
@@ -34,7 +40,7 @@ export default function ContactPage() {
             <div>
               <h2 className="font-display text-2xl font-bold text-[var(--fg)] mb-6">Meet the Team</h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                {TEAM.map((member) => (
+                {TEAM_MEMBERS.map((member) => (
                   <TeamCard key={member.name} {...member} />
                 ))}
               </div>
@@ -44,39 +50,7 @@ export default function ContactPage() {
           {/* Right — form */}
           <div className="space-y-6">
             <h2 className="font-display text-2xl font-bold text-[var(--fg)]">Send a Message</h2>
-            <form className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
-                />
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
-                />
-              </div>
-              <select className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] focus:border-[var(--primary)] focus:outline-none transition-colors">
-                <option value="">Department</option>
-                <option value="sales">Sales</option>
-                <option value="technical">Technical</option>
-                <option value="partnerships">Partnerships</option>
-                <option value="support">Support</option>
-                <option value="press">Press</option>
-              </select>
-              <textarea
-                rows={5}
-                placeholder="Tell us about your project..."
-                className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors resize-none"
-              />
-              <button
-                type="submit"
-                className="w-full h-12 rounded-full bg-[var(--primary)] font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-teal)] transition-all active:scale-95"
-              >
-                Send message
-              </button>
-            </form>
+            <ContactForm />
 
             {/* Calendar embed placeholder */}
             <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6 text-center">

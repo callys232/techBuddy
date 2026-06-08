@@ -1,0 +1,10 @@
+export { StickmanBg }    from "./StickmanBg";
+export { StickmanScene } from "./StickmanScene";
+export { PageVectors }   from "./PageVectors";
+export { Stickman }      from "./characters/Stickman";
+export { Runner }        from "./characters/Runner";
+export { Dancer }        from "./characters/Dancer";
+export { Acrobat }       from "./characters/Acrobat";
+export { Hurdle }        from "./obstacles/Hurdle";
+export { Car }           from "./obstacles/Car";
+export { Ramp }          from "./obstacles/Ramp";

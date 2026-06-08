@@ -1,11 +1,5 @@
 import { StatCard } from "@/components/ui/StatCard";
-
-const STATS = [
-  { value: 120, label: "Projects Delivered", suffix: "+", color: "teal" as const },
-  { value: 99, label: "Uptime Guaranteed", suffix: ".9%", color: "amber" as const },
-  { value: 14, label: "Countries Served", suffix: "", color: "teal" as const },
-  { value: 98, label: "Client Satisfaction", suffix: "%", color: "coral" as const },
-];
+import { STATS } from "@/mock/stats";
 
 export function StatsBar() {
   return (

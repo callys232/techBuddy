@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AppCard } from "@/components/ui/AppCard";
+import { SERVICE_PROCESS_STEPS, SERVICE_INCLUDED_FEATURES } from "@/mock/services";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -51,16 +52,13 @@ export default async function ServicePage({ params }: Props) {
         <h2 className="font-display text-3xl font-bold text-[var(--fg)] mb-8">
           What&apos;s Included
         </h2>
-        {/* Feature list populated from Sanity in production */}
         <ul className="space-y-3 max-w-2xl">
-          {["Discovery & strategy", "Design & prototyping", "Development", "Testing & QA", "Launch & support"].map(
-            (item) => (
-              <li key={item} className="flex items-center gap-3 text-[var(--fg)]/80">
-                <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
-                {item}
-              </li>
-            )
-          )}
+          {SERVICE_INCLUDED_FEATURES.map((item) => (
+            <li key={item} className="flex items-center gap-3 text-[var(--fg)]/80">
+              <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
+              {item}
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -70,17 +68,15 @@ export default async function ServicePage({ params }: Props) {
           Our Process
         </h2>
         <ol className="flex flex-wrap gap-4">
-          {["Discovery", "Design", "Build", "Test", "Launch", "Support"].map(
-            (step, i) => (
-              <li key={step} className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--bg)] text-sm font-bold">
-                  {i + 1}
-                </span>
-                <span className="text-[var(--fg)]">{step}</span>
-                {i < 5 && <span className="text-[var(--border)] ml-2">→</span>}
-              </li>
-            )
-          )}
+          {SERVICE_PROCESS_STEPS.map((step, i) => (
+            <li key={step} className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--bg)] text-sm font-bold">
+                {i + 1}
+              </span>
+              <span className="text-[var(--fg)]">{step}</span>
+              {i < SERVICE_PROCESS_STEPS.length - 1 && <span className="text-[var(--border)] ml-2">→</span>}
+            </li>
+          ))}
         </ol>
       </section>
 

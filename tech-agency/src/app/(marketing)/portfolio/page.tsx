@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
-import { AppCard } from "@/components/ui/AppCard";
-import { TabGroup } from "@/components/ui/TabGroup";
+import { PortfolioContent } from "@/components/sections/PortfolioContent";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Real products built for real businesses across Africa.",
+  title: "Portfolio — Digital Products Built for Africa",
+  description:
+    "Case studies of web platforms, mobile apps, fintech systems and SaaS products we've shipped for Nigerian and African startups and enterprises. From Lagos to Nairobi.",
+  keywords: [
+    "tech portfolio Nigeria", "web app case studies Africa",
+    "mobile app Nigeria portfolio", "African startup software examples",
+  ],
+  openGraph: {
+    title: "Our Work — Digital Products Built for Africa | TechAgency",
+    description:
+      "See how we've built platforms, apps and systems for serious African businesses.",
+  },
 };
-
-const FILTER_TABS = [
-  { id: "all", label: "All" },
-  { id: "web", label: "Web App" },
-  { id: "mobile", label: "Mobile" },
-  { id: "saas", label: "SaaS" },
-  { id: "fintech", label: "Fintech" },
-  { id: "ecommerce", label: "E-commerce" },
-  { id: "internal", label: "Internal Tools" },
-];
 
 export default function PortfolioPage() {
   return (
@@ -28,24 +27,8 @@ export default function PortfolioPage() {
           From Lagos to Nairobi — products that move the needle.
         </p>
       </section>
-
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
-        <TabGroup tabs={FILTER_TABS} activeTab="all" onChange={() => {}} />
-        <div className="mt-10 columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
-          {/* Masonry grid — populated from Sanity in production */}
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="break-inside-avoid">
-              <AppCard
-                image="/placeholder.png"
-                name={`Project ${i + 1}`}
-                tags={["Next.js", "Tailwind"]}
-                stack={["Next.js", "TypeScript", "Supabase"]}
-                liveUrl="#"
-                caseStudy
-              />
-            </div>
-          ))}
-        </div>
+        <PortfolioContent />
       </section>
     </div>
   );

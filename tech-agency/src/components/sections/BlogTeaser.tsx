@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { BlogCard } from "@/components/ui/BlogCard";
-
-const POSTS = [
-  { image: "/placeholder.png", category: "Web Dev", title: "Building Offline-First Apps for Low-Bandwidth Markets", author: { name: "Tech Team", avatar: "/placeholder.png" }, readTime: 7, slug: "offline-first-low-bandwidth" },
-  { image: "/placeholder.png", category: "Security", title: "NDPR Compliance Checklist for Nigerian SaaS Products", author: { name: "Tech Team", avatar: "/placeholder.png" }, readTime: 5, slug: "ndpr-compliance-checklist" },
-  { image: "/placeholder.png", category: "DevOps", title: "Zero-Downtime Deploys with GitHub Actions on Vercel", author: { name: "Tech Team", avatar: "/placeholder.png" }, readTime: 6, slug: "zero-downtime-vercel" },
-];
+import { FEATURED_POSTS } from "@/mock/blog";
 
 export function BlogTeaser() {
   return (
@@ -22,7 +17,7 @@ export function BlogTeaser() {
         </Link>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {POSTS.map((post) => (
+        {FEATURED_POSTS.map((post) => (
           <BlogCard key={post.slug} {...post} />
         ))}
       </div>

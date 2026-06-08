@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { BlogCard } from "@/components/ui/BlogCard";
-import { TabGroup } from "@/components/ui/TabGroup";
+import { BlogContent } from "@/components/sections/BlogContent";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Built by builders, for builders. Deep dives on web, security, DevOps, and African tech.",
+  title: "Blog — Tech Insights for African Founders & Builders",
+  description:
+    "Practical guides on building digital products, Nigerian fintech integration, DevOps on African infrastructure, startup strategy and engineering best practices for the African market.",
+  keywords: [
+    "Nigerian tech blog", "African startup insights",
+    "fintech Nigeria tutorial", "web development blog Africa",
+    "startup engineering Nigeria",
+  ],
+  openGraph: {
+    title: "Tech Insights for African Founders & Builders | TechAgency Blog",
+    description:
+      "Practical engineering guides, startup strategy and fintech deep-dives for the African market.",
+  },
 };
-
-const CATEGORY_TABS = [
-  { id: "all", label: "All" },
-  { id: "web-dev", label: "Web Dev" },
-  { id: "security", label: "Security" },
-  { id: "devops", label: "DevOps" },
-  { id: "startup-tech", label: "Startup Tech" },
-  { id: "nigeria-tech", label: "Nigeria Tech" },
-  { id: "tools", label: "Tools" },
-];
 
 export default function BlogPage() {
   return (
@@ -25,47 +25,8 @@ export default function BlogPage() {
           Built by Builders,<br />for Builders
         </h1>
       </section>
-
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* Main content */}
-          <div className="flex-1">
-            <TabGroup tabs={CATEGORY_TABS} activeTab="all" onChange={() => {}} />
-            <div className="mt-10 grid gap-6 sm:grid-cols-2">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <BlogCard
-                  key={i}
-                  image="/placeholder.png"
-                  category="Web Dev"
-                  title={`How We Built a Production-Grade Next.js App in 2 Weeks (${i + 1})`}
-                  author={{ name: "Tech Team", avatar: "/placeholder.png" }}
-                  readTime={5}
-                  slug={`sample-post-${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="w-full lg:w-72 space-y-8">
-            <div className="glass rounded-[var(--radius-card)] p-6">
-              <h3 className="font-display text-lg font-bold text-[var(--fg)] mb-3">
-                Newsletter
-              </h3>
-              <p className="text-sm text-[var(--fg)]/60 mb-4">
-                Weekly digest: Nigerian tech news + original articles.
-              </p>
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="w-full rounded-lg border border-[var(--border)] bg-transparent px-4 py-2 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none"
-              />
-              <button className="mt-3 w-full rounded-lg bg-[var(--primary)] py-2 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity">
-                Subscribe
-              </button>
-            </div>
-          </aside>
-        </div>
+        <BlogContent />
       </section>
     </div>
   );

@@ -1,62 +1,101 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Plus_Jakarta_Sans,
+  Inter,
+  JetBrains_Mono,
+} from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import "./globals.css";
 
-const syne = Syne({
+/* ── Fonts ──────────────────────────────────────────────────────────────────── */
+
+/* Hero / display titles */
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-bricolage",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const dmSans = DM_Sans({
+/* Section headers, nav, UI labels */
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-jakarta",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+/* Body copy, paragraphs, form inputs */
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-inter",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
+
+/* Code, labels, monospace accents */
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+  weight: ["400", "500", "700"],
+});
+
+/* ── Root Metadata ──────────────────────────────────────────────────────────── */
 
 export const metadata: Metadata = {
   title: {
-    default: "TechAgency — We Build What Africa Does Business With",
-    template: "%s | TechAgency",
+    default: "TechAgency — Digital Product Studio for African Businesses",
+    template: "%s | TechAgency Africa",
   },
   description:
-    "Web apps, mobile, DevOps, security — end-to-end digital products for serious African businesses.",
+    "We build scalable web apps, mobile products, fintech integrations and DevOps systems for Nigerian and African businesses. Lagos-based, NDPR-compliant, globally capable.",
   keywords: [
     "web development Nigeria",
-    "mobile app development Africa",
-    "DevOps",
-    "fintech",
-    "NDPR compliance",
     "software agency Lagos",
+    "mobile app development Africa",
+    "fintech developer Nigeria",
+    "tech startup MVP Africa",
+    "NDPR compliant software",
+    "digital products Nigeria",
+    "React Next.js Nigeria",
   ],
+  authors: [{ name: "TechAgency Africa", url: "https://techagency.africa" }],
+  creator: "TechAgency Africa",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   ),
   openGraph: {
     type: "website",
     locale: "en_NG",
-    siteName: "TechAgency",
+    siteName: "TechAgency Africa",
+    title: "TechAgency — Digital Product Studio for African Businesses",
+    description:
+      "End-to-end engineering for African businesses that want to grow. Web, mobile, fintech, DevOps.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+    title: "TechAgency — Digital Product Studio for African Businesses",
+    description:
+      "End-to-end engineering for African businesses. Web · Mobile · Fintech · DevOps.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+/* ── Root Layout ────────────────────────────────────────────────────────────── */
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       data-theme="dark"
-      className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+      className={`${bricolage.variable} ${jakarta.variable} ${inter.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <body>

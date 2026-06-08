@@ -1,37 +1,19 @@
 import Link from "next/link";
-import { IconBrandX, IconBrandLinkedin, IconBrandGithub, IconBrandInstagram } from "@tabler/icons-react";
+import {
+  IconBrandX,
+  IconBrandLinkedin,
+  IconBrandGithub,
+  IconBrandInstagram,
+} from "@tabler/icons-react";
+import { FOOTER_LINKS, SOCIAL_LINKS } from "@/mock/navigation";
+import type { ComponentType } from "react";
 
-const FOOTER_LINKS = {
-  Services: [
-    { label: "Web Development", href: "/services/web-development" },
-    { label: "Mobile Apps", href: "/services/mobile-apps" },
-    { label: "DevOps & CI/CD", href: "/services/devops" },
-    { label: "Security", href: "/services/security-pentesting" },
-    { label: "Fintech", href: "/services/fintech-payments" },
-    { label: "Tech Audit", href: "/services/tech-audit" },
-  ],
-  Company: [
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Blog", href: "/blog" },
-    { label: "Templates", href: "/templates" },
-    { label: "Invest", href: "/invest" },
-    { label: "Talent Hub", href: "/talent" },
-    { label: "Contact", href: "/contact" },
-  ],
-  Legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
-    { label: "NDPR Compliance", href: "/ndpr" },
-    { label: "Cookie Policy", href: "/cookies" },
-  ],
+const SOCIAL_ICON_MAP: Record<string, ComponentType<{ size: number }>> = {
+  x: IconBrandX,
+  linkedin: IconBrandLinkedin,
+  github: IconBrandGithub,
+  instagram: IconBrandInstagram,
 };
-
-const SOCIALS = [
-  { icon: IconBrandX, href: "#", label: "X / Twitter" },
-  { icon: IconBrandLinkedin, href: "#", label: "LinkedIn" },
-  { icon: IconBrandGithub, href: "#", label: "GitHub" },
-  { icon: IconBrandInstagram, href: "#", label: "Instagram" },
-];
 
 export function Footer() {
   return (
@@ -47,16 +29,19 @@ export function Footer() {
               End-to-end digital products for serious African businesses. NDPR compliant. Built for local conditions.
             </p>
             <div className="mt-6 flex items-center gap-4">
-              {SOCIALS.map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="text-[var(--fg)]/40 hover:text-[var(--primary)] transition-colors"
-                >
-                  <Icon size={19} />
-                </a>
-              ))}
+              {SOCIAL_LINKS.map(({ iconName, href, label }) => {
+                const Icon = SOCIAL_ICON_MAP[iconName];
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    className="text-[var(--fg)]/40 hover:text-[var(--primary)] transition-colors"
+                  >
+                    <Icon size={19} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -86,9 +71,7 @@ export function Footer() {
           <p className="text-xs text-[var(--fg)]/30">
             © {new Date().getFullYear()} TechAgency. All rights reserved. Built for Africa.
           </p>
-          <p className="text-xs text-[var(--fg)]/30">
-            Lagos, Nigeria · hello@techagency.africa
-          </p>
+          <p className="text-xs text-[var(--fg)]/30">Lagos, Nigeria · hello@techagency.africa</p>
         </div>
       </div>
     </footer>

@@ -1,23 +1,28 @@
-/* Design tokens — single source of truth for all theme values */
+/* Design tokens — trust blue · white · sky blue */
 
 :root {
-  /* --- Brand Colors --- */
-  --color-bg-primary: #0D0D0F;
-  --color-text-primary: #F2F0EB;
-  --color-accent-teal: #00E5C0;
-  --color-accent-amber: #F5A623;
-  --color-accent-coral: #FF5C4D;
-  --color-surface-dark: #1A202C;
-  --color-border-subtle: #2D3748;
+  /* --- Trust Blue palette --- */
+  --color-navy-deep:   #060E1C;
+  --color-navy:        #0D1F3D;
+  --color-trust-blue:  #1E3A8A;
+  --color-blue-mid:    #2563EB;
+  --color-sky:         #38BDF8;
+  --color-sky-light:   #7DD3FC;
+  --color-white:       #F0F8FF;
+  --color-accent-sky:  #38BDF8;
 
-  /* --- Semantic (dark default) --- */
-  --bg: var(--color-bg-primary);
-  --fg: var(--color-text-primary);
-  --surface: var(--color-surface-dark);
-  --border: var(--color-border-subtle);
-  --primary: var(--color-accent-teal);
-  --secondary: var(--color-accent-amber);
-  --danger: var(--color-accent-coral);
+  /* --- Secondary accent --- */
+  --color-accent-amber: #F59E0B;
+  --color-accent-coral: #F87171;
+
+  /* --- Semantic: dark (trust blue) default --- */
+  --bg:      var(--color-navy-deep);
+  --fg:      var(--color-white);
+  --surface: var(--color-navy);
+  --border:  rgba(56, 189, 248, 0.12);
+  --primary: var(--color-accent-sky);
+  --secondary: var(--color-blue-mid);
+  --danger:  var(--color-accent-coral);
 
   /* --- Typography scale --- */
   --text-xs: 0.75rem;
@@ -36,22 +41,33 @@
   --section-y: clamp(4rem, 8vw, 8rem);
   --container-px: clamp(1rem, 4vw, 2rem);
 
+  /* --- Border radius --- */
+  --radius-card:  16px;
+  --radius-badge: 9999px;
+
   /* --- Transitions --- */
-  --ease-card: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-card:   300ms cubic-bezier(0.4, 0, 0.2, 1);
   --ease-button: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* --- Shadows --- */
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-glow-teal: 0 0 24px rgba(0, 229, 192, 0.25);
-  --shadow-glow-amber: 0 0 24px rgba(245, 166, 35, 0.25);
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow-sky:  0 0 24px rgba(56, 189, 248, 0.3);
+  --shadow-glow-blue: 0 0 24px rgba(37, 99, 235, 0.3);
+  /* alias so existing components don't break */
+  --shadow-glow-teal: var(--shadow-glow-sky);
+  --shadow-glow-amber: 0 0 24px rgba(245, 158, 11, 0.25);
 }
 
-/* Light theme overrides */
+/* --- Light theme: reversed (white bg · trust-blue text · sky accent) --- */
 [data-theme="light"] {
-  --bg: #F8F8F6;
-  --fg: #0D0D0F;
-  --surface: #FFFFFF;
-  --border: #E2E8F0;
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --bg:      #FFFFFF;
+  --fg:      #0A1F3D;
+  --surface: #F0F7FF;
+  --border:  rgba(30, 58, 138, 0.12);
+  --primary: #0284C7;
+  --secondary: #1D4ED8;
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-glow-sky:  0 0 24px rgba(2, 132, 199, 0.2);
+  --shadow-glow-teal: var(--shadow-glow-sky);
 }

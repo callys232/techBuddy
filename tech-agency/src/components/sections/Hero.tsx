@@ -3,15 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-
-const PAIN_CHIPS = [
-  "Slow website",
-  "No mobile app",
-  "Security gaps",
-  "Need to scale",
-  "Starting from scratch",
-  "All of the above",
-];
+import { HERO_PAIN_CHIPS } from "@/mock/quote";
+import { StickmanBg } from "@/components/bg";
 
 export function Hero() {
   const [selected, setSelected] = useState<string[]>([]);
@@ -27,18 +20,11 @@ export function Hero() {
 
   return (
     <section className="relative grain overflow-hidden min-h-[92vh] flex items-center px-[var(--container-px)] py-[var(--section-y)]">
-      {/* Mesh gradient background */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 20% 40%, rgba(0,229,192,0.07) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 70%, rgba(245,166,35,0.05) 0%, transparent 60%)",
-        }}
-      />
 
-      <div className="max-w-4xl">
-        {/* Badge */}
+      {/* Stickman animated background */}
+      <StickmanBg />
+
+      <div className="max-w-4xl relative z-10">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,10 +32,9 @@ export function Hero() {
           className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-1.5 text-xs font-semibold text-[var(--fg)]/70 mb-8"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
-          Built for the African market
+          Lagos-based · NDPR Compliant · Pan-Africa
         </motion.span>
 
-        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,17 +44,16 @@ export function Hero() {
           We Build What Africa<br />Does Business With
         </motion.h1>
 
-        {/* Sub */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg text-[var(--fg)]/60 max-w-2xl mb-10"
+          className="font-body text-[17px] leading-relaxed text-[var(--fg)]/60 max-w-2xl mb-10"
         >
-          Web apps, mobile, DevOps, security — end-to-end digital products for serious businesses.
+          Scalable web apps, mobile products, fintech integrations and DevOps — built by engineers
+          who understand the African market and deliver on time.
         </motion.p>
 
-        {/* Pain-point selector */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -80,14 +64,15 @@ export function Hero() {
             What&apos;s your challenge?
           </p>
           <div className="flex flex-wrap gap-2">
-            {PAIN_CHIPS.map((chip) => (
+            {HERO_PAIN_CHIPS.map((chip) => (
               <button
                 key={chip}
+                type="button"
                 onClick={() => toggle(chip)}
                 className={[
                   "rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-200 active:scale-95",
                   selected.includes(chip)
-                    ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)] shadow-[0_0_12px_rgba(0,229,192,0.2)]"
+                    ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)] shadow-[0_0_12px_rgba(56,189,248,0.2)]"
                     : "border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)]/50 hover:text-[var(--fg)]",
                 ].join(" ")}
               >
@@ -97,7 +82,6 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -106,7 +90,7 @@ export function Hero() {
         >
           <Link
             href={`/quote${quoteParams}`}
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-teal)] transition-all active:scale-95"
+            className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-sky)] transition-all active:scale-95"
           >
             Get a Free Quote
           </Link>
