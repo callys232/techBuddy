@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme {
+  /* ── Color palette ─────────────────────────────── */
+  --color-navy-deep:    #060E1C;
+  --color-navy:         #0D1F3D;
+  --color-trust-blue:   #1E3A8A;
+  --color-blue-mid:     #2563EB;
+  --color-accent-sky:   #38BDF8;
+  --color-sky-light:    #7DD3FC;
+  --color-accent-amber: #F59E0B;
+  --color-accent-coral: #F87171;
+  --color-white:        #F0F8FF;
+
+  /* legacy aliases (keeps existing components from breaking) */
+  --color-bg-primary:    #060E1C;
+  --color-text-primary:  #F0F8FF;
+  --color-accent-teal:   #38BDF8;
+  --color-surface-dark:  #0D1F3D;
+  --color-border-subtle: rgba(56, 189, 248, 0.12);
+
+  /* ── Typography ────────────────────────────────── */
+  /* Display — Bricolage Grotesque: hero H1, jumbo numbers */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+
+  /* Heading — Plus Jakarta Sans: H2, H3, nav, UI labels */
+  --font-heading: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+
+  /* Body — Inter: paragraphs, form text, descriptions */
+  --font-body:  var(--font-inter), "Inter", sans-serif;
+  --font-sans:  var(--font-inter), "Inter", sans-serif;
+
+  /* Mono — JetBrains Mono: code, labels, badges */
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+}
+
+/* ── Heading font sweep ──────────────────────────────────────────────────────  */
+
+h2, h3 { font-family: var(--font-heading); }
+
+/* ── Base reset ──────────────────────────────────────────────────────────────  */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color:            var(--fg);
+  font-family:      var(--font-body);
+  font-size:        1rem;
+  line-height:      1.65;
+  min-height: 100vh;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* ── Selection ───────────────────────────────────────────────────────────────  */
+
+::selection {
+  background-color: #38BDF8;
+  color: #060E1C;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────────  */
+
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: rgba(56, 189, 248, 0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #38BDF8; }
+
+/* ── Grain texture ───────────────────────────────────────────────────────────  */
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Navbar hide/show ────────────────────────────────────────────────────────  */
+
+.navbar-slide {
+  transition:
+    transform      0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 300ms ease,
+    border-color   300ms ease,
+    box-shadow     300ms ease;
+}
+.navbar-visible { transform: translateY(0); }
+.navbar-hidden  { transform: translateY(-110%); }
+
+/* Active nav indicator */
+.nav-indicator {
+  transition: width 220ms ease;
+}
+
+/* ── Glassmorphism ───────────────────────────────────────────────────────────  */
+
+.glass {
+  background:              rgba(13, 31, 61, 0.65);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter:         blur(16px) saturate(180%);
+  border:                  1px solid rgba(56, 189, 248, 0.08);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.8);
+  border:     1px solid rgba(30, 58, 138, 0.1);
+}
