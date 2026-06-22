@@ -48,6 +48,22 @@ export const FREE_TOOLS: FreeTool[] = [
     href: "/tools/mvp-scope",
   },
   {
+    slug: "build-vs-buy",
+    icon: "⚖️",
+    title: "Build vs Buy Calculator",
+    desc: "Should you build it custom or use an existing tool? Get a 3-year cost comparison, break-even analysis, and a clear recommendation.",
+    badge: "Popular",
+    href: "/tools/build-vs-buy",
+  },
+  {
+    slug: "pmf-score",
+    icon: "📈",
+    title: "Product-Market Fit Score",
+    desc: "10 questions on retention, organic growth, engagement, and revenue signals. Get a PMF score and the specific gaps holding you back.",
+    badge: "For founders",
+    href: "/tools/pmf-score",
+  },
+  {
     slug: "free-audit",
     icon: "🔍",
     title: "Free Tech Audit",

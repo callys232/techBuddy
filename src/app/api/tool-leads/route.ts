@@ -152,6 +152,8 @@ export async function POST(req: Request) {
                   : tool === "ndpr-checker"        ? "NDPR Compliance Checker"
                   : tool === "mvp-scope"           ? "MVP Scope Generator"
                   : tool === "free-audit"          ? "Free Tech Audit"
+                  : tool === "build-vs-buy"        ? "Build vs Buy Calculator"
+                  : tool === "pmf-score"           ? "PMF Score"
                   : tool;
 
   const sourceLabel = source === "email-capture"    ? "submitted their email"

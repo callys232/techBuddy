@@ -1,6 +1,6 @@
 /** Fire-and-forget tool lead capture. Never throws, never blocks navigation. */
 export function captureToolLead(data: {
-  tool:        "cost-estimator" | "timeline-estimator" | "stack-picker" | "free-audit" | "ndpr-checker" | "mvp-scope";
+  tool:        "cost-estimator" | "timeline-estimator" | "stack-picker" | "free-audit" | "ndpr-checker" | "mvp-scope" | "build-vs-buy" | "pmf-score";
   source:      "email-capture" | "quote-click" | "whatsapp-click";
   email?:      string;
   selections:  Record<string, unknown>;

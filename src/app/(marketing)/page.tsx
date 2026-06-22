@@ -5,6 +5,7 @@ import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { AppShowcase } from "@/components/sections/AppShowcase";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
+import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
 import { BlogTeaser } from "@/components/sections/BlogTeaser";
 import { InvestTeaser } from "@/components/sections/InvestTeaser";
 import { CTAStrip } from "@/components/sections/CTAStrip";
@@ -32,6 +33,7 @@ export default function HomePage() {
       <StatsBar />
       <ServicesGrid />
       <AppShowcase />
+      <HomeCostEstimator />
       <TestimonialsSection />
       <FAQSection />
       <BlogTeaser />
