@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { TeamCard } from "@/components/ui/TeamCard";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { TEAM_MEMBERS } from "@/mock/team";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Contact — Work With Nigeria's Leading Product Studio",
@@ -21,7 +22,9 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <section className="px-[var(--container-px)] py-[var(--section-y)]">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
+        <PageVectors variant="flow" intensity={0.35} />
+        <div className="relative z-10">
         <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none mb-16">
           Let&apos;s Build Together
         </h1>
@@ -79,6 +82,7 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </div>

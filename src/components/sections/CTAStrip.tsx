@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { IconBrandWhatsapp, IconSparkles, IconClock } from "@tabler/icons-react";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
 export function CTAStrip() {
   return (
     <section className="relative grain overflow-hidden bg-[var(--bg)] py-[var(--section-y)] text-center">
+      <PageVectors variant="center" intensity={0.3} />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 [background:radial-gradient(ellipse_60%_70%_at_50%_50%,rgba(0,229,192,0.05)_0%,transparent_70%)]"
       />
-      <div className="mx-auto max-w-3xl px-[var(--container-px)]">
+      <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
         {/* Capacity signal */}
         <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-1.5 text-xs font-semibold text-[var(--fg)]/60 mb-8">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />

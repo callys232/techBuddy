@@ -17,6 +17,14 @@ export const FREE_TOOLS: FreeTool[] = [
     href: "/tools/cost-estimator",
   },
   {
+    slug: "timeline-estimator",
+    icon: "📅",
+    title: "Timeline Estimator",
+    desc: "Get a realistic, phase-by-phase delivery timeline based on your project scope, team readiness, and complexity.",
+    badge: "New",
+    href: "/tools/timeline-estimator",
+  },
+  {
     slug: "stack-picker",
     icon: "🛠️",
     title: "Tech Stack Picker",
@@ -142,4 +150,99 @@ export const STACK_RECOMMENDATIONS: StackRecommendation[] = [
     ],
     why: "Full JavaScript across the stack, easy to hire for, and Node's event loop handles thousands of concurrent connections efficiently.",
   },
+];
+
+/* ── Timeline Estimator data ─────────────────────────────────────────────── */
+
+export interface TimelineProjectType {
+  id: string;
+  label: string;
+  desc: string;
+  phases: { discovery: number[]; design: number[]; dev: number[]; qa: number[]; launch: number[] };
+}
+
+export interface TimelineOption {
+  id: string;
+  label: string;
+  desc: string;
+  weeksDelta: number;
+}
+
+export interface TimelineFeature {
+  id: string;
+  label: string;
+  weeks: number;
+}
+
+export const TIMELINE_PROJECT_TYPES: TimelineProjectType[] = [
+  {
+    id: "landing",
+    label: "Landing page",
+    desc: "Marketing site, product page, or company website",
+    phases: { discovery: [0.5, 1], design: [1, 2], dev: [1, 2], qa: [0.5, 1], launch: [0.5, 0.5] },
+  },
+  {
+    id: "webapp",
+    label: "Web app / MVP",
+    desc: "Full-stack product with auth, database, and core user flows",
+    phases: { discovery: [1, 2], design: [2, 3], dev: [4, 6], qa: [1, 2], launch: [0.5, 1] },
+  },
+  {
+    id: "saas",
+    label: "SaaS platform",
+    desc: "Multi-tenant product with billing, roles, and a full feature set",
+    phases: { discovery: [2, 3], design: [3, 4], dev: [8, 12], qa: [2, 3], launch: [1, 1] },
+  },
+  {
+    id: "ecommerce",
+    label: "E-commerce store",
+    desc: "Product catalogue, cart, checkout, and order management",
+    phases: { discovery: [1, 1], design: [2, 3], dev: [4, 6], qa: [1, 2], launch: [0.5, 1] },
+  },
+  {
+    id: "mobile",
+    label: "Mobile app",
+    desc: "iOS + Android app from a single React Native codebase",
+    phases: { discovery: [1, 2], design: [2, 4], dev: [5, 8], qa: [2, 3], launch: [1, 2] },
+  },
+  {
+    id: "dashboard",
+    label: "Admin / Dashboard",
+    desc: "Internal tool, analytics panel, or operations dashboard",
+    phases: { discovery: [1, 1], design: [1, 2], dev: [3, 5], qa: [1, 1], launch: [0.5, 0.5] },
+  },
+];
+
+export const TIMELINE_FEATURES: TimelineFeature[] = [
+  { id: "payments",  label: "Payment integration (Paystack/Flutterwave)", weeks: 1.5 },
+  { id: "auth",      label: "Authentication (email, social, OTP)",        weeks: 0.5 },
+  { id: "admin",     label: "Admin panel / backoffice",                    weeks: 2   },
+  { id: "cms",       label: "CMS / content management",                   weeks: 1   },
+  { id: "ai",        label: "AI / LLM feature (chatbot, extraction)",      weeks: 3   },
+  { id: "whatsapp",  label: "WhatsApp Business API",                       weeks: 1.5 },
+  { id: "analytics", label: "Analytics dashboard / reporting",             weeks: 2   },
+  { id: "offline",   label: "Offline / PWA mode",                         weeks: 1.5 },
+  { id: "api",       label: "Public REST / GraphQL API",                   weeks: 1.5 },
+  { id: "multilang", label: "Multilingual support",                        weeks: 1   },
+];
+
+export const TIMELINE_READINESS: TimelineOption[] = [
+  { id: "figma",    label: "Figma designs are ready",       desc: "You have final or near-final screen designs we can build from",  weeksDelta: -2   },
+  { id: "brand",    label: "Brand kit only, need design",   desc: "You have a logo and brand guide — we handle UX/UI design",       weeksDelta:  0   },
+  { id: "scratch",  label: "Starting from zero",            desc: "No designs yet — we do full research, UX, and visual design",    weeksDelta:  2   },
+  { id: "nodesign", label: "Functional UI only",            desc: "Speed over aesthetics — clean utility UI, no branding needed",   weeksDelta: -1   },
+];
+
+export const TIMELINE_FEEDBACK: TimelineOption[] = [
+  { id: "fast",   label: "Same day / next day",         desc: "You can review and approve within 24 hours",                 weeksDelta: -1 },
+  { id: "normal", label: "2–3 business days",           desc: "Standard review cycles — most projects run at this pace",   weeksDelta:  0 },
+  { id: "slow",   label: "About a week per review",     desc: "Busy schedules — each feedback round takes 5–7 days",       weeksDelta:  3 },
+  { id: "multi",  label: "Multiple decision-makers",    desc: "Sign-off requires a committee, board, or multiple founders", weeksDelta:  5 },
+];
+
+export const TIMELINE_INTEGRATIONS: TimelineOption[] = [
+  { id: "standard", label: "Standard only",                  desc: "Paystack, Supabase, Resend, WhatsApp — well-documented APIs",  weeksDelta: 0 },
+  { id: "govt",     label: "Government / regulatory APIs",   desc: "NIBSS, FIRS, CAC, NDPR reporting — slow approval cycles",      weeksDelta: 4 },
+  { id: "legacy",   label: "Legacy or existing codebase",    desc: "Integrating with an old system or continuing someone's work",  weeksDelta: 3 },
+  { id: "hardware", label: "Hardware, IoT, or unusual tech", desc: "Physical devices, unusual protocols, or undocumented systems", weeksDelta: 5 },
 ];

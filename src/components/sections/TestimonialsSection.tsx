@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { IconStarFilled, IconQuote, IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { TESTIMONIALS } from "@/mock/testimonials";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 const N = TESTIMONIALS.length;
 
@@ -97,8 +98,9 @@ export function TestimonialsSection() {
   };
 
   return (
-    <section className="py-[var(--section-y)] overflow-hidden">
-      <div className="mx-auto max-w-7xl px-[var(--container-px)]">
+    <section className="relative overflow-hidden py-[var(--section-y)]">
+      <PageVectors variant="bottom-left" intensity={0.32} />
+      <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
           {/* ── Left: copy + controls ──────────────────────────────────────── */}

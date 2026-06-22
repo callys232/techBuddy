@@ -134,3 +134,28 @@ create policy "anon_insert_invest_applications"
 create index if not exists invest_apps_email_idx   on public.invest_applications (email);
 create index if not exists invest_apps_created_idx on public.invest_applications (created_at desc);
 create index if not exists invest_apps_status_idx  on public.invest_applications (status);
+
+-- ─── Tool Leads ───────────────────────────────────────────────────────────────
+-- Captures every completed cost/timeline estimate — with or without email.
+
+create table if not exists public.tool_leads (
+  id          uuid        primary key default gen_random_uuid(),
+  tool        text        not null,                    -- 'cost-estimator' | 'timeline-estimator'
+  email       text,                                   -- nullable (anonymous estimates still captured)
+  source      text        not null default 'unknown', -- 'email-capture' | 'quote-click' | 'whatsapp-click'
+  selections  jsonb       not null default '{}',      -- every choice the user made
+  result      jsonb       not null default '{}',      -- the estimate they saw
+  subscribed  boolean     not null default false,     -- added to newsletter?
+  created_at  timestamptz not null default now()
+);
+
+alter table public.tool_leads enable row level security;
+
+create policy "anon_insert_tool_leads"
+  on public.tool_leads for insert
+  to anon, authenticated
+  with check (true);
+
+create index if not exists tool_leads_email_idx   on public.tool_leads (email);
+create index if not exists tool_leads_tool_idx    on public.tool_leads (tool);
+create index if not exists tool_leads_created_idx on public.tool_leads (created_at desc);

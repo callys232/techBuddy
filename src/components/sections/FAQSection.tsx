@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconPlus, IconMinus } from "@tabler/icons-react";
 import Link from "next/link";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 const FAQS = [
   {
@@ -84,8 +85,9 @@ function FAQItem({ q, a, link }: typeof FAQS[0]) {
 
 export function FAQSection() {
   return (
-    <section className="py-[var(--section-y)] bg-[var(--surface)]">
-      <div className="mx-auto max-w-7xl px-[var(--container-px)]">
+    <section className="relative overflow-hidden py-[var(--section-y)] bg-[var(--surface)]">
+      <PageVectors variant="scattered" intensity={0.3} />
+      <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
         <div className="grid lg:grid-cols-[380px,1fr] gap-16 items-start">
           {/* Left */}
           <div className="lg:sticky lg:top-28">

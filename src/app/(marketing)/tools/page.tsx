@@ -4,9 +4,9 @@ import { FREE_TOOLS } from "@/mock/tools";
 import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Free Tools — Cost Estimator, Stack Picker & Tech Audit",
+  title: "Free Tools — Cost Estimator, Timeline Estimator, Stack Picker & Tech Audit",
   description:
-    "Free tools for Nigerian founders and businesses: project cost estimator in Naira, tech stack picker, and a free manual tech audit of your website or app.",
+    "Free tools for Nigerian founders: project cost estimator in Naira, realistic timeline estimator, tech stack picker, and a free manual tech audit of your site or app.",
   keywords: [
     "project cost estimator Nigeria", "tech stack picker Africa",
     "free website audit Nigeria", "how much does an app cost Nigeria",
@@ -39,7 +39,7 @@ export default function ToolsPage() {
             Plan Your Build Before You Spend a Naira
           </h1>
           <p className="text-lg text-[var(--fg)]/55 leading-relaxed">
-            Three free tools to estimate costs, pick the right tech stack, and get your site audited — built for African founders.
+            Four free tools to estimate costs, plan your timeline, pick the right tech stack, and get your site audited — built for African founders.
           </p>
         </div>
       </section>
@@ -58,7 +58,7 @@ export default function ToolsPage() {
 
       {/* ── Tool cards ───────────────────────────────────────────────────── */}
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <div className="grid gap-6 sm:grid-cols-3 max-w-5xl mx-auto">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
           {FREE_TOOLS.map((tool, i) => (
             <Link
               key={tool.slug}

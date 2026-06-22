@@ -5,6 +5,7 @@ import { IconCheck, IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-reac
 import { ALL_SERVICES } from "@/mock/services";
 import { ALL_PROJECTS } from "@/mock/portfolio";
 import { AppCard } from "@/components/ui/AppCard";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -236,8 +237,9 @@ export default async function ServicePage({ params }: Props) {
     <div className="min-h-screen bg-[var(--bg)]">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="pt-[var(--section-y)] pb-16 border-b border-[var(--border)]">
-        <div className="mx-auto max-w-7xl px-[var(--container-px)]">
+      <section className="relative overflow-hidden pt-[var(--section-y)] pb-16 border-b border-[var(--border)]">
+        <PageVectors variant="top-right" intensity={0.35} />
+        <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
           <div className="max-w-3xl">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">
               {service?.tag ?? "Service"}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { IconCheck, IconSparkles } from "@tabler/icons-react";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Pricing — What It Costs to Build with TechAgency",
@@ -143,8 +144,9 @@ export default function PricingPage() {
     <div className="min-h-screen bg-[var(--bg)]">
 
       {/* ── Header ──────────────────────────────────────────────────────── */}
-      <section className="pt-[var(--section-y)] pb-16 text-center">
-        <div className="mx-auto max-w-3xl px-[var(--container-px)]">
+      <section className="relative overflow-hidden pt-[var(--section-y)] pb-16 text-center">
+        <PageVectors variant="center" intensity={0.38} />
+        <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
           <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">
             Transparent pricing
           </span>

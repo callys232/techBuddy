@@ -1,44 +1,84 @@
 "use client";
 
 import { useState } from "react";
+import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
+import { validateEmail, validateName, validateUrl } from "@/lib/validate";
+
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
 const AUDIT_TYPES = [
-  { id: "performance", label: "Performance",      hint: "Speed, Core Web Vitals, bundle size" },
-  { id: "security",    label: "Security",         hint: "Headers, vulnerabilities, HTTPS" },
-  { id: "seo",         label: "SEO",              hint: "Meta tags, sitemap, indexability" },
-  { id: "code",        label: "Code quality",     hint: "Architecture, tech debt, patterns" },
-  { id: "ux",          label: "UX & Accessibility", hint: "Usability, WCAG, mobile experience" },
+  { id: "performance", label: "Performance",         hint: "Speed, Core Web Vitals, bundle size"    },
+  { id: "security",    label: "Security",            hint: "Headers, vulnerabilities, HTTPS"        },
+  { id: "seo",         label: "SEO",                 hint: "Meta tags, sitemap, indexability"       },
+  { id: "code",        label: "Code quality",        hint: "Architecture, tech debt, patterns"      },
+  { id: "ux",          label: "UX & Accessibility",  hint: "Usability, WCAG, mobile experience"     },
 ];
 
 type Status = "idle" | "loading" | "success" | "error";
 
+function FieldError({ msg }: { msg: string | null }) {
+  if (!msg) return null;
+  return (
+    <span className="flex items-center gap-1 text-[11px] text-rose-400 mt-1.5">
+      <IconAlertCircle size={11} className="shrink-0" />{msg}
+    </span>
+  );
+}
+
 export function FreeAuditForm() {
-  const [name,       setName]       = useState("");
-  const [email,      setEmail]      = useState("");
-  const [url,        setUrl]        = useState("");
-  const [types,      setTypes]      = useState<string[]>(["performance", "security"]);
-  const [status,     setStatus]     = useState<Status>("idle");
-  const [errorMsg,   setErrorMsg]   = useState("");
+  const [name,  setName]  = useState("");
+  const [email, setEmail] = useState("");
+  const [url,   setUrl]   = useState("");
+  const [types, setTypes] = useState<string[]>(["performance", "security"]);
+  const [status,   setStatus]   = useState<Status>("idle");
+  const [serverErr, setServerErr] = useState("");
+
+  /* Touched state per field */
+  const [touched, setTouched] = useState({ name: false, email: false, url: false });
+  const touch = (field: keyof typeof touched) => setTouched((t) => ({ ...t, [field]: true }));
+
+  const nameErr  = touched.name  ? validateName(name)   : null;
+  const emailErr = touched.email ? validateEmail(email) : null;
+  const urlErr   = touched.url   ? validateUrl(url)     : null;
+
+  const isValid  = !validateName(name) && !validateEmail(email) && !validateUrl(url) && types.length > 0;
 
   const toggle = (id: string) =>
     setTypes((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
 
+  const inputCls = (err: string | null, val: string, isTouched: boolean) => [
+    "h-11 rounded-xl border px-4 text-sm text-[var(--fg)] bg-[var(--surface)]",
+    "placeholder:text-[var(--fg)]/25 focus:outline-none focus:ring-1 transition-colors w-full",
+    isTouched && err
+      ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400/20"
+      : isTouched && val && !err
+      ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500/20"
+      : "border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/30",
+  ].join(" ");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (types.length === 0) { setErrorMsg("Select at least one audit type."); return; }
+    /* Touch all fields to reveal errors */
+    setTouched({ name: true, email: true, url: true });
+    if (!isValid) return;
+    if (types.length === 0) { setServerErr("Select at least one audit type."); return; }
+
     setStatus("loading");
-    setErrorMsg("");
+    setServerErr("");
     try {
       const res = await fetch("/api/audit-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, url, auditTypes: types }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error ?? "Submit failed");
+      }
       setStatus("success");
-    } catch {
+    } catch (err: unknown) {
       setStatus("error");
-      setErrorMsg("Something went wrong. Please try again or WhatsApp us.");
+      setServerErr(err instanceof Error ? err.message : "Something went wrong. Please try again or WhatsApp us.");
     }
   };
 
@@ -46,17 +86,16 @@ export function FreeAuditForm() {
     return (
       <div className="glass rounded-[var(--radius-card)] border border-[var(--primary)]/30 p-10 text-center max-w-md mx-auto">
         <div className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/10 mb-5">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
-            <circle cx="14" cy="14" r="13" stroke="#38BDF8" strokeWidth="1.5" />
-            <path d="M8 14.5l4 4 8-9" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <IconCheck size={28} className="text-[var(--primary)]" />
         </div>
         <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">Audit Request Received!</h2>
-        <p className="text-[var(--fg)]/50 text-sm leading-relaxed mb-6">
-          We&apos;ll manually audit <span className="text-[var(--primary)] font-mono break-all">{url}</span> and send your report within 48 hours.
+        <p className="text-[var(--fg)]/50 text-sm leading-relaxed mb-1">
+          We&apos;ll manually audit <span className="text-[var(--primary)] font-mono break-all">{url}</span> and send
+          your report to <strong>{email}</strong> within 48 hours.
         </p>
+        <p className="text-xs text-[var(--fg)]/30 mb-6">Questions before then? WhatsApp us directly.</p>
         <a
-          href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000"}?text=${encodeURIComponent("Hi! I just submitted a free audit request.")}`}
+          href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I just submitted a free audit request for ${url}.`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-10 items-center gap-2 rounded-full bg-emerald-500 px-6 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors"
@@ -68,56 +107,64 @@ export function FreeAuditForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-6">
+    <form onSubmit={handleSubmit} noValidate className="max-w-xl mx-auto space-y-5">
 
+      {/* Name + Email */}
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-semibold text-[var(--fg)]/60" htmlFor="audit-name">
-            Your name
+        <div>
+          <label className="block text-xs font-semibold text-[var(--fg)]/60 mb-1" htmlFor="audit-name">
+            Your name <span className="text-[var(--primary)]">*</span>
           </label>
           <input
             id="audit-name"
             type="text"
-            required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => { setName(e.target.value); if (touched.name) {} }}
+            onBlur={() => touch("name")}
             placeholder="Chidi Okafor"
-            className="h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/25 focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/30 transition-colors"
+            className={inputCls(nameErr, name, touched.name)}
           />
+          <FieldError msg={nameErr} />
         </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-semibold text-[var(--fg)]/60" htmlFor="audit-email">
-            Email address
+        <div>
+          <label className="block text-xs font-semibold text-[var(--fg)]/60 mb-1" htmlFor="audit-email">
+            Email address <span className="text-[var(--primary)]">*</span>
           </label>
           <input
             id="audit-email"
             type="email"
-            required
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { setEmail(e.target.value); if (touched.email) {} }}
+            onBlur={() => touch("email")}
             placeholder="chidi@company.ng"
-            className="h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/25 focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/30 transition-colors"
+            className={inputCls(emailErr, email, touched.email)}
           />
+          <FieldError msg={emailErr} />
         </div>
       </div>
 
-      <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-semibold text-[var(--fg)]/60" htmlFor="audit-url">
-          Website or app URL
+      {/* URL */}
+      <div>
+        <label className="block text-xs font-semibold text-[var(--fg)]/60 mb-1" htmlFor="audit-url">
+          Website or app URL <span className="text-[var(--primary)]">*</span>
         </label>
         <input
           id="audit-url"
           type="url"
-          required
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => { setUrl(e.target.value); if (touched.url) {} }}
+          onBlur={() => touch("url")}
           placeholder="https://yourapp.com"
-          className="h-11 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/25 focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/30 transition-colors font-mono"
+          className={`${inputCls(urlErr, url, touched.url)} font-mono`}
         />
+        <FieldError msg={urlErr} />
       </div>
 
+      {/* Audit types */}
       <div>
-        <p className="text-xs font-semibold text-[var(--fg)]/60 mb-3">What should we audit?</p>
+        <p className="text-xs font-semibold text-[var(--fg)]/60 mb-3">
+          What should we audit? <span className="text-[var(--primary)]">*</span>
+        </p>
         <div className="flex flex-col gap-2">
           {AUDIT_TYPES.map((t) => (
             <label
@@ -145,12 +192,19 @@ export function FreeAuditForm() {
             </label>
           ))}
         </div>
+        {types.length === 0 && (
+          <span className="flex items-center gap-1 text-[11px] text-rose-400 mt-2">
+            <IconAlertCircle size={11} />Select at least one audit type
+          </span>
+        )}
       </div>
 
-      {errorMsg && (
-        <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">
-          {errorMsg}
-        </p>
+      {/* Server error */}
+      {serverErr && (
+        <div className="flex items-start gap-2 text-sm text-rose-400 bg-rose-400/10 border border-rose-400/20 rounded-xl px-4 py-3">
+          <IconAlertCircle size={15} className="shrink-0 mt-0.5" />
+          {serverErr}
+        </div>
       )}
 
       <button
@@ -162,7 +216,7 @@ export function FreeAuditForm() {
       </button>
 
       <p className="text-center text-xs text-[var(--fg)]/25">
-        No sign-up required. We&apos;ll email your report within 48 hours.
+        No sign-up required. Report delivered within 48 hours.
       </p>
     </form>
   );

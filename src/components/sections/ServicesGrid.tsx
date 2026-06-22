@@ -18,6 +18,7 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import { ALL_SERVICES } from "@/mock/services";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 /* ── Icons ─────────────────────────────────────────────────────────────────── */
 
@@ -124,8 +125,9 @@ export function ServicesGrid() {
   const svc = ALL_SERVICES[active];
 
   return (
-    <section className="py-[var(--section-y)]">
-      <div className="mx-auto max-w-7xl px-[var(--container-px)]">
+    <section className="relative overflow-hidden py-[var(--section-y)]">
+      <PageVectors variant="technical" intensity={0.38} />
+      <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
         <div className="grid lg:grid-cols-[1fr,480px] gap-12 lg:gap-20 items-center">
 
           {/* ── Left panel ──────────────────────────────────────────────── */}

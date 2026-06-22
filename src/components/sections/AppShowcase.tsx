@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { AppCard } from "@/components/ui/AppCard";
 import { FEATURED_PROJECTS } from "@/mock/portfolio";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export function AppShowcase() {
   return (
-    <section className="bg-[var(--surface)] py-[var(--section-y)]">
-      <div className="mx-auto max-w-7xl px-[var(--container-px)]">
+    <section className="relative overflow-hidden bg-[var(--surface)] py-[var(--section-y)]">
+      <PageVectors variant="top-right" intensity={0.35} />
+      <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
         <div className="mb-12 flex items-end justify-between">
           <div>
             <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">Our work</span>
