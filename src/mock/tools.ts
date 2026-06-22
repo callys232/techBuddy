@@ -32,6 +32,22 @@ export const FREE_TOOLS: FreeTool[] = [
     href: "/tools/stack-picker",
   },
   {
+    slug: "ndpr-checker",
+    icon: "🛡️",
+    title: "NDPR Compliance Checker",
+    desc: "Answer 16 questions and get a compliance score, gap analysis, and priority actions — specific to the Nigerian Data Protection Regulation.",
+    badge: "Nigeria-specific",
+    href: "/tools/ndpr-checker",
+  },
+  {
+    slug: "mvp-scope",
+    icon: "🗺️",
+    title: "MVP Scope Generator",
+    desc: "Tell us about your idea, answer 8 questions, get a prioritised Phase 1 feature list — what to build, what to cut, and what to do after launch.",
+    badge: "For founders",
+    href: "/tools/mvp-scope",
+  },
+  {
     slug: "free-audit",
     icon: "🔍",
     title: "Free Tech Audit",

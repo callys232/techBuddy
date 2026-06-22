@@ -6,6 +6,7 @@ import { IconCheck, IconBrandWhatsapp, IconAlertCircle } from "@tabler/icons-rea
 import { PROJECT_TYPES, FEATURE_ADDONS, TIMELINE_MULTIPLIERS } from "@/mock/tools";
 import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail } from "@/lib/validate";
+import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
@@ -34,6 +35,7 @@ export function CostEstimator() {
   const [email,       setEmail]       = useState("");
   const [emailTouched, setEmailTouched] = useState(false);
   const [emailError,  setEmailError]  = useState<string | null>(null);
+  const [category,    setCategory]    = useState<Category>("");
   const [captured,    setCaptured]    = useState(false);
   const [capBusy,     setCapBusy]     = useState(false);
 
@@ -74,7 +76,7 @@ export function CostEstimator() {
     setCapBusy(true);
     captureToolLead({
       tool: "cost-estimator", source: "email-capture",
-      email, selections: selectionsSummary(), result: resultSummary(),
+      email, selections: { ...selectionsSummary(), category }, result: resultSummary(),
     });
     await new Promise((r) => setTimeout(r, 500));
     setCaptured(true);
@@ -86,7 +88,7 @@ export function CostEstimator() {
     if (!checkEmail()) return;
     captureToolLead({
       tool: "cost-estimator", source: "quote-click",
-      email, selections: selectionsSummary(), result: resultSummary(),
+      email, selections: { ...selectionsSummary(), category }, result: resultSummary(),
     });
     const p = new URLSearchParams({ service: projectType, features: features.join(","), budget: String(Math.round(raw)) });
     router.push(`/quote?${p}`);
@@ -96,7 +98,7 @@ export function CostEstimator() {
     if (!checkEmail()) return;
     captureToolLead({
       tool: "cost-estimator", source: "whatsapp-click",
-      email, selections: selectionsSummary(), result: resultSummary(),
+      email, selections: { ...selectionsSummary(), category }, result: resultSummary(),
     });
     const msg = [
       `Hi TechAgency! Cost Estimator result:`,
@@ -137,21 +139,35 @@ export function CostEstimator() {
 
         {/* Feature addons */}
         <div>
-          <p className="font-heading font-semibold text-[var(--fg)] mb-1">Features you need</p>
-          <p className="text-xs text-[var(--fg)]/40 mb-3">Select all that apply</p>
-          <div className="flex flex-wrap gap-2">
-            {FEATURE_ADDONS.map((f) => (
-              <button key={f.id} type="button" onClick={() => toggleFeature(f.id)}
-                className={[
-                  "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all active:scale-95",
-                  features.includes(f.id)
-                    ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
-                    : "border-[var(--border)] text-[var(--fg)]/55 hover:border-[var(--primary)]/40",
-                ].join(" ")}>
-                {f.label}
-                <span className="ml-1.5 opacity-50 text-[10px]">+{(f.cost / 1000).toFixed(0)}k</span>
+          <div className="flex items-center justify-between mb-1">
+            <p className="font-heading font-semibold text-[var(--fg)]">Features you need</p>
+            {features.length > 0 && (
+              <button type="button" onClick={() => setFeatures([])}
+                className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors">
+                Clear all ({features.length})
               </button>
-            ))}
+            )}
+          </div>
+          <p className="text-xs text-[var(--fg)]/40 mb-3">Select all that apply — click again to remove</p>
+          <div className="flex flex-wrap gap-2">
+            {FEATURE_ADDONS.map((f) => {
+              const on = features.includes(f.id);
+              return (
+                <button key={f.id} type="button" onClick={() => toggleFeature(f.id)}
+                  className={[
+                    "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all active:scale-95",
+                    on
+                      ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
+                      : "border-[var(--border)] text-[var(--fg)]/55 hover:border-[var(--primary)]/40",
+                  ].join(" ")}>
+                  {f.label}
+                  {on
+                    ? <span className="opacity-60 hover:opacity-100 font-bold leading-none">×</span>
+                    : <span className="opacity-40 text-[10px]">+{(f.cost / 1000).toFixed(0)}k</span>
+                  }
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -259,6 +275,9 @@ export function CostEstimator() {
               <p className="text-[10px] text-[var(--fg)]/25 mt-2">
                 We&apos;ll email you a copy of this estimate and add you to our newsletter.
               </p>
+              <div className="mt-3 pt-3 border-t border-[var(--border)]">
+                <CategoryPicker value={category} onChange={setCategory} label="Your industry" />
+              </div>
             </form>
           )}
         </div>

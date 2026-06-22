@@ -95,6 +95,7 @@ create table if not exists public.audit_requests (
   email        text        not null,
   website_url  text        not null,
   audit_types  text[]      not null default '{}',
+  category     text,
   created_at   timestamptz not null default now()
 );
 

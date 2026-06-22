@@ -11,14 +11,14 @@ const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
-  const { name, email, url, auditTypes } = body ?? {};
+  const { name, email, url, auditTypes, category } = body ?? {};
 
   if (!name || !email || !url) {
     return NextResponse.json({ error: "name, email and url are required" }, { status: 400 });
   }
 
   /* Column is website_url in the migration schema */
-  await supabase.from("audit_requests").insert({ name, email, website_url: url, audit_types: auditTypes ?? [] }).then(() => null, () => null);
+  await supabase.from("audit_requests").insert({ name, email, website_url: url, audit_types: auditTypes ?? [], category: category ?? null }).then(() => null, () => null);
 
   await Promise.all([
     resend.emails.send({

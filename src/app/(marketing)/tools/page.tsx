@@ -58,7 +58,7 @@ export default function ToolsPage() {
 
       {/* ── Tool cards ───────────────────────────────────────────────────── */}
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           {FREE_TOOLS.map((tool, i) => (
             <Link
               key={tool.slug}

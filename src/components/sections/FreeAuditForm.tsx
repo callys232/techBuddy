@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { validateEmail, validateName, validateUrl } from "@/lib/validate";
+import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
@@ -29,7 +30,8 @@ export function FreeAuditForm() {
   const [name,  setName]  = useState("");
   const [email, setEmail] = useState("");
   const [url,   setUrl]   = useState("");
-  const [types, setTypes] = useState<string[]>(["performance", "security"]);
+  const [types,    setTypes]    = useState<string[]>(["performance", "security"]);
+  const [category, setCategory] = useState<Category>("");
   const [status,   setStatus]   = useState<Status>("idle");
   const [serverErr, setServerErr] = useState("");
 
@@ -69,7 +71,7 @@ export function FreeAuditForm() {
       const res = await fetch("/api/audit-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, url, auditTypes: types }),
+        body: JSON.stringify({ name, email, url, auditTypes: types, category }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -198,6 +200,9 @@ export function FreeAuditForm() {
           </span>
         )}
       </div>
+
+      {/* Category */}
+      <CategoryPicker value={category} onChange={setCategory} />
 
       {/* Server error */}
       {serverErr && (

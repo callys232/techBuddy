@@ -6,6 +6,7 @@ import Link from "next/link";
 import { IconCheck, IconClock, IconArrowRight, IconCalendar, IconAlertCircle, IconBrandWhatsapp } from "@tabler/icons-react";
 import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail } from "@/lib/validate";
+import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 import {
@@ -19,20 +20,48 @@ import {
 /* ── Types ──────────────────────────────────────────────────────────────────── */
 
 interface Selections {
-  projectType: string;
-  features:    string[];
-  readiness:   string;
-  feedback:    string;
-  integration: string;
+  projectTypes: string[]; /* multi-select */
+  features:     string[];
+  readiness:    string;
+  feedback:     string;
+  integrations: string[];
 }
 
 const EMPTY: Selections = {
-  projectType: "",
-  features:    [],
-  readiness:   "",
-  feedback:    "",
-  integration: "",
+  projectTypes: [],
+  features:     [],
+  readiness:    "",
+  feedback:     "",
+  integrations: [],
 };
+
+/* ── Recap chips — shows previous answers above the current step ────────── */
+
+function RecapChips({ step, sel }: { step: number; sel: Selections }) {
+  if (step === 0) return null;
+  const chips: { label: string; value: string }[] = [];
+  if (step > 0 && sel.projectTypes.length)
+    chips.push({ label: "Building", value: sel.projectTypes.map((id) => TIMELINE_PROJECT_TYPES.find((t) => t.id === id)?.label ?? id).join(", ") });
+  if (step > 1 && sel.features.length)
+    chips.push({ label: "Features", value: `${sel.features.length} selected` });
+  if (step > 2 && sel.readiness)
+    chips.push({ label: "Design", value: TIMELINE_READINESS.find((r) => r.id === sel.readiness)?.label ?? sel.readiness });
+  if (step > 3 && sel.feedback)
+    chips.push({ label: "Feedback", value: TIMELINE_FEEDBACK.find((f) => f.id === sel.feedback)?.label ?? sel.feedback });
+  if (step > 4 && sel.integrations.length)
+    chips.push({ label: "Integrations", value: `${sel.integrations.length} selected` });
+  if (!chips.length) return null;
+  return (
+    <div className="flex flex-wrap gap-2 mb-6">
+      {chips.map(({ label, value }) => (
+        <span key={label} className="flex items-center gap-1.5 text-[11px] rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-[var(--fg)]/50">
+          <span className="text-[var(--fg)]/30">{label}:</span>
+          <span className="font-medium text-[var(--fg)]/75 max-w-[140px] truncate">{value}</span>
+        </span>
+      ))}
+    </div>
+  );
+}
 
 const STEPS = ["Project type", "Features", "Design readiness", "Feedback speed", "Integrations", "Your email", "Your timeline"];
 
@@ -108,21 +137,41 @@ export function TimelineEstimator() {
   const [email,        setEmail]        = useState("");
   const [emailTouched, setEmailTouched] = useState(false);
   const [emailError,   setEmailError]   = useState<string | null>(null);
+  const [category,     setCategory]     = useState<Category>("");
   const [captured,     setCaptured]     = useState(false);
   const [capBusy,      setCapBusy]      = useState(false);
 
   const set = <K extends keyof Selections>(k: K, v: Selections[K]) =>
     setSel((s) => ({ ...s, [k]: v }));
 
+  const toggleProjectType = (id: string) =>
+    set("projectTypes", sel.projectTypes.includes(id)
+      ? sel.projectTypes.filter((t) => t !== id)
+      : [...sel.projectTypes, id]);
+
   const toggleFeature = (id: string) =>
     set("features", sel.features.includes(id)
       ? sel.features.filter((f) => f !== id)
       : [...sel.features, id]);
 
+  const toggleIntegration = (id: string) =>
+    set("integrations", sel.integrations.includes(id)
+      ? sel.integrations.filter((i) => i !== id)
+      : [...sel.integrations, id]);
+
   /* ── Compute timeline from selections ───────── */
   const result = useMemo(() => {
-    const pt = TIMELINE_PROJECT_TYPES.find((t) => t.id === sel.projectType);
-    if (!pt) return null;
+    const selectedTypes = TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id));
+    if (!selectedTypes.length) return null;
+
+    /* Use the most complex selected type as the base (highest dev phase max) */
+    const pt = selectedTypes.reduce((max, t) =>
+      t.phases.dev[1] > max.phases.dev[1] ? t : max, selectedTypes[0]);
+
+    /* Each additional selected type adds 35% of its dev time to the primary */
+    const multiTypeExtra = selectedTypes
+      .filter((t) => t.id !== pt.id)
+      .reduce((sum, t) => sum + t.phases.dev[1] * 0.35, 0);
 
     /* Feature weeks */
     const featureWeeks = TIMELINE_FEATURES
@@ -132,7 +181,10 @@ export function TimelineEstimator() {
     /* Modifier deltas */
     const readinessDelta = TIMELINE_READINESS.find((r) => r.id === sel.readiness)?.weeksDelta ?? 0;
     const feedbackDelta  = TIMELINE_FEEDBACK.find((f) => f.id === sel.feedback)?.weeksDelta ?? 0;
-    const integDelta     = TIMELINE_INTEGRATIONS.find((i) => i.id === sel.integration)?.weeksDelta ?? 0;
+    /* Sum across all selected integrations (multi-select, [] = standard/zero) */
+    const integDelta     = TIMELINE_INTEGRATIONS
+      .filter((i) => sel.integrations.includes(i.id))
+      .reduce((s, i) => s + i.weeksDelta, 0);
     const totalDelta     = readinessDelta + feedbackDelta + integDelta;
 
     /* Phases with feature weeks distributed proportionally (bulk goes to dev) */
@@ -143,7 +195,7 @@ export function TimelineEstimator() {
       { name: "Discovery",   min: pt.phases.discovery[0],           max: pt.phases.discovery[1] },
       { name: "Design",      min: clamp(pt.phases.design[0]   + (readinessDelta < 0 ? readinessDelta : 0), 0, 99),
                              max: clamp(pt.phases.design[1]   + Math.max(0, readinessDelta), 0, 99) },
-      { name: "Development", min: pt.phases.dev[0] + devExtra,      max: pt.phases.dev[1] + devExtra },
+      { name: "Development", min: pt.phases.dev[0] + devExtra + multiTypeExtra, max: pt.phases.dev[1] + devExtra + multiTypeExtra },
       { name: "QA & Test",   min: pt.phases.qa[0]  + qaExtra,       max: pt.phases.qa[1]  + qaExtra  },
       { name: "Launch",      min: pt.phases.launch[0],              max: pt.phases.launch[1] },
     ].map((p) => ({ ...p, min: Math.max(0.5, Math.round(p.min * 2) / 2), max: Math.max(0.5, Math.round(p.max * 2) / 2) }));
@@ -166,10 +218,10 @@ export function TimelineEstimator() {
   /* ── Steps ────────────────────────────────────────────────────── */
 
   const stepValid = () => {
-    if (step === 0) return !!sel.projectType;
+    if (step === 0) return sel.projectTypes.length > 0;
     if (step === 2) return !!sel.readiness;
     if (step === 3) return !!sel.feedback;
-    if (step === 4) return !!sel.integration;
+    if (step === 4) return true; /* integrations are multi-select — 0 = standard, always valid */
     if (step === 5) {
       const err = validateEmail(email);
       if (err) { setEmailTouched(true); setEmailError(err); return false; }
@@ -188,11 +240,12 @@ export function TimelineEstimator() {
         tool: "timeline-estimator", source: "email-capture",
         email,
         selections: {
-          projectType:  TIMELINE_PROJECT_TYPES.find((t) => t.id === sel.projectType)?.label ?? sel.projectType,
+          projectTypes: TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label),
           features:     TIMELINE_FEATURES.filter((f) => sel.features.includes(f.id)).map((f) => f.label),
           readiness:    TIMELINE_READINESS.find((r) => r.id === sel.readiness)?.label ?? sel.readiness,
           feedback:     TIMELINE_FEEDBACK.find((f) => f.id === sel.feedback)?.label ?? sel.feedback,
-          integration:  TIMELINE_INTEGRATIONS.find((i) => i.id === sel.integration)?.label ?? sel.integration,
+          integrations: TIMELINE_INTEGRATIONS.filter((i) => sel.integrations.includes(i.id)).map((i) => i.label),
+          category,
         },
         result: {
           totalMin: result.totalMin, totalMax: result.totalMax,
@@ -243,37 +296,87 @@ export function TimelineEstimator() {
           transition={{ duration: 0.22, ease: "easeOut" }}
         >
 
-          {/* ── Step 0: Project type ──────────────────────────────────── */}
+          {/* ── Step 0: Project type (multi-select) ──────────────────── */}
           {step === 0 && (
             <div>
+              <RecapChips step={step} sel={sel} />
               <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">What are you building?</h2>
-              <p className="text-sm text-[var(--fg)]/45 mb-6">Select the type that best matches your product.</p>
-              <div className="grid sm:grid-cols-2 gap-3">
-                {TIMELINE_PROJECT_TYPES.map((pt) => (
-                  <button
-                    key={pt.id}
-                    type="button"
-                    onClick={() => { set("projectType", pt.id); }}
-                    className={[
-                      "flex flex-col items-start gap-1 rounded-xl border p-4 text-left transition-all",
-                      sel.projectType === pt.id
-                        ? "border-[var(--primary)] bg-[var(--primary)]/8 shadow-[0_0_16px_rgba(56,189,248,0.12)]"
-                        : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
-                    ].join(" ")}
-                  >
-                    <span className="font-heading font-semibold text-[var(--fg)] text-sm">{pt.label}</span>
-                    <span className="text-xs text-[var(--fg)]/40">{pt.desc}</span>
-                  </button>
-                ))}
+              <div className="flex items-center gap-3 mb-6">
+                <p className="text-sm text-[var(--fg)]/45">Select everything that applies — combining types adjusts the timeline automatically.</p>
+                <span className="shrink-0 text-[10px] font-mono text-[var(--fg)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
+                  Select all that apply
+                </span>
               </div>
+
+              <div className="grid sm:grid-cols-2 gap-3">
+                {TIMELINE_PROJECT_TYPES.map((pt) => {
+                  const on = sel.projectTypes.includes(pt.id);
+                  return (
+                    <button
+                      key={pt.id}
+                      type="button"
+                      onClick={() => toggleProjectType(pt.id)}
+                      className={[
+                        "flex items-start gap-3 rounded-xl border p-4 text-left transition-all active:scale-[0.98]",
+                        on
+                          ? "border-[var(--primary)] bg-[var(--primary)]/8 shadow-[0_0_16px_rgba(56,189,248,0.10)]"
+                          : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                      ].join(" ")}
+                    >
+                      <span className={[
+                        "flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded border transition-all",
+                        on ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                      ].join(" ")}>
+                        {on && <IconCheck size={11} className="text-[var(--bg)]" />}
+                      </span>
+                      <span>
+                        <span className="block font-heading font-semibold text-[var(--fg)] text-sm">{pt.label}</span>
+                        <span className="block text-xs text-[var(--fg)]/40 mt-0.5">{pt.desc}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Live selection list */}
+              {sel.projectTypes.length > 0 && (
+                <div className="mt-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-4 py-3">
+                  <p className="text-xs font-semibold text-[var(--primary)] mb-2">
+                    {sel.projectTypes.length} type{sel.projectTypes.length > 1 ? "s" : ""} selected
+                    {sel.projectTypes.length > 1 && <span className="font-normal text-[var(--fg)]/40 ml-2">— timelines combined automatically</span>}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {sel.projectTypes.map((id) => {
+                      const pt = TIMELINE_PROJECT_TYPES.find((t) => t.id === id);
+                      return (
+                        <span key={id}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--primary)]">
+                          {pt?.label}
+                          <button type="button" onClick={() => toggleProjectType(id)}
+                            className="hover:text-[var(--fg)] transition-colors">×</button>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           {/* ── Step 1: Features ──────────────────────────────────────── */}
           {step === 1 && (
             <div>
-              <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">Which features do you need?</h2>
-              <p className="text-sm text-[var(--fg)]/45 mb-6">Select all that apply. Each adds to the development phase.</p>
+              <RecapChips step={step} sel={sel} />
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="font-display text-2xl font-extrabold text-[var(--fg)]">Which features do you need?</h2>
+                {sel.features.length > 0 && (
+                  <button type="button" onClick={() => set("features", [])}
+                    className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors shrink-0">
+                    Clear all ({sel.features.length})
+                  </button>
+                )}
+              </div>
+              <p className="text-sm text-[var(--fg)]/45 mb-6">Select all that apply — click again to remove.</p>
               <div className="grid sm:grid-cols-2 gap-2.5">
                 {TIMELINE_FEATURES.map((f) => {
                   const on = sel.features.includes(f.id);
@@ -303,17 +406,32 @@ export function TimelineEstimator() {
                   );
                 })}
               </div>
-              <p className="mt-4 text-xs text-[var(--fg)]/30">
-                {sel.features.length === 0
-                  ? "No features selected — skipping adds to the base timeline only."
-                  : `${sel.features.length} feature${sel.features.length > 1 ? "s" : ""} selected`}
-              </p>
+              {sel.features.length === 0 ? (
+                <p className="mt-4 text-xs text-[var(--fg)]/30">No features selected — skipping adds to the base timeline only.</p>
+              ) : (
+                <div className="mt-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-4 py-3">
+                  <div className="flex flex-wrap gap-2">
+                    {sel.features.map((id) => {
+                      const f = TIMELINE_FEATURES.find((f) => f.id === id);
+                      return (
+                        <span key={id}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--primary)]">
+                          {f?.label}
+                          <button type="button" onClick={() => toggleFeature(id)}
+                            className="font-bold opacity-60 hover:opacity-100 leading-none transition-opacity">×</button>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           {/* ── Step 2: Design readiness ─────────────────────────────── */}
           {step === 2 && (
             <div>
+              <RecapChips step={step} sel={sel} />
               <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">How ready are your designs?</h2>
               <p className="text-sm text-[var(--fg)]/45 mb-6">Design work is one of the biggest timeline variables.</p>
               <div className="space-y-3">
@@ -353,6 +471,7 @@ export function TimelineEstimator() {
           {/* ── Step 3: Feedback speed ───────────────────────────────── */}
           {step === 3 && (
             <div>
+              <RecapChips step={step} sel={sel} />
               <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">How fast can your team give feedback?</h2>
               <p className="text-sm text-[var(--fg)]/45 mb-6">Slow feedback cycles are the #1 cause of project overruns.</p>
               <div className="space-y-3">
@@ -389,42 +508,81 @@ export function TimelineEstimator() {
             </div>
           )}
 
-          {/* ── Step 4: Integrations ─────────────────────────────────── */}
+          {/* ── Step 4: Integrations (multi-select) ─────────────────── */}
           {step === 4 && (
             <div>
-              <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">Any complex integrations?</h2>
-              <p className="text-sm text-[var(--fg)]/45 mb-6">Third-party APIs with slow onboarding or poor documentation add weeks.</p>
+              <RecapChips step={step} sel={sel} />
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="font-display text-2xl font-extrabold text-[var(--fg)]">Any complex integrations?</h2>
+                {sel.integrations.length > 0 && (
+                  <button type="button" onClick={() => set("integrations", [])}
+                    className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors shrink-0">
+                    Clear all ({sel.integrations.length})
+                  </button>
+                )}
+              </div>
+              <p className="text-sm text-[var(--fg)]/45 mb-1">Select all that apply. If none apply, just continue — standard integrations add no extra time.</p>
+              <span className="inline-block mb-6 text-[10px] font-mono text-[var(--fg)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
+                Select all that apply
+              </span>
               <div className="space-y-3">
-                {TIMELINE_INTEGRATIONS.map((intg) => (
+                {TIMELINE_INTEGRATIONS.filter((i) => i.id !== "standard").map((intg) => {
+                  const on = sel.integrations.includes(intg.id);
+                  return (
                   <button
                     key={intg.id}
                     type="button"
-                    onClick={() => set("integration", intg.id)}
+                    onClick={() => toggleIntegration(intg.id)}
                     className={[
                       "flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-all",
-                      sel.integration === intg.id
+                      on
                         ? "border-[var(--primary)] bg-[var(--primary)]/8"
                         : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
                     ].join(" ")}
                   >
                     <span className={[
-                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all",
-                      sel.integration === intg.id ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-all",
+                      on ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
                     ].join(" ")}>
-                      {sel.integration === intg.id && <span className="block h-2 w-2 rounded-full bg-[var(--bg)]" />}
+                      {on && <IconCheck size={11} className="text-[var(--bg)]" />}
                     </span>
                     <div>
                       <div className="flex items-baseline gap-3">
                         <span className="font-heading font-semibold text-[var(--fg)] text-sm">{intg.label}</span>
-                        <span className={`font-mono text-xs ${intg.weeksDelta === 0 ? "text-emerald-400" : "text-amber-400"}`}>
-                          {intg.weeksDelta === 0 ? "no impact" : `+${intg.weeksDelta} weeks`}
-                        </span>
+                        <span className="font-mono text-xs text-amber-400">+{intg.weeksDelta} weeks</span>
                       </div>
                       <p className="text-xs text-[var(--fg)]/40 mt-0.5">{intg.desc}</p>
                     </div>
                   </button>
-                ))}
+                  );
+                })}
               </div>
+              {sel.integrations.length === 0 ? (
+                <p className="text-xs text-[var(--fg)]/30 mt-3">No selection = standard integrations only (Paystack, Supabase, etc.) — no extra time added.</p>
+              ) : (
+                <div className="mt-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-4 py-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-semibold text-[var(--primary)]">{sel.integrations.length} integration{sel.integrations.length > 1 ? "s" : ""} selected</p>
+                    <button type="button" onClick={() => set("integrations", [])}
+                      className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors">
+                      Clear all
+                    </button>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {sel.integrations.map((id) => {
+                      const intg = TIMELINE_INTEGRATIONS.find((i) => i.id === id);
+                      return (
+                        <span key={id}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--primary)]">
+                          {intg?.label}
+                          <button type="button" onClick={() => toggleIntegration(id)}
+                            className="font-bold opacity-60 hover:opacity-100 leading-none transition-opacity">×</button>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -470,6 +628,9 @@ export function TimelineEstimator() {
                 <p className="text-xs text-[var(--fg)]/30 mt-2">
                   We&apos;ll also add you to our newsletter — unsubscribe anytime.
                 </p>
+                <div className="mt-4 pt-3 border-t border-[var(--border)]">
+                  <CategoryPicker value={category} onChange={setCategory} />
+                </div>
               </div>
             </div>
           )}
@@ -486,7 +647,7 @@ export function TimelineEstimator() {
                     : `${result.totalMin}–${result.totalMax} weeks`}
                 </h2>
                 <p className="text-[var(--fg)]/45 text-sm">
-                  {TIMELINE_PROJECT_TYPES.find((t) => t.id === sel.projectType)?.label} ·{" "}
+                  {TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label).join(" + ")} ·{" "}
                   {sel.features.length} feature{sel.features.length !== 1 ? "s" : ""}
                 </p>
               </div>
@@ -553,11 +714,11 @@ export function TimelineEstimator() {
                       source:  "quote-click",
                       email:   email || undefined,
                       selections: {
-                        projectType: TIMELINE_PROJECT_TYPES.find((t) => t.id === sel.projectType)?.label ?? sel.projectType,
+                        projectTypes: TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label),
                         features:    TIMELINE_FEATURES.filter((f) => sel.features.includes(f.id)).map((f) => f.label),
                         readiness:   TIMELINE_READINESS.find((r) => r.id === sel.readiness)?.label ?? sel.readiness,
                         feedback:    TIMELINE_FEEDBACK.find((f) => f.id === sel.feedback)?.label ?? sel.feedback,
-                        integration: TIMELINE_INTEGRATIONS.find((i) => i.id === sel.integration)?.label ?? sel.integration,
+                        integrations: TIMELINE_INTEGRATIONS.filter((i) => sel.integrations.includes(i.id)).map((i) => i.label),
                       },
                       result: { totalMin: result.totalMin, totalMax: result.totalMax, normalLaunch: result.normalLaunch.toLocaleDateString("en-GB") },
                     });
@@ -575,14 +736,14 @@ export function TimelineEstimator() {
                       source:  "whatsapp-click",
                       email:   email || undefined,
                       selections: {
-                        projectType: TIMELINE_PROJECT_TYPES.find((t) => t.id === sel.projectType)?.label ?? sel.projectType,
+                        projectTypes: TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label),
                         features:    TIMELINE_FEATURES.filter((f) => sel.features.includes(f.id)).map((f) => f.label),
                       },
                       result: { totalMin: result.totalMin, totalMax: result.totalMax },
                     });
                     const msg = [
                       `Hi TechAgency! I just used the timeline estimator:`,
-                      `Project: ${TIMELINE_PROJECT_TYPES.find((t) => t.id === sel.projectType)?.label}`,
+                      `Project: ${TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label).join(" + ")}`,
                       `Timeline: ${result.totalMin}–${result.totalMax} weeks`,
                       `Launch: ${result.normalLaunch.toLocaleDateString("en-GB")}`,
                       `I'd like to get a proper quote.`,

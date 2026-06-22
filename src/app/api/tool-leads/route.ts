@@ -68,6 +68,63 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
       </table>`;
   }
 
+  if (tool === "ndpr-checker") {
+    const score    = (res.score    as number) ?? 0;
+    const grade    = (res.grade    as string) ?? "—";
+    const critical = (res.criticalGaps as number) ?? 0;
+    const cat      = (sel.category as string) ?? "—";
+    return `
+      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:6px 0;color:#666;width:160px">Industry</td><td style="padding:6px 0;font-weight:600">${cat}</td></tr>
+        <tr style="border-top:1px solid #e5e7eb">
+          <td style="padding:10px 0;color:#666">Compliance score</td>
+          <td style="padding:10px 0;font-size:22px;font-weight:800;color:#0ea5e9">${score} / 100</td>
+        </tr>
+        <tr><td style="padding:4px 0;color:#666">Grade</td><td style="padding:4px 0;font-weight:600">${grade}</td></tr>
+        <tr><td style="padding:4px 0;color:#666">Critical gaps</td><td style="padding:4px 0;font-weight:600;color:#f87171">${critical}</td></tr>
+      </table>`;
+  }
+
+  if (tool === "mvp-scope") {
+    const desc   = (sel.description   as string) ?? "—";
+    const user   = (sel.user          as string) ?? "—";
+    const action = (sel["core-action"] as string) ?? "—";
+    const rev    = (sel.revenue       as string) ?? "—";
+    const cat    = (sel.category      as string) ?? "—";
+    const p1     = (res.phase1Count   as number) ?? 0;
+    const weeks  = (res.weekRange     as string) ?? "—";
+    return `
+      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:6px 0;color:#666;width:160px">Industry</td><td style="padding:6px 0;font-weight:600">${cat}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Idea</td><td style="padding:6px 0;font-weight:600">${desc}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Core user</td><td style="padding:6px 0">${user}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Core action</td><td style="padding:6px 0">${action}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Revenue model</td><td style="padding:6px 0">${rev}</td></tr>
+        <tr style="border-top:1px solid #e5e7eb">
+          <td style="padding:10px 0;color:#666">Phase 1 features</td>
+          <td style="padding:10px 0;font-size:20px;font-weight:800;color:#0ea5e9">${p1} features · ${weeks} weeks</td>
+        </tr>
+      </table>`;
+  }
+
+  if (tool === "stack-picker") {
+    const stack = (res.stack     as string) ?? "—";
+    const why   = (res.tagline   as string) ?? "—";
+    const cat   = (sel.category  as string) ?? "—";
+    return `
+      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:6px 0;color:#666;width:160px">Industry</td><td style="padding:6px 0;font-weight:600">${cat}</td></tr>
+        ${Object.entries(sel).filter(([k]) => k !== "category").map(([k, v]) =>
+          `<tr><td style="padding:4px 0;color:#666;text-transform:capitalize">${k.replace(/-/g," ")}</td><td style="padding:4px 0">${v}</td></tr>`
+        ).join("")}
+        <tr style="border-top:1px solid #e5e7eb">
+          <td style="padding:10px 0;color:#666">Recommended stack</td>
+          <td style="padding:10px 0;font-size:18px;font-weight:800;color:#0ea5e9">${stack}</td>
+        </tr>
+        <tr><td style="padding:4px 0;color:#666">Reason</td><td style="padding:4px 0">${why}</td></tr>
+      </table>`;
+  }
+
   return `<pre style="font-size:12px;color:#666">${JSON.stringify({ sel, res }, null, 2)}</pre>`;
 }
 
@@ -91,6 +148,10 @@ export async function POST(req: Request) {
 
   const toolLabel = tool === "cost-estimator"     ? "Cost Estimator"
                   : tool === "timeline-estimator" ? "Timeline Estimator"
+                  : tool === "stack-picker"        ? "Stack Picker"
+                  : tool === "ndpr-checker"        ? "NDPR Compliance Checker"
+                  : tool === "mvp-scope"           ? "MVP Scope Generator"
+                  : tool === "free-audit"          ? "Free Tech Audit"
                   : tool;
 
   const sourceLabel = source === "email-capture"    ? "submitted their email"
