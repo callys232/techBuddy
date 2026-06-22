@@ -86,3 +86,24 @@ create index if not exists quote_requests_created_idx on public.quote_requests  
 create index if not exists contact_created_idx        on public.contact_messages (created_at desc);
 create index if not exists newsletter_email_idx       on public.newsletter_subs  (email);
 create index if not exists bookings_datetime_idx      on public.bookings         (booking_datetime);
+
+-- ─── Audit Requests ───────────────────────────────────────────────────────────
+
+create table if not exists public.audit_requests (
+  id           uuid        primary key default gen_random_uuid(),
+  name         text        not null,
+  email        text        not null,
+  website_url  text        not null,
+  audit_types  text[]      not null default '{}',
+  created_at   timestamptz not null default now()
+);
+
+alter table public.audit_requests enable row level security;
+
+create policy "anon_insert_audit_requests"
+  on public.audit_requests for insert
+  to anon, authenticated
+  with check (true);
+
+create index if not exists audit_requests_email_idx   on public.audit_requests (email);
+create index if not exists audit_requests_created_idx on public.audit_requests (created_at desc);

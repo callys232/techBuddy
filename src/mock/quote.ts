@@ -28,14 +28,16 @@ export const PAIN_CHIPS: string[] = [
   "WhatsApp integration",
 ];
 
-/** Also used in Hero section */
+/** Also used in Hero section — service-based tags */
 export const HERO_PAIN_CHIPS: string[] = [
-  "Slow website",
-  "No mobile app",
-  "Security gaps",
-  "Need to scale",
-  "Starting from scratch",
-  "All of the above",
+  "Web Apps",
+  "Mobile Apps",
+  "AI & Automation",
+  "WhatsApp Bots",
+  "DevOps & Scaling",
+  "Fintech & Payments",
+  "UI/UX Design",
+  "Data & Analytics",
 ];
 
 export const SCOPE_FEATURES: string[] = [

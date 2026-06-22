@@ -2,18 +2,24 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { IconTrendingUp } from "@tabler/icons-react";
 import { Popup } from "./Popup";
+import type { Project } from "@/mock/portfolio";
 
-interface AppCardProps {
-  image: string;
-  name: string;
-  tags: string[];
-  stack: string[];
-  liveUrl?: string;
-  caseStudy?: boolean;
-}
+type AppCardProps = Omit<Project, "category">;
 
-export function AppCard({ image, name, tags, stack, liveUrl, caseStudy }: AppCardProps) {
+export function AppCard({
+  image,
+  name,
+  description,
+  tags,
+  stack,
+  liveUrl,
+  caseStudy,
+  result,
+  highlight,
+  client,
+}: AppCardProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,9 +39,19 @@ export function AppCard({ image, name, tags, stack, liveUrl, caseStudy }: AppCar
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
+          {/* Result badge overlay */}
+          {highlight && (
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-[var(--bg)]/90 backdrop-blur-sm border border-[var(--border)] px-2.5 py-1">
+              <IconTrendingUp size={11} className="text-[var(--primary)] shrink-0" />
+              <span className="font-mono text-[10px] text-[var(--fg)]/70 leading-none">{highlight}</span>
+            </div>
+          )}
         </div>
         <div className="p-5">
-          <h3 className="font-display text-lg font-bold text-[var(--fg)] mb-3">{name}</h3>
+          <h3 className="font-display text-lg font-bold text-[var(--fg)] mb-1">{name}</h3>
+          {description && (
+            <p className="text-xs text-[var(--fg)]/50 leading-relaxed mb-3 line-clamp-2">{description}</p>
+          )}
           <div className="flex flex-wrap gap-2 mb-4">
             {tags.map((t) => (
               <span
@@ -47,7 +63,7 @@ export function AppCard({ image, name, tags, stack, liveUrl, caseStudy }: AppCar
             ))}
           </div>
           <div className="flex items-center gap-3">
-            {liveUrl && (
+            {liveUrl && liveUrl !== "#" && (
               <a
                 href={liveUrl}
                 target="_blank"
@@ -59,8 +75,8 @@ export function AppCard({ image, name, tags, stack, liveUrl, caseStudy }: AppCar
               </a>
             )}
             {caseStudy && (
-              <button className="text-sm font-semibold text-[var(--fg)]/50 hover:text-[var(--fg)] transition-colors">
-                Case study
+              <button type="button" className="text-sm font-semibold text-[var(--fg)]/50 hover:text-[var(--fg)] transition-colors">
+                Case study →
               </button>
             )}
           </div>
@@ -69,9 +85,33 @@ export function AppCard({ image, name, tags, stack, liveUrl, caseStudy }: AppCar
 
       {caseStudy && (
         <Popup isOpen={open} onClose={() => setOpen(false)} title={name} size="lg">
-          <div className="space-y-6 text-[var(--fg)]/80">
+          <div className="space-y-6">
+            {/* Client & result */}
+            <div className="rounded-xl bg-[var(--primary)]/5 border border-[var(--primary)]/20 p-4 space-y-1">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--primary)]">Key outcome</p>
+              <p className="font-display text-base font-bold text-[var(--fg)]">{result}</p>
+              {client && <p className="text-xs text-[var(--fg)]/45">{client}</p>}
+            </div>
+
+            {/* Description */}
+            {description && (
+              <div>
+                <h4 className="font-display font-bold text-[var(--fg)] mb-2 text-sm">About this project</h4>
+                <p className="text-sm text-[var(--fg)]/70 leading-relaxed">{description}</p>
+              </div>
+            )}
+
+            {/* Highlight stat */}
+            {highlight && (
+              <div className="flex items-center gap-2 text-sm text-[var(--fg)]/60">
+                <IconTrendingUp size={14} className="text-[var(--primary)] shrink-0" />
+                <span>{highlight}</span>
+              </div>
+            )}
+
+            {/* Tech Stack */}
             <div>
-              <h4 className="font-display font-bold text-[var(--fg)] mb-2">Tech Stack</h4>
+              <h4 className="font-display font-bold text-[var(--fg)] mb-2 text-sm">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {stack.map((s) => (
                   <span
@@ -83,13 +123,13 @@ export function AppCard({ image, name, tags, stack, liveUrl, caseStudy }: AppCar
                 ))}
               </div>
             </div>
-            <p className="text-sm">Full case study content coming from Sanity CMS.</p>
+
             <div className="pt-4 border-t border-[var(--border)] text-center">
               <a
                 href="/quote"
                 className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity"
               >
-                Need something like this? Get a quote
+                Build something similar →
               </a>
             </div>
           </div>

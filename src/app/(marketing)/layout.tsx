@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AgentWidget } from "@/components/ui/AgentWidget";
+import { PageStickman } from "@/components/ui/PageStickman";
 import { PageTransition } from "@/components/layout/PageTransition";
 
 export default function MarketingLayout({
@@ -11,6 +12,7 @@ export default function MarketingLayout({
   return (
     <>
       <Navbar />
+      <PageStickman />
       <PageTransition>
         <main>{children}</main>
       </PageTransition>

@@ -33,7 +33,9 @@ export const FOOTER_LINKS: FooterLinkGroup = {
     { label: "Tech Audit", href: "/services/tech-audit" },
   ],
   Company: [
+    { label: "About",      href: "/about" },
     { label: "Portfolio",  href: "/portfolio" },
+    { label: "Pricing",    href: "/pricing" },
     { label: "Blog",       href: "/blog" },
     { label: "Templates",  href: "/templates" },
     { label: "Free Tools", href: "/tools" },
