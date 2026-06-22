@@ -17,7 +17,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "name, email and url are required" }, { status: 400 });
   }
 
-  await supabase.from("audit_requests").insert({ name, email, url, audit_types: auditTypes ?? [] }).then(() => null, () => null);
+  /* Column is website_url in the migration schema */
+  await supabase.from("audit_requests").insert({ name, email, website_url: url, audit_types: auditTypes ?? [] }).then(() => null, () => null);
 
   await Promise.all([
     resend.emails.send({

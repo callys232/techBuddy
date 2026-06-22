@@ -42,14 +42,19 @@ export default function InvestPage() {
         </div>
       </section>
 
-      {/* Auth-gated application — Clerk sign-in required */}
+      {/* Application CTA */}
       <section className="px-[var(--container-px)] py-[var(--section-y)] text-center bg-[var(--surface)]">
-        <p className="text-[var(--fg)]/60 mb-4">Sign in to submit a full application.</p>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-3">
+          Ready to pitch your idea?
+        </h2>
+        <p className="text-[var(--fg)]/55 mb-6 max-w-md mx-auto">
+          Submit a short brief and we&apos;ll review it within 5 business days. No lengthy decks required.
+        </p>
         <a
-          href="/sign-in?redirect=/invest/apply"
-          className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--primary)] px-7 font-semibold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-all"
+          href="/invest/apply"
+          className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95"
         >
-          Sign in to apply
+          Apply now — it&apos;s free
         </a>
       </section>
     </div>

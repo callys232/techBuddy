@@ -52,22 +52,31 @@ export default function ContactPage() {
             <h2 className="font-display text-2xl font-bold text-[var(--fg)]">Send a Message</h2>
             <ContactForm />
 
-            {/* Calendar embed placeholder */}
-            <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6 text-center">
-              <p className="font-display text-lg font-bold text-[var(--fg)] mb-2">
+            {/* Calendar booking */}
+            <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6">
+              <p className="font-display text-lg font-bold text-[var(--fg)] mb-1">
                 Book a Discovery Call
               </p>
-              <p className="text-sm text-[var(--fg)]/50 mb-4">
-                30 minutes · Cal.com
+              <p className="text-sm text-[var(--fg)]/50 mb-1">30 minutes · Free · No sales pitch</p>
+              <p className="text-xs text-[var(--fg)]/35 mb-5">
+                Talk directly to an engineer. We&apos;ll scope your project and give you a realistic estimate on the call.
               </p>
-              <a
-                href="https://cal.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--primary)] px-6 text-sm font-semibold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-all"
-              >
-                Pick a time
-              </a>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={process.env.NEXT_PUBLIC_CAL_URL ?? "https://cal.com/techagencyafrica/discovery"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity"
+                >
+                  Pick a time
+                </a>
+                <a
+                  href={`mailto:hello@techagency.africa?subject=Discovery call request`}
+                  className="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--border)] px-6 text-sm font-semibold text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                >
+                  Email instead
+                </a>
+              </div>
             </div>
           </div>
         </div>

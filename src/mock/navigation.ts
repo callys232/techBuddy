@@ -52,8 +52,8 @@ export const FOOTER_LINKS: FooterLinkGroup = {
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { iconName: "x", href: "#", label: "X / Twitter" },
-  { iconName: "linkedin", href: "#", label: "LinkedIn" },
-  { iconName: "github", href: "#", label: "GitHub" },
-  { iconName: "instagram", href: "#", label: "Instagram" },
+  { iconName: "x",         href: "https://x.com/techagencyafrica",              label: "X / Twitter" },
+  { iconName: "linkedin",  href: "https://linkedin.com/company/techagencyafrica", label: "LinkedIn"    },
+  { iconName: "github",    href: "https://github.com/techagencyafrica",           label: "GitHub"      },
+  { iconName: "instagram", href: "https://instagram.com/techagencyafrica",        label: "Instagram"   },
 ];

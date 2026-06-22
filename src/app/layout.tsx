@@ -6,6 +6,7 @@ import {
   JetBrains_Mono,
 } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import "./globals.css";
 
 /* ── Fonts ──────────────────────────────────────────────────────────────────── */
@@ -73,7 +74,7 @@ export const metadata: Metadata = {
     title: "TechAgency — Digital Product Studio for African Businesses",
     description:
       "End-to-end engineering for African businesses that want to grow. Web, mobile, fintech, DevOps.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.svg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
@@ -99,7 +100,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

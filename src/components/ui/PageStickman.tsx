@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAnimate } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 type Pose = "run-right" | "run-left" | "climb" | "jump" | "idle";
 
-const S = 1.7; // stroke width
+const S    = 1.7;
+const EDGE = 52;
 
 /* ── SVG poses ─────────────────────────────────────────────────────────────── */
 
 function IdlePose() {
   return (
-    <svg width="32" height="52" viewBox="0 0 32 52" fill="none" aria-hidden>
-      <circle cx="16" cy="8" r="7" stroke="currentColor" strokeWidth={S} />
+    <svg width="32" height="52" viewBox="0 0 32 52" fill="none">
+      <circle cx="16" cy="8"  r="7"  stroke="currentColor" strokeWidth={S} />
       <line x1="16" y1="15" x2="16" y2="33" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="6"  y2="29" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="26" y2="29" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
@@ -23,10 +24,9 @@ function IdlePose() {
 }
 
 function RunA() {
-  /* Left arm + right leg forward */
   return (
-    <svg width="32" height="52" viewBox="0 0 32 52" fill="none" aria-hidden>
-      <circle cx="16" cy="8" r="7" stroke="currentColor" strokeWidth={S} />
+    <svg width="32" height="52" viewBox="0 0 32 52" fill="none">
+      <circle cx="16" cy="8"  r="7"  stroke="currentColor" strokeWidth={S} />
       <line x1="17" y1="15" x2="16" y2="33" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="6"  y2="15" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="26" y2="27" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
@@ -37,10 +37,9 @@ function RunA() {
 }
 
 function RunB() {
-  /* Right arm + left leg forward */
   return (
-    <svg width="32" height="52" viewBox="0 0 32 52" fill="none" aria-hidden>
-      <circle cx="16" cy="8" r="7" stroke="currentColor" strokeWidth={S} />
+    <svg width="32" height="52" viewBox="0 0 32 52" fill="none">
+      <circle cx="16" cy="8"  r="7"  stroke="currentColor" strokeWidth={S} />
       <line x1="17" y1="15" x2="16" y2="33" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="26" y2="15" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="6"  y2="27" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
@@ -51,10 +50,9 @@ function RunB() {
 }
 
 function ClimbA() {
-  /* Right hand up, left foot braced */
   return (
-    <svg width="32" height="52" viewBox="0 0 32 52" fill="none" aria-hidden>
-      <circle cx="16" cy="8" r="7" stroke="currentColor" strokeWidth={S} />
+    <svg width="32" height="52" viewBox="0 0 32 52" fill="none">
+      <circle cx="16" cy="8"  r="7"  stroke="currentColor" strokeWidth={S} />
       <line x1="16" y1="15" x2="16" y2="33" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="24" y2="11" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="8"  y2="26" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
@@ -65,10 +63,9 @@ function ClimbA() {
 }
 
 function ClimbB() {
-  /* Left hand up, right foot braced */
   return (
-    <svg width="32" height="52" viewBox="0 0 32 52" fill="none" aria-hidden>
-      <circle cx="16" cy="8" r="7" stroke="currentColor" strokeWidth={S} />
+    <svg width="32" height="52" viewBox="0 0 32 52" fill="none">
+      <circle cx="16" cy="8"  r="7"  stroke="currentColor" strokeWidth={S} />
       <line x1="16" y1="15" x2="16" y2="33" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="8"  y2="11" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="16" y1="21" x2="24" y2="26" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
@@ -79,10 +76,9 @@ function ClimbB() {
 }
 
 function JumpPose() {
-  /* Arms wide, legs tucked — mid-air exhilaration */
   return (
-    <svg width="40" height="52" viewBox="0 0 40 52" fill="none" aria-hidden>
-      <circle cx="20" cy="8" r="7" stroke="currentColor" strokeWidth={S} />
+    <svg width="40" height="52" viewBox="0 0 40 52" fill="none">
+      <circle cx="20" cy="8"  r="7"  stroke="currentColor" strokeWidth={S} />
       <line x1="20" y1="15" x2="20" y2="32" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="20" y1="21" x2="3"  y2="13" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
       <line x1="20" y1="21" x2="37" y2="13" stroke="currentColor" strokeWidth={S} strokeLinecap="round" />
@@ -92,117 +88,123 @@ function JumpPose() {
   );
 }
 
-/* ── Animated figure — flips horizontally for run-left ──────────────────────── */
-
 function Figure({ pose, frame }: { pose: Pose; frame: 0 | 1 }) {
-  const inner =
-    pose === "idle"                             ? <IdlePose />     :
-    pose === "jump"                             ? <JumpPose />     :
-    pose === "climb"                            ? (frame ? <ClimbB /> : <ClimbA />) :
-    /* run-right or run-left: same frames, mirrored for left */
+  const body =
+    pose === "idle"  ? <IdlePose /> :
+    pose === "jump"  ? <JumpPose /> :
+    pose === "climb" ? (frame ? <ClimbB /> : <ClimbA />) :
     (frame ? <RunB /> : <RunA />);
 
   return pose === "run-left"
-    ? <div className="[transform:scaleX(-1)]">{inner}</div>
-    : <>{inner}</>;
+    ? <div className="[transform:scaleX(-1)]">{body}</div>
+    : <>{body}</>;
 }
 
-/* ── Main component ─────────────────────────────────────────────────────────── */
-
-const EDGE = 52; // px from screen edge
+/* ── Component ─────────────────────────────────────────────────────────────── */
 
 export function PageStickman() {
-  const [ref, animate] = useAnimate();
-  const [pose,    setPose]    = useState<Pose>("idle");
-  const [frame,   setFrame]   = useState<0 | 1>(0);
-  const [visible, setVisible] = useState(false);
+  const controls = useAnimation();
+  const [pose,  setPose]  = useState<Pose>("idle");
+  const [frame, setFrame] = useState<0 | 1>(0);
 
-  /* Limb animation — cycles faster when running */
+  /* Limb cycling */
   useEffect(() => {
     const ms = pose === "run-right" || pose === "run-left" ? 250
-             : pose === "climb" ? 430 : 900;
+             : pose === "climb" ? 440 : 1000;
     const id = setInterval(() => setFrame((f) => (f === 0 ? 1 : 0)), ms);
     return () => clearInterval(id);
   }, [pose]);
 
-  /* Full-page circuit */
+  /* Circuit */
   useEffect(() => {
     let live = true;
     const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
-    const run = async () => {
-      await sleep(400);
-      if (!live || !ref.current) return;
+    type E = "linear" | "easeIn" | "easeOut" | "easeInOut";
+    const move = (
+      x: number | undefined,
+      y: number | undefined,
+      duration: number,
+      ease: E = "easeInOut"
+    ) => controls.start({
+      ...(x !== undefined ? { x } : {}),
+      ...(y !== undefined ? { y } : {}),
+      transition: { duration, ease },
+    });
 
-      const W    = window.innerWidth;
-      const H    = window.innerHeight;
-      const TOP  = 88;          // y when at the top
-      const BOT  = H - 68;     // y when at the bottom
-      const MID  = Math.round(H * 0.48);
-      const LEFT = EDGE;
+    const run = async () => {
+      await sleep(600);
+      if (!live) return;
+
+      const W     = window.innerWidth;
+      const H     = window.innerHeight;
+      const TOP   = 90;
+      const BOT   = H - 70;
+      const MID   = Math.round(H * 0.48);
+      const LEFT  = EDGE;
       const RIGHT = W - EDGE;
 
-      /* Appear at bottom-left */
-      await animate(ref.current, { x: LEFT, y: BOT }, { duration: 0 });
-      setVisible(true);
+      /* Place at bottom-left instantly, then fade in */
+      controls.set({ x: LEFT, y: BOT, opacity: 0 });
+      await controls.start({ opacity: 0.11, transition: { duration: 0.6 } });
 
-      while (live && ref.current) {
-        /* ① Bottom run → right ─────────────────────────────────── */
+      while (live) {
+        /* ① Run right along the bottom */
         setPose("run-right");
-        await animate(ref.current, { x: RIGHT }, { duration: 7, ease: "linear" });
+        await move(RIGHT, undefined, 7, "linear");
         if (!live) break;
 
-        /* ② Climb up the right side ─────────────────────────────── */
+        /* ② Climb up right side */
         setPose("climb");
-        await animate(ref.current, { y: TOP }, { duration: 5.5, ease: "easeInOut" });
+        await move(undefined, TOP, 5.5);
         if (!live) break;
 
-        /* ③ Pause — stickman looks around ──────────────────────── */
+        /* ③ Look around */
         setPose("idle");
         await sleep(650);
         if (!live) break;
 
-        /* ④ Run left across the top ─────────────────────────────── */
+        /* ④ Run left across the top */
         setPose("run-left");
-        await animate(ref.current, { x: LEFT }, { duration: 7.5, ease: "linear" });
+        await move(LEFT, undefined, 7.5, "linear");
         if (!live) break;
 
-        /* ⑤ Pause top-left ──────────────────────────────────────── */
+        /* ⑤ Pause top-left */
         setPose("idle");
         await sleep(400);
         if (!live) break;
 
-        /* ⑥ Jump / fall to mid-height ──────────────────────────── */
+        /* ⑥ Jump — fall to mid */
         setPose("jump");
-        await animate(ref.current, { y: MID }, { duration: 0.55, ease: "easeIn" });
+        await move(undefined, MID, 0.55, "easeIn");
         if (!live) break;
 
-        /* ⑦ Land — brief idle ───────────────────────────────────── */
+        /* ⑦ Land */
         setPose("idle");
         await sleep(350);
         if (!live) break;
 
-        /* ⑧ Run right at mid-height ─────────────────────────────── */
+        /* ⑧ Run right at mid-height */
         setPose("run-right");
-        await animate(ref.current, { x: RIGHT }, { duration: 5, ease: "linear" });
+        await move(RIGHT, undefined, 5, "linear");
         if (!live) break;
 
-        /* ⑨ Climb down right side ───────────────────────────────── */
+        /* ⑨ Climb down right side */
         setPose("climb");
-        await animate(ref.current, { y: BOT }, { duration: 4, ease: "easeInOut" });
+        await move(undefined, BOT, 4);
         if (!live) break;
 
-        /* ⑩ Idle at bottom-right ────────────────────────────────── */
+        /* ⑩ Pause bottom-right */
         setPose("idle");
         await sleep(500);
         if (!live) break;
 
-        /* ⑪ Run left back to start ──────────────────────────────── */
+        /* ⑪ Run left home */
         setPose("run-left");
-        await animate(ref.current, { x: LEFT }, { duration: 6.5, ease: "linear" });
+        await move(LEFT, undefined, 6.5, "linear");
         if (!live) break;
 
-        /* ⑫ Reset / breathe before next loop ───────────────────── */
+        /* ⑫ Breathe */
         setPose("idle");
         await sleep(700);
       }
@@ -213,16 +215,13 @@ export function PageStickman() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div
-      ref={ref}
+    <motion.div
       aria-hidden
-      className={[
-        "fixed pointer-events-none z-10 hidden lg:block",
-        "text-[var(--fg)] transition-opacity duration-500",
-        visible ? "opacity-[0.11]" : "opacity-0",
-      ].join(" ")}
+      animate={controls}
+      initial={{ x: EDGE, y: 600, opacity: 0 }}
+      className="fixed top-0 left-0 pointer-events-none z-10 hidden lg:block text-[var(--fg)]"
     >
       <Figure pose={pose} frame={frame} />
-    </div>
+    </motion.div>
   );
 }

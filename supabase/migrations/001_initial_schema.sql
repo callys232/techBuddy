@@ -107,3 +107,30 @@ create policy "anon_insert_audit_requests"
 
 create index if not exists audit_requests_email_idx   on public.audit_requests (email);
 create index if not exists audit_requests_created_idx on public.audit_requests (created_at desc);
+
+-- ─── Investment Applications ──────────────────────────────────────────────────
+
+create table if not exists public.invest_applications (
+  id           uuid        primary key default gen_random_uuid(),
+  name         text        not null,
+  email        text        not null,
+  company      text,
+  stage        text,
+  invest_type  text,
+  pitch        text        not null,
+  funding      text,
+  url          text,
+  status       text        not null default 'pending',
+  created_at   timestamptz not null default now()
+);
+
+alter table public.invest_applications enable row level security;
+
+create policy "anon_insert_invest_applications"
+  on public.invest_applications for insert
+  to anon, authenticated
+  with check (true);
+
+create index if not exists invest_apps_email_idx   on public.invest_applications (email);
+create index if not exists invest_apps_created_idx on public.invest_applications (created_at desc);
+create index if not exists invest_apps_status_idx  on public.invest_applications (status);
