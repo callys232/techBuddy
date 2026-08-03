@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
   },
   // Enable React strict mode for better dev warnings
   reactStrictMode: true,
+  // Turbopack config (Next.js 16 default bundler)
+  turbopack: {},
 };
 
 export default nextConfig;

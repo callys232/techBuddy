@@ -39,8 +39,8 @@ const SERVICE_DETAIL: Record<string, {
   relatedCategories: string[];
 }> = {
   "web-development": {
-    tagline: "Fast, offline-ready web apps built for the African market",
-    problem: "Most web agencies build for a fibre connection. We build for the 3G reality of Nigerian users — fast initial loads, offline fallbacks, and Paystack payments that actually convert.",
+    tagline: "Fast, offline-ready web apps built for real-world networks",
+    problem: "Most web agencies build for a fibre connection. We build for the 3G reality most users actually have — fast initial loads, offline fallbacks, and payment integrations that actually convert.",
     deliverables: ["Full-stack Next.js application", "Mobile-responsive design (all screen sizes)", "CMS for non-technical content updates", "Authentication (email, Google, phone OTP)", "SEO-optimised architecture", "Deployment on Vercel + CI/CD pipeline", "3 months post-launch support"],
     whoFor: ["Startups launching an MVP", "SMEs replacing an outdated website", "Businesses launching an e-commerce store", "SaaS founders building their first platform"],
     faqs: [
@@ -52,7 +52,7 @@ const SERVICE_DETAIL: Record<string, {
   },
   "mobile-apps": {
     tagline: "One codebase. iOS + Android. Built to work on 2G.",
-    problem: "Nigerian users download apps on slow connections and use them on devices with limited RAM. We build React Native apps that are lightweight, offline-capable, and feel native on both platforms.",
+    problem: "Users in emerging markets download apps on slow connections and use them on devices with limited RAM. We build React Native apps that are lightweight, offline-capable, and feel native on both platforms.",
     deliverables: ["React Native app (iOS + Android)", "Offline-first data sync", "Biometric authentication", "Push notifications (FCM + APNs)", "App store submission (both stores)", "USSD fallback option for low-connectivity users", "3 months post-launch support"],
     whoFor: ["Fintech startups needing a mobile product", "Logistics companies managing field agents", "Healthcare platforms serving remote areas", "E-commerce businesses wanting a native shopping experience"],
     faqs: [
@@ -63,12 +63,12 @@ const SERVICE_DETAIL: Record<string, {
     relatedCategories: ["fintech", "mobile"],
   },
   "fintech-payments": {
-    tagline: "Accept money the way Nigerians actually pay",
-    problem: "Card payments, bank transfers, USSD, and mobile money — Nigerian users pay in every format. We integrate all of them cleanly, handle CBN compliance, and keep your checkout conversion high.",
-    deliverables: ["Paystack or Flutterwave integration", "Virtual account / NUBAN generation", "USSD payment flow", "Webhook handling + reconciliation", "Transaction dashboard + reporting", "CBN/PCI-DSS compliance consultation", "Refund and dispute workflows"],
-    whoFor: ["E-commerce platforms accepting customer payments", "SaaS companies billing Nigerian subscribers", "Marketplaces handling seller payouts", "Fintech startups building payment products"],
+    tagline: "Accept money the way your customers actually pay",
+    problem: "Card payments, bank transfers, USSD, and mobile money — customers across Africa pay in every format, and global customers expect their own rails too. We integrate all of them cleanly, handle regulatory compliance, and keep your checkout conversion high.",
+    deliverables: ["Paystack, Flutterwave or Stripe integration", "Virtual account / NUBAN generation", "USSD payment flow", "Webhook handling + reconciliation", "Transaction dashboard + reporting", "CBN/PCI-DSS compliance consultation", "Refund and dispute workflows"],
+    whoFor: ["E-commerce platforms accepting customer payments", "SaaS companies billing subscribers globally", "Marketplaces handling seller payouts", "Fintech startups building payment products"],
     faqs: [
-      { q: "Paystack or Flutterwave?", a: "Paystack for Nigeria-only products (better conversion rates, cleaner DX). Flutterwave for multi-country or international payouts. We can integrate both." },
+      { q: "Paystack or Flutterwave?", a: "Paystack for Nigeria-focused products (better conversion rates, cleaner DX). Flutterwave for multi-country or international payouts. We can integrate both, alongside Stripe for global card processing." },
       { q: "Can you handle subscription billing?", a: "Yes — recurring charges, failed payment retries, dunning emails, and pause/cancel flows are all in scope." },
       { q: "What about fraud prevention?", a: "We implement 3DS, velocity checks, IP geolocation, and device fingerprinting. We can also integrate Smile Identity for KYC." },
     ],
@@ -76,19 +76,19 @@ const SERVICE_DETAIL: Record<string, {
   },
   "ai-integration": {
     tagline: "Automate the work eating your team's time",
-    problem: "Document extraction, customer support, invoice processing, WhatsApp bots — AI can eliminate 60–70% of manual tasks for most Nigerian SMEs. We build the integration that connects these tools to your actual workflow.",
+    problem: "Document extraction, customer support, invoice processing, WhatsApp bots — AI can eliminate 60–70% of manual tasks for most growing businesses. We build the integration that connects these tools to your actual workflow.",
     deliverables: ["LLM integration (Claude, GPT-4, Gemini)", "Document / PDF extraction pipeline", "Custom chatbot with business context", "WhatsApp AI bot (via Business API)", "RAG system for company knowledge base", "Cost-optimised routing (Haiku for simple, Sonnet for complex)", "Analytics dashboard for AI usage"],
     whoFor: ["Operations teams drowning in manual document work", "Customer support teams handling repetitive queries", "HR teams processing applications at volume", "Any business with a WhatsApp customer-facing channel"],
     faqs: [
       { q: "How much does AI cost to run monthly?", a: "Most SME use cases cost ₦20k–₦80k/month in API fees. We implement smart caching and model routing to minimise cost without sacrificing quality." },
       { q: "Is our data safe when sent to an LLM?", a: "We use API calls (not the AI company's training pipeline) and can set up data anonymisation before sending to the model. NDPR-compliant architecture by default." },
-      { q: "How accurate is document extraction?", a: "90–97% accuracy on most structured Nigerian document types (invoices, IDs, bank statements). We build human-review fallbacks for the edge cases." },
+      { q: "How accurate is document extraction?", a: "90–97% accuracy on most structured document types (invoices, IDs, bank statements). We build human-review fallbacks for the edge cases." },
     ],
     relatedCategories: ["saas", "fintech"],
   },
   "devops": {
     tagline: "Ship daily. Never go down. Know when something breaks.",
-    problem: "Most Nigerian engineering teams deploy manually and find out about outages from customer complaints. We set up automated pipelines, monitoring, and alerting so problems are caught before they cost you clients.",
+    problem: "Most growing engineering teams deploy manually and find out about outages from customer complaints. We set up automated pipelines, monitoring, and alerting so problems are caught before they cost you clients.",
     deliverables: ["GitHub Actions / GitLab CI pipelines", "Docker containerisation", "Kubernetes (for scale) or simpler orchestration", "Vercel / Railway / AWS / GCP deployment", "Grafana + Prometheus monitoring", "PagerDuty / Slack alerting", "Disaster recovery runbooks"],
     whoFor: ["Engineering teams deploying manually more than once a week", "Products that have had an outage in the last 6 months", "Startups preparing for a major growth event (launch, PR, investor demo)", "Companies moving from a monolith to microservices"],
     faqs: [
@@ -100,13 +100,13 @@ const SERVICE_DETAIL: Record<string, {
   },
   "whatsapp-api": {
     tagline: "Serve customers where they already are",
-    problem: "Nigerians don't download apps for every business they interact with. They use WhatsApp. A well-built WhatsApp bot handles order updates, support queries, OTP, and even payments — without an app download.",
+    problem: "Customers across Africa and beyond don't download apps for every business they interact with. They use WhatsApp. A well-built WhatsApp bot handles order updates, support queries, OTP, and even payments — without an app download.",
     deliverables: ["WhatsApp Business API setup (Meta-approved)", "Custom conversation flows", "OTP and 2FA integration", "Order tracking notifications", "AI-powered FAQ handling", "Webhook security (HMAC validation)", "Analytics and conversation dashboard"],
     whoFor: ["E-commerce businesses sending order updates", "Healthcare providers handling appointment booking", "Banks and fintechs sending OTP", "Any business with a high-volume customer support load"],
     faqs: [
       { q: "How long does WhatsApp API approval take?", a: "Meta's review takes 3–7 business days for most businesses. We handle the application and guide you through the verification." },
       { q: "Can the bot handle complex conversations?", a: "Yes — we integrate Claude or GPT-4 for open-ended queries, with handoff to a human agent when the bot isn't confident." },
-      { q: "What does it cost per message?", a: "Meta charges per conversation window (24-hour sessions). Most Nigerian businesses pay ₦15k–₦60k/month in platform fees at reasonable volume. We don't mark this up." },
+      { q: "What does it cost per message?", a: "Meta charges per conversation window (24-hour sessions). Most businesses at reasonable volume pay ₦15k–₦60k/month equivalent in platform fees. We don't mark this up." },
     ],
     relatedCategories: ["ecommerce", "fintech"],
   },
@@ -124,7 +124,7 @@ const SERVICE_DETAIL: Record<string, {
   },
   "ui-ux-design": {
     tagline: "Users figure out your product in 30 seconds, not 30 minutes",
-    problem: "Bad UX doesn't just frustrate users — it kills conversion. We do research-led design that accounts for the specific behaviours and constraints of African users: feature phone fallbacks, low-literacy flows, and data-cost sensitivity.",
+    problem: "Bad UX doesn't just frustrate users — it kills conversion. We do research-led design that accounts for the specific behaviours and constraints of real users everywhere: feature phone fallbacks, low-literacy flows, and data-cost sensitivity.",
     deliverables: ["User research & persona development", "Information architecture", "Low-fidelity wireframes", "High-fidelity Figma prototype (clickable)", "Design system + component library", "Handoff to engineering (Figma with tokens)", "Usability testing with real users"],
     whoFor: ["Founders building their first product and need to validate before coding", "Engineering teams that built something but users are confused", "Companies redesigning an existing product", "Anyone launching a public-facing consumer product"],
     faqs: [
@@ -171,7 +171,7 @@ const SERVICE_DETAIL: Record<string, {
   },
   "data-analytics": {
     tagline: "Make decisions based on what's actually happening",
-    problem: "Most Nigerian businesses make product decisions based on gut feel because they have no visibility into what users actually do. We build the infrastructure to see everything — and dashboards your team will actually check.",
+    problem: "Most growing businesses make product decisions based on gut feel because they have no visibility into what users actually do. We build the infrastructure to see everything — and dashboards your team will actually check.",
     deliverables: ["Event tracking implementation (PostHog / Mixpanel)", "Custom BI dashboard (Metabase / custom React)", "Data pipeline (ETL from your sources)", "KPI definition and reporting framework", "Cohort and funnel analysis", "Automated weekly/monthly reports", "Data team training"],
     whoFor: ["Founders making product decisions without data", "Marketing teams spending on channels without knowing ROI", "Operations teams managing large volumes without visibility", "Businesses scaling and needing investor-ready metrics"],
     faqs: [
@@ -182,12 +182,12 @@ const SERVICE_DETAIL: Record<string, {
   },
   "seo-growth": {
     tagline: "Get found by the businesses that can actually afford to hire you",
-    problem: "Most Nigerian businesses rank for nothing because their site is slow, has thin content, or isn't indexed properly. We fix the technical foundation first, then build the content strategy that drives qualified traffic.",
-    deliverables: ["Technical SEO audit + fix implementation", "Core Web Vitals optimisation", "Keyword research (Nigerian + African market)", "Content strategy and brief creation", "Schema markup implementation", "Google Search Console + Analytics setup", "Monthly ranking reports"],
-    whoFor: ["B2B businesses whose ideal clients search Google before buying", "E-commerce stores losing to competitors in search", "Service businesses with a local Lagos / Nigerian audience", "SaaS companies wanting organic acquisition"],
+    problem: "Most growing businesses rank for nothing because their site is slow, has thin content, or isn't indexed properly. We fix the technical foundation first, then build the content strategy that drives qualified traffic.",
+    deliverables: ["Technical SEO audit + fix implementation", "Core Web Vitals optimisation", "Keyword research (local + global markets)", "Content strategy and brief creation", "Schema markup implementation", "Google Search Console + Analytics setup", "Monthly ranking reports"],
+    whoFor: ["B2B businesses whose ideal clients search Google before buying", "E-commerce stores losing to competitors in search", "Service businesses with a local or regional audience", "SaaS companies wanting organic acquisition"],
     faqs: [
       { q: "How long until we see results?", a: "Technical fixes show impact in 4–8 weeks. Content-driven ranking takes 3–6 months. We set honest expectations upfront — no promises of 'page 1 in 30 days'." },
-      { q: "Do you write the content?", a: "We create the strategy and briefs. For content production, we work with your team or refer vetted Nigerian tech writers." },
+      { q: "Do you write the content?", a: "We create the strategy and briefs. For content production, we work with your team or refer vetted tech writers from our network." },
     ],
     relatedCategories: ["web", "ecommerce"],
   },
@@ -217,8 +217,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!title) return { title: "Service not found" };
   const detail = SERVICE_DETAIL[slug];
   return {
-    title: `${title} — TechAgency Africa`,
-    description: detail?.tagline ?? `Professional ${title} services for African businesses.`,
+    title: `${title} — TechAgency`,
+    description: detail?.tagline ?? `Professional ${title} services for ambitious businesses everywhere.`,
   };
 }
 
@@ -252,9 +252,12 @@ export default async function ServicePage({ params }: Props) {
                 {detail.tagline}
               </p>
             )}
-            {service && (
-              <p className="font-mono text-sm text-[var(--primary)]">{service.startingFrom}</p>
-            )}
+            <Link
+              href="/tools/cost-estimator"
+              className="inline-flex items-center gap-1.5 font-mono text-xs text-[var(--primary)]/70 hover:text-[var(--primary)] transition-colors mt-1"
+            >
+              💰 Use the free estimator to get a cost range →
+            </Link>
             <div className="flex flex-wrap gap-4 mt-8">
               <Link
                 href={`/quote?service=${encodeURIComponent(title)}`}
@@ -376,7 +379,7 @@ export default async function ServicePage({ params }: Props) {
               Get a free quote
             </Link>
             <Link href="/pricing" className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-7 font-heading font-semibold text-sm text-[var(--fg)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
-              View pricing
+              Estimate the cost
             </Link>
           </div>
         </div>

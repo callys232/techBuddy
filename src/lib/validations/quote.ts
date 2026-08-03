@@ -6,6 +6,7 @@ export const quoteSchema = z.object({
   budget: z.number().min(500_000).max(50_000_000),
   timeline: z.enum(["ASAP", "1-3 months", "3-6 months", "No rush"]),
   features: z.array(z.string()),
+  colors: z.array(z.string()).max(3).optional().default([]),
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Valid email required"),
   whatsapp: z.string().min(7, "WhatsApp number required"),

@@ -2,28 +2,25 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { IconStarFilled, IconQuote, IconChevronRight } from "@tabler/icons-react";
+import { IconStarFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { TESTIMONIALS } from "@/mock/testimonials";
-import { PageVectors } from "@/components/bg/PageVectors";
 
 const N = TESTIMONIALS.length;
 
-/* Position config per rank (0 = top, 1 = second, 2 = third) */
 const RANKS = [
-  { rotate: 0,  y: 0,  scale: 1,    zIndex: 30, opacity: 1   },
-  { rotate: -3, y: 14, scale: 0.97, zIndex: 20, opacity: 1   },
-  { rotate: -6, y: 26, scale: 0.94, zIndex: 10, opacity: 0.9 },
+  { rotate: 0,  y: 0,  scale: 1,    zIndex: 30, opacity: 1    },
+  { rotate: -3, y: 14, scale: 0.95, zIndex: 20, opacity: 0.4  },
+  { rotate: -6, y: 26, scale: 0.9,  zIndex: 10, opacity: 0.18 },
 ];
 
-/* Card flies off to the top-right when dismissed */
 const EXIT = { rotate: 18, x: 340, y: -120, scale: 0.8, opacity: 0, zIndex: 40 };
 
 function StarRow({ n: count }: { n: number }) {
   return (
     <div className="flex gap-0.5">
       {Array.from({ length: count }).map((_, i) => (
-        <IconStarFilled key={i} size={12} className="text-amber-400" />
+        <IconStarFilled key={i} size={11} className="text-amber-400" />
       ))}
     </div>
   );
@@ -31,29 +28,36 @@ function StarRow({ n: count }: { n: number }) {
 
 function Card({ t }: { t: typeof TESTIMONIALS[0] }) {
   return (
-    <div className="flex flex-col gap-5 h-full rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-7 shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
-      <div className="flex items-start justify-between">
-        <StarRow n={t.rating} />
-        <IconQuote size={26} className="text-[var(--primary)]/15 shrink-0" />
+    <div className="flex flex-col gap-5 h-full lm-card-solid p-8 shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
+      {/* Large opening quote mark — Lamidone style */}
+      <div className="text-[56px] leading-none font-serif text-[var(--primary)]/15 -mb-2 -ml-1 select-none">
+        &ldquo;
       </div>
 
-      <p className="flex-1 text-[14.5px] text-[var(--fg)]/72 leading-[1.85]">
-        &ldquo;{t.quote}&rdquo;
+      <div className="flex items-center justify-between">
+        <StarRow n={t.rating} />
+        <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--fg)]/25">
+          {t.industry}
+        </span>
+      </div>
+
+      <p className="flex-1 text-[15px] text-[var(--fg)]/72 leading-[1.85] italic">
+        {t.quote}
       </p>
 
-      <div className="flex items-center gap-3 pt-4 border-t border-[var(--border)]">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/15 font-display font-bold text-sm text-[var(--primary)]">
+      {/* Divider */}
+      <div className="gradient-line" />
+
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/15 font-display font-bold text-sm gradient-text">
           {t.name.charAt(0)}
         </div>
         <div className="min-w-0">
           <p className="font-heading text-sm font-semibold text-[var(--fg)] leading-snug truncate">
             {t.name}
           </p>
-          <p className="text-[11px] text-[var(--fg)]/40 truncate">{t.role} · {t.company}</p>
+          <p className="text-[11px] gradient-text font-semibold truncate">{t.role} · {t.company}</p>
         </div>
-        <span className="ml-auto shrink-0 font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--fg)]/25">
-          {t.industry}
-        </span>
       </div>
     </div>
   );
@@ -82,9 +86,8 @@ export function TestimonialsSection() {
     setTimeout(() => setExiting(null), 500);
   };
 
-  /* Auto-advance every 5 s */
   useEffect(() => {
-    const id = setInterval(advance, 5000);
+    const id = setInterval(advance, 5500);
     return () => clearInterval(id);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -99,24 +102,30 @@ export function TestimonialsSection() {
 
   return (
     <section className="relative overflow-hidden py-[var(--section-y)]">
-      <PageVectors variant="bottom-left" intensity={0.32} />
-      <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      {/* Ambient orb */}
+      <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[var(--primary)]/5 blur-[90px]" />
 
-          {/* ── Left: copy + controls ──────────────────────────────────────── */}
+      <div className="relative z-10 mx-auto max-w-6xl px-[var(--container-px)]">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+
+          {/* ── Left: copy + controls ── */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">
+            <span className="eyebrow-pill mb-5 inline-flex">
+              <span className="pulse-dot" />
               Client stories
             </span>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-[var(--fg)] leading-[1.1] mb-5">
-              Problems solved.<br />Products shipped.
+
+            <h2 className="mt-5 font-display font-extrabold text-[var(--fg)] leading-[1.1] mb-5 tracking-[-0.02em]
+                           text-[clamp(1.9rem,3.5vw,3rem)]">
+              Problems solved.<br />
+              <span className="gradient-text">Products shipped.</span>
             </h2>
-            <p className="text-[var(--fg)]/50 leading-relaxed mb-8 max-w-sm">
+            <p className="text-[var(--fg)]/50 leading-relaxed mb-8 max-w-sm text-[14.5px]">
               From Lagos fintechs to agritech NGOs — here&apos;s what our clients say after shipping with us.
             </p>
 
-            {/* Dot pagination */}
-            <div className="flex items-center gap-2.5 mb-6">
+            {/* Lamidone-style dot nav — active is a pill */}
+            <div className="flex items-center gap-2.5 mb-7">
               {TESTIMONIALS.map((_, i) => (
                 <button
                   key={i}
@@ -126,20 +135,19 @@ export function TestimonialsSection() {
                   className={[
                     "rounded-full transition-all duration-300",
                     i === active
-                      ? "w-6 h-[7px] bg-[var(--primary)]"
-                      : "w-[7px] h-[7px] bg-[var(--border)] hover:bg-[var(--fg)]/25",
+                      ? "w-8 h-2 bg-[var(--primary)] shadow-[0_0_6px_rgba(56,189,248,0.5)]"
+                      : "w-2 h-2 bg-[var(--border)] hover:bg-[var(--fg)]/25",
                   ].join(" ")}
                 />
               ))}
             </div>
 
-            {/* Next button */}
             <button
               type="button"
               onClick={advance}
-              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-full border border-[var(--border)] text-sm font-semibold text-[var(--fg)]/55 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
+              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-xl border border-[var(--border)] text-sm font-semibold text-[var(--fg)]/55 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
             >
-              Next <IconChevronRight size={14} />
+              Next review →
             </button>
 
             {/* Stats */}
@@ -150,7 +158,7 @@ export function TestimonialsSection() {
                 { stat: "94%",    label: "Re-engagement rate" },
               ].map(({ stat, label }) => (
                 <div key={label}>
-                  <p className="font-display text-2xl font-extrabold text-[var(--fg)]">{stat}</p>
+                  <p className="font-display text-2xl font-extrabold gradient-text">{stat}</p>
                   <p className="text-xs text-[var(--fg)]/40 mt-0.5">{label}</p>
                 </div>
               ))}
@@ -164,9 +172,9 @@ export function TestimonialsSection() {
             </Link>
           </div>
 
-          {/* ── Right: stacked card deck ───────────────────────────────────── */}
+          {/* ── Right: stacked card deck ── */}
           <div
-            className="relative h-[380px] cursor-pointer select-none"
+            className="relative h-[400px] cursor-pointer select-none"
             onClick={advance}
             title="Click to see next"
           >
@@ -179,8 +187,6 @@ export function TestimonialsSection() {
                 <Card t={t} />
               </motion.div>
             ))}
-
-            {/* Tap hint — fades after first interaction */}
             <p className="absolute -bottom-7 right-0 text-[10px] text-[var(--fg)]/25 font-mono tracking-wide select-none pointer-events-none">
               tap card to flip →
             </p>

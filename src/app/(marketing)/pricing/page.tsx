@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { IconCheck, IconSparkles } from "@tabler/icons-react";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { ConnectorsGrid } from "@/components/sections/ConnectorsGrid";
+import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
+import { getUserLocation } from "@/lib/geo";
 
 export const metadata: Metadata = {
   title: "Pricing — What It Costs to Build with TechAgency",
   description:
-    "Transparent Naira pricing for web apps, mobile products, AI integration, fintech, and maintenance. No hidden fees.",
+    "Transparent pricing for web apps, mobile products, AI integration, fintech, and maintenance — quoted in Naira, USD or GBP. No hidden fees.",
 };
 
 const PROJECT_TIERS = [
@@ -139,35 +142,43 @@ const ADD_ONS = [
   { name: "DevOps setup (CI/CD + cloud)", price: "₦300k – ₦1.2M" },
 ];
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const location = await getUserLocation();
+
   return (
     <div className="min-h-screen bg-[var(--bg)]">
 
       {/* ── Header ──────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-[var(--section-y)] pb-16 text-center">
         <PageVectors variant="center" intensity={0.38} />
+        <div aria-hidden className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[320px] rounded-full bg-[var(--primary)]/8 blur-[100px]" />
         <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">
+          <div className="flex justify-center">
+            <CurrencyBanner location={location} />
+          </div>
+          <span className="eyebrow-pill mb-6 inline-flex">
+            <span className="pulse-dot" />
             Transparent pricing
           </span>
-          <h1 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-[var(--fg)] leading-[1.1] mb-4">
-            What does it cost<br />to build with us?
+          <h1 className="mt-2 font-display text-[clamp(2.2rem,4.5vw,3.5rem)] font-extrabold text-[var(--fg)] leading-[1.1] mb-4 tracking-[-0.02em]">
+            What Does It Cost<br /><span className="gradient-text">to Build With Us?</span>
           </h1>
-          <p className="text-[var(--fg)]/50 text-lg leading-relaxed mb-6">
+          <p className="text-[var(--fg)]/50 text-lg leading-relaxed mb-8">
             Every project is different, but these ranges cover the vast majority of what we build.
-            All prices are in Nigerian Naira. No hidden fees, no surprises.
+            Prices are shown in Nigerian Naira — we quote in USD, GBP or your local currency for clients outside Nigeria. No hidden fees, no surprises.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/tools/cost-estimator"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+              className="group relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] btn-glow transition-all active:scale-[0.97]"
             >
-              <IconSparkles size={14} className="opacity-80" />
-              Get an instant estimate
+              <span aria-hidden className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/18 to-transparent skew-x-12" />
+              <IconSparkles size={14} className="relative opacity-80" />
+              <span className="relative">Get an instant estimate</span>
             </Link>
             <Link
               href="/quote"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-7 font-heading font-semibold text-sm text-[var(--fg)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-7 font-heading font-semibold text-sm text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
             >
               Get a custom quote
             </Link>
@@ -175,33 +186,36 @@ export default function PricingPage() {
         </div>
       </section>
 
+      <div className="gradient-line" />
+
       {/* ── One-off project pricing ───────────────────────────────────── */}
-      <section className="py-16 bg-[var(--surface)]">
+      <section className="py-16">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
-          <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
-            Project builds
+          <span className="eyebrow-pill mb-5 inline-flex">Project builds</span>
+          <h2 className="mt-5 font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+            One-off builds, <span className="gradient-text">delivered in full.</span>
           </h2>
-          <p className="text-sm text-[var(--fg)]/45 mb-10">One-off builds, delivered in full.</p>
+          <p className="text-sm text-[var(--fg)]/45 mb-10">Pick a scope. We handle discovery to launch.</p>
 
           <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
             {PROJECT_TIERS.map((tier) => (
               <div
                 key={tier.name}
                 className={[
-                  "relative flex flex-col rounded-[var(--radius-card)] border p-6",
+                  "relative flex flex-col p-6",
                   tier.highlight
-                    ? "border-[var(--primary)] bg-[var(--primary)]/4 shadow-[0_0_32px_rgba(56,189,248,0.15)]"
-                    : "border-[var(--border)] bg-[var(--bg)]",
+                    ? "lm-card border-[var(--primary)]/50 shadow-[0_0_32px_rgba(56,189,248,0.15)]"
+                    : "lm-card lm-card-hover",
                 ].join(" ")}
               >
                 {tier.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--primary)] px-3 py-0.5 font-mono text-[10px] font-bold text-[var(--bg)] uppercase tracking-wide">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--primary)] px-3 py-0.5 font-mono text-[10px] font-bold text-[var(--bg)] uppercase tracking-wide shadow-[0_0_12px_rgba(56,189,248,0.5)]">
                     Most popular
                   </span>
                 )}
                 <div className="mb-4">
                   <p className="font-heading font-semibold text-[var(--fg)] text-sm">{tier.name}</p>
-                  <p className="font-display text-2xl font-extrabold text-[var(--fg)] mt-1">{tier.range}</p>
+                  <p className="font-display text-2xl font-extrabold gradient-text mt-1">{tier.range}</p>
                   <p className="font-mono text-xs text-[var(--fg)]/35 mt-0.5">{tier.duration}</p>
                 </div>
                 <p className="text-xs text-[var(--fg)]/55 leading-relaxed mb-5">{tier.desc}</p>
@@ -218,7 +232,7 @@ export default function PricingPage() {
                   className={[
                     "flex h-9 items-center justify-center rounded-full text-xs font-semibold transition-all",
                     tier.highlight
-                      ? "bg-[var(--primary)] text-[var(--bg)] hover:opacity-90"
+                      ? "bg-[var(--primary)] text-[var(--bg)] btn-glow hover:opacity-90"
                       : "border border-[var(--border)] text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)]",
                   ].join(" ")}
                 >
@@ -231,32 +245,34 @@ export default function PricingPage() {
       </section>
 
       {/* ── Retainer / maintenance ────────────────────────────────────── */}
-      <section className="py-16">
+      <section className="py-16 bg-[var(--surface)]">
+        <div className="gradient-line mb-16" />
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
-          <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
-            Monthly maintenance plans
+          <span className="eyebrow-pill mb-5 inline-flex">Monthly plans</span>
+          <h2 className="mt-5 font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+            Keep it <span className="gradient-text">running and growing.</span>
           </h2>
-          <p className="text-sm text-[var(--fg)]/45 mb-10">Keep your product running and growing after launch.</p>
+          <p className="text-sm text-[var(--fg)]/45 mb-10">Maintenance and active development after launch.</p>
 
           <div className="grid sm:grid-cols-3 gap-5 max-w-4xl">
             {RETAINER_TIERS.map((tier) => (
               <div
                 key={tier.name}
                 className={[
-                  "relative flex flex-col rounded-[var(--radius-card)] border p-6",
+                  "relative flex flex-col p-6",
                   tier.highlight
-                    ? "border-[var(--primary)] bg-[var(--primary)]/4 shadow-[0_0_32px_rgba(56,189,248,0.12)]"
-                    : "border-[var(--border)] bg-[var(--surface)]",
+                    ? "lm-card border-[var(--primary)]/50 shadow-[0_0_32px_rgba(56,189,248,0.12)]"
+                    : "lm-card lm-card-hover",
                 ].join(" ")}
               >
                 {tier.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--primary)] px-3 py-0.5 font-mono text-[10px] font-bold text-[var(--bg)] uppercase tracking-wide">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--primary)] px-3 py-0.5 font-mono text-[10px] font-bold text-[var(--bg)] uppercase tracking-wide shadow-[0_0_12px_rgba(56,189,248,0.5)]">
                     Recommended
                   </span>
                 )}
                 <p className="font-heading font-semibold text-[var(--fg)] text-sm mb-1">{tier.name}</p>
                 <div className="flex items-baseline gap-0.5 mb-1">
-                  <span className="font-display text-2xl font-extrabold text-[var(--fg)]">{tier.price}</span>
+                  <span className="font-display text-2xl font-extrabold gradient-text">{tier.price}</span>
                   <span className="text-xs text-[var(--fg)]/35">{tier.period}</span>
                 </div>
                 <p className="text-xs text-[var(--fg)]/50 leading-relaxed mb-5">{tier.desc}</p>
@@ -273,7 +289,7 @@ export default function PricingPage() {
                   className={[
                     "flex h-9 items-center justify-center rounded-full text-xs font-semibold transition-all",
                     tier.highlight
-                      ? "bg-[var(--primary)] text-[var(--bg)] hover:opacity-90"
+                      ? "bg-[var(--primary)] text-[var(--bg)] btn-glow hover:opacity-90"
                       : "border border-[var(--border)] text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)]",
                   ].join(" ")}
                 >
@@ -286,15 +302,19 @@ export default function PricingPage() {
       </section>
 
       {/* ── Add-ons ──────────────────────────────────────────────────── */}
-      <section className="py-16 bg-[var(--surface)]">
+      <section className="py-16">
+        <div className="gradient-line mb-16" />
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
-          <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">Common add-ons</h2>
+          <span className="eyebrow-pill mb-5 inline-flex">Add-ons</span>
+          <h2 className="mt-5 font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+            Common <span className="gradient-text">add-ons.</span>
+          </h2>
           <p className="text-sm text-[var(--fg)]/45 mb-8">Typically added to a base project build.</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {ADD_ONS.map(({ name, price }) => (
               <div
                 key={name}
-                className="flex items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--bg)] px-4 py-3"
+                className="lm-card lm-card-hover flex items-center justify-between gap-4 px-4 py-3"
               >
                 <span className="text-sm text-[var(--fg)]/70">{name}</span>
                 <span className="font-mono text-xs text-[var(--primary)] shrink-0">{price}</span>
@@ -304,22 +324,27 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* ── Third-party connectors ──────────────────────────────────── */}
+      <ConnectorsGrid />
+
       {/* ── Note + CTA ───────────────────────────────────────────────── */}
-      <section className="py-16">
-        <div className="mx-auto max-w-3xl px-[var(--container-px)] text-center">
+      <section className="relative overflow-hidden py-16 text-center">
+        <div aria-hidden className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_55%_65%_at_50%_50%,rgba(56,189,248,0.07)_0%,transparent_68%)]" />
+        <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
           <p className="text-sm text-[var(--fg)]/40 leading-relaxed mb-8">
             All ranges are based on standard project scope. Complex integrations, large teams, NDPR compliance work, or very tight timelines will adjust the final number. We&apos;ll tell you exactly why before you sign anything.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/quote"
-              className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-heading font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity"
+              className="group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-full bg-[var(--primary)] px-8 font-heading font-semibold text-[var(--bg)] btn-glow transition-all active:scale-[0.97]"
             >
-              Get your specific quote
+              <span aria-hidden className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/18 to-transparent skew-x-12" />
+              <span className="relative">Get your specific quote</span>
             </Link>
             <Link
               href="/tools/cost-estimator"
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-[var(--border)] px-8 font-heading font-semibold text-[var(--fg)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-[var(--border)] px-8 font-heading font-semibold text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
             >
               Use the estimator
             </Link>

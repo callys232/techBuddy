@@ -47,8 +47,8 @@ export function AppCard({
             </div>
           )}
         </div>
-        <div className="p-5">
-          <h3 className="font-display text-lg font-bold text-[var(--fg)] mb-1">{name}</h3>
+        <div className="p-4">
+          <h3 className="font-display text-base font-bold text-[var(--fg)] mb-1">{name}</h3>
           {description && (
             <p className="text-xs text-[var(--fg)]/50 leading-relaxed mb-3 line-clamp-2">{description}</p>
           )}

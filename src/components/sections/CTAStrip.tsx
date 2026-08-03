@@ -1,55 +1,59 @@
 import Link from "next/link";
-import { IconBrandWhatsapp, IconSparkles, IconClock } from "@tabler/icons-react";
-import { PageVectors } from "@/components/bg/PageVectors";
+import { IconBrandWhatsapp, IconArrowRight, IconClock } from "@tabler/icons-react";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
 export function CTAStrip() {
   return (
-    <section className="relative grain overflow-hidden bg-[var(--bg)] py-[var(--section-y)] text-center">
-      <PageVectors variant="center" intensity={0.3} />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 [background:radial-gradient(ellipse_60%_70%_at_50%_50%,rgba(0,229,192,0.05)_0%,transparent_70%)]"
-      />
+    <section className="relative overflow-hidden py-[var(--section-y)] text-center">
+      {/* Ambient glow — centred orb */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_55%_65%_at_50%_50%,rgba(56,189,248,0.08)_0%,transparent_68%)]" />
+
+      <div className="gradient-line mb-20" />
+
       <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
-        {/* Capacity signal */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-1.5 text-xs font-semibold text-[var(--fg)]/60 mb-8">
+
+        {/* Capacity badge */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)]/60 backdrop-blur-sm px-4 py-1.5 text-[11px] font-semibold text-[var(--fg)]/55 mb-8">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
           Taking 2 new client projects for Q3 2026 · Slots filling fast
         </div>
 
-        <h2 className="font-display text-5xl font-extrabold text-[var(--fg)] leading-tight mb-4">
-          Ready to Build<br />Something Serious?
+        <h2 className="font-display font-extrabold text-[var(--fg)] leading-tight mb-4 tracking-[-0.02em]
+                       text-[clamp(2rem,5vw,3.5rem)]">
+          Ready to Build<br />
+          <span className="gradient-text">Something Serious?</span>
         </h2>
-        <p className="text-[var(--fg)]/50 mb-10 text-lg">
+
+        <p className="text-[var(--fg)]/50 mb-10 text-[15px] leading-relaxed max-w-xl mx-auto">
           Tell us what you&apos;re building — we&apos;ll reply with an honest scope and Naira range within 24 hours. No sales pitch, no commitment.
         </p>
 
-        {/* Two paths */}
-        <div className="flex flex-wrap gap-4 justify-center mb-8">
+        {/* Two CTAs */}
+        <div className="flex flex-wrap gap-4 justify-center mb-10">
           <Link
             href="/quote"
-            className="inline-flex h-13 items-center gap-2 rounded-full bg-[var(--primary)] px-10 text-base font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-teal)] transition-all active:scale-95"
+            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[var(--primary)] px-9 py-4 text-[14px] font-bold text-[var(--bg)] btn-glow transition-all active:scale-[0.97]"
           >
-            <IconSparkles size={16} className="opacity-80" />
+            <span aria-hidden className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/18 to-transparent skew-x-12" />
             Get a Free Quote
+            <IconArrowRight size={15} className="relative" />
           </Link>
           <a
             href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I'd like to discuss a project with TechAgency.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-13 items-center gap-2 rounded-full border border-[var(--border)] px-10 text-base font-semibold text-[var(--fg)] hover:border-[#25D366] hover:text-[#25D366] transition-all active:scale-95"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-9 py-4 text-[14px] font-semibold text-[var(--fg)]/65 hover:border-[#25D366]/60 hover:text-[#25D366] transition-all active:scale-[0.97]"
           >
-            <IconBrandWhatsapp size={18} />
+            <IconBrandWhatsapp size={16} />
             WhatsApp us directly
           </a>
         </div>
 
-        {/* Reassurance row */}
-        <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-[var(--fg)]/35">
+        {/* Reassurance strip */}
+        <div className="flex flex-wrap items-center justify-center gap-5 text-[11px] text-[var(--fg)]/35">
           <span className="flex items-center gap-1.5">
-            <IconClock size={12} />
+            <IconClock size={11} />
             Reply within 24 hours
           </span>
           <span className="w-1 h-1 rounded-full bg-[var(--fg)]/20" />

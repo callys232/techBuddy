@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -9,8 +10,9 @@ const LAST_UPDATED = "1 June 2026";
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
-      <div className="mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
+    <div className="relative overflow-hidden min-h-screen bg-[var(--bg)]">
+      <PageVectors variant="minimal" intensity={0.5} />
+      <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">Legal</span>
         <h1 className="mt-3 font-display text-4xl font-extrabold text-[var(--fg)] mb-2">Terms of Service</h1>
         <p className="text-sm text-[var(--fg)]/40 mb-10">Last updated: {LAST_UPDATED}</p>
@@ -103,3 +105,4 @@ export default function TermsPage() {
     </div>
   );
 }
+

@@ -5,17 +5,17 @@ import { TEAM_MEMBERS } from "@/mock/team";
 import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Contact — Work With Nigeria's Leading Product Studio",
+  title: "Contact — Work With a Lagos-Born, Globally-Minded Product Studio",
   description:
     "Book a 30-minute discovery call or send a message. Lagos-based, globally accessible. We reply within 24 hours. Talk to real engineers — no account managers.",
   keywords: [
-    "contact tech agency Nigeria", "hire Nigerian developers",
-    "Lagos software company contact", "book discovery call Africa",
+    "contact tech agency", "hire African developers",
+    "Lagos software company contact", "book discovery call",
   ],
   openGraph: {
-    title: "Let's Build Together | Contact TechAgency Africa",
+    title: "Let's Build Together | Contact TechAgency",
     description:
-      "Lagos-based product studio. Book a call or drop a message — we reply within 24 hours.",
+      "Lagos-born product studio, working worldwide. Book a call or drop a message — we reply within 24 hours.",
   },
 };
 

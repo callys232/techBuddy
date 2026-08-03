@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BuildVsBuyCalc } from "@/components/sections/BuildVsBuyCalc";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Build vs Buy Calculator — Should You Build Custom or Use a SaaS Tool?",
   description:
     "Compare the 3-year total cost of building custom software against the best SaaS alternatives. Get a clear recommendation with break-even analysis — for 9 common business tool categories.",
   keywords: [
-    "build vs buy software Nigeria", "custom software vs SaaS Africa",
-    "should I build or buy software", "software ROI calculator Nigeria",
-    "CRM build or buy", "helpdesk build or buy Africa",
+    "build vs buy software", "custom software vs SaaS",
+    "should I build or buy software", "software ROI calculator",
+    "CRM build or buy", "helpdesk build or buy",
   ],
 };
 
 export default function BuildVsBuyPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <div className="max-w-5xl mx-auto">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
+        <PageVectors variant="technical" intensity={0.38} />
+        <div className="relative z-10 max-w-5xl mx-auto">
           <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">Free Tool</p>
           <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-4 max-w-2xl">
             Build Custom or Buy a SaaS Tool?

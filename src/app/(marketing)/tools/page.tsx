@@ -6,14 +6,14 @@ import { PageVectors } from "@/components/bg/PageVectors";
 export const metadata: Metadata = {
   title: "Free Tools — Cost Estimator, Timeline Estimator, Stack Picker & Tech Audit",
   description:
-    "Free tools for Nigerian founders: project cost estimator in Naira, realistic timeline estimator, tech stack picker, and a free manual tech audit of your site or app.",
+    "Free tools for founders everywhere: project cost estimator, realistic timeline estimator, tech stack picker, and a free manual tech audit of your site or app.",
   keywords: [
-    "project cost estimator Nigeria", "tech stack picker Africa",
-    "free website audit Nigeria", "how much does an app cost Nigeria",
-    "best tech stack Nigeria 2026",
+    "project cost estimator", "tech stack picker",
+    "free website audit", "how much does an app cost",
+    "best tech stack 2026",
   ],
   openGraph: {
-    title: "Free Tools for African Tech Founders | TechBuddy",
+    title: "Free Tools for Founders Everywhere | TechBuddy",
     description: "Estimate your build cost, pick the right tech stack, and get a free audit — no sign-up required.",
   },
 };
@@ -36,10 +36,10 @@ export default function ToolsPage() {
             Free Tools
           </p>
           <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-5">
-            Plan Your Build Before You Spend a Naira
+            Plan Your Build Before You Spend a Dime
           </h1>
           <p className="text-lg text-[var(--fg)]/55 leading-relaxed">
-            Four free tools to estimate costs, plan your timeline, pick the right tech stack, and get your site audited — built for African founders.
+            Ten free tools — estimate costs, plan timelines, pick your stack, check NDPR compliance, build your resume, predict a match, and more. No sign-up for most.
           </p>
         </div>
       </section>
@@ -63,10 +63,10 @@ export default function ToolsPage() {
             <Link
               key={tool.slug}
               href={tool.href}
-              className="group flex flex-col glass rounded-[var(--radius-card)] border border-[var(--border)] p-7 hover:border-[var(--primary)]/60 hover:-translate-y-1.5 hover:shadow-[var(--shadow-glow-sky)] transition-all duration-300"
+              className="group flex flex-col glass rounded-[var(--radius-card)] border border-[var(--border)] p-5 hover:border-[var(--primary)]/60 hover:-translate-y-1.5 hover:shadow-[var(--shadow-glow-sky)] transition-all duration-300"
             >
-              <div className="flex items-start justify-between mb-5">
-                <span className="text-3xl">{tool.icon}</span>
+              <div className="flex items-start justify-between mb-4">
+                <span className="text-2xl">{tool.icon}</span>
                 {tool.badge && (
                   <span className={[
                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold font-mono uppercase tracking-wide",
@@ -78,10 +78,10 @@ export default function ToolsPage() {
                   </span>
                 )}
               </div>
-              <h2 className="font-heading font-bold text-lg text-[var(--fg)] mb-2 group-hover:text-[var(--primary)] transition-colors">
+              <h2 className="font-heading font-bold text-base text-[var(--fg)] mb-1.5 group-hover:text-[var(--primary)] transition-colors">
                 {tool.title}
               </h2>
-              <p className="text-sm text-[var(--fg)]/50 leading-relaxed flex-1 mb-5">
+              <p className="text-sm text-[var(--fg)]/50 leading-relaxed flex-1 mb-4">
                 {tool.desc}
               </p>
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--primary)] group-hover:gap-2.5 transition-all">

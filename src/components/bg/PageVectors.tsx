@@ -39,8 +39,21 @@ function diamondPts(cx: number, cy: number, r: number) {
 
 /* ── Component ─────────────────────────────────────────────────────────────── */
 
+const VARIANT_SHORT: Record<string, string> = {
+  "top-right":   "tr",
+  "bottom-left": "bl",
+  "center":      "cn",
+  "scattered":   "sc",
+  "flow":        "fl",
+  "technical":   "te",
+  "minimal":     "mn",
+};
+
 export function PageVectors({ variant = "scattered", intensity = 0.5 }: Props) {
-  const op = intensity * 0.065;
+  const op  = intensity * 0.22;
+  /* Include intensity in prefix so same-variant instances with different intensities
+     don't share the pv-pulse keyframe (which bakes opacity values from `op`) */
+  const pfx = `${VARIANT_SHORT[variant] ?? "xx"}${Math.round(intensity * 10)}`;
 
   type ShapeDef = {
     type: "hex"|"circle"|"tri"|"oct"|"diamond"|"plus"|"bracket-l"|"bracket-r"|"arrow-r"|"arrow-d"|"circuit"|"dashes"|"ring";
@@ -129,21 +142,22 @@ export function PageVectors({ variant = "scattered", intensity = 0.5 }: Props) {
       { type: "ring",      cx: 55, cy: 55, r: 20, anim: "pv-pulse", dur: 7  },
     ];
 
-  /* Build per-shape CSS classes (avoids inline style on SVG elements) */
+  /* Per-shape classes — namespaced with variant prefix to avoid collision when
+     multiple PageVectors instances appear on the same page                    */
   const shapeCss = shapes.map((s, i) => {
     if (!s.anim) return "";
     const delay = s.delay ? `${s.delay}s` : "0s";
-    return `.pv-s${i}{animation:${s.anim} ${s.dur ?? 8}s linear ${delay} infinite;transform-origin:${s.cx}% ${s.cy}%;}`;
+    return `.pv-${pfx}-s${i}{animation:${s.anim}-${pfx} ${s.dur ?? 8}s linear ${delay} infinite;transform-origin:${s.cx}% ${s.cy}%;}`;
   }).filter(Boolean).join("");
 
   const css = `
-    @keyframes pv-float  {0%,100%{transform:translateY(0)}   50%{transform:translateY(-2%)}}
-    @keyframes pv-floatR {0%,100%{transform:translate(0,0)}  50%{transform:translate(1.5%,-1.5%)}}
-    @keyframes pv-spin   {from{transform:rotate(0deg)}  to{transform:rotate(360deg)}}
-    @keyframes pv-spinR  {from{transform:rotate(0deg)}  to{transform:rotate(-360deg)}}
-    @keyframes pv-pulse  {0%,100%{opacity:${op * 14}} 50%{opacity:${op * 5}}}
-    @keyframes pv-dash   {to{stroke-dashoffset:-24}}
-    .pv-dash-line{animation:pv-dash 3s linear infinite;transform-origin:50% 50%;}
+    @keyframes pv-float-${pfx}  {0%,100%{transform:translateY(0)}   50%{transform:translateY(-2.5%)}}
+    @keyframes pv-floatR-${pfx} {0%,100%{transform:translate(0,0)}  50%{transform:translate(1.8%,-1.8%)}}
+    @keyframes pv-spin-${pfx}   {from{transform:rotate(0deg)}  to{transform:rotate(360deg)}}
+    @keyframes pv-spinR-${pfx}  {from{transform:rotate(0deg)}  to{transform:rotate(-360deg)}}
+    @keyframes pv-pulse-${pfx}  {0%,100%{opacity:${(op * 1.4).toFixed(3)}} 50%{opacity:${(op * 0.5).toFixed(3)}}}
+    @keyframes pv-dash-${pfx}   {to{stroke-dashoffset:-24}}
+    .pv-${pfx}-dash{animation:pv-dash-${pfx} 3s linear infinite;transform-origin:50% 50%;}
     ${shapeCss}
   `;
 
@@ -178,7 +192,7 @@ export function PageVectors({ variant = "scattered", intensity = 0.5 }: Props) {
             <circle
               key={`d${row}-${col}`}
               cx={col * 7.5 + 3.75} cy={row * 10 + 5}
-              r="0.35" fill="#38BDF8" opacity={op * 0.55}
+              r="0.4" fill="#38BDF8" opacity={op * 0.7}
             />
           ))
         )}
@@ -189,7 +203,7 @@ export function PageVectors({ variant = "scattered", intensity = 0.5 }: Props) {
           const sw      = s.r > 20 ? "0.35" : "0.4";
           const fillOp  = i % 5 === 0 ? op * 0.5 : 0;
           const sOp     = op * (s.r > 25 ? 0.9 : 1.2);
-          const cls     = s.anim ? `pv-s${i}` : undefined;
+          const cls     = s.anim ? `pv-${pfx}-s${i}` : undefined;
 
           if (s.type === "hex")
             return <polygon key={i} className={cls} points={hexPts(s.cx, s.cy, s.r)} fill={color} fillOpacity={fillOp} stroke={color} strokeWidth={sw} strokeOpacity={sOp} />;
@@ -284,7 +298,7 @@ export function PageVectors({ variant = "scattered", intensity = 0.5 }: Props) {
           if (s.type === "dashes") {
             return (
               <line key={i}
-                className="pv-dash-line"
+                className={`pv-${pfx}-dash`}
                 x1={s.cx - s.r} y1={s.cy} x2={s.cx + s.r} y2={s.cy}
                 stroke={color} strokeWidth="0.5" strokeOpacity={sOp * 0.7}
                 strokeDasharray="3,2" strokeLinecap="round"

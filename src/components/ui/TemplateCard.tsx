@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { Popup } from "./Popup";
+import { TemplatePreview } from "./TemplatePreview";
 import type { Template, ExternalTemplate } from "@/mock/templates";
 import { formatPriceRange } from "@/mock/templates";
 
@@ -25,22 +25,17 @@ export function TemplateCard({ image, name, type, priceRange, features, onSelect
     <>
       <div className="group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--primary)]/60 hover:shadow-[var(--shadow-glow-teal)]">
         <div className="relative aspect-video overflow-hidden bg-[var(--bg)]">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <TemplatePreview image={image} name={name} type={type} />
           <span className="absolute right-3 top-3 font-mono text-xs rounded-[var(--radius-badge)] bg-[var(--color-accent-teal)]/10 text-[var(--color-accent-teal)] px-2.5 py-1 capitalize">
             {type}
           </span>
         </div>
-        <div className="flex flex-1 flex-col p-5">
-          <h3 className="font-display text-lg font-bold text-[var(--fg)]">{name}</h3>
+        <div className="flex flex-1 flex-col p-4">
+          <h3 className="font-display text-base font-bold text-[var(--fg)]">{name}</h3>
           <p className="text-sm text-[var(--primary)] font-semibold mt-1 mb-3">
             {formatPriceRange(priceRange)}
           </p>
-          <ul className="flex-1 space-y-1.5 mb-5">
+          <ul className="flex-1 space-y-1.5 mb-4">
             {features.map((f) => (
               <li key={f} className="flex items-center gap-2 text-xs text-[var(--fg)]/60">
                 <IconCheck size={13} className="text-[var(--primary)] shrink-0" />
@@ -70,7 +65,7 @@ export function TemplateCard({ image, name, type, priceRange, features, onSelect
       <Popup isOpen={preview} onClose={() => setPreview(false)} title={`Preview — ${name}`} size="xl">
         <div className="space-y-4">
           <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-[var(--bg)] border border-[var(--border)]">
-            <Image src={image} alt={name} fill className="object-cover" />
+            <TemplatePreview image={image} name={name} type={type} />
           </div>
           <div className="text-center pt-2">
             <button
@@ -108,13 +103,7 @@ export function ExternalTemplateCard({
     <>
       <div className="group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--primary)]/60 hover:shadow-[var(--shadow-glow-teal)]">
         <div className="relative aspect-video overflow-hidden bg-[var(--bg)]">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            unoptimized={image.startsWith("http")}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <TemplatePreview image={image} name={name} type={type} />
           <span className="absolute right-3 top-3 font-mono text-xs rounded-[var(--radius-badge)] bg-[var(--color-accent-teal)]/10 text-[var(--color-accent-teal)] px-2.5 py-1 capitalize">
             {type}
           </span>
@@ -122,15 +111,15 @@ export function ExternalTemplateCard({
             {sourceLabel}
           </span>
         </div>
-        <div className="flex flex-1 flex-col p-5">
+        <div className="flex flex-1 flex-col p-4">
           <div className="flex items-start justify-between gap-2 mb-1">
-            <h3 className="font-display text-lg font-bold text-[var(--fg)]">{name}</h3>
+            <h3 className="font-display text-base font-bold text-[var(--fg)]">{name}</h3>
             <span className="shrink-0 font-mono text-xs text-[var(--fg)]/35 mt-1">{originalPrice}</span>
           </div>
           <p className="text-sm text-[var(--primary)] font-semibold mb-3">
             Customisation: {formatPriceRange(priceRange)}
           </p>
-          <ul className="flex-1 space-y-1.5 mb-5">
+          <ul className="flex-1 space-y-1.5 mb-4">
             {features.map((f) => (
               <li key={f} className="flex items-center gap-2 text-xs text-[var(--fg)]/60">
                 <IconCheck size={13} className="text-[var(--primary)] shrink-0" />
@@ -169,13 +158,7 @@ export function ExternalTemplateCard({
       <Popup isOpen={preview} onClose={() => setPreview(false)} title={`${name} — Reference`} size="xl">
         <div className="space-y-4">
           <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-[var(--bg)] border border-[var(--border)]">
-            <Image
-              src={image}
-              alt={name}
-              fill
-              unoptimized={image.startsWith("http")}
-              className="object-cover"
-            />
+            <TemplatePreview image={image} name={name} type={type} />
           </div>
           <div className="glass rounded-xl border border-[var(--border)] p-4 text-sm text-[var(--fg)]/55 leading-relaxed">
             This is an external reference from <strong className="text-[var(--fg)]">{sourceLabel}</strong>. We&apos;ll use it as a starting point and build a custom version tailored to your brand, stack and requirements.

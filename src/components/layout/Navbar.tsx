@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, type ComponentType } from "react";
 import Link from "next/link";
+import { CatalystTechLogo } from "@/components/ui/Logo";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -19,34 +20,42 @@ import {
   IconSparkles,
   IconChevronRight,
   IconTools,
+  IconTag,
 } from "@tabler/icons-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { NAV_LINKS } from "@/mock/navigation";
 
 /* ── Nav metadata (UI-layer, not in mock) ───────────────────────────────────── */
 
-const NAV_ICONS: Record<string, ComponentType<{ size?: number; className?: string }>> = {
-  "/services":  IconCode,
+const NAV_ICONS: Record<
+  string,
+  ComponentType<{ size?: number; className?: string }>
+> = {
+  "/services": IconCode,
+  "/pricing": IconTag,
   "/portfolio": IconBriefcase,
-  "/tools":     IconTools,
+  "/tools": IconTools,
   "/templates": IconLayoutGrid,
-  "/blog":      IconNews,
-  "/devops":    IconServer,
-  "/talent":    IconUsers,
-  "/invest":    IconTrendingUp,
-  "/contact":   IconMail,
+  "/blog": IconNews,
+  "/news": IconNews,
+  "/devops": IconServer,
+  "/talent": IconUsers,
+  "/invest": IconTrendingUp,
+  "/contact": IconMail,
 };
 
 const NAV_DESC: Record<string, string> = {
-  "/services":  "Web, mobile, DevOps, AI & more",
+  "/services": "Web, mobile, DevOps, AI & more",
+  "/pricing": "Transparent Naira pricing, no hidden fees",
   "/portfolio": "Products we've shipped",
-  "/tools":     "Free estimator, stack picker & audit",
+  "/tools": "Resume maker, estimator, stack picker & audit",
+  "/news": "Tech news from Africa & around the world",
   "/templates": "Launch-ready starters",
-  "/blog":      "Insights for builders",
-  "/devops":    "Pipelines & infrastructure",
-  "/talent":    "Join our talent network",
-  "/invest":    "Equity & revenue share",
-  "/contact":   "Book a call · 24 hr reply",
+  "/blog": "Insights for builders",
+  "/devops": "Pipelines & infrastructure",
+  "/talent": "Join our talent network",
+  "/invest": "Equity & revenue share",
+  "/contact": "Book a call · 24 hr reply",
 };
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
@@ -54,11 +63,11 @@ const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 /* ── Component ──────────────────────────────────────────────────────────────── */
 
 export function Navbar() {
-  const [menuOpen, setMenuOpen]   = useState(false);
-  const [scrolled, setScrolled]   = useState(false);
-  const [visible,  setVisible]    = useState(true);
-  const lastScrollY               = useRef(0);
-  const pathname                  = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const pathname = usePathname();
 
   /* Close mobile menu on route change — deferred to avoid sync setState in effect */
   useEffect(() => {
@@ -81,11 +90,15 @@ export function Navbar() {
   /* Lock body scroll when mobile menu is open */
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(href + "/");
 
   return (
     <header
@@ -93,25 +106,22 @@ export function Navbar() {
         "fixed top-0 left-0 right-0 z-40 navbar-slide",
         visible ? "navbar-visible" : "navbar-hidden",
         scrolled || menuOpen
-          ? "glass border-b border-[var(--border)] shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-          : "bg-transparent border-transparent",
+          ? "glass shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          : "bg-transparent",
       ].join(" ")}
     >
       {/* ── Main bar ─────────────────────────────────────────────────────────── */}
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-[var(--container-px)]">
-
+      <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-[var(--container-px)]">
         {/* Logo */}
-        <Link href="/" className="flex flex-col leading-none gap-[4px] shrink-0" aria-label="TechAgency home">
-          <span className="font-display text-[21px] font-black tracking-[-0.025em] text-[var(--fg)]">
-            Tech<span className="text-[var(--primary)]">Agency</span>
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[var(--fg)]/30 pl-[1px]">
-            Africa&apos;s Product Studio
-          </span>
+        <Link href="/" aria-label="TechBuddy home" className="shrink-0">
+          <CatalystTechLogo size="md" />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+        <nav
+          className="hidden lg:flex items-center gap-0.5"
+          aria-label="Main navigation"
+        >
           {NAV_LINKS.map(({ label, href }) => {
             const active = isActive(href);
             return (
@@ -122,7 +132,7 @@ export function Navbar() {
                   "relative flex items-center gap-1.5 rounded-lg px-3.5 py-2",
                   "font-heading text-[13px] font-medium transition-colors duration-150",
                   active
-                    ? "text-[var(--fg)]"
+                    ? "text-[var(--primary)] bg-[var(--primary)]/8"
                     : "text-[var(--fg)]/50 hover:text-[var(--fg)] hover:bg-[var(--surface)]/40",
                 ].join(" ")}
               >
@@ -142,20 +152,10 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          {/* AI advisor trigger */}
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new Event("open-agent-widget"))}
-            aria-label="Open AI advisor"
-            className="hidden md:flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)]/45 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-150"
-          >
-            <IconSparkles size={16} />
-          </button>
-
           {/* Get a quote CTA */}
           <Link
             href="/quote"
-            className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-full bg-[var(--primary)] pl-4 pr-4 font-heading text-[13px] font-bold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-sky)] transition-all active:scale-[0.97]"
+            className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-xl bg-[var(--primary)] pl-4 pr-4 font-heading text-[13px] font-bold text-[var(--bg)] btn-glow hover:opacity-90 transition-all active:scale-[0.97]"
           >
             <IconSparkles size={13} className="opacity-80" />
             Get a quote
@@ -174,13 +174,16 @@ export function Navbar() {
         </div>
       </div>
 
+      {/* Gradient bottom separator */}
+      <div className="gradient-line" />
+
       {/* ── Mobile menu ──────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{   opacity: 0, y: -8 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
             className="lg:hidden border-t border-[var(--border)] bg-[var(--bg)] px-[var(--container-px)] pb-6 pt-3"
           >
@@ -223,7 +226,10 @@ export function Navbar() {
                         </span>
                       )}
                     </span>
-                    <IconChevronRight size={14} className="shrink-0 opacity-25" />
+                    <IconChevronRight
+                      size={14}
+                      className="shrink-0 opacity-25"
+                    />
                   </Link>
                 );
               })}

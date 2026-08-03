@@ -5,35 +5,35 @@ import { PageVectors } from "@/components/bg/PageVectors";
 export const metadata: Metadata = {
   title: "About TechAgency — Who We Are",
   description:
-    "We're a Lagos-based digital product studio building world-class software for African businesses. Meet the team, learn our story, and understand how we work.",
+    "We're a Lagos-born digital product studio building world-class software for ambitious businesses everywhere. Meet the team, learn our story, and understand how we work.",
 };
 
 const TEAM = [
   {
     name: "Chukwuemeka Obi",
     role: "Co-founder & CTO",
-    bio: "Full-stack engineer with 10+ years building fintech and logistics platforms. Previously led engineering at a Series B Nigerian startup. Expert in distributed systems and Paystack payment integrations.",
+    bio: "Full-stack engineer with 10+ years building fintech and logistics platforms. Previously led engineering at a Series B startup. Expert in distributed systems and payment integrations.",
     skills: ["Next.js", "PostgreSQL", "DevOps", "Fintech"],
     initial: "C",
   },
   {
     name: "Adaeze Nwosu",
     role: "Co-founder & Head of Design",
-    bio: "Product designer who has shipped interfaces used by millions across Nigeria and Ghana. Specialises in low-bandwidth UX and accessibility for African markets. Google Africa Scholar.",
+    bio: "Product designer who has shipped interfaces used by millions across Africa and Europe. Specialises in low-bandwidth UX and accessibility for emerging markets. Google Africa Scholar.",
     skills: ["Product Design", "Figma", "User Research", "Design Systems"],
     initial: "A",
   },
   {
     name: "Tunde Fashola",
     role: "Head of Engineering",
-    bio: "Ex-Microsoft engineer who returned to Lagos to build the African tech ecosystem. Leads our 30+ engineer talent network. Deep expertise in React Native, cloud architecture, and DevOps automation.",
+    bio: "Ex-Microsoft engineer who returned to Lagos to build a global-standard tech network from Africa. Leads our 30+ engineer talent network. Deep expertise in React Native, cloud architecture, and DevOps automation.",
     skills: ["React Native", "Cloud", "Team Leadership", "CI/CD"],
     initial: "T",
   },
   {
     name: "Ngozi Eze",
     role: "Head of Client Success",
-    bio: "Bridges the gap between technical teams and business stakeholders. Has managed over 35 product launches for Nigerian startups. Certified Scrum Master with expertise in remote team coordination.",
+    bio: "Bridges the gap between technical teams and business stakeholders. Has managed over 35 product launches for startups worldwide. Certified Scrum Master with expertise in remote team coordination.",
     skills: ["Project Management", "Scrum", "Client Relations", "Strategy"],
     initial: "N",
   },
@@ -41,8 +41,8 @@ const TEAM = [
 
 const VALUES = [
   {
-    title: "African context first",
-    body: "We design for low-bandwidth environments, Naira payments, NDPR compliance, and the real constraints of African businesses — not as an afterthought but as the primary requirement.",
+    title: "Real-world constraints first",
+    body: "We design for low-bandwidth environments, local payment rails, data compliance, and the real constraints of the markets we build for — wherever those markets are, not as an afterthought but as the primary requirement.",
   },
   {
     title: "Ship fast, maintain properly",
@@ -70,13 +70,13 @@ export default function AboutPage() {
             Our story
           </span>
           <h1 className="mt-4 font-display text-5xl md:text-6xl font-extrabold text-[var(--fg)] leading-[1.08] tracking-[-0.03em] max-w-3xl">
-            Africa&apos;s Product Studio
+            Built in Africa. Engineered for the World.
           </h1>
           <p className="mt-6 text-lg text-[var(--fg)]/55 max-w-2xl leading-relaxed">
-            We started TechAgency in Lagos with a simple observation: Nigerian businesses were being underserved by generic agencies that didn&apos;t understand Paystack, NDPR, or what it means to build for a user on a 3G connection.
+            We started TechAgency in Lagos with a simple observation: fast-growing businesses were being underserved by generic agencies that didn&apos;t understand payments infrastructure, data compliance, or what it means to build for a user on a 3G connection.
           </p>
           <p className="mt-4 text-lg text-[var(--fg)]/55 max-w-2xl leading-relaxed">
-            Today we&apos;re a 120-engineer network shipping products across fintech, logistics, healthcare, and e-commerce for clients from Lagos to Accra to Nairobi.
+            Today we&apos;re a 120-engineer network shipping products across fintech, logistics, healthcare, and e-commerce for clients from Lagos to Accra to Nairobi to London and beyond.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
@@ -104,7 +104,7 @@ export default function AboutPage() {
               { stat: "2020", label: "Founded in Lagos" },
               { stat: "120+", label: "Engineers in network" },
               { stat: "35+",  label: "Products shipped" },
-              { stat: "12",   label: "Nigerian states served" },
+              { stat: "3",    label: "Continents served" },
             ].map(({ stat, label }) => (
               <div key={label}>
                 <p className="font-display text-3xl font-extrabold text-[var(--fg)]">{stat}</p>

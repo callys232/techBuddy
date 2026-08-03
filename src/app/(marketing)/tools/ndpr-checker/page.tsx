@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NDPRChecker } from "@/components/sections/NDPRChecker";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "NDPR Compliance Checker — How Compliant Is Your Nigerian Product?",
@@ -19,8 +20,9 @@ export const metadata: Metadata = {
 export default function NDPRCheckerPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <div className="max-w-5xl mx-auto">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
+        <PageVectors variant="top-right" intensity={0.38} />
+        <div className="relative z-10 max-w-5xl mx-auto">
           <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
             Free Tool · Nigeria-specific
           </p>
@@ -31,11 +33,11 @@ export default function NDPRCheckerPage() {
             The Nigerian Data Protection Regulation (NDPR) requires every business that processes personal data to meet 16 core requirements. Answer honestly — this isn&apos;t a sales pitch, it&apos;s a real compliance check.
           </p>
           <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--fg)]/35 mb-12">
-            <span>⏱ ~8 minutes</span>
+            <span>â± ~8 minutes</span>
             <span>·</span>
-            <span>📋 16 questions across 6 categories</span>
+            <span>ðŸ"‹ 16 questions across 6 categories</span>
             <span>·</span>
-            <span>⚖️ Based on NDPR 2019 & NITDA guidelines</span>
+            <span>âš–ï¸ Based on NDPR 2019 & NITDA guidelines</span>
           </div>
 
           <NDPRChecker />
@@ -43,7 +45,7 @@ export default function NDPRCheckerPage() {
       </section>
 
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
-        <div className="max-w-5xl mx-auto">
+        <div className="relative z-10 max-w-5xl mx-auto">
           <p className="text-sm text-[var(--fg)]/35 leading-relaxed max-w-2xl">
             <strong className="text-[var(--fg)]/50">Disclaimer:</strong> This tool is for educational and preliminary self-assessment purposes only. It does not constitute legal advice. For a formal NDPR compliance audit or filing with NITDA, engage a licensed Data Protection Compliance Organisation (DPCO). The questions are based on the NDPR 2019, the NDPR Implementation Framework, and NITDA guidelines as of 2026.
           </p>
@@ -52,3 +54,4 @@ export default function NDPRCheckerPage() {
     </div>
   );
 }
+

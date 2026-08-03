@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { useState } from "react";
 import Link from "next/link";
 import { IconCheck, IconArrowLeft } from "@tabler/icons-react";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 /* Can't export metadata from a client component — handled via route segment config */
 export const dynamic = "force-dynamic";
@@ -76,8 +77,9 @@ export default function InvestApplyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
-      <div className="mx-auto max-w-2xl px-[var(--container-px)] py-[var(--section-y)]">
+    <div className="relative overflow-hidden min-h-screen bg-[var(--bg)]">
+      <PageVectors variant="scattered" intensity={0.3} />
+      <div className="relative z-10 mx-auto max-w-2xl px-[var(--container-px)] py-[var(--section-y)]">
 
         {/* Back */}
         <Link
@@ -135,11 +137,13 @@ export default function InvestApplyPage() {
               />
             </div>
             <div>
-              <label className="block font-heading text-sm font-semibold text-[var(--fg)] mb-1.5">
+              <label htmlFor="invest-stage" className="block font-heading text-sm font-semibold text-[var(--fg)] mb-1.5">
                 Current stage
               </label>
               <select
+                id="invest-stage"
                 value={form.stage} onChange={set("stage")}
+                aria-label="Current stage"
                 className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--fg)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/20 transition-colors"
               >
                 <option value="">Select stage…</option>

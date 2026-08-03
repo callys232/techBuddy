@@ -27,12 +27,12 @@ export function BlogCard({ image, category, title, author, readTime, slug }: Blo
           {category}
         </span>
       </div>
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-lg font-bold text-[var(--fg)] leading-snug mb-4 line-clamp-2">
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="font-display text-base font-bold text-[var(--fg)] leading-snug mb-3 line-clamp-2">
           {title}
         </h3>
         <div className="mt-auto flex items-center gap-3">
-          <div className="relative h-7 w-7 overflow-hidden rounded-full bg-[var(--border)]">
+          <div className="relative h-6 w-6 overflow-hidden rounded-full bg-[var(--border)]">
             <Image src={author.avatar} alt={author.name} fill className="object-cover" />
           </div>
           <span className="text-sm text-[var(--fg)]/60">{author.name}</span>

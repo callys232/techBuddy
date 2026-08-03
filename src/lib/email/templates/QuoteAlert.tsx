@@ -12,12 +12,14 @@ interface QuoteAlertProps {
   budget: number;
   timeline: string;
   features: string[];
+  colors?: string[];
+  estimatedRange?: string;
   contactMethod: string;
 }
 
 export function QuoteAlert({
   name, email, whatsapp, company, pains, template,
-  budget, timeline, features, contactMethod,
+  budget, timeline, features, colors, estimatedRange, contactMethod,
 }: QuoteAlertProps) {
   return (
     <Html>
@@ -38,9 +40,24 @@ export function QuoteAlert({
             {company && <Text><strong>Company:</strong> {company}</Text>}
             <Text><strong>Pain Points:</strong> {pains.join(", ")}</Text>
             {template && <Text><strong>Template:</strong> {template}</Text>}
-            <Text><strong>Budget:</strong> ₦{(budget / 1_000_000).toFixed(1)}M</Text>
+            {estimatedRange && <Text><strong>Computed estimate:</strong> {estimatedRange}</Text>}
+            <Text><strong>Stated budget:</strong> ₦{(budget / 1_000_000).toFixed(1)}M</Text>
             <Text><strong>Timeline:</strong> {timeline}</Text>
             <Text><strong>Features:</strong> {features.join(", ")}</Text>
+            {!!colors?.length && (
+              <Text>
+                <strong>Preferred colors:</strong>{" "}
+                {colors.map((hex) => (
+                  <span key={hex} style={{ marginRight: 10 }}>
+                    <span style={{
+                      display: "inline-block", width: 12, height: 12, borderRadius: 6,
+                      backgroundColor: hex, marginRight: 4, verticalAlign: "middle",
+                    }} />
+                    {hex}
+                  </span>
+                ))}
+              </Text>
+            )}
             <Text><strong>Contact via:</strong> {contactMethod}</Text>
           </Section>
         </Container>

@@ -3,16 +3,16 @@ import { DEVOPS_SERVICES, DEVOPS_STACK } from "@/mock/services";
 import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "DevOps & CI/CD — Production-Grade Infrastructure for African Systems",
+  title: "DevOps & CI/CD — Production-Grade Infrastructure for Growing Systems",
   description:
-    "Automated CI/CD pipelines, Docker & Kubernetes containerisation, GitOps, Terraform infrastructure-as-code, Grafana monitoring and disaster recovery for systems serving the African market.",
+    "Automated CI/CD pipelines, Docker & Kubernetes containerisation, GitOps, Terraform infrastructure-as-code, Grafana monitoring and disaster recovery for systems serving markets worldwide.",
   keywords: [
-    "DevOps Nigeria", "CI/CD Africa", "Kubernetes Nigeria",
-    "cloud infrastructure Lagos", "Docker containerisation Nigeria",
-    "Terraform Africa", "site reliability engineering Nigeria",
+    "DevOps engineering", "CI/CD pipelines", "Kubernetes",
+    "cloud infrastructure", "Docker containerisation",
+    "Terraform infrastructure", "site reliability engineering",
   ],
   openGraph: {
-    title: "DevOps & CI/CD Infrastructure for African Businesses | TechAgency",
+    title: "DevOps & CI/CD Infrastructure for Growing Businesses | TechAgency",
     description:
       "Ship faster and break nothing — automated pipelines, containers and full observability.",
   },

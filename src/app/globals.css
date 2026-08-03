@@ -117,3 +117,130 @@ body {
   background: rgba(255, 255, 255, 0.8);
   border:     1px solid rgba(30, 58, 138, 0.1);
 }
+
+/* ── Lamidone / HubSpot design utilities ──────────────────────────────────── */
+
+/* Gradient text — sky blue family */
+.gradient-text {
+  background: linear-gradient(135deg, #0284C7 0%, #0EA5E9 45%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #0369A1 0%, #0284C7 50%, #0EA5E9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Eyebrow pill — above every section heading */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.28rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: rgba(56, 189, 248, 0.07);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+[data-theme="light"] .eyebrow-pill {
+  border-color: rgba(2, 132, 199, 0.25);
+  background: rgba(2, 132, 199, 0.06);
+}
+
+/* Pulse dot (inside eyebrow pills) */
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Lamidone card base */
+.lm-card {
+  background: rgba(56, 189, 248, 0.03);
+  border: 1px solid rgba(56, 189, 248, 0.12);
+  border-radius: 16px;
+  transition: background 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease, transform 0.25s ease;
+}
+.lm-card-hover:hover {
+  background: rgba(56, 189, 248, 0.07);
+  border-color: rgba(56, 189, 248, 0.38);
+  box-shadow: 0 16px 40px rgba(56, 189, 248, 0.13);
+  transform: translateY(-5px);
+}
+[data-theme="light"] .lm-card {
+  background: rgba(2, 132, 199, 0.03);
+  border-color: rgba(2, 132, 199, 0.12);
+}
+[data-theme="light"] .lm-card-hover:hover {
+  background: rgba(2, 132, 199, 0.06);
+  border-color: rgba(2, 132, 199, 0.38);
+  box-shadow: 0 16px 40px rgba(2, 132, 199, 0.12);
+}
+
+/* Solid card — opaque surface, for stacked / layered decks where a card
+   behind must not show through the one on top */
+.lm-card-solid {
+  background: var(--surface);
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  border-radius: 16px;
+}
+[data-theme="light"] .lm-card-solid {
+  border-color: rgba(2, 132, 199, 0.14);
+}
+
+/* Primary CTA glow */
+.btn-glow {
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
+  transition: box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 36px rgba(56, 189, 248, 0.72);
+}
+[data-theme="light"] .btn-glow {
+  box-shadow: 0 0 24px rgba(2, 132, 199, 0.38);
+}
+[data-theme="light"] .btn-glow:hover {
+  box-shadow: 0 0 36px rgba(2, 132, 199, 0.62);
+}
+
+/* Gradient separator line */
+.gradient-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(56, 189, 248, 0.35), transparent);
+}
+[data-theme="light"] .gradient-line {
+  background: linear-gradient(to right, transparent, rgba(2, 132, 199, 0.28), transparent);
+}
+
+/* Icon square (Lamidone feature card icon container) */
+.icon-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+[data-theme="light"] .icon-square {
+  border-color: rgba(2, 132, 199, 0.2);
+  background: rgba(2, 132, 199, 0.08);
+}

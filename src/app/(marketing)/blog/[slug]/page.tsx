@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ALL_POSTS } from "@/mock/blog";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -40,7 +41,10 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <article className="mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
+      <div className="relative overflow-hidden">
+        <PageVectors variant="bottom-left" intensity={0.28} />
+      </div>
+      <article className="relative mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-[var(--fg)]/40 mb-8">
           <Link href="/blog" className="hover:text-[var(--primary)] transition-colors">Blog</Link>

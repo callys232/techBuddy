@@ -1,31 +1,33 @@
 import type { Metadata } from "next";
 import { FreeAuditForm } from "@/components/sections/FreeAuditForm";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Free Tech Audit — Performance, Security & SEO Review for Nigerian Sites",
+  title: "Free Tech Audit — Performance, Security & SEO Review",
   description:
     "Submit your website or app URL and our engineers will manually audit performance, security headers, SEO, code quality and accessibility — delivered as a written report within 48 hours, free.",
   keywords: [
-    "free website audit Nigeria", "free app security audit Africa",
-    "website performance check Nigeria", "free SEO audit Lagos",
-    "tech audit Nigeria free",
+    "free website audit", "free app security audit",
+    "website performance check", "free SEO audit",
+    "free tech audit",
   ],
 };
 
 const WHAT_YOU_GET = [
-  { icon: "⚡", title: "Performance score",    body: "Core Web Vitals, LCP, CLS, FID and load time on Nigerian network conditions." },
-  { icon: "🔒", title: "Security review",      body: "HTTP headers, exposed endpoints, HTTPS config and known vulnerability checks." },
-  { icon: "🔍", title: "SEO analysis",         body: "Meta tags, Open Graph, structured data, sitemap and indexability review." },
-  { icon: "🧱", title: "Code quality notes",   body: "Architecture patterns, obvious tech debt, framework version and dependency health." },
-  { icon: "♿", title: "Accessibility check",  body: "Colour contrast, keyboard navigation, ARIA labels and WCAG 2.1 compliance basics." },
+  { icon: "⚡", title: "Performance score",   body: "Core Web Vitals, LCP, CLS, FID and load time across real-world network conditions." },
+  { icon: "🔒", title: "Security review",     body: "HTTP headers, exposed endpoints, HTTPS config and known vulnerability checks." },
+  { icon: "🔍", title: "SEO analysis",        body: "Meta tags, Open Graph, structured data, sitemap and indexability review." },
+  { icon: "🧱", title: "Code quality notes",  body: "Architecture patterns, obvious tech debt, framework version and dependency health." },
+  { icon: "♿", title: "Accessibility check", body: "Colour contrast, keyboard navigation, ARIA labels and WCAG 2.1 compliance basics." },
 ];
 
 export default function FreeAuditPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
 
-      <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
+        <PageVectors variant="technical" intensity={0.38} />
+        <div className="relative z-10 max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
 
           {/* Left: pitch */}
           <div>
@@ -68,3 +70,4 @@ export default function FreeAuditPage() {
     </div>
   );
 }
+

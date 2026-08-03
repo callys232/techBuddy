@@ -7,20 +7,22 @@ import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
 import { BlogTeaser } from "@/components/sections/BlogTeaser";
+import { RevealSection } from "@/components/ui/ScrollReveal";
+import { WhyWebsiteSection } from "@/components/sections/WhyWebsiteSection";
 import { InvestTeaser } from "@/components/sections/InvestTeaser";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 
 export const metadata: Metadata = {
-  title: "TechAgency — Digital Product Studio for African Businesses",
+  title: "TechAgency — Digital Product Studio, Built in Africa for the World",
   description:
-    "We engineer scalable web apps, mobile products, fintech integrations and DevOps systems for Nigerian and African businesses. Lagos-based, NDPR-compliant, built to last.",
+    "We engineer scalable web apps, mobile products, fintech integrations and DevOps systems for ambitious businesses everywhere. Born in Lagos, built to global standards.",
   keywords: [
-    "web development Nigeria", "software agency Lagos",
-    "mobile app development Africa", "fintech developer Nigeria",
-    "tech startup MVP Africa", "NDPR compliant software",
+    "digital product studio", "software agency",
+    "mobile app development", "fintech developer",
+    "tech startup MVP", "NDPR compliant software",
   ],
   openGraph: {
-    title: "TechAgency — Digital Product Studio for African Businesses",
+    title: "TechAgency — Digital Product Studio, Built in Africa for the World",
     description:
       "End-to-end engineering for businesses that want to grow. Web · Mobile · Fintech · DevOps.",
   },
@@ -30,15 +32,16 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <StatsBar />
-      <ServicesGrid />
-      <AppShowcase />
-      <HomeCostEstimator />
-      <TestimonialsSection />
-      <FAQSection />
-      <BlogTeaser />
-      <InvestTeaser />
-      <CTAStrip />
+      <WhyWebsiteSection />
+      <RevealSection><StatsBar /></RevealSection>
+      <RevealSection delay={0.05}><ServicesGrid /></RevealSection>
+      <RevealSection delay={0.05}><AppShowcase /></RevealSection>
+      <RevealSection delay={0.05}><HomeCostEstimator /></RevealSection>
+      <RevealSection delay={0.05}><TestimonialsSection /></RevealSection>
+      <RevealSection delay={0.05}><FAQSection /></RevealSection>
+      <RevealSection delay={0.05}><BlogTeaser /></RevealSection>
+      <RevealSection delay={0.05}><InvestTeaser /></RevealSection>
+      <RevealSection delay={0.05}><CTAStrip /></RevealSection>
     </>
   );
 }

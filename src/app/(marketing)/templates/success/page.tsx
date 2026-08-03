@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Purchase Successful — Check Your Email",
@@ -38,8 +39,9 @@ export default async function TemplatePurchaseSuccessPage({ searchParams }: Prop
   const waMessage = encodeURIComponent(`Hi! I just purchased the ${name ?? "template"} template. My email is ${email ?? ""}.`);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] flex flex-col items-center justify-center px-[var(--container-px)] text-center">
-      <div className="inline-flex h-20 w-20 items-center justify-center rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/10 mb-6">
+    <div className="relative overflow-hidden min-h-screen bg-[var(--bg)] flex flex-col items-center justify-center px-[var(--container-px)] text-center">
+      <PageVectors variant="center" intensity={0.4} />
+      <div className="relative z-10 inline-flex h-20 w-20 items-center justify-center rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/10 mb-6">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden>
           <circle cx="18" cy="18" r="17" stroke="#38BDF8" strokeWidth="1.5" />
           <path d="M10 18.5l5.5 5.5 10.5-11" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />

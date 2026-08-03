@@ -15,11 +15,11 @@
   --color-accent-amber: #F59E0B;
   --color-accent-coral: #F87171;
 
-  /* --- Semantic: dark (trust blue) default --- */
-  --bg:      var(--color-navy-deep);
-  --fg:      var(--color-white);
-  --surface: var(--color-navy);
-  --border:  rgba(56, 189, 248, 0.12);
+  /* --- Semantic: dark (ocean blue) default --- */
+  --bg:      #0A1628;
+  --fg:      #EBF4FF;
+  --surface: #0F2040;
+  --border:  rgba(56, 189, 248, 0.14);
   --primary: var(--color-accent-sky);
   --secondary: var(--color-blue-mid);
   --danger:  var(--color-accent-coral);

@@ -2,28 +2,30 @@ import type { Metadata } from "next";
 import { PricingCard } from "@/components/ui/PricingCard";
 import { ServicesContent } from "@/components/sections/ServicesContent";
 import { PRICING_TIERS } from "@/mock/services";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Services — Web, Mobile, Fintech & DevOps Engineering",
   description:
-    "Full-stack web applications, iOS & Android mobile apps, Paystack/Flutterwave fintech integration, cloud DevOps, security auditing and ongoing maintenance — all under one roof in Lagos.",
+    "Full-stack web applications, iOS & Android mobile apps, fintech integration, cloud DevOps, security auditing and ongoing maintenance — all under one roof, from a Lagos-born team serving clients worldwide.",
   keywords: [
-    "web development Nigeria", "mobile app development Africa",
-    "fintech integration Nigeria", "DevOps Africa",
-    "React Next.js Nigeria", "cloud infrastructure Lagos",
-    "security audit Nigeria",
+    "web development", "mobile app development",
+    "fintech integration", "DevOps engineering",
+    "React Next.js development", "cloud infrastructure",
+    "security audit",
   ],
   openGraph: {
     title: "Digital Services — Web, Mobile & Fintech Engineering | TechAgency",
     description:
-      "End-to-end engineering services for Nigerian and African businesses. One studio, every layer of the stack.",
+      "End-to-end engineering services for ambitious businesses everywhere. One studio, every layer of the stack.",
   },
 };
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <section className="px-[var(--container-px)] py-[var(--section-y)] text-center">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
+        <PageVectors variant="flow" intensity={0.35} />
         <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none">
           Everything Your Business Needs to Win Online
         </h1>

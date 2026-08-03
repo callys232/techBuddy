@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Talent Hub — Hire Vetted Nigerian Engineers or Join the Network",
+  title: "Talent Hub — Hire Vetted African Engineers, Anywhere",
   description:
-    "TechBuddy connects African businesses with pre-vetted full-stack engineers, DevOps specialists, mobile developers and product designers — ready to build in days, not months.",
+    "TechBuddy connects businesses worldwide with pre-vetted full-stack engineers, DevOps specialists, mobile developers and product designers from across Africa — ready to build in days, not months.",
   keywords: [
-    "hire Nigerian developers", "vetted African engineers", "remote developers Nigeria",
-    "tech talent Lagos", "hire fintech developer Africa", "join tech network Nigeria",
-    "African software engineers", "product designers Nigeria",
+    "hire African developers", "vetted software engineers", "remote developers Africa",
+    "tech talent Lagos", "hire fintech developer", "join global tech network",
+    "African software engineers", "remote product designers",
   ],
   openGraph: {
-    title: "Nigeria's Vetted Tech Talent — Hire or Join | TechBuddy",
+    title: "Africa's Vetted Tech Talent, Working Worldwide — Hire or Join | TechBuddy",
     description:
-      "Pre-vetted African engineers available to hire. Join a growing network of builders working on products that matter.",
+      "Pre-vetted African engineers available to hire, anywhere. Join a growing network of builders working on products that matter.",
   },
 };
 
@@ -61,10 +61,10 @@ export default function TalentPage() {
             Talent Hub
           </p>
           <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-6">
-            Nigeria&apos;s Vetted Tech Talent,<br />Ready to Build
+            Africa&apos;s Vetted Tech Talent,<br />Working Worldwide
           </h1>
           <p className="text-lg text-[var(--fg)]/60 max-w-xl mb-10 leading-relaxed">
-            Pre-screened engineers, designers and DevOps specialists — matched to your project in days.
+            Pre-screened engineers, designers and DevOps specialists — matched to your project in days, wherever you&apos;re building.
             Or join our network and work on products that matter.
           </p>
           <div className="flex flex-wrap gap-4">

@@ -71,6 +71,22 @@ export const FREE_TOOLS: FreeTool[] = [
     badge: "Free",
     href: "/tools/free-audit",
   },
+  {
+    slug: "resume-maker",
+    icon: "📄",
+    title: "Resume Maker",
+    desc: "Build a professional PDF resume in minutes — Classic, Modern, or Minimal template. Download free with a free account.",
+    badge: "New",
+    href: "/tools/resume-maker",
+  },
+  {
+    slug: "sport-predictor",
+    icon: "⚽",
+    title: "Sport Predictor",
+    desc: "Pick a live fixture from the Premier League, La Liga, Serie A, Bundesliga, Champions League or NBA — get a free win-probability analysis and form guide.",
+    badge: "New",
+    href: "/tools/sport-predictor",
+  },
 ];
 
 /* ── Cost estimator data ─────────────────────────────────────────────────── */

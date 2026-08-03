@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { TemplatesContent } from "@/components/sections/TemplatesContent";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Web Templates — Launch-Ready Starters for African Businesses",
+  title: "Web Templates — Launch-Ready Starters for Growing Businesses",
   description:
-    "Production-ready Next.js templates for Nigerian businesses, e-commerce stores, SaaS platforms, fintech dashboards and landing pages — customised to your brand and deployed in days.",
+    "Production-ready Next.js templates for e-commerce stores, SaaS platforms, fintech dashboards and landing pages — customised to your brand and deployed in days, wherever you're building for.",
   keywords: [
-    "web template Nigeria", "Next.js template Africa",
-    "SaaS starter Nigeria", "e-commerce template Nigeria",
-    "landing page template Africa",
+    "web template", "Next.js template",
+    "SaaS starter", "e-commerce template",
+    "landing page template",
   ],
   openGraph: {
-    title: "Launch-Ready Web Templates for African Businesses | TechAgency",
+    title: "Launch-Ready Web Templates for Growing Businesses | TechAgency",
     description:
       "Pre-built, production-ready templates — customised to your brand, deployed in days.",
   },
@@ -20,7 +21,8 @@ export const metadata: Metadata = {
 export default function TemplatesPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <section className="px-[var(--container-px)] py-[var(--section-y)] text-center">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
+        <PageVectors variant="top-right" intensity={0.35} />
         <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none">
           Start Fast, Launch Faster
         </h1>

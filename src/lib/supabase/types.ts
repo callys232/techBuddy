@@ -114,6 +114,23 @@ export interface Database {
         };
         Relationships: [];
       };
+      resume_members: {
+        Row: {
+          id: string;
+          email: string;
+          name: string;
+          created_at: string;
+        };
+        Insert: {
+          email: string;
+          name: string;
+        };
+        Update: {
+          email?: string;
+          name?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

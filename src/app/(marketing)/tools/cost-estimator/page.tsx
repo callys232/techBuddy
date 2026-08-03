@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
 import { CostEstimator } from "@/components/sections/CostEstimator";
+import { PageVectors } from "@/components/bg/PageVectors";
+import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
+import { getUserLocation } from "@/lib/geo";
 
 export const metadata: Metadata = {
-  title: "Project Cost Estimator — How Much Does a Website or App Cost in Nigeria?",
+  title: "Project Cost Estimator — How Much Does a Website or App Cost?",
   description:
-    "Instant Naira cost estimates for web apps, mobile apps, SaaS platforms and e-commerce stores — based on real project data from Nigerian builds. Adjust for features and timeline.",
+    "Instant cost estimates in Naira (with USD equivalents) for web apps, mobile apps, SaaS platforms and e-commerce stores — based on real project delivery data. Adjust for features and timeline.",
   keywords: [
-    "app cost Nigeria", "website cost Nigeria 2026",
-    "how much does it cost to build an app in Nigeria",
-    "software development cost Africa", "web app price Nigeria",
+    "app development cost", "website cost 2026",
+    "how much does it cost to build an app",
+    "software development cost Africa", "web app price estimator",
   ],
 };
 
-export default function CostEstimatorPage() {
+export default async function CostEstimatorPage() {
+  const location = await getUserLocation();
+
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <div className="max-w-5xl mx-auto">
+      <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
+        <PageVectors variant="flow" intensity={0.38} />
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <CurrencyBanner location={location} />
           <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
             Free Tool
           </p>
@@ -31,7 +38,7 @@ export default function CostEstimatorPage() {
       </section>
 
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
-        <div className="max-w-5xl mx-auto">
+        <div className="relative z-10 max-w-5xl mx-auto">
           <p className="text-sm text-[var(--fg)]/35 leading-relaxed max-w-2xl">
             <strong className="text-[var(--fg)]/50">How is this calculated?</strong> Base costs come from our median project delivery data across 120+ builds. Feature add-ons reflect average complexity. Timeline adjustments mirror real urgency premiums and negotiated long-lead discounts. The final quote you receive after the wizard may differ based on your specific requirements, design complexity, third-party integrations, and team composition.
           </p>
@@ -40,3 +47,4 @@ export default function CostEstimatorPage() {
     </div>
   );
 }
+

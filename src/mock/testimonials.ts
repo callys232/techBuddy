@@ -11,7 +11,7 @@ export interface Testimonial {
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "TechAgency built our fintech platform in 14 weeks — Paystack integration, NDPR-compliant data handling, everything. We went from idea to 5,000 users without a single critical bug in production. The team genuinely understands the Nigerian financial system.",
+      "TechAgency built our fintech platform in 14 weeks — Paystack integration, NDPR-compliant data handling, everything. We went from idea to 5,000 users without a single critical bug in production. The team genuinely understands African financial systems and builds to global standards.",
     name: "Adaeze Okoye",
     role: "Co-founder & CEO",
     company: "FinTrack Pro",
@@ -51,7 +51,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "The AI chatbot they integrated handles 70% of our customer inquiries automatically. Our support team now focuses on complex issues only. ROI was positive within 3 months — something I didn't think was possible for a Nigerian SME our size.",
+      "The AI chatbot they integrated handles 70% of our customer inquiries automatically. Our support team now focuses on complex issues only. ROI was positive within 3 months — something I didn't think was possible for a business our size.",
     name: "Tunde Afolabi",
     role: "Managing Director",
     company: "RetailMax NG",

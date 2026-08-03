@@ -125,6 +125,28 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
       </table>`;
   }
 
+  if (tool === "sport-predictor") {
+    const league   = (sel.league   as string) ?? "—";
+    const home     = (sel.homeTeam as string) ?? "—";
+    const away     = (sel.awayTeam as string) ?? "—";
+    const score    = (res.predictedScore as string) ?? "—";
+    const conf     = (res.confidence     as string) ?? "—";
+    const homePct  = (res.homeWinPct as number) ?? 0;
+    const drawPct  = (res.drawPct    as number) ?? 0;
+    const awayPct  = (res.awayWinPct as number) ?? 0;
+    return `
+      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:6px 0;color:#666;width:160px">League</td><td style="padding:6px 0;font-weight:600">${league}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Fixture</td><td style="padding:6px 0;font-weight:600">${home} vs ${away}</td></tr>
+        <tr style="border-top:1px solid #e5e7eb">
+          <td style="padding:10px 0;color:#666">Projected score</td>
+          <td style="padding:10px 0;font-size:20px;font-weight:800;color:#0ea5e9">${score}</td>
+        </tr>
+        <tr><td style="padding:4px 0;color:#666">Win probability</td><td style="padding:4px 0;font-weight:600">${home} ${homePct}% · Draw ${drawPct}% · ${away} ${awayPct}%</td></tr>
+        <tr><td style="padding:4px 0;color:#666">Confidence</td><td style="padding:4px 0;font-weight:600">${conf}</td></tr>
+      </table>`;
+  }
+
   return `<pre style="font-size:12px;color:#666">${JSON.stringify({ sel, res }, null, 2)}</pre>`;
 }
 
@@ -154,6 +176,7 @@ export async function POST(req: Request) {
                   : tool === "free-audit"          ? "Free Tech Audit"
                   : tool === "build-vs-buy"        ? "Build vs Buy Calculator"
                   : tool === "pmf-score"           ? "PMF Score"
+                  : tool === "sport-predictor"     ? "Sport Predictor"
                   : tool;
 
   const sourceLabel = source === "email-capture"    ? "submitted their email"

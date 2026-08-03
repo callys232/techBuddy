@@ -47,40 +47,40 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "TechAgency — Digital Product Studio for African Businesses",
-    template: "%s | TechAgency Africa",
+    default: "TechAgency — Digital Product Studio, Built in Africa for the World",
+    template: "%s | TechAgency",
   },
   description:
-    "We build scalable web apps, mobile products, fintech integrations and DevOps systems for Nigerian and African businesses. Lagos-based, NDPR-compliant, globally capable.",
+    "We build scalable web apps, mobile products, fintech integrations and DevOps systems for ambitious businesses everywhere. Born in Lagos, engineered for global standards.",
   keywords: [
-    "web development Nigeria",
-    "software agency Lagos",
-    "mobile app development Africa",
-    "fintech developer Nigeria",
-    "tech startup MVP Africa",
+    "digital product studio",
+    "software agency",
+    "mobile app development",
+    "fintech developer",
+    "tech startup MVP",
     "NDPR compliant software",
-    "digital products Nigeria",
-    "React Next.js Nigeria",
+    "web development Nigeria",
+    "React Next.js development",
   ],
-  authors: [{ name: "TechAgency Africa", url: "https://techagency.africa" }],
-  creator: "TechAgency Africa",
+  authors: [{ name: "TechAgency", url: "https://techagency.africa" }],
+  creator: "TechAgency",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   ),
   openGraph: {
     type: "website",
     locale: "en_NG",
-    siteName: "TechAgency Africa",
-    title: "TechAgency — Digital Product Studio for African Businesses",
+    siteName: "TechAgency",
+    title: "TechAgency — Digital Product Studio, Built in Africa for the World",
     description:
-      "End-to-end engineering for African businesses that want to grow. Web, mobile, fintech, DevOps.",
+      "End-to-end engineering for ambitious businesses that want to grow. Web, mobile, fintech, DevOps.",
     images: [{ url: "/og-image.svg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechAgency — Digital Product Studio for African Businesses",
+    title: "TechAgency — Digital Product Studio, Built in Africa for the World",
     description:
-      "End-to-end engineering for African businesses. Web · Mobile · Fintech · DevOps.",
+      "End-to-end engineering for ambitious businesses. Web · Mobile · Fintech · DevOps.",
   },
   robots: {
     index: true,

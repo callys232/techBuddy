@@ -4,18 +4,18 @@ import { INVEST_SCHEMES } from "@/mock/invest";
 import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Investment & Incubation — We Co-Build With African Founders",
+  title: "Investment & Incubation — We Co-Build With Ambitious Founders",
   description:
-    "Equity builds, revenue-share development, incubation support and grant navigation for African startup founders. We build your product while you grow your business.",
+    "Equity builds, revenue-share development, incubation support and grant navigation for founders building the next big thing — rooted in Africa, open to founders everywhere.",
   keywords: [
-    "startup equity Nigeria", "co-build Africa",
-    "tech incubation Nigeria", "revenue share software Africa",
-    "African founder investment", "non-dilutive grant Nigeria",
+    "startup equity", "co-build studio",
+    "tech incubation", "revenue share software",
+    "African founder investment", "non-dilutive grant",
   ],
   openGraph: {
-    title: "We Invest in Ideas Worth Building | TechAgency Africa",
+    title: "We Invest in Ideas Worth Building | TechAgency",
     description:
-      "Equity, revenue share, incubation and advisory for African founders building serious products.",
+      "Equity, revenue share, incubation and advisory for ambitious founders building serious products.",
   },
 };
 

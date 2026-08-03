@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { quoteSchema } from "@/lib/validations/quote";
 import { createServerClient } from "@/lib/supabase/client";
 import { sendQuoteAlertToTeam, sendQuoteConfirmationToUser } from "@/lib/email/send";
+import { estimateQuotePrice } from "@/mock/quote";
+import { formatPriceRange } from "@/mock/templates";
 
 export async function POST(req: Request) {
   try {
@@ -26,9 +28,11 @@ export async function POST(req: Request) {
 
     if (error) throw error;
 
+    const estimatedRange = formatPriceRange(estimateQuotePrice(data.template ?? "", data.features));
+
     // Fire emails in parallel — don't block response on failure
     await Promise.allSettled([
-      sendQuoteAlertToTeam({ ...data, pains: data.pains }),
+      sendQuoteAlertToTeam({ ...data, pains: data.pains, estimatedRange }),
       sendQuoteConfirmationToUser(data.name, data.email),
     ]);
 

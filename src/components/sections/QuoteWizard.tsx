@@ -14,11 +14,14 @@ import {
   CONTACT_METHODS,
   REFERRAL_SOURCES,
   QUOTE_TEMPLATES,
+  BRAND_COLOR_SWATCHES,
   BUDGET_MIN,
   BUDGET_MAX,
   BUDGET_STEP,
   BUDGET_DEFAULT,
+  estimateQuotePrice,
 } from "@/mock/quote";
+import { formatPriceRange } from "@/mock/templates";
 
 interface FormData {
   pains: string[];
@@ -26,6 +29,7 @@ interface FormData {
   budget: number;
   timeline: string;
   features: string[];
+  colors: string[];
   name: string;
   email: string;
   whatsapp: string;
@@ -46,6 +50,7 @@ export function QuoteWizard() {
     budget: BUDGET_DEFAULT,
     timeline: TIMELINE_OPTIONS[1],
     features: [],
+    colors: [],
     name: "",
     email: "",
     whatsapp: "",
@@ -70,8 +75,18 @@ export function QuoteWizard() {
         : [...f.features, feat],
     }));
 
+  const toggleColor = (hex: string) =>
+    setForm((f) => ({
+      ...f,
+      colors: f.colors.includes(hex)
+        ? f.colors.filter((c) => c !== hex)
+        : f.colors.length >= 3 ? f.colors : [...f.colors, hex],
+    }));
+
   const budgetDisplay = (v: number) =>
     v >= BUDGET_MAX ? "₦50M+" : `₦${(v / 1_000_000).toFixed(1)}M`;
+
+  const estimate = estimateQuotePrice(form.template, form.features);
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -171,6 +186,14 @@ export function QuoteWizard() {
             <div className="space-y-8">
               <h2 className="font-display text-2xl font-bold text-[var(--fg)]">Scope & Budget</h2>
 
+              {/* Live computed estimate — updates as template/features change */}
+              <div className="rounded-xl border border-[var(--primary)]/30 bg-[var(--primary)]/5 px-5 py-4">
+                <p className="text-xs text-[var(--fg)]/50 mb-1">Based on your template and features so far</p>
+                <p className="font-display text-xl font-extrabold text-[var(--primary)]">
+                  {formatPriceRange(estimate)}
+                </p>
+              </div>
+
               <div>
                 <label className="text-sm font-semibold text-[var(--fg)] block mb-3">
                   Budget: <span className="text-[var(--primary)]">{budgetDisplay(form.budget)}</span>
@@ -230,6 +253,40 @@ export function QuoteWizard() {
                       {feat}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-semibold text-[var(--fg)] block mb-1">
+                  Preferred brand colors <span className="text-[var(--fg)]/35 font-normal">(pick up to 3)</span>
+                </label>
+                <p className="text-xs text-[var(--fg)]/40 mb-3">We&apos;ll design your first mockup around these.</p>
+                <div className="flex flex-wrap gap-3">
+                  {BRAND_COLOR_SWATCHES.map((c) => {
+                    const on = form.colors.includes(c.hex);
+                    return (
+                      <button
+                        key={c.hex}
+                        type="button"
+                        onClick={() => toggleColor(c.hex)}
+                        title={c.name}
+                        aria-label={c.name}
+                        aria-pressed={on}
+                        disabled={!on && form.colors.length >= 3}
+                        className={[
+                          "relative flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all disabled:opacity-25",
+                          on ? "border-[var(--fg)] scale-110" : "border-transparent hover:scale-105",
+                        ].join(" ")}
+                      >
+                        <span className="h-8 w-8 rounded-full" style={{ backgroundColor: c.hex }} />
+                        {on && (
+                          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--primary)]">
+                            <IconCheck size={10} className="text-[var(--bg)]" />
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>

@@ -22,6 +22,8 @@ export interface ExternalTemplate {
   sourceUrl:    string;
   /** Original price string e.g. "$59" or "Free" */
   originalPrice: string;
+  /** GitHub star count — only present for live-fetched GitHub results */
+  stars?:       number;
 }
 
 export interface TemplateTab {
@@ -104,9 +106,10 @@ export const ALL_TEMPLATES: Template[] = [
 /* ── Curated external references ────────────────────────────────────────── */
 /* ThemeForest items licensed under Envato Regular/Extended License.         */
 /* We link with affiliate ref and charge for our customisation service.      */
+/* Hand-curated because ThemeForest has no public API and scraping it        */
+/* would violate their Terms of Service.                                     */
 
-export const EXTERNAL_TEMPLATES: ExternalTemplate[] = [
-  /* ── ThemeForest / Envato ─────────────────────────────────────────────── */
+export const THEMEFOREST_TEMPLATES: ExternalTemplate[] = [
   {
     name:          "Flatsome",
     type:          "ecommerce",
@@ -162,13 +165,20 @@ export const EXTERNAL_TEMPLATES: ExternalTemplate[] = [
     sourceUrl:     "https://themeforest.net/search/react%20admin%20dashboard",
     originalPrice: "$24",
   },
-  /* ── GitHub (MIT-licensed) ─────────────────────────────────────────────── */
+];
+
+/* ── Fallback GitHub templates ────────────────────────────────────────────── */
+/* Used only if the live /api/templates fetch fails or returns nothing —     */
+/* the live engine (src/app/api/templates/route.ts) pulls fresh MIT-licensed  */
+/* repos from the GitHub Search API on every revalidation window.            */
+
+export const FALLBACK_GITHUB_TEMPLATES: ExternalTemplate[] = [
   {
     name:          "Taxonomy",
     type:          "saas",
     priceRange:    { min: 800, max: 2500 },
     features:      ["Next.js 14", "Stripe", "Prisma", "Tailwind"],
-    image:         "/placeholder.png",
+    image:         "https://opengraph.githubassets.com/1/mickasmt/next-saas-stripe-starter",
     source:        "github",
     sourceLabel:   "GitHub (MIT)",
     sourceUrl:     "https://github.com/mickasmt/next-saas-stripe-starter",
@@ -179,7 +189,7 @@ export const EXTERNAL_TEMPLATES: ExternalTemplate[] = [
     type:          "dashboard",
     priceRange:    { min: 600, max: 2000 },
     features:      ["Next.js 14", "shadcn/ui", "Recharts", "TypeScript"],
-    image:         "/placeholder.png",
+    image:         "https://opengraph.githubassets.com/1/shadcn-ui/ui",
     source:        "github",
     sourceLabel:   "GitHub (MIT)",
     sourceUrl:     "https://github.com/shadcn-ui/ui/tree/main/apps/www",
@@ -190,7 +200,7 @@ export const EXTERNAL_TEMPLATES: ExternalTemplate[] = [
     type:          "blog",
     priceRange:    { min: 200, max: 550 },
     features:      ["Next.js 14", "MDX", "Contentlayer", "Auth"],
-    image:         "/placeholder.png",
+    image:         "https://opengraph.githubassets.com/1/shadcn-ui/taxonomy",
     source:        "github",
     sourceLabel:   "GitHub (MIT)",
     sourceUrl:     "https://github.com/shadcn-ui/taxonomy",
@@ -201,7 +211,7 @@ export const EXTERNAL_TEMPLATES: ExternalTemplate[] = [
     type:          "saas",
     priceRange:    { min: 1000, max: 3500 },
     features:      ["Next.js", "tRPC", "Prisma", "NextAuth"],
-    image:         "/placeholder.png",
+    image:         "https://opengraph.githubassets.com/1/t3-oss/create-t3-turbo",
     source:        "github",
     sourceLabel:   "GitHub (MIT)",
     sourceUrl:     "https://github.com/t3-oss/create-t3-turbo",
@@ -212,13 +222,24 @@ export const EXTERNAL_TEMPLATES: ExternalTemplate[] = [
     type:          "portfolio",
     priceRange:    { min: 200, max: 450 },
     features:      ["Next.js", "PDF export", "Tailwind", "TypeScript"],
-    image:         "/placeholder.png",
+    image:         "https://opengraph.githubassets.com/1/xitanggg/open-resume",
     source:        "github",
     sourceLabel:   "GitHub (MIT)",
     sourceUrl:     "https://github.com/xitanggg/open-resume",
     originalPrice: "Free",
   },
 ];
+
+/** Customisation price range (₦k) applied to live GitHub templates, by category */
+export const CATEGORY_PRICE_RANGE: Record<string, { min: number; max: number }> = {
+  landing:   { min: 200, max: 600 },
+  saas:      { min: 800, max: 3000 },
+  ecommerce: { min: 700, max: 2800 },
+  portfolio: { min: 200, max: 500 },
+  blog:      { min: 200, max: 600 },
+  dashboard: { min: 700, max: 2500 },
+  mobile:    { min: 1000, max: 4000 },
+};
 
 export function formatPriceRange(range: { min: number; max: number }): string {
   const fmt = (n: number) => n >= 1000 ? `₦${(n / 1000).toFixed(1)}M` : `₦${n}k`;

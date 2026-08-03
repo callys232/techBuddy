@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
+import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -9,8 +10,9 @@ const LAST_UPDATED = "1 June 2026";
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
-      <div className="mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
+    <div className="relative overflow-hidden min-h-screen bg-[var(--bg)]">
+      <PageVectors variant="minimal" intensity={0.5} />
+      <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
         {/* Header */}
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">Legal</span>
         <h1 className="mt-3 font-display text-4xl font-extrabold text-[var(--fg)] mb-2">Privacy Policy</h1>
@@ -105,7 +107,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--fg)] mb-3">9. Contact</h2>
             <p>
-              Data Controller: TechAgency Africa · hello@techagency.africa · Lagos, Nigeria<br />
+              Data Controller: TechAgency Africa ·hello@techagency.africa ·Lagos, Nigeria<br />
               Data Protection Officer: privacy@techagency.africa
             </p>
           </section>
@@ -114,3 +116,4 @@ export default function PrivacyPage() {
     </div>
   );
 }
+

@@ -69,7 +69,7 @@ export const ALL_SERVICES: ServiceItem[] = [
   {
     icon: "code",
     title: "Web Development",
-    desc: "Full-stack web apps, CMS, e-commerce, PWAs — offline-first for Nigerian connectivity.",
+    desc: "Full-stack web apps, CMS, e-commerce, PWAs — offline-first for real-world connectivity.",
     outcome: "Launch a platform that works on 3G and scales to millions",
     tag: "Web",
     href: "/services/web-development",
@@ -125,7 +125,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     icon: "credit-card",
     title: "Fintech & Payments",
     desc: "Paystack, Flutterwave, CBN compliance, PCI-DSS, USSD banking flows.",
-    outcome: "Accept money in any format Nigerians actually use",
+    outcome: "Accept money in any format your customers actually use",
     tag: "Fintech",
     href: "/services/fintech-payments",
     color: "teal",
@@ -201,7 +201,7 @@ export const ALL_SERVICES: ServiceItem[] = [
   {
     icon: "search",
     title: "SEO & Growth",
-    desc: "Technical SEO, content strategy, Core Web Vitals, rank tracking for African markets.",
+    desc: "Technical SEO, content strategy, Core Web Vitals, rank tracking for global markets.",
     outcome: "Get found by the businesses that can actually afford to hire you",
     tag: "SEO",
     href: "/services/seo-growth",

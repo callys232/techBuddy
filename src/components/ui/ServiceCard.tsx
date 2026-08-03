@@ -54,7 +54,7 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({
-  icon, title, desc, outcome, tag, href, color = "teal", startingFrom,
+  icon, title, desc, outcome, tag, href, color = "teal",
 }: ServiceCardProps) {
   const Icon = ICONS[icon];
 
@@ -62,15 +62,15 @@ export function ServiceCard({
     <Link
       href={href}
       className={[
-        "group relative flex flex-col gap-4 rounded-[var(--radius-card)] border border-[var(--border)]",
-        "bg-[var(--surface)] p-6 transition-all duration-300 hover:-translate-y-1.5",
+        "group relative flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--border)]",
+        "bg-[var(--surface)] p-4 transition-all duration-300 hover:-translate-y-1.5",
         GLOW[color],
       ].join(" ")}
     >
       {/* Icon + tag */}
       <div className="flex items-start justify-between">
-        <span className={`flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--bg)] ${ICON_COLOR[color]}`}>
-          <Icon size={22} />
+        <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--bg)] ${ICON_COLOR[color]}`}>
+          <Icon size={18} />
         </span>
         <span className={`font-mono text-xs font-semibold rounded-[var(--radius-badge)] px-2.5 py-1 ${TAG_COLOR[color]}`}>
           {tag}
@@ -79,7 +79,7 @@ export function ServiceCard({
 
       {/* Title + description */}
       <div>
-        <h3 className="font-display text-xl font-bold text-[var(--fg)] mb-2">{title}</h3>
+        <h3 className="font-display text-base font-bold text-[var(--fg)] mb-1.5">{title}</h3>
         <p className="text-sm text-[var(--fg)]/60 leading-relaxed">{desc}</p>
       </div>
 
@@ -88,9 +88,8 @@ export function ServiceCard({
         {outcome}
       </p>
 
-      {/* Footer: price + CTA */}
+      {/* Footer: CTA only */}
       <div className="mt-auto flex items-center justify-between pt-3 border-t border-[var(--border)]">
-        <span className="font-mono text-xs font-medium text-[var(--fg)]/40">{startingFrom}</span>
         <span className="flex items-center gap-1 text-sm font-semibold text-[var(--primary)] group-hover:gap-2 transition-all">
           Learn more <IconArrowRight size={13} />
         </span>

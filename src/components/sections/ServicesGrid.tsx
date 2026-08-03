@@ -132,14 +132,15 @@ export function ServicesGrid() {
 
           {/* ── Left panel ──────────────────────────────────────────────── */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">
+            <span className="eyebrow-pill mb-5 inline-flex">
               What we do
             </span>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-[var(--fg)] leading-[1.1] mb-5">
-              Services
+            <h2 className="mt-5 font-display font-extrabold text-[var(--fg)] leading-[1.1] mb-5 tracking-[-0.02em]
+                           text-[clamp(2rem,3.5vw,3rem)]">
+              <span className="gradient-text">Fourteen services.</span><br />One team.
             </h2>
-            <p className="text-[var(--fg)]/50 leading-relaxed mb-10 max-w-sm">
-              Fourteen services. One team. Built around what African businesses actually need to scale.
+            <p className="text-[var(--fg)]/50 leading-relaxed mb-10 max-w-sm text-[14.5px]">
+              Built around what African businesses actually need to scale.
             </p>
 
             {/* Active service info — animates in on change, color matches active card */}

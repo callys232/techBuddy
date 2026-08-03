@@ -12,7 +12,7 @@ export function PricingCard({ tier, price, features, recommended, ctaText }: Pri
   return (
     <div
       className={[
-        "relative flex flex-col rounded-[var(--radius-card)] border p-7 transition-all duration-300",
+        "relative flex flex-col rounded-[var(--radius-card)] border p-5 transition-all duration-300",
         recommended
           ? "border-[var(--primary)] bg-[var(--surface)] shadow-[var(--shadow-glow-teal)]"
           : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--primary)]/50",
@@ -23,11 +23,11 @@ export function PricingCard({ tier, price, features, recommended, ctaText }: Pri
           Recommended
         </span>
       )}
-      <div className="mb-6">
-        <h3 className="font-display text-xl font-bold text-[var(--fg)]">{tier}</h3>
-        <p className="mt-2 font-display text-3xl font-extrabold text-[var(--fg)]">{price}</p>
+      <div className="mb-4">
+        <h3 className="font-display text-base font-bold text-[var(--fg)]">{tier}</h3>
+        <p className="mt-1.5 font-display text-2xl font-extrabold text-[var(--fg)]">{price}</p>
       </div>
-      <ul className="flex-1 space-y-3 mb-8">
+      <ul className="flex-1 space-y-2.5 mb-6">
         {features.map((f) => (
           <li key={f} className="flex items-start gap-2 text-sm text-[var(--fg)]/70">
             <IconCheck size={16} className="mt-0.5 shrink-0 text-[var(--primary)]" />
