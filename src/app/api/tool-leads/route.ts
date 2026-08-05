@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase/client";
-import { Resend } from "resend";
+import { getResendClient } from "@/lib/email/resend";
 
-const resend     = new Resend(process.env.RESEND_API_KEY ?? "");
+const resend = getResendClient();
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
-const SITE_URL   = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
 
 /* ── Formatters ──────────────────────────────────────────────────────────────── */
 
@@ -12,14 +12,18 @@ function fmtNaira(n: number) {
   return "₦" + Math.round(n).toLocaleString("en-NG");
 }
 
-function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: Record<string, unknown>): string {
+function selectionsSummaryHtml(
+  tool: string,
+  sel: Record<string, unknown>,
+  res: Record<string, unknown>,
+): string {
   if (tool === "cost-estimator") {
-    const pt        = (sel.projectType as string) ?? "—";
-    const features  = (sel.features   as string[]) ?? [];
-    const timeline  = (sel.timeline   as string) ?? "—";
-    const low       = res.low  as number;
-    const high      = res.high as number;
-    const mid       = res.mid  as number;
+    const pt = (sel.projectType as string) ?? "—";
+    const features = (sel.features as string[]) ?? [];
+    const timeline = (sel.timeline as string) ?? "—";
+    const low = res.low as number;
+    const high = res.high as number;
+    const mid = res.mid as number;
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:6px 0;color:#666;width:160px">Project type</td><td style="padding:6px 0;font-weight:600">${pt}</td></tr>
@@ -34,19 +38,23 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
   }
 
   if (tool === "timeline-estimator") {
-    const pt        = (sel.projectType as string) ?? "—";
-    const features  = (sel.features   as string[]) ?? [];
-    const readiness = (sel.readiness  as string) ?? "—";
-    const feedback  = (sel.feedback   as string) ?? "—";
-    const integ     = (sel.integration as string) ?? "—";
-    const minW      = res.totalMin as number;
-    const maxW      = res.totalMax as number;
-    const launch    = (res.normalLaunch as string) ?? "—";
-    const phases    = (res.phases as { name: string; min: number; max: number }[]) ?? [];
+    const pt = (sel.projectType as string) ?? "—";
+    const features = (sel.features as string[]) ?? [];
+    const readiness = (sel.readiness as string) ?? "—";
+    const feedback = (sel.feedback as string) ?? "—";
+    const integ = (sel.integration as string) ?? "—";
+    const minW = res.totalMin as number;
+    const maxW = res.totalMax as number;
+    const launch = (res.normalLaunch as string) ?? "—";
+    const phases =
+      (res.phases as { name: string; min: number; max: number }[]) ?? [];
 
-    const phaseRows = phases.map((p) =>
-      `<tr><td style="padding:4px 0;color:#666">${p.name}</td><td style="padding:4px 0">${p.min}–${p.max} weeks</td></tr>`
-    ).join("");
+    const phaseRows = phases
+      .map(
+        (p) =>
+          `<tr><td style="padding:4px 0;color:#666">${p.name}</td><td style="padding:4px 0">${p.min}–${p.max} weeks</td></tr>`,
+      )
+      .join("");
 
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
@@ -65,10 +73,10 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
   }
 
   if (tool === "ndpr-checker") {
-    const score    = (res.score    as number) ?? 0;
-    const grade    = (res.grade    as string) ?? "—";
+    const score = (res.score as number) ?? 0;
+    const grade = (res.grade as string) ?? "—";
     const critical = (res.criticalGaps as number) ?? 0;
-    const cat      = (sel.category as string) ?? "—";
+    const cat = (sel.category as string) ?? "—";
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:6px 0;color:#666;width:160px">Industry</td><td style="padding:6px 0;font-weight:600">${cat}</td></tr>
@@ -82,13 +90,13 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
   }
 
   if (tool === "mvp-scope") {
-    const desc   = (sel.description   as string) ?? "—";
-    const user   = (sel.user          as string) ?? "—";
+    const desc = (sel.description as string) ?? "—";
+    const user = (sel.user as string) ?? "—";
     const action = (sel["core-action"] as string) ?? "—";
-    const rev    = (sel.revenue       as string) ?? "—";
-    const cat    = (sel.category      as string) ?? "—";
-    const p1     = (res.phase1Count   as number) ?? 0;
-    const weeks  = (res.weekRange     as string) ?? "—";
+    const rev = (sel.revenue as string) ?? "—";
+    const cat = (sel.category as string) ?? "—";
+    const p1 = (res.phase1Count as number) ?? 0;
+    const weeks = (res.weekRange as string) ?? "—";
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:6px 0;color:#666;width:160px">Industry</td><td style="padding:6px 0;font-weight:600">${cat}</td></tr>
@@ -104,15 +112,19 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
   }
 
   if (tool === "stack-picker") {
-    const stack = (res.stack     as string) ?? "—";
-    const why   = (res.tagline   as string) ?? "—";
-    const cat   = (sel.category  as string) ?? "—";
+    const stack = (res.stack as string) ?? "—";
+    const why = (res.tagline as string) ?? "—";
+    const cat = (sel.category as string) ?? "—";
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:6px 0;color:#666;width:160px">Industry</td><td style="padding:6px 0;font-weight:600">${cat}</td></tr>
-        ${Object.entries(sel).filter(([k]) => k !== "category").map(([k, v]) =>
-          `<tr><td style="padding:4px 0;color:#666;text-transform:capitalize">${k.replace(/-/g," ")}</td><td style="padding:4px 0">${v}</td></tr>`
-        ).join("")}
+        ${Object.entries(sel)
+          .filter(([k]) => k !== "category")
+          .map(
+            ([k, v]) =>
+              `<tr><td style="padding:4px 0;color:#666;text-transform:capitalize">${k.replace(/-/g, " ")}</td><td style="padding:4px 0">${v}</td></tr>`,
+          )
+          .join("")}
         <tr style="border-top:1px solid #e5e7eb">
           <td style="padding:10px 0;color:#666">Recommended stack</td>
           <td style="padding:10px 0;font-size:18px;font-weight:800;color:#0ea5e9">${stack}</td>
@@ -122,14 +134,14 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
   }
 
   if (tool === "sport-predictor") {
-    const league   = (sel.league   as string) ?? "—";
-    const home     = (sel.homeTeam as string) ?? "—";
-    const away     = (sel.awayTeam as string) ?? "—";
-    const score    = (res.predictedScore as string) ?? "—";
-    const conf     = (res.confidence     as string) ?? "—";
-    const homePct  = (res.homeWinPct as number) ?? 0;
-    const drawPct  = (res.drawPct    as number) ?? 0;
-    const awayPct  = (res.awayWinPct as number) ?? 0;
+    const league = (sel.league as string) ?? "—";
+    const home = (sel.homeTeam as string) ?? "—";
+    const away = (sel.awayTeam as string) ?? "—";
+    const score = (res.predictedScore as string) ?? "—";
+    const conf = (res.confidence as string) ?? "—";
+    const homePct = (res.homeWinPct as number) ?? 0;
+    const drawPct = (res.drawPct as number) ?? 0;
+    const awayPct = (res.awayWinPct as number) ?? 0;
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:6px 0;color:#666;width:160px">League</td><td style="padding:6px 0;font-weight:600">${league}</td></tr>
@@ -145,11 +157,14 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
 
   if (tool === "whatsapp-bot-builder") {
     const businessName = (sel.businessName as string) ?? "—";
-    const welcome      = (sel.welcomeMessage as string) ?? "—";
-    const options      = (sel.options as { label: string; reply: string }[]) ?? [];
-    const optionRows = options.map((o, i) =>
-      `<tr><td style="padding:4px 0;color:#666;vertical-align:top">${i + 1}. ${o.label}</td><td style="padding:4px 0">${o.reply}</td></tr>`
-    ).join("");
+    const welcome = (sel.welcomeMessage as string) ?? "—";
+    const options = (sel.options as { label: string; reply: string }[]) ?? [];
+    const optionRows = options
+      .map(
+        (o, i) =>
+          `<tr><td style="padding:4px 0;color:#666;vertical-align:top">${i + 1}. ${o.label}</td><td style="padding:4px 0">${o.reply}</td></tr>`,
+      )
+      .join("");
     return `
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:6px 0;color:#666;width:160px">Business</td><td style="padding:6px 0;font-weight:600">${businessName}</td></tr>
@@ -167,11 +182,11 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const {
-    tool       = "unknown",
-    email      = null,
-    source     = "unknown",
+    tool = "unknown",
+    email = null,
+    source = "unknown",
     selections = {},
-    result     = {},
+    result = {},
   } = body as {
     tool?: string;
     email?: string | null;
@@ -180,31 +195,52 @@ export async function POST(req: Request) {
     result?: Record<string, unknown>;
   };
 
-  const toolLabel = tool === "cost-estimator"     ? "Cost Estimator"
-                  : tool === "timeline-estimator" ? "Timeline Estimator"
-                  : tool === "stack-picker"        ? "Stack Picker"
-                  : tool === "ndpr-checker"        ? "NDPR Compliance Checker"
-                  : tool === "mvp-scope"           ? "MVP Scope Generator"
-                  : tool === "free-audit"          ? "Free Tech Audit"
-                  : tool === "build-vs-buy"        ? "Build vs Buy Calculator"
-                  : tool === "pmf-score"           ? "PMF Score"
-                  : tool === "sport-predictor"     ? "Sport Predictor"
-                  : tool === "qr-code-generator"   ? "QR Code Generator"
-                  : tool === "invoice-generator"   ? "Invoice Generator"
-                  : tool === "name-generator"      ? "Business Name Generator"
-                  : tool === "cover-letter-generator" ? "Cover Letter Generator"
-                  : tool === "business-plan-generator" ? "AI Business Plan Generator"
-                  : tool === "premium-audit"       ? "Premium Audit Report"
-                  : tool === "whatsapp-bot-builder" ? "WhatsApp Bot Flow Builder"
-                  : tool;
+  const toolLabel =
+    tool === "cost-estimator"
+      ? "Cost Estimator"
+      : tool === "timeline-estimator"
+        ? "Timeline Estimator"
+        : tool === "stack-picker"
+          ? "Stack Picker"
+          : tool === "ndpr-checker"
+            ? "NDPR Compliance Checker"
+            : tool === "mvp-scope"
+              ? "MVP Scope Generator"
+              : tool === "free-audit"
+                ? "Free Tech Audit"
+                : tool === "build-vs-buy"
+                  ? "Build vs Buy Calculator"
+                  : tool === "pmf-score"
+                    ? "PMF Score"
+                    : tool === "sport-predictor"
+                      ? "Sport Predictor"
+                      : tool === "qr-code-generator"
+                        ? "QR Code Generator"
+                        : tool === "invoice-generator"
+                          ? "Invoice Generator"
+                          : tool === "name-generator"
+                            ? "Business Name Generator"
+                            : tool === "cover-letter-generator"
+                              ? "Cover Letter Generator"
+                              : tool === "business-plan-generator"
+                                ? "AI Business Plan Generator"
+                                : tool === "premium-audit"
+                                  ? "Premium Audit Report"
+                                  : tool === "whatsapp-bot-builder"
+                                    ? "WhatsApp Bot Flow Builder"
+                                    : tool;
 
-  const sourceLabel = source === "email-capture"    ? "submitted their email"
-                    : source === "quote-click"       ? "clicked Get a Quote"
-                    : source === "whatsapp-click"    ? "clicked WhatsApp"
-                    : source;
+  const sourceLabel =
+    source === "email-capture"
+      ? "submitted their email"
+      : source === "quote-click"
+        ? "clicked Get a Quote"
+        : source === "whatsapp-click"
+          ? "clicked WhatsApp"
+          : source;
 
   const summaryHtml = selectionsSummaryHtml(tool, selections, result);
-  const subscribed  = source === "email-capture" && !!email;
+  const subscribed = source === "email-capture" && !!email;
 
   /* ── 1. Save to Supabase (and newsletter subscribe) ────────────── */
   try {
@@ -212,7 +248,7 @@ export async function POST(req: Request) {
 
     await supabase.from("tool_leads").insert({
       tool,
-      email:      email ?? null,
+      email: email ?? null,
       source,
       selections,
       result,
@@ -220,8 +256,12 @@ export async function POST(req: Request) {
     });
 
     if (subscribed && email) {
-      await supabase.from("newsletter_subs")
-        .upsert({ email, tags: [tool], status: "active" }, { onConflict: "email" });
+      await supabase
+        .from("newsletter_subs")
+        .upsert(
+          { email, tags: [tool], status: "active" },
+          { onConflict: "email" },
+        );
     }
   } catch {
     // Supabase not configured yet, or write failed — non-fatal, emails still send below
@@ -230,70 +270,77 @@ export async function POST(req: Request) {
   /* ── 3. Team alert — always sent ─────────────────────────────── */
   const teamSubject = `🔧 ${toolLabel} lead — ${email ?? "anonymous"} (${sourceLabel})`;
 
-  await resend.emails.send({
-    from:    `TechAgency Tools <noreply@techbuddy.ng>`,
-    to:      TEAM_EMAIL,
-    subject: teamSubject,
-    html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-        <h2 style="color:#0ea5e9;margin-bottom:4px">${toolLabel} Lead</h2>
-        <p style="color:#666;margin-top:0">Source: <strong>${sourceLabel}</strong></p>
+  if (resend) {
+    await resend.emails
+      .send({
+        from: `TechAgency Tools <noreply@techbuddy.ng>`,
+        to: TEAM_EMAIL,
+        subject: teamSubject,
+        html: `
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+          <h2 style="color:#0ea5e9;margin-bottom:4px">${toolLabel} Lead</h2>
+          <p style="color:#666;margin-top:0">Source: <strong>${sourceLabel}</strong></p>
 
-        <p><strong>Email:</strong> ${email ? `<a href="mailto:${email}">${email}</a>` : "<em>Not provided (anonymous)</em>"}</p>
-        <p><strong>Added to newsletter:</strong> ${subscribed ? "Yes ✅" : "No"}</p>
+          <p><strong>Email:</strong> ${email ? `<a href="mailto:${email}">${email}</a>` : "<em>Not provided (anonymous)</em>"}</p>
+          <p><strong>Added to newsletter:</strong> ${subscribed ? "Yes ✅" : "No"}</p>
 
-        <hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0" />
+          <hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0" />
 
-        <h3 style="margin-bottom:12px">Their complete selections &amp; estimate</h3>
-        ${summaryHtml}
-
-        <hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0" />
-
-        ${email ? `<p><a href="mailto:${email}?subject=Following up on your ${toolLabel} estimate" style="background:#0ea5e9;color:#fff;padding:10px 20px;border-radius:20px;text-decoration:none;font-weight:600;font-size:14px">Reply to ${email} →</a></p>` : ""}
-        <p style="color:#999;font-size:12px">Captured from ${SITE_URL}/tools/${tool} at ${new Date().toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} WAT</p>
-      </div>
-    `,
-  }).catch(() => null);
-
-  /* ── 4. User confirmation email (only when email provided) ────── */
-  if (email) {
-    const quoteUrl = tool === "cost-estimator"
-      ? `${SITE_URL}/quote?service=${encodeURIComponent((selections.projectType as string) ?? "")}&budget=${encodeURIComponent(String(result.mid ?? ""))}`
-      : `${SITE_URL}/quote?timeline=${result.totalMin ?? ""}-${result.totalMax ?? ""}`;
-
-    await resend.emails.send({
-      from:    "TechAgency Africa <noreply@techbuddy.ng>",
-      to:      email,
-      subject: `Your ${toolLabel} estimate — keep it handy`,
-      html: `
-        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#111">
-          <h2 style="color:#0ea5e9">Your estimate from TechAgency Africa</h2>
-          <p style="color:#555">Here's a complete copy of the estimate you just built on our ${toolLabel}.</p>
-
+          <h3 style="margin-bottom:12px">Their complete selections &amp; estimate</h3>
           ${summaryHtml}
 
-          <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0" />
+          <hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0" />
 
-          <h3>What happens next?</h3>
-          <ol style="color:#555;line-height:1.8">
-            <li>Get a precise, signed scope from our quote wizard</li>
-            <li>Our engineers review and reply within 24 hours with a Naira breakdown</li>
-            <li>We align on timeline and start building</li>
-          </ol>
-
-          <p style="margin-top:24px">
-            <a href="${quoteUrl}" style="background:#0ea5e9;color:#fff;padding:12px 24px;border-radius:24px;text-decoration:none;font-weight:700;font-size:15px">
-              Get your exact quote →
-            </a>
-          </p>
-
-          <p style="color:#999;font-size:12px;margin-top:32px">
-            You're receiving this because you used our ${toolLabel}${subscribed ? " and subscribed to our newsletter" : ""}.<br/>
-            Questions? Reply to this email or WhatsApp us directly.
-          </p>
+          ${email ? `<p><a href="mailto:${email}?subject=Following up on your ${toolLabel} estimate" style="background:#0ea5e9;color:#fff;padding:10px 20px;border-radius:20px;text-decoration:none;font-weight:600;font-size:14px">Reply to ${email} →</a></p>` : ""}
+          <p style="color:#999;font-size:12px">Captured from ${SITE_URL}/tools/${tool} at ${new Date().toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} WAT</p>
         </div>
       `,
-    }).catch(() => null);
+      })
+      .catch(() => null);
+
+    /* ── 4. User confirmation email (only when email provided) ────── */
+    if (email) {
+      const quoteUrl =
+        tool === "cost-estimator"
+          ? `${SITE_URL}/quote?service=${encodeURIComponent((selections.projectType as string) ?? "")}&budget=${encodeURIComponent(String(result.mid ?? ""))}`
+          : `${SITE_URL}/quote?timeline=${result.totalMin ?? ""}-${result.totalMax ?? ""}`;
+
+      await resend.emails
+        .send({
+          from: "TechAgency Africa <noreply@techbuddy.ng>",
+          to: email,
+          subject: `Your ${toolLabel} estimate — keep it handy`,
+          html: `
+          <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#111">
+            <h2 style="color:#0ea5e9">Your estimate from TechAgency Africa</h2>
+            <p style="color:#555">Here's a complete copy of the estimate you just built on our ${toolLabel}.</p>
+
+            ${summaryHtml}
+
+            <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0" />
+
+            <h3>What happens next?</h3>
+            <ol style="color:#555;line-height:1.8">
+              <li>Get a precise, signed scope from our quote wizard</li>
+              <li>Our engineers review and reply within 24 hours with a Naira breakdown</li>
+              <li>We align on timeline and start building</li>
+            </ol>
+
+            <p style="margin-top:24px">
+              <a href="${quoteUrl}" style="background:#0ea5e9;color:#fff;padding:12px 24px;border-radius:24px;text-decoration:none;font-weight:700;font-size:15px">
+                Get your exact quote →
+              </a>
+            </p>
+
+            <p style="color:#999;font-size:12px;margin-top:32px">
+              You're receiving this because you used our ${toolLabel}${subscribed ? " and subscribed to our newsletter" : ""}.<br/>
+              Questions? Reply to this email or WhatsApp us directly.
+            </p>
+          </div>
+        `,
+        })
+        .catch(() => null);
+    }
   }
 
   return NextResponse.json({ ok: true });

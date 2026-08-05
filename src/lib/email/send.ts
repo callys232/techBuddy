@@ -1,14 +1,20 @@
-import { Resend } from "resend";
 import { render } from "@react-email/components";
+import { getResendClient } from "@/lib/email/resend";
 import { QuoteAlert } from "./templates/QuoteAlert";
 import { QuoteConfirmation } from "./templates/QuoteConfirmation";
 import { ContactAlert } from "./templates/ContactAlert";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = getResendClient();
 const FROM = "TechAgency <noreply@techagency.africa>";
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "hello@techagency.africa";
 
-export async function sendQuoteAlertToTeam(data: Parameters<typeof QuoteAlert>[0]) {
+export async function sendQuoteAlertToTeam(
+  data: Parameters<typeof QuoteAlert>[0],
+) {
+  if (!resend) {
+    return null;
+  }
+
   const html = await render(QuoteAlert(data));
   return resend.emails.send({
     from: FROM,
@@ -19,6 +25,10 @@ export async function sendQuoteAlertToTeam(data: Parameters<typeof QuoteAlert>[0
 }
 
 export async function sendQuoteConfirmationToUser(name: string, email: string) {
+  if (!resend) {
+    return null;
+  }
+
   const html = await render(QuoteConfirmation({ name }));
   return resend.emails.send({
     from: FROM,
@@ -28,7 +38,13 @@ export async function sendQuoteConfirmationToUser(name: string, email: string) {
   });
 }
 
-export async function sendContactAlertToTeam(data: Parameters<typeof ContactAlert>[0]) {
+export async function sendContactAlertToTeam(
+  data: Parameters<typeof ContactAlert>[0],
+) {
+  if (!resend) {
+    return null;
+  }
+
   const html = await render(ContactAlert(data));
   return resend.emails.send({
     from: FROM,

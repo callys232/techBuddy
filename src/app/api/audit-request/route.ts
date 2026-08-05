@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase/client";
-import { Resend } from "resend";
+import { getResendClient } from "@/lib/email/resend";
 
-const resend    = new Resend(process.env.RESEND_API_KEY ?? "");
+const resend = getResendClient();
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 
 export async function POST(req: Request) {
@@ -10,42 +10,55 @@ export async function POST(req: Request) {
   const { name, email, url, auditTypes, category } = body ?? {};
 
   if (!name || !email || !url) {
-    return NextResponse.json({ error: "name, email and url are required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "name, email and url are required" },
+      { status: 400 },
+    );
   }
 
   /* Column is website_url in the migration schema */
   try {
     const supabase = createServerClient();
-    await supabase.from("audit_requests").insert({ name, email, website_url: url, audit_types: auditTypes ?? [], category: category ?? null });
+    await supabase
+      .from("audit_requests")
+      .insert({
+        name,
+        email,
+        website_url: url,
+        audit_types: auditTypes ?? [],
+        category: category ?? null,
+      });
   } catch {
     // Supabase not configured yet, or insert failed — non-fatal, emails still send below
   }
 
-  await Promise.all([
-    resend.emails.send({
-      from:    "TechBuddy <noreply@techbuddy.ng>",
-      to:      email,
-      subject: "Your free tech audit request — we're on it",
-      html: `
-        <p>Hi ${name},</p>
-        <p>We received your audit request for <strong>${url}</strong>.</p>
-        <p>Our engineers will review the following:</p>
-        <ul>${(auditTypes ?? []).map((t: string) => `<li>${t}</li>`).join("")}</ul>
-        <p>Expect your audit report within <strong>48 hours</strong>.</p>
-        <p>— TechBuddy Team</p>
-      `,
-    }),
-    resend.emails.send({
-      from:    "TechBuddy Audits <noreply@techbuddy.ng>",
-      to:      TEAM_EMAIL,
-      subject: `New audit request from ${name}`,
-      html: `
-        <p><strong>${name}</strong> (${email}) requested an audit for: <a href="${url}">${url}</a></p>
-        <p>Audit types: ${(auditTypes ?? []).join(", ")}</p>
-        <p>Respond within 48 hours.</p>
-      `,
-    }),
-  ]).catch(() => null);
+  if (resend) {
+    await Promise.all([
+      resend.emails.send({
+        from: "TechBuddy <noreply@techbuddy.ng>",
+        to: email,
+        subject: "Your free tech audit request — we're on it",
+        html: `
+          <p>Hi ${name},</p>
+          <p>We received your audit request for <strong>${url}</strong>.</p>
+          <p>Our engineers will review the following:</p>
+          <ul>${(auditTypes ?? []).map((t: string) => `<li>${t}</li>`).join("")}</ul>
+          <p>Expect your audit report within <strong>48 hours</strong>.</p>
+          <p>— TechBuddy Team</p>
+        `,
+      }),
+      resend.emails.send({
+        from: "TechBuddy Audits <noreply@techbuddy.ng>",
+        to: TEAM_EMAIL,
+        subject: `New audit request from ${name}`,
+        html: `
+          <p><strong>${name}</strong> (${email}) requested an audit for: <a href="${url}">${url}</a></p>
+          <p>Audit types: ${(auditTypes ?? []).join(", ")}</p>
+          <p>Respond within 48 hours.</p>
+        `,
+      }),
+    ]).catch(() => null);
+  }
 
   return NextResponse.json({ success: true });
 }
