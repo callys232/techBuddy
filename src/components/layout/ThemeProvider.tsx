@@ -10,28 +10,28 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: "dark",
+  theme: "light",
   toggleTheme: () => {},
 });
 
+/* Light is the default for new visitors — it does not follow the OS
+   prefers-color-scheme. Dark only activates on an explicit saved choice.
+   The actual pre-paint class application lives in the inline script in
+   layout.tsx (avoids a light→dark flash); this just syncs React state to
+   whatever the script already set on <html>. */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
-    const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    const resolved = stored ?? preferred;
-    setTheme(resolved);
-    document.documentElement.setAttribute("data-theme", resolved);
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
   }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => {
       const next = prev === "dark" ? "light" : "dark";
       localStorage.setItem("theme", next);
-      document.documentElement.setAttribute("data-theme", next);
+      document.documentElement.classList.toggle("dark", next === "dark");
       return next;
     });
   };

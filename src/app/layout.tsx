@@ -1,47 +1,7 @@
 import type { Metadata } from "next";
-import {
-  Bricolage_Grotesque,
-  Plus_Jakarta_Sans,
-  Inter,
-  JetBrains_Mono,
-} from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import "./globals.css";
-
-/* ── Fonts ──────────────────────────────────────────────────────────────────── */
-
-/* Hero / display titles */
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  variable: "--font-bricolage",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-/* Section headers, nav, UI labels */
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-/* Body copy, paragraphs, form inputs */
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-/* Code, labels, monospace accents */
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  display: "swap",
-  weight: ["400", "500", "700"],
-});
 
 /* ── Root Metadata ──────────────────────────────────────────────────────────── */
 
@@ -89,17 +49,28 @@ export const metadata: Metadata = {
   },
 };
 
+/* Applied before paint so there's never a light→dark flash. Light is the
+   default for new visitors — dark only activates on an explicit saved choice,
+   it does not follow the OS preference. */
+const THEME_INIT_SCRIPT = `
+(function () {
+  try {
+    var stored = localStorage.getItem("theme");
+    if (stored === "dark") document.documentElement.classList.add("dark");
+  } catch (e) {}
+})();
+`;
+
 /* ── Root Layout ────────────────────────────────────────────────────────────── */
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      data-theme="dark"
-      className={`${bricolage.variable} ${jakarta.variable} ${inter.variable} ${mono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <PostHogProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </PostHogProvider>

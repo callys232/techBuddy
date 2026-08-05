@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@/lib/supabase/client";
 import { Resend } from "resend";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY ?? ""
-);
 const resend    = new Resend(process.env.RESEND_API_KEY ?? "");
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 
@@ -18,7 +14,12 @@ export async function POST(req: Request) {
   }
 
   /* Column is website_url in the migration schema */
-  await supabase.from("audit_requests").insert({ name, email, website_url: url, audit_types: auditTypes ?? [], category: category ?? null }).then(() => null, () => null);
+  try {
+    const supabase = createServerClient();
+    await supabase.from("audit_requests").insert({ name, email, website_url: url, audit_types: auditTypes ?? [], category: category ?? null });
+  } catch {
+    // Supabase not configured yet, or insert failed — non-fatal, emails still send below
+  }
 
   await Promise.all([
     resend.emails.send({

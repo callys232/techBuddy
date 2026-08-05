@@ -4,6 +4,7 @@ import { IconCheck, IconSparkles } from "@tabler/icons-react";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { ConnectorsGrid } from "@/components/sections/ConnectorsGrid";
 import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
+import { ComparisonTable, type ComparisonRow } from "@/components/ui/ComparisonTable";
 import { getUserLocation } from "@/lib/geo";
 
 export const metadata: Metadata = {
@@ -140,6 +141,15 @@ const ADD_ONS = [
   { name: "Security pentest", price: "₦300k – ₦1.5M" },
   { name: "Performance optimisation", price: "₦200k – ₦800k" },
   { name: "DevOps setup (CI/CD + cloud)", price: "₦300k – ₦1.2M" },
+];
+
+const COMPARISON_ROWS: ComparisonRow[] = [
+  { capability: "Fixed Naira quote before work starts",       values: ["yes", "partial", "no"] },
+  { capability: "Direct access to the engineer, not a broker", values: ["yes", "yes", "no"] },
+  { capability: "NDPR/NDPA compliance built into delivery",    values: ["yes", "no", "partial"] },
+  { capability: "Post-launch support included",                values: ["yes", "no", "partial"] },
+  { capability: "Payment integration expertise (Paystack/Flutterwave)", values: ["yes", "partial", "yes"] },
+  { capability: "One team across web, mobile, DevOps and AI",  values: ["yes", "no", "partial"] },
 ];
 
 export default async function PricingPage() {
@@ -320,6 +330,27 @@ export default async function PricingPage() {
                 <span className="font-mono text-xs text-[var(--primary)] shrink-0">{price}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How we compare ──────────────────────────────────────────── */}
+      <section className="py-16">
+        <div className="gradient-line mb-16" />
+        <div className="shell">
+          <span className="eyebrow mb-5 inline-flex">Comparison</span>
+          <h2 className="h-section mb-2">
+            How we compare.
+          </h2>
+          <p className="text-sm muted mb-10 max-w-xl">
+            Most builds run through a freelancer or a big agency. Here&apos;s what actually differs.
+          </p>
+          <div className="card p-2 sm:p-4">
+            <ComparisonTable
+              columns={["TechAgency", "Freelancer", "Big agency"]}
+              highlightColumn={0}
+              rows={COMPARISON_ROWS}
+            />
           </div>
         </div>
       </section>

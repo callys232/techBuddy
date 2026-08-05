@@ -16,11 +16,13 @@ const SOCIAL_ICON_MAP: Record<string, ComponentType<{ size: number }>> = {
   instagram: IconBrandInstagram,
 };
 
+const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "hello@techagency.africa";
+
 export function Footer() {
   return (
     <footer className="bg-[var(--surface)]">
       <div className="gradient-line" />
-      <div className="mx-auto max-w-7xl px-[var(--container-px)] py-16">
+      <div className="shell py-16">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">
@@ -75,7 +77,7 @@ export function Footer() {
             <p className="text-[11px] text-[var(--fg)]/30">
               © {new Date().getFullYear()} TechAgency. All rights reserved. Built in Africa, for the world.
             </p>
-            <p className="text-[11px] text-[var(--fg)]/30">Lagos, Nigeria · Global remote team · hello@techagency.africa</p>
+            <p className="text-[11px] text-[var(--fg)]/30">Lagos, Nigeria · Global remote team · {TEAM_EMAIL}</p>
           </div>
         </div>
       </div>

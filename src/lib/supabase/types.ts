@@ -131,6 +131,161 @@ export interface Database {
         };
         Relationships: [];
       };
+      audit_requests: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          website_url: string;
+          audit_types: string[];
+          category: string | null;
+          created_at: string;
+        };
+        Insert: {
+          name: string;
+          email: string;
+          website_url: string;
+          audit_types: string[];
+          category?: string | null;
+        };
+        Update: {
+          name?: string;
+          email?: string;
+          website_url?: string;
+          audit_types?: string[];
+          category?: string | null;
+        };
+        Relationships: [];
+      };
+      invest_applications: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          company: string | null;
+          stage: string | null;
+          invest_type: string | null;
+          pitch: string;
+          funding: string | null;
+          url: string | null;
+          created_at: string;
+        };
+        Insert: {
+          name: string;
+          email: string;
+          company?: string | null;
+          stage?: string | null;
+          invest_type?: string | null;
+          pitch: string;
+          funding?: string | null;
+          url?: string | null;
+        };
+        Update: {
+          name?: string;
+          email?: string;
+          company?: string | null;
+          stage?: string | null;
+          invest_type?: string | null;
+          pitch?: string;
+          funding?: string | null;
+          url?: string | null;
+        };
+        Relationships: [];
+      };
+      points_balances: {
+        Row: {
+          email: string;
+          balance: number;
+          updated_at: string;
+        };
+        Insert: {
+          email: string;
+          balance?: number;
+        };
+        Update: {
+          email?: string;
+          balance?: number;
+        };
+        Relationships: [];
+      };
+      points_transactions: {
+        Row: {
+          id: string;
+          email: string;
+          delta: number;
+          reason: string;
+          created_at: string;
+        };
+        Insert: {
+          email: string;
+          delta: number;
+          reason: string;
+        };
+        Update: {
+          email?: string;
+          delta?: number;
+          reason?: string;
+        };
+        Relationships: [];
+      };
+      subscriptions: {
+        Row: {
+          id: string;
+          email: string;
+          status: string;
+          plan: string;
+          paystack_customer_code: string | null;
+          paystack_subscription_code: string | null;
+          current_period_end: string | null;
+          created_at: string;
+        };
+        Insert: {
+          email: string;
+          status: string;
+          plan: string;
+          paystack_customer_code?: string | null;
+          paystack_subscription_code?: string | null;
+          current_period_end?: string | null;
+        };
+        Update: {
+          email?: string;
+          status?: string;
+          plan?: string;
+          paystack_customer_code?: string | null;
+          paystack_subscription_code?: string | null;
+          current_period_end?: string | null;
+        };
+        Relationships: [];
+      };
+      tool_leads: {
+        Row: {
+          id: string;
+          tool: string;
+          email: string | null;
+          source: string;
+          selections: Record<string, unknown>;
+          result: Record<string, unknown>;
+          subscribed: boolean;
+          created_at: string;
+        };
+        Insert: {
+          tool: string;
+          email?: string | null;
+          source: string;
+          selections: Record<string, unknown>;
+          result: Record<string, unknown>;
+          subscribed: boolean;
+        };
+        Update: {
+          tool?: string;
+          email?: string | null;
+          source?: string;
+          selections?: Record<string, unknown>;
+          result?: Record<string, unknown>;
+          subscribed?: boolean;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

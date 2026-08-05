@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@/lib/supabase/client";
 import { Resend } from "resend";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY ?? ""
-);
 const resend     = new Resend(process.env.RESEND_API_KEY ?? "");
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 
@@ -17,16 +13,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "name, email and pitch are required" }, { status: 400 });
   }
 
-  await supabase.from("invest_applications").insert({
-    name,
-    email,
-    company:     company ?? null,
-    stage:       stage ?? null,
-    invest_type: investType ?? null,
-    pitch,
-    funding:     funding ?? null,
-    url:         url ?? null,
-  }).then(() => null, () => null);
+  try {
+    const supabase = createServerClient();
+    await supabase.from("invest_applications").insert({
+      name,
+      email,
+      company:     company ?? null,
+      stage:       stage ?? null,
+      invest_type: investType ?? null,
+      pitch,
+      funding:     funding ?? null,
+      url:         url ?? null,
+    });
+  } catch {
+    // Supabase not configured yet, or insert failed — non-fatal, emails still send below
+  }
 
   await Promise.all([
     /* Confirmation to applicant */

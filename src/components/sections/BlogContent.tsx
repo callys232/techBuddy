@@ -1,12 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { TabGroup } from "@/components/ui/TabGroup";
 import { BlogCard } from "@/components/ui/BlogCard";
 import { BLOG_TABS, ALL_POSTS } from "@/mock/blog";
 
 export function BlogContent() {
-  const [activeTab, setActiveTab] = useState("all");
+  const searchParams = useSearchParams();
+  const requestedCategory = searchParams.get("category");
+  const initialTab = BLOG_TABS.some((t) => t.id === requestedCategory) ? requestedCategory! : "all";
+
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [subEmail, setSubEmail] = useState("");
   const [subStatus, setSubStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 

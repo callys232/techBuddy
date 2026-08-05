@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Suspense } from "react";
 import { BlogContent } from "@/components/sections/BlogContent";
 import { NewsFeed } from "@/components/sections/NewsFeed";
 import { PageVectors } from "@/components/bg/PageVectors";
@@ -19,30 +21,77 @@ export const metadata: Metadata = {
   },
 };
 
+const GOALS = [
+  { label: "Ship your MVP faster",       href: "/blog?category=startup-tech" },
+  { label: "Pass NDPR compliance",       href: "/blog?category=security" },
+  { label: "Learn what breaks at scale", href: "/blog?category=devops" },
+  { label: "Pick the right stack",       href: "/blog?category=web-dev" },
+];
+
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
+
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
         <PageVectors variant="scattered" intensity={0.35} />
-        <div className="relative z-10">
-        <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none">
-          Built by Builders,<br />for Builders
-        </h1>
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <span className="eyebrow mb-5 inline-flex">The TechBuddy Blog</span>
+
+          <h1 className="h-hero mb-5">
+            Built by Builders,<br />for Builders
+          </h1>
+
+          <p className="lead max-w-lg mx-auto mb-8">
+            Real engineering write-ups, fintech integration guides, and startup strategy from a
+            team that&apos;s shipped 35+ products. No thought-leadership — just what worked, what
+            broke, and what we&apos;d do differently.
+          </p>
+
+          {/* Real, sourced counts — not invented */}
+          <div className="flex items-center justify-center gap-8 mb-8">
+            <div className="text-center">
+              <span className="block font-display font-semibold text-2xl text-[var(--brand)]">11</span>
+              <span className="stat-label">articles</span>
+            </div>
+            <div className="w-px h-8 bg-[var(--border)]" />
+            <div className="text-center">
+              <span className="block font-display font-semibold text-2xl text-[var(--brand)]">7</span>
+              <span className="stat-label">categories</span>
+            </div>
+          </div>
+
+          {/* Outcome-framed goals — what you land by reading, not what we cover */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {GOALS.map((g) => (
+              <Link
+                key={g.label}
+                href={g.href}
+                className="rounded-full border border-[var(--border)] px-3.5 py-1.5 text-[13px] font-medium text-[var(--ink-muted)] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
+              >
+                {g.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
+
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
-        <BlogContent />
+        <Suspense fallback={null}>
+          <BlogContent />
+        </Suspense>
       </section>
 
-      {/* Live news feed */}
+      {/* ── Live news feed ───────────────────────────────────────────────── */}
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
         <div className="mb-10">
-          <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">
-            Live from around the world
-          </span>
-          <h2 className="mt-2 font-display text-3xl md:text-4xl font-extrabold text-[var(--fg)]">
-            News that moves African builders
+          <span className="eyebrow mb-4 inline-flex">Live from around the world</span>
+          <h2 className="h-section">
+            News that moves builders, everywhere
           </h2>
+          <p className="muted mt-2 max-w-lg text-[14.5px]">
+            Aggregated every 30 minutes from global tech press, African tech coverage, and crypto/fintech sources — so you&apos;re not the last to know.
+          </p>
         </div>
         <NewsFeed />
       </section>

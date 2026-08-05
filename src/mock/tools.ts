@@ -5,6 +5,7 @@ export interface FreeTool {
   desc: string;
   badge?: string;
   href: string;
+  premium?: boolean;
 }
 
 export const FREE_TOOLS: FreeTool[] = [
@@ -86,6 +87,64 @@ export const FREE_TOOLS: FreeTool[] = [
     desc: "Pick a live fixture from the Premier League, La Liga, Serie A, Bundesliga, Champions League or NBA — get a free win-probability analysis and form guide.",
     badge: "New",
     href: "/tools/sport-predictor",
+  },
+  {
+    slug: "qr-code-generator",
+    icon: "🔲",
+    title: "QR Code Generator",
+    desc: "Generate a QR code for a link, WiFi network, WhatsApp chat, vCard or plain text — customise the colour and download as PNG or SVG.",
+    badge: "New",
+    href: "/tools/qr-code-generator",
+  },
+  {
+    slug: "invoice-generator",
+    icon: "🧾",
+    title: "Invoice Generator",
+    desc: "Build a professional invoice with line items, VAT and multi-currency support — download as a branded PDF in seconds.",
+    badge: "New",
+    href: "/tools/invoice-generator",
+  },
+  {
+    slug: "name-generator",
+    icon: "✨",
+    title: "Business Name Generator",
+    desc: "Describe your business, get 15 AI-generated name ideas with an instant .com / .ng availability check.",
+    badge: "AI-powered",
+    href: "/tools/name-generator",
+  },
+  {
+    slug: "cover-letter-generator",
+    icon: "✉️",
+    title: "Cover Letter Generator",
+    desc: "Tell us the role and your strengths — get a tailored, ready-to-send cover letter in seconds. Pairs perfectly with Resume Maker.",
+    badge: "AI-powered",
+    href: "/tools/cover-letter-generator",
+  },
+  {
+    slug: "business-plan-generator",
+    icon: "📊",
+    title: "AI Business Plan Generator",
+    desc: "Turn your idea into a structured business plan — market analysis, business model, go-to-market and financial summary, ready to share with investors.",
+    badge: "Premium",
+    href: "/tools/business-plan-generator",
+    premium: true,
+  },
+  {
+    slug: "premium-audit",
+    icon: "🚀",
+    title: "Premium Audit Report",
+    desc: "An instant, automated deep-dive report on top of the free audit — security headers, SEO signals, performance and a prioritised fix list as a branded PDF.",
+    badge: "Premium",
+    href: "/tools/premium-audit",
+    premium: true,
+  },
+  {
+    slug: "whatsapp-bot-builder",
+    icon: "🤖",
+    title: "WhatsApp Bot Flow Builder",
+    desc: "Design your WhatsApp auto-reply flow — keywords, menus and responses — then send it to our team to deploy on WhatsApp Business API.",
+    badge: "New",
+    href: "/tools/whatsapp-bot-builder",
   },
 ];
 

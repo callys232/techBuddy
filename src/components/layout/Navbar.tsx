@@ -21,6 +21,7 @@ import {
   IconChevronRight,
   IconTools,
   IconTag,
+  IconUserCircle,
 } from "@tabler/icons-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { NAV_LINKS } from "@/mock/navigation";
@@ -111,7 +112,7 @@ export function Navbar() {
       ].join(" ")}
     >
       {/* ── Main bar ─────────────────────────────────────────────────────────── */}
-      <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-[var(--container-px)]">
+      <div className="shell flex h-[68px] items-center justify-between">
         {/* Logo */}
         <Link href="/" aria-label="TechBuddy home" className="shrink-0">
           <CatalystTechLogo size="md" />
@@ -152,12 +153,18 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          {/* Get a quote CTA */}
+          {/* Dashboard */}
           <Link
-            href="/quote"
-            className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-xl bg-[var(--primary)] pl-4 pr-4 font-heading text-[13px] font-bold text-[var(--bg)] btn-glow hover:opacity-90 transition-all active:scale-[0.97]"
+            href="/dashboard"
+            aria-label="Your dashboard"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
           >
-            <IconSparkles size={13} className="opacity-80" />
+            <IconUserCircle size={17} />
+          </Link>
+
+          {/* Get a quote CTA */}
+          <Link href="/quote" className="btn-primary hidden sm:inline-flex h-9 px-4 text-[13px]">
+            <IconSparkles size={13} />
             Get a quote
           </Link>
 
@@ -236,20 +243,21 @@ export function Navbar() {
             </nav>
 
             {/* Bottom actions */}
-            <div className="mt-4 grid grid-cols-2 gap-2.5">
+            <div className="mt-4 grid grid-cols-3 gap-2.5">
+              <Link href="/dashboard" className="btn-ghost h-11 text-[13px]">
+                <IconUserCircle size={16} />
+                Account
+              </Link>
               <a
                 href={`https://wa.me/${WA}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border)] font-heading text-[13px] font-semibold text-[var(--fg)]/65 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
+                className="btn-ghost h-11 text-[13px]"
               >
                 <IconBrandWhatsapp size={16} />
                 WhatsApp
               </a>
-              <Link
-                href="/quote"
-                className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[var(--primary)] font-heading text-[13px] font-bold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-[0.97]"
-              >
+              <Link href="/quote" className="btn-primary h-11 text-[13px]">
                 <IconSparkles size={14} />
                 Get a quote
               </Link>

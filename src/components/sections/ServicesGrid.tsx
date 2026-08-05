@@ -33,24 +33,15 @@ const ICON_MAP = {
   settings:        IconSettings,
 } as const;
 
-/* ── Colour palette — one per card, cycles across 14 services ─────────────── */
-
-const PALETTE = [
-  { card: "bg-sky-950 border-sky-700/40",     icon: "bg-sky-900/60 text-sky-400",         badge: "bg-sky-900/70 text-sky-300",         title: "text-sky-50",     desc: "text-sky-200/65",     accent: "text-sky-400",     glow: "hover:shadow-[0_24px_64px_rgba(56,189,248,0.25)]"   },
-  { card: "bg-amber-950 border-amber-700/40", icon: "bg-amber-900/60 text-amber-400",     badge: "bg-amber-900/70 text-amber-300",     title: "text-amber-50",   desc: "text-amber-200/65",   accent: "text-amber-400",   glow: "hover:shadow-[0_24px_64px_rgba(245,166,35,0.25)]"   },
-  { card: "bg-rose-950 border-rose-700/40",   icon: "bg-rose-900/60 text-rose-400",       badge: "bg-rose-900/70 text-rose-300",       title: "text-rose-50",    desc: "text-rose-200/65",    accent: "text-rose-400",    glow: "hover:shadow-[0_24px_64px_rgba(251,113,133,0.25)]"  },
-  { card: "bg-emerald-950 border-emerald-700/40", icon: "bg-emerald-900/60 text-emerald-400", badge: "bg-emerald-900/70 text-emerald-300", title: "text-emerald-50", desc: "text-emerald-200/65", accent: "text-emerald-400", glow: "hover:shadow-[0_24px_64px_rgba(52,211,153,0.25)]"  },
-  { card: "bg-violet-950 border-violet-700/40",   icon: "bg-violet-900/60 text-violet-400",   badge: "bg-violet-900/70 text-violet-300",   title: "text-violet-50",  desc: "text-violet-200/65",  accent: "text-violet-400",  glow: "hover:shadow-[0_24px_64px_rgba(167,139,250,0.25)]" },
-  { card: "bg-orange-950 border-orange-700/40",   icon: "bg-orange-900/60 text-orange-400",   badge: "bg-orange-900/70 text-orange-300",   title: "text-orange-50",  desc: "text-orange-200/65",  accent: "text-orange-400",  glow: "hover:shadow-[0_24px_64px_rgba(251,146,60,0.25)]"  },
-  { card: "bg-teal-950 border-teal-700/40",       icon: "bg-teal-900/60 text-teal-400",       badge: "bg-teal-900/70 text-teal-300",       title: "text-teal-50",    desc: "text-teal-200/65",    accent: "text-teal-400",    glow: "hover:shadow-[0_24px_64px_rgba(45,212,191,0.25)]"   },
-] as const;
+/* ── Suite tints — one per service, cycling through the 8-hue suite palette.
+   Applied only to the icon glyph, tag badge and hover-tint chip — the card
+   surface itself stays flat (--surface), never a colored background fill. ── */
+const SUITE_TINTS = [
+  "var(--suite-1)", "var(--suite-2)", "var(--suite-3)", "var(--suite-4)",
+  "var(--suite-5)", "var(--suite-6)", "var(--suite-7)", "var(--suite-8)",
+];
 
 /* ── Stack positions ────────────────────────────────────────────────────────── */
-
-const STACK_POS = [
-  { rotate: 0,  y: 0,  scale: 1,    zIndex: 20, opacity: 1    }, // top
-  { rotate: -8, y: 28, scale: 0.88, zIndex: 10, opacity: 0.18 }, // shadow hint
-];
 
 const EXIT_LEFT  = { rotate: -18, x: -340, y: -80, scale: 0.82, opacity: 0, zIndex: 30 };
 const EXIT_RIGHT = { rotate:  18, x:  340, y: -80, scale: 0.82, opacity: 0, zIndex: 30 };
@@ -106,7 +97,7 @@ export function ServicesGrid() {
     if (rank === 1) {
       return {
         rotate: -8, y: 28, x: 0, scale: 0.88, zIndex: 10,
-        opacity: deckHovered ? 0.28 : 0.18,
+        opacity: deckHovered ? 0.5 : 0.35,
         transition: { type: "spring" as const, stiffness: 260, damping: 28 },
       };
     }
@@ -121,25 +112,22 @@ export function ServicesGrid() {
     return { rotate: -10, y: 40, x: 0, scale: 0.84, zIndex: 0, opacity: 0 };
   };
 
-  const palette = (i: number) => PALETTE[i % PALETTE.length];
+  const tint = (i: number) => SUITE_TINTS[i % SUITE_TINTS.length];
   const svc = ALL_SERVICES[active];
 
   return (
     <section className="relative overflow-hidden py-[var(--section-y)]">
-      <PageVectors variant="technical" intensity={0.38} />
+      <PageVectors variant="technical" intensity={0.2} />
       <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
         <div className="grid lg:grid-cols-[1fr,480px] gap-12 lg:gap-20 items-center">
 
           {/* ── Left panel ──────────────────────────────────────────────── */}
           <div>
-            <span className="eyebrow-pill mb-5 inline-flex">
-              What we do
-            </span>
-            <h2 className="mt-5 font-display font-extrabold text-[var(--fg)] leading-[1.1] mb-5 tracking-[-0.02em]
-                           text-[clamp(2rem,3.5vw,3rem)]">
-              <span className="gradient-text">Fourteen services.</span><br />One team.
+            <span className="eyebrow mb-5 inline-flex">What we do</span>
+            <h2 className="h-section mb-5">
+              Fourteen services. One team.
             </h2>
-            <p className="text-[var(--fg)]/50 leading-relaxed mb-10 max-w-sm text-[14.5px]">
+            <p className="muted leading-relaxed mb-10 max-w-sm text-[14.5px]">
               Built around what African businesses actually need to scale.
             </p>
 
@@ -153,15 +141,16 @@ export function ServicesGrid() {
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 className="mb-8"
               >
-                <p className={`font-display font-extrabold text-xl leading-snug mb-1 ${palette(active).accent}`}>
+                <p className="font-display font-semibold text-xl leading-snug mb-1" style={{ color: tint(active) }}>
                   {svc.title}
                 </p>
-                <p className="text-sm text-[var(--fg)]/50 italic leading-relaxed mb-4">
+                <p className="text-sm muted italic leading-relaxed mb-4">
                   {svc.outcome}
                 </p>
                 <Link
                   href={svc.href}
-                  className={`group/link inline-flex items-center gap-1.5 text-sm font-semibold hover:underline ${palette(active).accent}`}
+                  className="group/link inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+                  style={{ color: tint(active) }}
                 >
                   Explore {svc.title}
                   <motion.span
@@ -185,12 +174,12 @@ export function ServicesGrid() {
                   aria-label={dir === "prev" ? "Previous service" : "Next service"}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.85, transition: { type: "spring", stiffness: 500, damping: 18 } }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)]/50 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
                 >
                   {dir === "prev" ? <IconChevronLeft size={16} /> : <IconChevronRight size={16} />}
                 </motion.button>
               ))}
-              <span className="font-mono text-xs text-[var(--fg)]/30 ml-1">
+              <span className="font-mono text-xs faint ml-1">
                 {active + 1} / {N}
               </span>
             </div>
@@ -208,18 +197,14 @@ export function ServicesGrid() {
                   transition={{ duration: 0.12 }}
                   className={[
                     "rounded-full transition-all duration-300 origin-center",
-                    i === active
-                      ? "w-5 h-[6px] bg-[var(--primary)]"
-                      : "w-[6px] h-[6px] bg-[var(--border)]",
+                    i === active ? "w-5 h-[6px]" : "w-[6px] h-[6px] bg-[var(--border)]",
                   ].join(" ")}
+                  style={i === active ? { background: "var(--brand)" } : undefined}
                 />
               ))}
             </div>
 
-            <Link
-              href="/services"
-              className="inline-block mt-8 text-sm font-semibold text-[var(--primary)] hover:underline"
-            >
+            <Link href="/services" className="link-underline inline-block mt-8 text-sm font-semibold">
               View all services →
             </Link>
           </div>
@@ -232,9 +217,9 @@ export function ServicesGrid() {
             onMouseLeave={() => setDeckHovered(false)}
           >
             {ALL_SERVICES.map((s, i) => {
-              const p   = palette(i);
               const Ico = ICON_MAP[s.icon];
               const top = isTopCard(i);
+              const c = tint(i);
 
               /* Skip full motion treatment for cards that are never visible */
               if (!isVisible(i)) return null;
@@ -247,13 +232,8 @@ export function ServicesGrid() {
                   /* Lift only on hover — no rotation (avoids origin-corner swing) */
                   whileHover={top ? { y: -10, scale: 1.02, transition: { duration: 0.18 } } : undefined}
                   whileTap={top ? { scale: 0.96, transition: { type: "spring", stiffness: 500, damping: 22 } } : undefined}
-                  className={[
-                    "absolute inset-0 origin-bottom",   /* pivot from center-bottom for natural card feel */
-                    "rounded-[var(--radius-card)] border",
-                    "shadow-[0_12px_48px_rgba(0,0,0,0.4)]",
-                    top ? p.glow : "",
-                    p.card,
-                  ].join(" ")}
+                  className="absolute inset-0 origin-bottom card"
+                  style={{ borderColor: top ? c : "var(--border)" }}
                 >
                   <div className="flex flex-col h-full p-7">
 
@@ -261,7 +241,8 @@ export function ServicesGrid() {
                     <div className="flex items-start justify-between mb-6">
                       {/* Icon floats on the active card */}
                       <motion.span
-                        className={`flex h-12 w-12 items-center justify-center rounded-2xl ${p.icon}`}
+                        className="flex h-12 w-12 items-center justify-center rounded-2xl"
+                        style={{ background: `color-mix(in srgb, ${c} 12%, var(--surface))`, color: c }}
                         animate={top ? { y: [0, -4, 0] } : { y: 0 }}
                         transition={top
                           ? { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
@@ -272,7 +253,8 @@ export function ServicesGrid() {
                       </motion.span>
 
                       <motion.span
-                        className={`font-mono text-[10px] font-semibold rounded-full px-3 py-1 uppercase tracking-wide ${p.badge}`}
+                        className="font-mono text-[10px] font-semibold rounded-full px-3 py-1 uppercase tracking-wide"
+                        style={{ background: `color-mix(in srgb, ${c} 14%, var(--surface))`, color: c }}
                         whileHover={{ scale: 1.08 }}
                         transition={{ duration: 0.12 }}
                       >
@@ -281,26 +263,27 @@ export function ServicesGrid() {
                     </div>
 
                     {/* Title */}
-                    <h3 className={`font-display text-2xl font-extrabold leading-snug mb-3 ${p.title}`}>
+                    <h3 className="font-display text-2xl font-semibold leading-snug mb-3 text-[var(--ink)]">
                       {s.title}
                     </h3>
 
                     {/* Description */}
-                    <p className={`text-sm leading-relaxed mb-4 flex-1 ${p.desc}`}>
+                    <p className="text-sm leading-relaxed mb-4 flex-1 muted">
                       {s.desc}
                     </p>
 
                     {/* Outcome */}
-                    <p className={`text-xs italic leading-relaxed border-l-2 pl-3 mb-5 border-current/30 ${p.accent}`}>
+                    <p className="text-xs italic leading-relaxed border-l-2 pl-3 mb-5" style={{ borderColor: c, color: "var(--ink-muted)" }}>
                       {s.outcome}
                     </p>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
                       <Link
                         href={s.href}
                         onClick={(e) => e.stopPropagation()}
-                        className={`group/more flex items-center gap-1 text-xs font-semibold ${p.accent}`}
+                        className="group/more flex items-center gap-1 text-xs font-semibold"
+                        style={{ color: c }}
                       >
                         Learn more
                         <motion.span
@@ -316,9 +299,9 @@ export function ServicesGrid() {
                       <Link
                         href={`/quote?service=${encodeURIComponent(s.title)}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 px-3 py-1.5 text-[11px] font-semibold text-white/80 transition-all"
+                        className="btn-primary h-8 px-3 text-[11px]"
                       >
-                        <IconSparkles size={11} className="opacity-70" />
+                        <IconSparkles size={11} />
                         Get a quote
                       </Link>
                     </div>
@@ -327,7 +310,7 @@ export function ServicesGrid() {
               );
             })}
 
-            <p className="absolute -bottom-7 right-0 text-[10px] text-[var(--fg)]/25 font-mono tracking-wide select-none pointer-events-none">
+            <p className="absolute -bottom-7 right-0 text-[10px] faint font-mono tracking-wide select-none pointer-events-none">
               tap to flip →
             </p>
           </div>

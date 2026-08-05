@@ -1,19 +1,18 @@
 import { STATS } from "@/mock/stats";
 
+/* Same four proof stats shown in Hero and WhyWebsiteSection — one
+   source of truth, not a second set of numbers that can drift. */
+const SHOWN = [STATS.productsShipped, STATS.timeToMvp, STATS.clientReEngagement, STATS.engineersInNetwork];
+
 export function StatsBar() {
   return (
-    <section className="relative border-y border-[var(--border)] bg-[var(--surface)]/60 backdrop-blur-sm">
-      <div className="mx-auto max-w-5xl px-[var(--container-px)]">
+    <section className="relative border-y border-[var(--border)] bg-[var(--surface)]">
+      <div className="shell">
         <div className="flex flex-wrap items-center justify-center divide-x divide-[var(--border)]">
-          {STATS.map((stat, i) => (
-            <div key={stat.label} className="flex items-center gap-3 px-8 py-6">
-              {i !== 0 && <span className="sr-only">|</span>}
-              <p className="font-display text-2xl font-extrabold gradient-text leading-none">
-                {stat.value}
-              </p>
-              <p className="text-[12px] text-[var(--fg)]/45 leading-snug max-w-[7rem]">
-                {stat.label}
-              </p>
+          {SHOWN.map((stat) => (
+            <div key={stat.id} className="flex items-center gap-3 px-8 py-6">
+              <p className="font-display font-semibold text-2xl text-[var(--brand)] leading-none">{stat.value}</p>
+              <p className="text-[12px] muted leading-snug max-w-[7rem]">{stat.label}</p>
             </div>
           ))}
         </div>

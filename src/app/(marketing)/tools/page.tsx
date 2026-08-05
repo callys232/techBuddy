@@ -4,24 +4,25 @@ import { FREE_TOOLS } from "@/mock/tools";
 import { PageVectors } from "@/components/bg/PageVectors";
 
 export const metadata: Metadata = {
-  title: "Free Tools — Cost Estimator, Timeline Estimator, Stack Picker & Tech Audit",
+  title: "Free & Premium Tools — Resume Maker, Invoice Generator, QR Codes, AI Business Plans & More",
   description:
-    "Free tools for founders everywhere: project cost estimator, realistic timeline estimator, tech stack picker, and a free manual tech audit of your site or app.",
+    "Seventeen tools for founders, job seekers and builders everywhere: cost estimator, invoice generator, QR codes, AI business plan generator, resume maker, and more. Most are free — no sign-up required.",
   keywords: [
     "project cost estimator", "tech stack picker",
     "free website audit", "how much does an app cost",
-    "best tech stack 2026",
+    "invoice generator", "qr code generator", "business name generator",
+    "cover letter generator", "AI business plan generator",
   ],
   openGraph: {
-    title: "Free Tools for Founders Everywhere | TechBuddy",
-    description: "Estimate your build cost, pick the right tech stack, and get a free audit — no sign-up required.",
+    title: "Free & Premium Tools for Builders Everywhere | TechBuddy",
+    description: "Estimate your build cost, generate invoices and QR codes, write a cover letter, or get an AI business plan — most are free.",
   },
 };
 
 const STATS = [
-  { value: "2 min",  label: "Average time to estimate" },
-  { value: "Free",   label: "No sign-up required" },
-  { value: "48 hrs", label: "Audit turnaround" },
+  { value: "17",     label: "Tools in the ecosystem" },
+  { value: "Free",   label: "No sign-up for most" },
+  { value: "48 hrs", label: "Manual audit turnaround" },
 ];
 
 export default function ToolsPage() {
@@ -39,7 +40,7 @@ export default function ToolsPage() {
             Plan Your Build Before You Spend a Dime
           </h1>
           <p className="text-lg text-[var(--fg)]/55 leading-relaxed">
-            Ten free tools — estimate costs, plan timelines, pick your stack, check NDPR compliance, build your resume, predict a match, and more. No sign-up for most.
+            Seventeen tools — estimate costs, generate invoices and QR codes, write a cover letter, name your business, build your resume, and more. A few premium tools go deeper with AI. No sign-up for most.
           </p>
         </div>
       </section>
@@ -59,32 +60,45 @@ export default function ToolsPage() {
       {/* ── Tool cards ───────────────────────────────────────────────────── */}
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-          {FREE_TOOLS.map((tool, i) => (
+          {FREE_TOOLS.map((tool) => (
             <Link
               key={tool.slug}
               href={tool.href}
-              className="group flex flex-col glass rounded-[var(--radius-card)] border border-[var(--border)] p-5 hover:border-[var(--primary)]/60 hover:-translate-y-1.5 hover:shadow-[var(--shadow-glow-sky)] transition-all duration-300"
+              className={[
+                "group flex flex-col glass rounded-[var(--radius-card)] border p-5 hover:-translate-y-1.5 transition-all duration-300",
+                tool.premium
+                  ? "border-amber-400/30 hover:border-amber-400/60 hover:shadow-[0_0_24px_rgba(251,191,36,0.15)]"
+                  : "border-[var(--border)] hover:border-[var(--primary)]/60 hover:shadow-[var(--shadow-glow-sky)]",
+              ].join(" ")}
             >
               <div className="flex items-start justify-between mb-4">
                 <span className="text-2xl">{tool.icon}</span>
                 {tool.badge && (
                   <span className={[
                     "inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold font-mono uppercase tracking-wide",
-                    i === 0
-                      ? "bg-[var(--primary)]/10 text-[var(--primary)]"
-                      : "bg-emerald-500/10 text-emerald-400",
+                    tool.premium
+                      ? "bg-amber-400/15 text-amber-500"
+                      : tool.badge === "New" || tool.badge === "AI-powered"
+                        ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                        : "bg-emerald-500/10 text-emerald-400",
                   ].join(" ")}>
                     {tool.badge}
                   </span>
                 )}
               </div>
-              <h2 className="font-heading font-bold text-base text-[var(--fg)] mb-1.5 group-hover:text-[var(--primary)] transition-colors">
+              <h2 className={[
+                "font-heading font-bold text-base text-[var(--fg)] mb-1.5 transition-colors",
+                tool.premium ? "group-hover:text-amber-500" : "group-hover:text-[var(--primary)]",
+              ].join(" ")}>
                 {tool.title}
               </h2>
               <p className="text-sm text-[var(--fg)]/50 leading-relaxed flex-1 mb-4">
                 {tool.desc}
               </p>
-              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--primary)] group-hover:gap-2.5 transition-all">
+              <span className={[
+                "inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all",
+                tool.premium ? "text-amber-500" : "text-[var(--primary)]",
+              ].join(" ")}>
                 Open tool →
               </span>
             </Link>

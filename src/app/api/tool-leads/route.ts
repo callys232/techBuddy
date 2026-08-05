@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@/lib/supabase/client";
 import { Resend } from "resend";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL   ?? "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY  ?? ""
-);
 const resend     = new Resend(process.env.RESEND_API_KEY ?? "");
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 const SITE_URL   = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
@@ -147,6 +143,22 @@ function selectionsSummaryHtml(tool: string, sel: Record<string, unknown>, res: 
       </table>`;
   }
 
+  if (tool === "whatsapp-bot-builder") {
+    const businessName = (sel.businessName as string) ?? "—";
+    const welcome      = (sel.welcomeMessage as string) ?? "—";
+    const options      = (sel.options as { label: string; reply: string }[]) ?? [];
+    const optionRows = options.map((o, i) =>
+      `<tr><td style="padding:4px 0;color:#666;vertical-align:top">${i + 1}. ${o.label}</td><td style="padding:4px 0">${o.reply}</td></tr>`
+    ).join("");
+    return `
+      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:6px 0;color:#666;width:160px">Business</td><td style="padding:6px 0;font-weight:600">${businessName}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Welcome message</td><td style="padding:6px 0">${welcome}</td></tr>
+        <tr style="border-top:1px solid #e5e7eb"><td colspan="2" style="padding:8px 0;color:#666;font-size:12px">Menu options</td></tr>
+        ${optionRows}
+      </table>`;
+  }
+
   return `<pre style="font-size:12px;color:#666">${JSON.stringify({ sel, res }, null, 2)}</pre>`;
 }
 
@@ -177,6 +189,13 @@ export async function POST(req: Request) {
                   : tool === "build-vs-buy"        ? "Build vs Buy Calculator"
                   : tool === "pmf-score"           ? "PMF Score"
                   : tool === "sport-predictor"     ? "Sport Predictor"
+                  : tool === "qr-code-generator"   ? "QR Code Generator"
+                  : tool === "invoice-generator"   ? "Invoice Generator"
+                  : tool === "name-generator"      ? "Business Name Generator"
+                  : tool === "cover-letter-generator" ? "Cover Letter Generator"
+                  : tool === "business-plan-generator" ? "AI Business Plan Generator"
+                  : tool === "premium-audit"       ? "Premium Audit Report"
+                  : tool === "whatsapp-bot-builder" ? "WhatsApp Bot Flow Builder"
                   : tool;
 
   const sourceLabel = source === "email-capture"    ? "submitted their email"
@@ -187,21 +206,25 @@ export async function POST(req: Request) {
   const summaryHtml = selectionsSummaryHtml(tool, selections, result);
   const subscribed  = source === "email-capture" && !!email;
 
-  /* ── 1. Save to Supabase ──────────────────────────────────────── */
-  await supabase.from("tool_leads").insert({
-    tool,
-    email:      email ?? null,
-    source,
-    selections,
-    result,
-    subscribed,
-  }).then(() => null, () => null);
+  /* ── 1. Save to Supabase (and newsletter subscribe) ────────────── */
+  try {
+    const supabase = createServerClient();
 
-  /* ── 2. Subscribe to newsletter (email-capture source only) ───── */
-  if (subscribed && email) {
-    await supabase.from("newsletter_subs")
-      .upsert({ email, tags: [tool], status: "active" }, { onConflict: "email" })
-      .then(() => null, () => null);
+    await supabase.from("tool_leads").insert({
+      tool,
+      email:      email ?? null,
+      source,
+      selections,
+      result,
+      subscribed,
+    });
+
+    if (subscribed && email) {
+      await supabase.from("newsletter_subs")
+        .upsert({ email, tags: [tool], status: "active" }, { onConflict: "email" });
+    }
+  } catch {
+    // Supabase not configured yet, or write failed — non-fatal, emails still send below
   }
 
   /* ── 3. Team alert — always sent ─────────────────────────────── */

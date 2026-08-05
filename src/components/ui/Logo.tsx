@@ -1,5 +1,6 @@
-/* TechBuddy logo mark — cropped from public/logo.png (transparent PNG) to
-   its actual content bounds so it sizes cleanly at navbar/footer scale.
+/* TechBuddy logo mark — cropped from public/logo.png (the real uploaded
+   asset, transparent PNG) to its actual content bounds so it sizes cleanly
+   at navbar/footer scale. See public/logo-mark.png for the crop.
 */
 
 import Image from "next/image";
