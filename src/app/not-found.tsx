@@ -2,13 +2,13 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[var(--bg)] flex flex-col items-center justify-center px-[var(--container-px)] text-center">
-      <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.3em] mb-6">
+    <div className="min-h-screen bg-[var(--page)] flex flex-col items-center justify-center px-[var(--container-px)] text-center">
+      <p className="font-mono text-[var(--brand)] text-xs uppercase tracking-[0.3em] mb-6">
         404 — Page Not Found
       </p>
 
       <div className="relative mb-8 select-none" aria-hidden>
-        <span className="font-display text-[12rem] font-extrabold leading-none text-[var(--fg)]/[0.04] select-none">
+        <span className="font-display text-[12rem] font-extrabold leading-none text-[var(--ink)]/[0.04] select-none">
           404
         </span>
         <div className="absolute inset-0 flex items-center justify-center">
@@ -28,31 +28,31 @@ export default function NotFound() {
         </div>
       </div>
 
-      <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[var(--fg)] mb-4">
+      <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[var(--ink)] mb-4">
         Lost in the Build
       </h1>
-      <p className="text-[var(--fg)]/50 max-w-sm mb-10 leading-relaxed">
+      <p className="text-[var(--ink)]/50 max-w-sm mb-10 leading-relaxed">
         Our stickman jumped past this one. The page you&apos;re looking for doesn&apos;t exist or has moved.
       </p>
 
       <div className="flex flex-wrap gap-4 justify-center">
         <Link
           href="/"
-          className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-sky)] transition-all active:scale-95"
+          className="btn-primary h-12 px-8"
         >
           Back to Home
         </Link>
         <Link
           href="/contact"
-          className="inline-flex h-12 items-center gap-2 rounded-full border border-[var(--border)] px-8 font-semibold text-[var(--fg)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all active:scale-95"
+          className="btn-ghost h-12 px-8"
         >
           Contact Us
         </Link>
       </div>
 
-      <div className="mt-16 flex flex-wrap gap-6 justify-center text-sm text-[var(--fg)]/30">
+      <div className="mt-16 flex flex-wrap gap-6 justify-center text-sm text-[var(--ink)]/30">
         {["/services", "/portfolio", "/blog", "/quote"].map((href) => (
-          <Link key={href} href={href} className="hover:text-[var(--primary)] transition-colors">
+          <Link key={href} href={href} className="hover:text-[var(--brand)] transition-colors">
             {href}
           </Link>
         ))}

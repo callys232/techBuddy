@@ -133,14 +133,14 @@ export function Navbar() {
                   "relative flex items-center gap-1.5 rounded-lg px-3.5 py-2",
                   "font-heading text-[13px] font-medium transition-colors duration-150",
                   active
-                    ? "text-[var(--primary)] bg-[var(--primary)]/8"
-                    : "text-[var(--fg)]/50 hover:text-[var(--fg)] hover:bg-[var(--surface)]/40",
+                    ? "text-[var(--brand)] bg-[var(--brand)]/8"
+                    : "text-[var(--ink)]/50 hover:text-[var(--ink)] hover:bg-[var(--surface)]/40",
                 ].join(" ")}
               >
                 {label}
                 <span
                   className={[
-                    "nav-indicator absolute bottom-1 left-1/2 -translate-x-1/2 h-[2.5px] rounded-full bg-[var(--primary)]",
+                    "nav-indicator absolute bottom-1 left-1/2 -translate-x-1/2 h-[2.5px] rounded-full bg-[var(--brand)]",
                     active ? "w-[18px]" : "w-0",
                   ].join(" ")}
                 />
@@ -157,7 +157,7 @@ export function Navbar() {
           <Link
             href="/dashboard"
             aria-label="Your dashboard"
-            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink)]/60 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
           >
             <IconUserCircle size={17} />
           </Link>
@@ -174,7 +174,7 @@ export function Navbar() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            className="lg:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)] hover:border-[var(--primary)] transition-colors"
+            className="lg:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink)] hover:border-[var(--brand)] transition-colors"
           >
             {menuOpen ? <IconX size={17} /> : <IconMenu2 size={17} />}
           </button>
@@ -192,7 +192,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="lg:hidden border-t border-[var(--border)] bg-[var(--bg)] px-[var(--container-px)] pb-6 pt-3"
+            className="lg:hidden border-t border-[var(--border)] bg-[var(--page)] px-[var(--container-px)] pb-6 pt-3"
           >
             {/* Nav links */}
             <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
@@ -207,8 +207,8 @@ export function Navbar() {
                     className={[
                       "flex items-center gap-4 rounded-xl px-4 py-3 transition-colors duration-150",
                       active
-                        ? "bg-[var(--primary)]/8 text-[var(--primary)]"
-                        : "text-[var(--fg)]/65 hover:bg-[var(--surface)] hover:text-[var(--fg)]",
+                        ? "bg-[var(--brand)]/8 text-[var(--brand)]"
+                        : "text-[var(--ink)]/65 hover:bg-[var(--surface)] hover:text-[var(--ink)]",
                     ].join(" ")}
                   >
                     {Icon && (
@@ -216,7 +216,7 @@ export function Navbar() {
                         className={[
                           "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
                           active
-                            ? "bg-[var(--primary)]/15"
+                            ? "bg-[var(--brand)]/15"
                             : "bg-[var(--surface)]",
                         ].join(" ")}
                       >
@@ -228,7 +228,7 @@ export function Navbar() {
                         {label}
                       </span>
                       {desc && (
-                        <span className="block font-body text-[11.5px] text-[var(--fg)]/38 mt-0.5">
+                        <span className="block font-body text-[11.5px] text-[var(--ink)]/38 mt-0.5">
                           {desc}
                         </span>
                       )}

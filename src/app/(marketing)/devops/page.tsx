@@ -20,19 +20,19 @@ export const metadata: Metadata = {
 
 export default function DevOpsPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative grain overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="bottom-left" intensity={0.6} />
         <div className="relative z-10">
-        <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none max-w-3xl">
+        <h1 className="h-display max-w-3xl">
           Ship Faster. Break Nothing.
         </h1>
-        <p className="mt-6 text-lg text-[var(--fg)]/60 max-w-xl">
+        <p className="mt-6 text-lg text-[var(--ink)]/60 max-w-xl">
           End-to-end DevOps — from pipelines to production, with full observability.
         </p>
         <a
           href="/quote?service=devops"
-          className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-teal)] transition-all active:scale-95"
+          className="btn-primary mt-8 h-12 px-8"
         >
           Get a DevOps audit
         </a>
@@ -40,12 +40,12 @@ export default function DevOpsPage() {
       </section>
 
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <h2 className="font-display text-3xl font-bold text-[var(--fg)] mb-8">Services</h2>
+        <h2 className="font-display text-3xl font-bold text-[var(--ink)] mb-8">Services</h2>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {DEVOPS_SERVICES.map((s) => (
             <li
               key={s}
-              className="glass rounded-[var(--radius-card)] p-5 text-[var(--fg)] font-medium"
+              className="glass rounded-[var(--radius-card)] p-5 text-[var(--ink)] font-medium"
             >
               {s}
             </li>
@@ -54,14 +54,14 @@ export default function DevOpsPage() {
       </section>
 
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)]">
-        <h2 className="font-display text-3xl font-bold text-[var(--fg)] mb-8">
+        <h2 className="font-display text-3xl font-bold text-[var(--ink)] mb-8">
           Infrastructure Stack
         </h2>
         <div className="flex flex-wrap gap-3">
           {DEVOPS_STACK.map((tech) => (
             <span
               key={tech}
-              className="font-mono text-sm rounded-[var(--radius-badge)] border border-[var(--border)] px-3 py-1.5 text-[var(--fg)]/70"
+              className="font-mono text-sm rounded-[var(--radius-badge)] border border-[var(--border)] px-3 py-1.5 text-[var(--ink)]/70"
             >
               {tech}
             </span>

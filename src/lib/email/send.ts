@@ -4,13 +4,13 @@ import { QuoteAlert } from "./templates/QuoteAlert";
 import { QuoteConfirmation } from "./templates/QuoteConfirmation";
 import { ContactAlert } from "./templates/ContactAlert";
 
-const resend = getResendClient();
 const FROM = "TechAgency <noreply@techagency.africa>";
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "hello@techagency.africa";
 
 export async function sendQuoteAlertToTeam(
   data: Parameters<typeof QuoteAlert>[0],
 ) {
+  const resend = getResendClient();
   if (!resend) {
     return null;
   }
@@ -25,6 +25,7 @@ export async function sendQuoteAlertToTeam(
 }
 
 export async function sendQuoteConfirmationToUser(name: string, email: string) {
+  const resend = getResendClient();
   if (!resend) {
     return null;
   }
@@ -41,6 +42,7 @@ export async function sendQuoteConfirmationToUser(name: string, email: string) {
 export async function sendContactAlertToTeam(
   data: Parameters<typeof ContactAlert>[0],
 ) {
+  const resend = getResendClient();
   if (!resend) {
     return null;
   }

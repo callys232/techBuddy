@@ -53,12 +53,12 @@ export function BlogContent() {
 
       <aside className="w-full lg:w-72 space-y-8">
         <div className="glass rounded-[var(--radius-card)] p-6">
-          <h3 className="font-display text-lg font-bold text-[var(--fg)] mb-3">Newsletter</h3>
-          <p className="text-sm text-[var(--fg)]/60 mb-4">
+          <h3 className="font-display text-lg font-bold text-[var(--ink)] mb-3">Newsletter</h3>
+          <p className="text-sm text-[var(--ink)]/60 mb-4">
             Weekly digest: Nigerian tech news + original articles.
           </p>
           {subStatus === "success" ? (
-            <p className="text-sm font-semibold text-[var(--primary)]">You&apos;re subscribed!</p>
+            <p className="text-sm font-semibold text-[var(--brand)]">You&apos;re subscribed!</p>
           ) : (
             <form onSubmit={handleSubscribe}>
               <input
@@ -67,7 +67,7 @@ export function BlogContent() {
                 value={subEmail}
                 onChange={(e) => setSubEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full rounded-lg border border-[var(--border)] bg-transparent px-4 py-2 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none"
+                className="w-full rounded-lg border border-[var(--border)] bg-transparent px-4 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none"
               />
               {subStatus === "error" && (
                 <p className="mt-1 text-xs text-red-400">Something went wrong. Try again.</p>
@@ -75,7 +75,7 @@ export function BlogContent() {
               <button
                 type="submit"
                 disabled={subStatus === "loading"}
-                className="mt-3 w-full rounded-lg bg-[var(--primary)] py-2 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="mt-3 w-full rounded-lg bg-[var(--brand)] py-2 text-sm font-semibold text-[var(--page)] hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {subStatus === "loading" ? "Subscribing..." : "Subscribe"}
               </button>

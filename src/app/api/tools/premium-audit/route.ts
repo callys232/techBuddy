@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { isEmailSubscribed } from "@/lib/subscription";
+import { isUnlocked } from "@/lib/store";
 import { runAudit } from "@/lib/audit/engine";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -11,9 +13,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "email and url are required" }, { status: 400 });
   }
 
-  const subscribed = await isEmailSubscribed(email);
-  if (!subscribed) {
+  const hasAccess = (await isEmailSubscribed(email)) || (await isUnlocked(email, "premium-audit-unlock"));
+  if (!hasAccess) {
     return NextResponse.json({ error: "The Premium Audit Report is a TechBuddy Premium feature" }, { status: 403 });
+  }
+
+  const allowed = await checkRateLimit("premium-audit", getClientIp(req), 10);
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many requests — try again in a minute." }, { status: 429 });
   }
 
   try {

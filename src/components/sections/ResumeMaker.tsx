@@ -69,15 +69,15 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-[var(--fg)]/60 mb-1">{label}</label>
+      <label className="block text-xs font-medium text-[var(--ink)]/60 mb-1">{label}</label>
       <div className="relative">
-        {icon && <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--primary)] pointer-events-none">{icon}</span>}
+        {icon && <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--brand)] pointer-events-none">{icon}</span>}
         <input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={`w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/30 transition-colors py-2 px-3 ${icon ? "pl-9" : ""}`}
+          className={`w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:outline-none focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)]/30 transition-colors py-2 px-3 ${icon ? "pl-9" : ""}`}
         />
       </div>
     </div>
@@ -89,13 +89,13 @@ function TextArea({ label, value, onChange, placeholder, rows = 3 }: {
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-[var(--fg)]/60 mb-1">{label}</label>
+      <label className="block text-xs font-medium text-[var(--ink)]/60 mb-1">{label}</label>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
-        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/30 transition-colors py-2 px-3 resize-none"
+        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:outline-none focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)]/30 transition-colors py-2 px-3 resize-none"
       />
     </div>
   );
@@ -103,10 +103,10 @@ function TextArea({ label, value, onChange, placeholder, rows = 3 }: {
 
 function EntryCard({ label, onRemove, children }: { label: string; onRemove: () => void; children: React.ReactNode }) {
   return (
-    <div className="bg-[var(--bg)] border border-[var(--border)] rounded-lg p-4 space-y-3 relative">
+    <div className="bg-[var(--page)] border border-[var(--border)] rounded-lg p-4 space-y-3 relative">
       <div className="flex items-center justify-between mb-1">
-        <p className="text-xs font-semibold text-[var(--fg)]/50 uppercase tracking-wide">{label}</p>
-        <button onClick={onRemove} className="text-[var(--fg)]/30 hover:text-rose-400 transition-colors" aria-label="Remove">
+        <p className="text-xs font-semibold text-[var(--ink)]/50 uppercase tracking-wide">{label}</p>
+        <button onClick={onRemove} className="text-[var(--ink)]/30 hover:text-rose-400 transition-colors" aria-label="Remove">
           <IconTrash size={14} />
         </button>
       </div>
@@ -119,7 +119,7 @@ function AddButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center justify-center gap-2 border border-dashed border-[var(--border)] hover:border-[var(--primary)] text-[var(--fg)]/50 hover:text-[var(--primary)] rounded-lg py-3 text-sm transition-colors"
+      className="w-full flex items-center justify-center gap-2 border border-dashed border-[var(--border)] hover:border-[var(--brand)] text-[var(--ink)]/50 hover:text-[var(--brand)] rounded-lg py-3 text-sm transition-colors"
     >
       <IconPlus size={15} />
       {label}
@@ -162,30 +162,30 @@ function AuthModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[var(--bg)] border border-[var(--border)] rounded-[var(--radius-card)] p-6 w-full max-w-sm shadow-2xl relative">
-        <button onClick={onClose} className="absolute top-4 right-4 text-[var(--fg)]/40 hover:text-[var(--fg)] transition-colors" aria-label="Close"><IconX size={18} /></button>
+      <div className="bg-[var(--page)] border border-[var(--border)] rounded-[var(--radius-card)] p-6 w-full max-w-sm shadow-2xl relative">
+        <button onClick={onClose} className="absolute top-4 right-4 text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors" aria-label="Close"><IconX size={18} /></button>
         {sent ? (
           <div className="text-center py-4">
-            <div className="w-12 h-12 rounded-full bg-[var(--primary)]/15 flex items-center justify-center mx-auto mb-4"><IconCheck size={24} className="text-[var(--primary)]" /></div>
-            <p className="font-heading font-semibold text-[var(--fg)] mb-2">Check your email</p>
-            <p className="text-sm text-[var(--fg)]/50">We sent a magic link to <strong>{email}</strong>. Click it to verify and your PDF will download automatically.</p>
+            <div className="w-12 h-12 rounded-full bg-[var(--brand)]/15 flex items-center justify-center mx-auto mb-4"><IconCheck size={24} className="text-[var(--brand)]" /></div>
+            <p className="font-heading font-semibold text-[var(--ink)] mb-2">Check your email</p>
+            <p className="text-sm text-[var(--ink)]/50">We sent a magic link to <strong>{email}</strong>. Click it to verify and your PDF will download automatically.</p>
           </div>
         ) : (
           <>
             <div className="mb-5">
-              <p className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.2em] mb-2">Free to use</p>
-              <h2 className="font-heading font-bold text-[var(--fg)] text-lg mb-1">Download requires a free account</h2>
-              <p className="text-sm text-[var(--fg)]/50 leading-relaxed">Create your free account to download your resume as a PDF. No credit card needed.</p>
+              <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em] mb-2">Free to use</p>
+              <h2 className="font-heading font-bold text-[var(--ink)] text-lg mb-1">Download requires a free account</h2>
+              <p className="text-sm text-[var(--ink)]/50 leading-relaxed">Create your free account to download your resume as a PDF. No credit card needed.</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-3">
               <Field label="Full name" value={name} onChange={setName} placeholder="Adaeze Okafor" icon={<IconUser size={14} />} />
               <Field label="Email address" value={email} onChange={setEmail} placeholder="you@example.com" type="email" icon={<IconMail size={14} />} />
               {error && <div className="flex items-center gap-2 text-rose-400 text-xs"><IconAlertCircle size={14} className="shrink-0" /><span>{error}</span></div>}
-              <button type="submit" disabled={busy} className="w-full bg-[var(--primary)] hover:bg-sky-400 disabled:opacity-60 text-white font-semibold text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
+              <button type="submit" disabled={busy} className="w-full bg-[var(--brand)] hover:bg-sky-400 disabled:opacity-60 text-white font-semibold text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
                 {busy ? <IconLoader2 size={16} className="animate-spin" /> : <IconMail size={16} />}
                 {busy ? "Creating account…" : "Create free account"}
               </button>
-              <p className="text-center text-[11px] text-[var(--fg)]/35">We&apos;ll send a magic link — no password needed.</p>
+              <p className="text-center text-[11px] text-[var(--ink)]/35">We&apos;ll send a magic link — no password needed.</p>
             </form>
           </>
         )}
@@ -275,16 +275,16 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[var(--bg)] border border-[var(--border)] rounded-[var(--radius-card)] p-6 w-full max-w-sm shadow-2xl relative">
-        <button onClick={onClose} className="absolute top-4 right-4 text-[var(--fg)]/40 hover:text-[var(--fg)] transition-colors" aria-label="Close"><IconX size={18} /></button>
+      <div className="bg-[var(--page)] border border-[var(--border)] rounded-[var(--radius-card)] p-6 w-full max-w-sm shadow-2xl relative">
+        <button onClick={onClose} className="absolute top-4 right-4 text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors" aria-label="Close"><IconX size={18} /></button>
         <div className="w-12 h-12 rounded-full bg-amber-400/15 flex items-center justify-center mb-4"><IconCrown size={22} className="text-amber-400" /></div>
-        <h2 className="font-heading font-bold text-[var(--fg)] text-lg mb-1">Resume Premium</h2>
-        <p className="text-sm text-[var(--fg)]/50 leading-relaxed mb-4">
+        <h2 className="font-heading font-bold text-[var(--ink)] text-lg mb-1">Resume Premium</h2>
+        <p className="text-sm text-[var(--ink)]/50 leading-relaxed mb-4">
           Unlock the Executive and Technical templates, plus AI-powered resume suggestions.
         </p>
         <ul className="space-y-2 mb-5">
           {["2 additional professional templates", "AI suggestions tailored to your resume", "Priority PDF generation"].map((f) => (
-            <li key={f} className="flex items-center gap-2 text-sm text-[var(--fg)]/70"><IconCheck size={14} className="text-emerald-400 shrink-0" />{f}</li>
+            <li key={f} className="flex items-center gap-2 text-sm text-[var(--ink)]/70"><IconCheck size={14} className="text-emerald-400 shrink-0" />{f}</li>
           ))}
         </ul>
 
@@ -298,11 +298,11 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
                   key={p.id}
                   onClick={() => setProvider(p.id)}
                   className={`flex flex-col items-start gap-1 rounded-lg border px-3 py-2 text-left transition-colors ${
-                    provider === p.id ? "border-amber-400 bg-amber-400/10" : "border-[var(--border)] hover:border-[var(--fg)]/30"
+                    provider === p.id ? "border-amber-400 bg-amber-400/10" : "border-[var(--border)] hover:border-[var(--ink)]/30"
                   }`}
                 >
-                  <span className="flex items-center gap-1.5 text-xs font-medium text-[var(--fg)]">{p.icon}{p.label}</span>
-                  <span className="text-[11px] text-[var(--fg)]/45">{p.price}</span>
+                  <span className="flex items-center gap-1.5 text-xs font-medium text-[var(--ink)]">{p.icon}{p.label}</span>
+                  <span className="text-[11px] text-[var(--ink)]/45">{p.price}</span>
                 </button>
               ))}
             </div>
@@ -320,23 +320,23 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
 
             {pointsCost !== null && (
               <>
-                <div className="flex items-center gap-2 my-4"><div className="h-px flex-1 bg-[var(--border)]" /><span className="text-[11px] text-[var(--fg)]/35">or</span><div className="h-px flex-1 bg-[var(--border)]" /></div>
+                <div className="flex items-center gap-2 my-4"><div className="h-px flex-1 bg-[var(--border)]" /><span className="text-[11px] text-[var(--ink)]/35">or</span><div className="h-px flex-1 bg-[var(--border)]" /></div>
                 <button
                   onClick={handleRedeem}
                   disabled={!canRedeem || redeeming}
-                  className="w-full border border-[var(--border)] disabled:opacity-50 text-[var(--fg)] font-medium text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 hover:border-[var(--fg)]/30"
+                  className="w-full border border-[var(--border)] disabled:opacity-50 text-[var(--ink)] font-medium text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 hover:border-[var(--ink)]/30"
                 >
                   {redeeming ? <IconLoader2 size={16} className="animate-spin" /> : <IconStarFilled size={15} className="text-amber-400" />}
                   {redeeming ? "Redeeming…" : `Redeem ${pointsCost} points for 1 month`}
                 </button>
-                <p className="text-center text-[11px] text-[var(--fg)]/35 mt-1.5">
+                <p className="text-center text-[11px] text-[var(--ink)]/35 mt-1.5">
                   {pointsBalance !== null ? `You have ${pointsBalance} points` : "Loading your points…"}
                   {pointsBalance !== null && !canRedeem ? ` — need ${pointsCost - pointsBalance} more` : ""}
                 </p>
               </>
             )}
 
-            <p className="text-center text-[11px] text-[var(--fg)]/35 mt-3">Secure checkout. Cancel anytime.</p>
+            <p className="text-center text-[11px] text-[var(--ink)]/35 mt-3">Secure checkout. Cancel anytime.</p>
           </>
         )}
       </div>
@@ -550,7 +550,7 @@ export function ResumeMaker() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all ${
-                  activeTab === tab.id ? "bg-[var(--primary)] text-white" : "text-[var(--fg)]/60 hover:text-[var(--fg)] hover:bg-[var(--border)]"
+                  activeTab === tab.id ? "bg-[var(--brand)] text-white" : "text-[var(--ink)]/60 hover:text-[var(--ink)] hover:bg-[var(--border)]"
                 }`}
               >
                 {tab.icon}{tab.label}
@@ -637,14 +637,14 @@ export function ResumeMaker() {
             {activeTab === "skills" && (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-[var(--fg)]/60 mb-1.5">
-                    Skills<span className="ml-2 text-[var(--fg)]/30 font-normal">Press Enter or comma to add</span>
+                  <label className="block text-xs font-medium text-[var(--ink)]/60 mb-1.5">
+                    Skills<span className="ml-2 text-[var(--ink)]/30 font-normal">Press Enter or comma to add</span>
                   </label>
-                  <div className="min-h-[48px] flex flex-wrap gap-2 bg-[var(--bg)] border border-[var(--border)] rounded-lg p-2.5 cursor-text focus-within:border-[var(--primary)] focus-within:ring-1 focus-within:ring-[var(--primary)]/30 transition-colors" onClick={() => skillInputRef.current?.focus()}>
+                  <div className="min-h-[48px] flex flex-wrap gap-2 bg-[var(--page)] border border-[var(--border)] rounded-lg p-2.5 cursor-text focus-within:border-[var(--brand)] focus-within:ring-1 focus-within:ring-[var(--brand)]/30 transition-colors" onClick={() => skillInputRef.current?.focus()}>
                     {data.skills.map((skill) => (
-                      <span key={skill} className="inline-flex items-center gap-1 bg-[var(--primary)]/15 text-[var(--primary)] text-xs px-2.5 py-1 rounded-full">
+                      <span key={skill} className="inline-flex items-center gap-1 bg-[var(--brand)]/15 text-[var(--brand)] text-xs px-2.5 py-1 rounded-full">
                         {skill}
-                        <button onClick={(e) => { e.stopPropagation(); removeSkill(skill); }} className="text-[var(--primary)]/60 hover:text-[var(--primary)] ml-0.5" aria-label={`Remove ${skill}`}><IconX size={11} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); removeSkill(skill); }} className="text-[var(--brand)]/60 hover:text-[var(--brand)] ml-0.5" aria-label={`Remove ${skill}`}><IconX size={11} /></button>
                       </span>
                     ))}
                     <input
@@ -652,18 +652,18 @@ export function ResumeMaker() {
                       onChange={(e) => setSkillInput(e.target.value)} onKeyDown={onSkillKeyDown}
                       onBlur={() => skillInput.trim() && addSkill(skillInput)}
                       placeholder={data.skills.length === 0 ? "Type a skill and press Enter…" : ""}
-                      className="flex-1 min-w-[120px] bg-transparent text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 outline-none"
+                      className="flex-1 min-w-[120px] bg-transparent text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 outline-none"
                     />
                   </div>
                 </div>
-                {data.skills.length > 0 && <p className="text-xs text-[var(--fg)]/40">{data.skills.length} skill{data.skills.length !== 1 ? "s" : ""} added</p>}
+                {data.skills.length > 0 && <p className="text-xs text-[var(--ink)]/40">{data.skills.length} skill{data.skills.length !== 1 ? "s" : ""} added</p>}
               </div>
             )}
 
             {activeTab === "extras" && (
               <div className="space-y-6">
                 <div>
-                  <p className="text-xs font-semibold text-[var(--fg)]/60 uppercase tracking-wide mb-3">Languages</p>
+                  <p className="text-xs font-semibold text-[var(--ink)]/60 uppercase tracking-wide mb-3">Languages</p>
                   <div className="space-y-3">
                     {data.languages.map((l) => (
                       <EntryCard key={l.id} label="Language" onRemove={() => langOps.remove(l.id)}>
@@ -677,7 +677,7 @@ export function ResumeMaker() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[var(--fg)]/60 uppercase tracking-wide mb-3">Awards</p>
+                  <p className="text-xs font-semibold text-[var(--ink)]/60 uppercase tracking-wide mb-3">Awards</p>
                   <div className="space-y-3">
                     {data.awards.map((a) => (
                       <EntryCard key={a.id} label="Award" onRemove={() => awardOps.remove(a.id)}>
@@ -697,7 +697,7 @@ export function ResumeMaker() {
             {activeTab === "summary" && (
               <div className="space-y-3">
                 <TextArea label="Professional summary" value={data.summary} onChange={(v) => setField("summary", v)} placeholder="A 2–4 sentence overview of your background, expertise, and what you bring to a role…" rows={7} />
-                <p className="text-xs text-[var(--fg)]/40">{data.summary.length} characters · Aim for 200–400 for best results</p>
+                <p className="text-xs text-[var(--ink)]/40">{data.summary.length} characters · Aim for 200–400 for best results</p>
 
                 {/* AI suggestions — Resume Premium feature */}
                 <div className="border-t border-[var(--border)] pt-4">
@@ -714,7 +714,7 @@ export function ResumeMaker() {
                   {suggestions && (
                     <ul className="mt-3 space-y-2">
                       {suggestions.map((s, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs text-[var(--fg)]/70 bg-[var(--bg)] border border-[var(--border)] rounded-lg p-3">
+                        <li key={i} className="flex items-start gap-2 text-xs text-[var(--ink)]/70 bg-[var(--page)] border border-[var(--border)] rounded-lg p-3">
                           <IconSparkles size={12} className="text-amber-400 shrink-0 mt-0.5" />
                           {s}
                         </li>
@@ -728,18 +728,18 @@ export function ResumeMaker() {
 
           <div className="bg-[var(--surface)] border border-t-0 border-[var(--border)] rounded-b-[var(--radius-card)] p-4">
             {downloadError && <div className="flex items-center gap-2 text-rose-400 text-xs mb-3"><IconAlertCircle size={14} className="shrink-0" /><span>{downloadError}</span></div>}
-            <button onClick={handleDownload} disabled={downloading} className="w-full flex items-center justify-center gap-2 bg-[var(--primary)] hover:bg-sky-400 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
+            <button onClick={handleDownload} disabled={downloading} className="w-full flex items-center justify-center gap-2 bg-[var(--brand)] hover:bg-sky-400 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
               {downloading ? <IconLoader2 size={16} className="animate-spin" /> : <IconDownload size={16} />}
               {downloading ? "Generating PDF…" : "Download PDF"}
             </button>
-            <p className="text-center text-[11px] text-[var(--fg)]/30 mt-2">Free · No watermarks · No signup required to edit</p>
+            <p className="text-center text-[11px] text-[var(--ink)]/30 mt-2">Free · No watermarks · No signup required to edit</p>
           </div>
         </div>
 
         {/* ── Preview panel ────────────────────────────────────────────── */}
         <div className="w-full lg:w-3/5 flex flex-col gap-3 sticky top-6">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-[var(--fg)]/50 font-medium shrink-0">Template:</span>
+            <span className="text-xs text-[var(--ink)]/50 font-medium shrink-0">Template:</span>
             <div className="flex gap-1.5 flex-wrap">
               {RESUME_TEMPLATES.map((t) => {
                 const locked = t.premium && !subscribed;
@@ -748,7 +748,7 @@ export function ResumeMaker() {
                     key={t.id}
                     onClick={() => selectTemplate(t.id)}
                     className={`flex items-center gap-1 px-3 py-1 rounded-md text-xs font-medium transition-all ${
-                      template === t.id ? "bg-[var(--primary)] text-white" : "bg-[var(--surface)] border border-[var(--border)] text-[var(--fg)]/60 hover:text-[var(--fg)]"
+                      template === t.id ? "bg-[var(--brand)] text-white" : "bg-[var(--surface)] border border-[var(--border)] text-[var(--ink)]/60 hover:text-[var(--ink)]"
                     }`}
                   >
                     {locked && <IconLock size={10} />}
@@ -767,7 +767,7 @@ export function ResumeMaker() {
                 <div className="w-3 h-3 rounded-full bg-amber-400/60" />
                 <div className="w-3 h-3 rounded-full bg-green-400/60" />
               </div>
-              <span className="text-xs text-[var(--fg)]/30 font-mono">resume-preview · {template}</span>
+              <span className="text-xs text-[var(--ink)]/30 font-mono">resume-preview · {template}</span>
             </div>
             <div className="overflow-auto max-h-[800px]">
               <Preview data={data} />

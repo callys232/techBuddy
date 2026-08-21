@@ -10,12 +10,12 @@ export function AppShowcase() {
       <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
         <div className="mb-12 flex items-end justify-between">
           <div>
-            <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">Our work</span>
-            <h2 className="mt-2 font-display text-4xl font-extrabold text-[var(--fg)]">
+            <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">Our work</span>
+            <h2 className="mt-2 font-display text-4xl font-extrabold text-[var(--ink)]">
               Apps We&apos;ve Shipped
             </h2>
           </div>
-          <Link href="/portfolio" className="hidden sm:inline text-sm font-semibold text-[var(--primary)] hover:underline">
+          <Link href="/portfolio" className="hidden sm:inline text-sm font-semibold text-[var(--brand)] hover:underline">
             All projects →
           </Link>
         </div>

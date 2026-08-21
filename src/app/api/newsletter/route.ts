@@ -3,8 +3,6 @@ import { newsletterSchema } from "@/lib/validations/contact";
 import { createServerClient } from "@/lib/supabase/client";
 import { getResendClient } from "@/lib/email/resend";
 
-const resend = getResendClient();
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -21,6 +19,7 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     /* Welcome email */
+    const resend = getResendClient();
     if (resend) {
       await resend.emails
         .send({

@@ -54,9 +54,9 @@ function RecapChips({ step, sel }: { step: number; sel: Selections }) {
   return (
     <div className="flex flex-wrap gap-2 mb-6">
       {chips.map(({ label, value }) => (
-        <span key={label} className="flex items-center gap-1.5 text-[11px] rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-[var(--fg)]/50">
-          <span className="text-[var(--fg)]/30">{label}:</span>
-          <span className="font-medium text-[var(--fg)]/75 max-w-[140px] truncate">{value}</span>
+        <span key={label} className="flex items-center gap-1.5 text-[11px] rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-[var(--ink)]/50">
+          <span className="text-[var(--ink)]/30">{label}:</span>
+          <span className="font-medium text-[var(--ink)]/75 max-w-[140px] truncate">{value}</span>
         </span>
       ))}
     </div>
@@ -99,7 +99,7 @@ function PhaseBar({
     <div className="space-y-3">
       {phases.map((p, i) => {
         const widthPct = (p.max / total) * 100;
-        const color    = PHASE_COLORS[p.name] ?? "bg-[var(--primary)]/60";
+        const color    = PHASE_COLORS[p.name] ?? "bg-[var(--brand)]/60";
         return (
           <motion.div
             key={p.name}
@@ -108,8 +108,8 @@ function PhaseBar({
             transition={{ delay: i * 0.08 }}
             className="flex items-center gap-3"
           >
-            <span className="w-28 shrink-0 text-xs text-[var(--fg)]/45 text-right">{p.name}</span>
-            <div className="flex-1 h-5 bg-[var(--bg)] rounded-full overflow-hidden">
+            <span className="w-28 shrink-0 text-xs text-[var(--ink)]/45 text-right">{p.name}</span>
+            <div className="flex-1 h-5 bg-[var(--page)] rounded-full overflow-hidden">
               <motion.div
                 className={`h-full rounded-full ${color}`}
                 initial={{ width: 0 }}
@@ -117,7 +117,7 @@ function PhaseBar({
                 transition={{ delay: i * 0.08 + 0.1, duration: 0.5, ease: "easeOut" }}
               />
             </div>
-            <span className="w-20 text-xs font-mono text-[var(--fg)]/55">
+            <span className="w-20 text-xs font-mono text-[var(--ink)]/55">
               {p.min === p.max ? `${p.min}w` : `${p.min}–${p.max}w`}
             </span>
           </motion.div>
@@ -272,14 +272,14 @@ export function TimelineEstimator() {
               onClick={() => i < step && setStep(i)}
               className={[
                 "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all",
-                i < step  ? "bg-[var(--primary)] text-[var(--bg)] cursor-pointer" :
-                i === step ? "bg-[var(--primary)]/20 text-[var(--primary)] border border-[var(--primary)]" :
-                            "bg-[var(--border)] text-[var(--fg)]/30",
+                i < step  ? "bg-[var(--brand)] text-[var(--page)] cursor-pointer" :
+                i === step ? "bg-[var(--brand)]/20 text-[var(--brand)] border border-[var(--brand)]" :
+                            "bg-[var(--border)] text-[var(--ink)]/30",
               ].join(" ")}
             >
               {i < step ? <IconCheck size={12} /> : i + 1}
             </button>
-            <span className={`hidden sm:block text-xs font-medium ${i === step ? "text-[var(--fg)]" : "text-[var(--fg)]/30"}`}>
+            <span className={`hidden sm:block text-xs font-medium ${i === step ? "text-[var(--ink)]" : "text-[var(--ink)]/30"}`}>
               {label}
             </span>
             {i < STEPS.length - 1 && <span className="text-[var(--border)] text-xs">›</span>}
@@ -300,10 +300,10 @@ export function TimelineEstimator() {
           {step === 0 && (
             <div>
               <RecapChips step={step} sel={sel} />
-              <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">What are you building?</h2>
+              <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">What are you building?</h2>
               <div className="flex items-center gap-3 mb-6">
-                <p className="text-sm text-[var(--fg)]/45">Select everything that applies — combining types adjusts the timeline automatically.</p>
-                <span className="shrink-0 text-[10px] font-mono text-[var(--fg)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
+                <p className="text-sm text-[var(--ink)]/45">Select everything that applies — combining types adjusts the timeline automatically.</p>
+                <span className="shrink-0 text-[10px] font-mono text-[var(--ink)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
                   Select all that apply
                 </span>
               </div>
@@ -319,19 +319,19 @@ export function TimelineEstimator() {
                       className={[
                         "flex items-start gap-3 rounded-xl border p-4 text-left transition-all active:scale-[0.98]",
                         on
-                          ? "border-[var(--primary)] bg-[var(--primary)]/8 shadow-[0_0_16px_rgba(56,189,248,0.10)]"
-                          : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/8 shadow-[0_0_16px_rgba(56,189,248,0.10)]"
+                          : "border-[var(--border)] hover:border-[var(--brand)]/40 bg-[var(--surface)]",
                       ].join(" ")}
                     >
                       <span className={[
                         "flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded border transition-all",
-                        on ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                        on ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                       ].join(" ")}>
-                        {on && <IconCheck size={11} className="text-[var(--bg)]" />}
+                        {on && <IconCheck size={11} className="text-[var(--page)]" />}
                       </span>
                       <span>
-                        <span className="block font-heading font-semibold text-[var(--fg)] text-sm">{pt.label}</span>
-                        <span className="block text-xs text-[var(--fg)]/40 mt-0.5">{pt.desc}</span>
+                        <span className="block font-heading font-semibold text-[var(--ink)] text-sm">{pt.label}</span>
+                        <span className="block text-xs text-[var(--ink)]/40 mt-0.5">{pt.desc}</span>
                       </span>
                     </button>
                   );
@@ -340,20 +340,20 @@ export function TimelineEstimator() {
 
               {/* Live selection list */}
               {sel.projectTypes.length > 0 && (
-                <div className="mt-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-4 py-3">
-                  <p className="text-xs font-semibold text-[var(--primary)] mb-2">
+                <div className="mt-4 rounded-xl border border-[var(--brand)]/20 bg-[var(--brand)]/5 px-4 py-3">
+                  <p className="text-xs font-semibold text-[var(--brand)] mb-2">
                     {sel.projectTypes.length} type{sel.projectTypes.length > 1 ? "s" : ""} selected
-                    {sel.projectTypes.length > 1 && <span className="font-normal text-[var(--fg)]/40 ml-2">— timelines combined automatically</span>}
+                    {sel.projectTypes.length > 1 && <span className="font-normal text-[var(--ink)]/40 ml-2">— timelines combined automatically</span>}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {sel.projectTypes.map((id) => {
                       const pt = TIMELINE_PROJECT_TYPES.find((t) => t.id === id);
                       return (
                         <span key={id}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--primary)]">
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--brand)]/10 border border-[var(--brand)]/20 px-3 py-1 text-xs font-medium text-[var(--brand)]">
                           {pt?.label}
                           <button type="button" onClick={() => toggleProjectType(id)}
-                            className="hover:text-[var(--fg)] transition-colors">×</button>
+                            className="hover:text-[var(--ink)] transition-colors">×</button>
                         </span>
                       );
                     })}
@@ -368,15 +368,15 @@ export function TimelineEstimator() {
             <div>
               <RecapChips step={step} sel={sel} />
               <div className="flex items-center justify-between mb-2">
-                <h2 className="font-display text-2xl font-extrabold text-[var(--fg)]">Which features do you need?</h2>
+                <h2 className="font-display text-2xl font-extrabold text-[var(--ink)]">Which features do you need?</h2>
                 {sel.features.length > 0 && (
                   <button type="button" onClick={() => set("features", [])}
-                    className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors shrink-0">
+                    className="text-xs text-[var(--ink)]/35 hover:text-rose-400 transition-colors shrink-0">
                     Clear all ({sel.features.length})
                   </button>
                 )}
               </div>
-              <p className="text-sm text-[var(--fg)]/45 mb-6">Select all that apply — click again to remove.</p>
+              <p className="text-sm text-[var(--ink)]/45 mb-6">Select all that apply — click again to remove.</p>
               <div className="grid sm:grid-cols-2 gap-2.5">
                 {TIMELINE_FEATURES.map((f) => {
                   const on = sel.features.includes(f.id);
@@ -388,34 +388,34 @@ export function TimelineEstimator() {
                       className={[
                         "flex items-center gap-3 rounded-xl border p-3.5 text-left transition-all",
                         on
-                          ? "border-[var(--primary)] bg-[var(--primary)]/8"
-                          : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/8"
+                          : "border-[var(--border)] hover:border-[var(--brand)]/40 bg-[var(--surface)]",
                       ].join(" ")}
                     >
                       <span className={[
                         "flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-all",
-                        on ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                        on ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                       ].join(" ")}>
-                        {on && <IconCheck size={11} className="text-[var(--bg)]" />}
+                        {on && <IconCheck size={11} className="text-[var(--page)]" />}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-[var(--fg)] leading-snug">{f.label}</p>
-                        <p className="text-xs text-[var(--fg)]/35">+{f.weeks < 1 ? `${f.weeks * 2} days` : `~${f.weeks} week${f.weeks !== 1 ? "s" : ""}`}</p>
+                        <p className="text-sm font-medium text-[var(--ink)] leading-snug">{f.label}</p>
+                        <p className="text-xs text-[var(--ink)]/35">+{f.weeks < 1 ? `${f.weeks * 2} days` : `~${f.weeks} week${f.weeks !== 1 ? "s" : ""}`}</p>
                       </div>
                     </button>
                   );
                 })}
               </div>
               {sel.features.length === 0 ? (
-                <p className="mt-4 text-xs text-[var(--fg)]/30">No features selected — skipping adds to the base timeline only.</p>
+                <p className="mt-4 text-xs text-[var(--ink)]/30">No features selected — skipping adds to the base timeline only.</p>
               ) : (
-                <div className="mt-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-4 py-3">
+                <div className="mt-4 rounded-xl border border-[var(--brand)]/20 bg-[var(--brand)]/5 px-4 py-3">
                   <div className="flex flex-wrap gap-2">
                     {sel.features.map((id) => {
                       const f = TIMELINE_FEATURES.find((f) => f.id === id);
                       return (
                         <span key={id}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--primary)]">
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--brand)]/10 border border-[var(--brand)]/20 px-3 py-1 text-xs font-medium text-[var(--brand)]">
                           {f?.label}
                           <button type="button" onClick={() => toggleFeature(id)}
                             className="font-bold opacity-60 hover:opacity-100 leading-none transition-opacity">×</button>
@@ -432,8 +432,8 @@ export function TimelineEstimator() {
           {step === 2 && (
             <div>
               <RecapChips step={step} sel={sel} />
-              <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">How ready are your designs?</h2>
-              <p className="text-sm text-[var(--fg)]/45 mb-6">Design work is one of the biggest timeline variables.</p>
+              <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">How ready are your designs?</h2>
+              <p className="text-sm text-[var(--ink)]/45 mb-6">Design work is one of the biggest timeline variables.</p>
               <div className="space-y-3">
                 {TIMELINE_READINESS.map((r) => (
                   <button
@@ -443,24 +443,24 @@ export function TimelineEstimator() {
                     className={[
                       "flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-all",
                       sel.readiness === r.id
-                        ? "border-[var(--primary)] bg-[var(--primary)]/8"
-                        : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                        ? "border-[var(--brand)] bg-[var(--brand)]/8"
+                        : "border-[var(--border)] hover:border-[var(--brand)]/40 bg-[var(--surface)]",
                     ].join(" ")}
                   >
                     <span className={[
                       "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all",
-                      sel.readiness === r.id ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                      sel.readiness === r.id ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                     ].join(" ")}>
-                      {sel.readiness === r.id && <span className="block h-2 w-2 rounded-full bg-[var(--bg)]" />}
+                      {sel.readiness === r.id && <span className="block h-2 w-2 rounded-full bg-[var(--page)]" />}
                     </span>
                     <div>
                       <div className="flex items-baseline gap-3">
-                        <span className="font-heading font-semibold text-[var(--fg)] text-sm">{r.label}</span>
-                        <span className={`font-mono text-xs ${r.weeksDelta < 0 ? "text-emerald-400" : r.weeksDelta > 0 ? "text-amber-400" : "text-[var(--fg)]/30"}`}>
+                        <span className="font-heading font-semibold text-[var(--ink)] text-sm">{r.label}</span>
+                        <span className={`font-mono text-xs ${r.weeksDelta < 0 ? "text-emerald-400" : r.weeksDelta > 0 ? "text-amber-400" : "text-[var(--ink)]/30"}`}>
                           {r.weeksDelta < 0 ? `saves ${Math.abs(r.weeksDelta)} weeks` : r.weeksDelta > 0 ? `+${r.weeksDelta} weeks` : "no change"}
                         </span>
                       </div>
-                      <p className="text-xs text-[var(--fg)]/40 mt-0.5">{r.desc}</p>
+                      <p className="text-xs text-[var(--ink)]/40 mt-0.5">{r.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -472,8 +472,8 @@ export function TimelineEstimator() {
           {step === 3 && (
             <div>
               <RecapChips step={step} sel={sel} />
-              <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">How fast can your team give feedback?</h2>
-              <p className="text-sm text-[var(--fg)]/45 mb-6">Slow feedback cycles are the #1 cause of project overruns.</p>
+              <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">How fast can your team give feedback?</h2>
+              <p className="text-sm text-[var(--ink)]/45 mb-6">Slow feedback cycles are the #1 cause of project overruns.</p>
               <div className="space-y-3">
                 {TIMELINE_FEEDBACK.map((f) => (
                   <button
@@ -483,24 +483,24 @@ export function TimelineEstimator() {
                     className={[
                       "flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-all",
                       sel.feedback === f.id
-                        ? "border-[var(--primary)] bg-[var(--primary)]/8"
-                        : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                        ? "border-[var(--brand)] bg-[var(--brand)]/8"
+                        : "border-[var(--border)] hover:border-[var(--brand)]/40 bg-[var(--surface)]",
                     ].join(" ")}
                   >
                     <span className={[
                       "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all",
-                      sel.feedback === f.id ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                      sel.feedback === f.id ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                     ].join(" ")}>
-                      {sel.feedback === f.id && <span className="block h-2 w-2 rounded-full bg-[var(--bg)]" />}
+                      {sel.feedback === f.id && <span className="block h-2 w-2 rounded-full bg-[var(--page)]" />}
                     </span>
                     <div>
                       <div className="flex items-baseline gap-3">
-                        <span className="font-heading font-semibold text-[var(--fg)] text-sm">{f.label}</span>
+                        <span className="font-heading font-semibold text-[var(--ink)] text-sm">{f.label}</span>
                         <span className={`font-mono text-xs ${f.weeksDelta <= 0 ? "text-emerald-400" : "text-amber-400"}`}>
                           {f.weeksDelta < 0 ? `saves ${Math.abs(f.weeksDelta)} week` : f.weeksDelta > 0 ? `+${f.weeksDelta} weeks` : "baseline"}
                         </span>
                       </div>
-                      <p className="text-xs text-[var(--fg)]/40 mt-0.5">{f.desc}</p>
+                      <p className="text-xs text-[var(--ink)]/40 mt-0.5">{f.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -513,16 +513,16 @@ export function TimelineEstimator() {
             <div>
               <RecapChips step={step} sel={sel} />
               <div className="flex items-center justify-between mb-2">
-                <h2 className="font-display text-2xl font-extrabold text-[var(--fg)]">Any complex integrations?</h2>
+                <h2 className="font-display text-2xl font-extrabold text-[var(--ink)]">Any complex integrations?</h2>
                 {sel.integrations.length > 0 && (
                   <button type="button" onClick={() => set("integrations", [])}
-                    className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors shrink-0">
+                    className="text-xs text-[var(--ink)]/35 hover:text-rose-400 transition-colors shrink-0">
                     Clear all ({sel.integrations.length})
                   </button>
                 )}
               </div>
-              <p className="text-sm text-[var(--fg)]/45 mb-1">Select all that apply. If none apply, just continue — standard integrations add no extra time.</p>
-              <span className="inline-block mb-6 text-[10px] font-mono text-[var(--fg)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
+              <p className="text-sm text-[var(--ink)]/45 mb-1">Select all that apply. If none apply, just continue — standard integrations add no extra time.</p>
+              <span className="inline-block mb-6 text-[10px] font-mono text-[var(--ink)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
                 Select all that apply
               </span>
               <div className="space-y-3">
@@ -536,35 +536,35 @@ export function TimelineEstimator() {
                     className={[
                       "flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-all",
                       on
-                        ? "border-[var(--primary)] bg-[var(--primary)]/8"
-                        : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                        ? "border-[var(--brand)] bg-[var(--brand)]/8"
+                        : "border-[var(--border)] hover:border-[var(--brand)]/40 bg-[var(--surface)]",
                     ].join(" ")}
                   >
                     <span className={[
                       "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-all",
-                      on ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                      on ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                     ].join(" ")}>
-                      {on && <IconCheck size={11} className="text-[var(--bg)]" />}
+                      {on && <IconCheck size={11} className="text-[var(--page)]" />}
                     </span>
                     <div>
                       <div className="flex items-baseline gap-3">
-                        <span className="font-heading font-semibold text-[var(--fg)] text-sm">{intg.label}</span>
+                        <span className="font-heading font-semibold text-[var(--ink)] text-sm">{intg.label}</span>
                         <span className="font-mono text-xs text-amber-400">+{intg.weeksDelta} weeks</span>
                       </div>
-                      <p className="text-xs text-[var(--fg)]/40 mt-0.5">{intg.desc}</p>
+                      <p className="text-xs text-[var(--ink)]/40 mt-0.5">{intg.desc}</p>
                     </div>
                   </button>
                   );
                 })}
               </div>
               {sel.integrations.length === 0 ? (
-                <p className="text-xs text-[var(--fg)]/30 mt-3">No selection = standard integrations only (Paystack, Supabase, etc.) — no extra time added.</p>
+                <p className="text-xs text-[var(--ink)]/30 mt-3">No selection = standard integrations only (Paystack, Supabase, etc.) — no extra time added.</p>
               ) : (
-                <div className="mt-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 px-4 py-3">
+                <div className="mt-4 rounded-xl border border-[var(--brand)]/20 bg-[var(--brand)]/5 px-4 py-3">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-semibold text-[var(--primary)]">{sel.integrations.length} integration{sel.integrations.length > 1 ? "s" : ""} selected</p>
+                    <p className="text-xs font-semibold text-[var(--brand)]">{sel.integrations.length} integration{sel.integrations.length > 1 ? "s" : ""} selected</p>
                     <button type="button" onClick={() => set("integrations", [])}
-                      className="text-xs text-[var(--fg)]/35 hover:text-rose-400 transition-colors">
+                      className="text-xs text-[var(--ink)]/35 hover:text-rose-400 transition-colors">
                       Clear all
                     </button>
                   </div>
@@ -573,7 +573,7 @@ export function TimelineEstimator() {
                       const intg = TIMELINE_INTEGRATIONS.find((i) => i.id === id);
                       return (
                         <span key={id}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--primary)]">
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--brand)]/10 border border-[var(--brand)]/20 px-3 py-1 text-xs font-medium text-[var(--brand)]">
                           {intg?.label}
                           <button type="button" onClick={() => toggleIntegration(id)}
                             className="font-bold opacity-60 hover:opacity-100 leading-none transition-opacity">×</button>
@@ -589,16 +589,16 @@ export function TimelineEstimator() {
           {/* ── Step 5: Email gate ───────────────────────────────────── */}
           {step === 5 && (
             <div className="max-w-md">
-              <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+              <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">
                 Almost there — where should we send your timeline?
               </h2>
-              <p className="text-sm text-[var(--fg)]/45 mb-8 leading-relaxed">
+              <p className="text-sm text-[var(--ink)]/45 mb-8 leading-relaxed">
                 We&apos;ll email you a full copy of your estimate, phase breakdown, and possible launch dates. Free, no spam.
               </p>
 
               <div>
-                <label className="block font-heading text-sm font-semibold text-[var(--fg)] mb-1.5">
-                  Email address <span className="text-[var(--primary)]">*</span>
+                <label className="block font-heading text-sm font-semibold text-[var(--ink)] mb-1.5">
+                  Email address <span className="text-[var(--brand)]">*</span>
                 </label>
                 <input
                   type="email"
@@ -611,13 +611,13 @@ export function TimelineEstimator() {
                   placeholder="you@company.ng"
                   autoFocus
                   className={[
-                    "w-full rounded-xl border px-4 py-3 text-sm text-[var(--fg)] bg-[var(--surface)]",
-                    "placeholder:text-[var(--fg)]/30 focus:outline-none focus:ring-1 transition-colors",
+                    "w-full rounded-xl border px-4 py-3 text-sm text-[var(--ink)] bg-[var(--surface)]",
+                    "placeholder:text-[var(--ink)]/30 focus:outline-none focus:ring-1 transition-colors",
                     emailTouched && emailError
                       ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400/20"
                       : isEmailValid && emailTouched
                       ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500/20"
-                      : "border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/20",
+                      : "border-[var(--border)] focus:border-[var(--brand)] focus:ring-[var(--brand)]/20",
                   ].join(" ")}
                 />
                 {emailTouched && emailError && (
@@ -625,7 +625,7 @@ export function TimelineEstimator() {
                     <IconAlertCircle size={11} className="shrink-0" />{emailError}
                   </span>
                 )}
-                <p className="text-xs text-[var(--fg)]/30 mt-2">
+                <p className="text-xs text-[var(--ink)]/30 mt-2">
                   We&apos;ll also add you to our newsletter — unsubscribe anytime.
                 </p>
                 <div className="mt-4 pt-3 border-t border-[var(--border)]">
@@ -640,13 +640,13 @@ export function TimelineEstimator() {
             <div className="space-y-8">
               {/* Headline */}
               <div>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-2">Your estimate</p>
-                <h2 className="font-display text-4xl font-extrabold text-[var(--fg)] mb-1">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--brand)] mb-2">Your estimate</p>
+                <h2 className="font-display text-4xl font-extrabold text-[var(--ink)] mb-1">
                   {result.totalMin === result.totalMax
                     ? `${result.totalMin} weeks`
                     : `${result.totalMin}–${result.totalMax} weeks`}
                 </h2>
-                <p className="text-[var(--fg)]/45 text-sm">
+                <p className="text-[var(--ink)]/45 text-sm">
                   {TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label).join(" + ")} ·{" "}
                   {sel.features.length} feature{sel.features.length !== 1 ? "s" : ""}
                 </p>
@@ -654,7 +654,7 @@ export function TimelineEstimator() {
 
               {/* Phase bar */}
               <div>
-                <h3 className="font-heading font-semibold text-[var(--fg)] text-sm mb-4">Phase breakdown</h3>
+                <h3 className="font-heading font-semibold text-[var(--ink)] text-sm mb-4">Phase breakdown</h3>
                 <PhaseBar phases={result.phases} />
               </div>
 
@@ -662,14 +662,14 @@ export function TimelineEstimator() {
               <div className="grid sm:grid-cols-3 gap-3">
                 {[
                   { label: "Rushed", icon: "⚡", date: result.fastLaunch,    note: "All parties move fast, designs ready",   color: "border-amber-400/30 bg-amber-500/5" },
-                  { label: "Normal", icon: "📅", date: result.normalLaunch,  note: "Standard delivery at our recommended pace", color: "border-[var(--primary)]/40 bg-[var(--primary)]/5" },
+                  { label: "Normal", icon: "📅", date: result.normalLaunch,  note: "Standard delivery at our recommended pace", color: "border-[var(--brand)]/40 bg-[var(--brand)]/5" },
                   { label: "Relaxed", icon: "🌿", date: result.relaxedLaunch, note: "Flexible scope, no rush, lower cost",    color: "border-emerald-400/30 bg-emerald-500/5" },
                 ].map(({ label, icon, date, note, color }) => (
                   <div key={label} className={`rounded-xl border p-4 ${color}`}>
                     <p className="text-lg mb-1">{icon}</p>
-                    <p className="font-heading font-semibold text-[var(--fg)] text-sm">{label}</p>
-                    <p className="font-mono text-xs text-[var(--primary)] mt-1">{formatDate(date)}</p>
-                    <p className="text-[11px] text-[var(--fg)]/35 mt-1.5 leading-snug">{note}</p>
+                    <p className="font-heading font-semibold text-[var(--ink)] text-sm">{label}</p>
+                    <p className="font-mono text-xs text-[var(--brand)] mt-1">{formatDate(date)}</p>
+                    <p className="text-[11px] text-[var(--ink)]/35 mt-1.5 leading-snug">{note}</p>
                   </div>
                 ))}
               </div>
@@ -680,7 +680,7 @@ export function TimelineEstimator() {
                   <p className="font-heading font-semibold text-emerald-400 text-xs mb-3 uppercase tracking-wide">What speeds it up</p>
                   <ul className="space-y-1.5">
                     {["Figma designs ready on day one", "Responsive within 24 hours on reviews", "All content ready before dev starts", "One clear decision-maker on your side", "Standard integrations only (Paystack etc.)"].map((t) => (
-                      <li key={t} className="flex items-start gap-2 text-xs text-[var(--fg)]/60">
+                      <li key={t} className="flex items-start gap-2 text-xs text-[var(--ink)]/60">
                         <IconCheck size={11} className="text-emerald-400 shrink-0 mt-0.5" />{t}
                       </li>
                     ))}
@@ -690,7 +690,7 @@ export function TimelineEstimator() {
                   <p className="font-heading font-semibold text-amber-400 text-xs mb-3 uppercase tracking-wide">What adds weeks</p>
                   <ul className="space-y-1.5">
                     {["Scope changes mid-development", "Slow feedback or committee sign-offs", "Government / CBN API onboarding", "Unclear requirements at discovery", "Third-party delays (app store, banks)"].map((t) => (
-                      <li key={t} className="flex items-start gap-2 text-xs text-[var(--fg)]/60">
+                      <li key={t} className="flex items-start gap-2 text-xs text-[var(--ink)]/60">
                         <IconAlertCircle size={11} className="text-amber-400 shrink-0 mt-0.5" />{t}
                       </li>
                     ))}
@@ -724,7 +724,7 @@ export function TimelineEstimator() {
                     });
                     window.location.href = `/quote?timeline=${result.totalMin}-${result.totalMax}`;
                   }}
-                  className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+                  className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-heading font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-opacity"
                 >
                   Get a firm quote with this scope <IconArrowRight size={14} />
                 </button>
@@ -750,28 +750,28 @@ export function TimelineEstimator() {
                     ].join("\n");
                     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
                   }}
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 font-heading font-semibold text-sm text-[var(--fg)]/60 hover:border-[#25D366] hover:text-[#25D366] transition-colors"
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 font-heading font-semibold text-sm text-[var(--ink)]/60 hover:border-[#25D366] hover:text-[#25D366] transition-colors"
                 >
                   <IconBrandWhatsapp size={14} /> Chat on WhatsApp
                 </button>
                 <Link
                   href="/tools/cost-estimator"
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 font-heading font-semibold text-sm text-[var(--fg)]/60 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 font-heading font-semibold text-sm text-[var(--ink)]/60 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
                 >
                   <IconClock size={14} /> See cost estimate
                 </Link>
                 <button
                   type="button"
                   onClick={reset}
-                  className="inline-flex h-11 items-center px-5 text-sm text-[var(--fg)]/30 hover:text-[var(--fg)] transition-colors"
+                  className="inline-flex h-11 items-center px-5 text-sm text-[var(--ink)]/30 hover:text-[var(--ink)] transition-colors"
                 >
                   Start over
                 </button>
               </div>
 
               {/* Disclaimer */}
-              <p className="text-[11px] text-[var(--fg)]/25 leading-relaxed">
-                These timelines are based on our median delivery data across 35+ shipped products. Actual timelines depend on scope clarity, third-party dependencies, and stakeholder availability. A signed scope from our quote wizard will include contractual milestone dates.
+              <p className="text-[11px] text-[var(--ink-faint)] leading-relaxed">
+                This is a rule-based estimate — phase durations and deltas modeled on typical project patterns, not a live database. Actual timelines depend on scope clarity, third-party dependencies, and stakeholder availability. A signed scope from our quote wizard will include contractual milestone dates.
               </p>
             </div>
           )}
@@ -786,14 +786,14 @@ export function TimelineEstimator() {
             type="button"
             onClick={back}
             disabled={step === 0}
-            className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] disabled:opacity-0 transition-all"
+            className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] disabled:opacity-0 transition-all"
           >
             ← Back
           </button>
           <button
             type="button"
             onClick={next}
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-all active:scale-95"
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-heading font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-all active:scale-95"
           >
             {step === 5 ? (
               <><IconCalendar size={14} /> Show my timeline</>

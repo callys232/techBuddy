@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getResendClient } from "@/lib/email/resend";
 
 const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY ?? "";
-const resend = getResendClient();
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://techbuddy.ng";
 
@@ -31,6 +30,7 @@ export async function GET(req: NextRequest) {
   const templateName: string = metadata?.template_name ?? "your template";
   const buyerName: string = metadata?.buyer_name ?? "there";
 
+  const resend = getResendClient();
   if (resend) {
     await Promise.all([
       resend.emails.send({

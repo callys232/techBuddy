@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { IconStarFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { TESTIMONIALS } from "@/mock/testimonials";
+import { STATS } from "@/mock/stats";
 
 const N = TESTIMONIALS.length;
 
@@ -28,35 +29,39 @@ function StarRow({ n: count }: { n: number }) {
 
 function Card({ t }: { t: typeof TESTIMONIALS[0] }) {
   return (
-    <div className="flex flex-col gap-5 h-full lm-card-solid p-8 shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
-      {/* Large opening quote mark — Lamidone style */}
-      <div className="text-[56px] leading-none font-serif text-[var(--primary)]/15 -mb-2 -ml-1 select-none">
+    <div className="flex flex-col gap-5 h-full card p-8">
+      {/* Large opening quote mark */}
+      <div className="text-[56px] leading-none font-serif text-[var(--brand)]/15 -mb-2 -ml-1 select-none">
         &ldquo;
       </div>
 
       <div className="flex items-center justify-between">
-        <StarRow n={t.rating} />
-        <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--fg)]/25">
+        {t.illustrative ? (
+          <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--warn)]">Illustrative</span>
+        ) : (
+          <StarRow n={t.rating} />
+        )}
+        <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--ink-faint)]">
           {t.industry}
         </span>
       </div>
 
-      <p className="flex-1 text-[15px] text-[var(--fg)]/72 leading-[1.85] italic">
+      <p className="flex-1 text-[15px] text-[var(--ink)]/80 leading-[1.85] italic">
         {t.quote}
       </p>
 
       {/* Divider */}
-      <div className="gradient-line" />
+      <div className="h-px bg-[var(--border)]" />
 
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/15 font-display font-bold text-sm gradient-text">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--brand)]/12 font-heading font-bold text-sm text-[var(--brand)]">
           {t.name.charAt(0)}
         </div>
         <div className="min-w-0">
-          <p className="font-heading text-sm font-semibold text-[var(--fg)] leading-snug truncate">
+          <p className="font-heading text-sm font-semibold text-[var(--ink)] leading-snug truncate">
             {t.name}
           </p>
-          <p className="text-[11px] gradient-text font-semibold truncate">{t.role} · {t.company}</p>
+          <p className="text-[11px] text-[var(--brand)] font-semibold truncate">{t.role} · {t.company}</p>
         </div>
       </div>
     </div>
@@ -102,29 +107,26 @@ export function TestimonialsSection() {
 
   return (
     <section className="relative overflow-hidden py-[var(--section-y)]">
-      {/* Ambient orb */}
-      <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[var(--primary)]/5 blur-[90px]" />
-
       <div className="relative z-10 mx-auto max-w-6xl px-[var(--container-px)]">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
 
           {/* ── Left: copy + controls ── */}
           <div>
-            <span className="eyebrow-pill mb-5 inline-flex">
-              <span className="pulse-dot" />
-              Client stories
-            </span>
+            <span className="eyebrow mb-5 inline-flex">Illustrative feedback</span>
 
-            <h2 className="mt-5 font-display font-extrabold text-[var(--fg)] leading-[1.1] mb-5 tracking-[-0.02em]
+            <h2 className="mt-5 font-heading font-extrabold text-[var(--ink)] leading-[1.1] mb-5 tracking-[-0.02em]
                            text-[clamp(1.9rem,3.5vw,3rem)]">
               Problems solved.<br />
-              <span className="gradient-text">Products shipped.</span>
+              <span className="text-[var(--brand)]">Products shipped.</span>
             </h2>
-            <p className="text-[var(--fg)]/50 leading-relaxed mb-8 max-w-sm text-[14.5px]">
-              From Lagos fintechs to agritech NGOs — here&apos;s what our clients say after shipping with us.
+            <p className="text-[var(--ink-muted)] leading-relaxed mb-3 max-w-sm text-[14.5px]">
+              We&apos;re early — these aren&apos;t quotes from real clients yet. They&apos;re illustrative of the kind of feedback we&apos;re built to earn, based on how we work.
+            </p>
+            <p className="text-[var(--ink-faint)] leading-relaxed mb-8 max-w-sm text-[13px]">
+              Once we ship real client work, this section becomes real client quotes — nothing else.
             </p>
 
-            {/* Lamidone-style dot nav — active is a pill */}
+            {/* Dot nav — active is a pill */}
             <div className="flex items-center gap-2.5 mb-7">
               {TESTIMONIALS.map((_, i) => (
                 <button
@@ -135,8 +137,8 @@ export function TestimonialsSection() {
                   className={[
                     "rounded-full transition-all duration-300",
                     i === active
-                      ? "w-8 h-2 bg-[var(--primary)] shadow-[0_0_6px_rgba(56,189,248,0.5)]"
-                      : "w-2 h-2 bg-[var(--border)] hover:bg-[var(--fg)]/25",
+                      ? "w-8 h-2 bg-[var(--brand)]"
+                      : "w-2 h-2 bg-[var(--border)] hover:bg-[var(--ink)]/25",
                   ].join(" ")}
                 />
               ))}
@@ -145,30 +147,26 @@ export function TestimonialsSection() {
             <button
               type="button"
               onClick={advance}
-              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-xl border border-[var(--border)] text-sm font-semibold text-[var(--fg)]/55 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
+              className="btn-ghost h-10 px-5 text-sm"
             >
-              Next review →
+              Next →
             </button>
 
             {/* Stats */}
             <div className="mt-10 grid grid-cols-3 gap-4 pt-8 border-t border-[var(--border)]">
-              {[
-                { stat: "8 wks",  label: "Avg. time to MVP" },
-                { stat: "35+",    label: "Live products" },
-                { stat: "94%",    label: "Re-engagement rate" },
-              ].map(({ stat, label }) => (
-                <div key={label}>
-                  <p className="font-display text-2xl font-extrabold gradient-text">{stat}</p>
-                  <p className="text-xs text-[var(--fg)]/40 mt-0.5">{label}</p>
+              {[STATS.timeToMvp, STATS.productsShipped, STATS.clientReEngagement].map((s) => (
+                <div key={s.id}>
+                  <p className="font-heading text-2xl font-extrabold text-[var(--brand)]">{s.value}</p>
+                  <p className="text-xs text-[var(--ink-faint)] mt-0.5">{s.label}</p>
                 </div>
               ))}
             </div>
 
             <Link
               href="/portfolio"
-              className="inline-block mt-6 text-sm font-semibold text-[var(--primary)] hover:underline"
+              className="inline-block mt-6 text-sm font-semibold text-[var(--brand)] hover:underline"
             >
-              See all case studies →
+              See our concept work →
             </Link>
           </div>
 
@@ -187,7 +185,7 @@ export function TestimonialsSection() {
                 <Card t={t} />
               </motion.div>
             ))}
-            <p className="absolute -bottom-7 right-0 text-[10px] text-[var(--fg)]/25 font-mono tracking-wide select-none pointer-events-none">
+            <p className="absolute -bottom-7 right-0 text-[10px] text-[var(--ink)]/25 font-mono tracking-wide select-none pointer-events-none">
               tap card to flip →
             </p>
           </div>

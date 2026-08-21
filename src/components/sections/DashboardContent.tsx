@@ -13,9 +13,14 @@ import {
   IconClock,
   IconArrowUpRight,
   IconArrowDownRight,
+  IconCurrencyBitcoin,
+  IconDownload,
+  IconLockOpen,
+  IconShoppingBag,
 } from "@tabler/icons-react";
 import { getSupabase } from "@/lib/supabase/client";
 import type { RewardId } from "@/lib/points";
+import { TOPUP_PRESETS_USD, POINTS_PER_USD } from "@/lib/points";
 
 interface Subscription {
   status: string;
@@ -35,9 +40,20 @@ interface Transaction {
   created_at: string;
 }
 
+interface OwnedProduct {
+  purchaseId: string;
+  purchasedAt: string;
+  pricePaidPoints: number;
+  slug: string;
+  name: string;
+  type: "download" | "unlock";
+  category: string | null;
+}
+
 interface Summary {
   subscription: Subscription | null;
   points: { balance: number; rewards: Reward[]; transactions: Transaction[] };
+  purchases: OwnedProduct[];
 }
 
 const MIN_WATCH_SECONDS = 15;
@@ -203,6 +219,84 @@ function WatchAdModal({ email, onClose, onEarned }: { email: string; onClose: ()
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   Fund account — buy points with crypto (100 points = $1)
+───────────────────────────────────────────────────────────────────────────── */
+
+function FundAccountModal({ email, onClose }: { email: string; onClose: () => void }) {
+  const [amount, setAmount] = useState<number>(TOPUP_PRESETS_USD[0]);
+  const [custom, setCustom] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const effectiveAmount = custom ? Number(custom) || 0 : amount;
+  const points = Math.round(effectiveAmount * POINTS_PER_USD);
+
+  const fund = async () => {
+    if (effectiveAmount < 1) { setError("Minimum top-up is $1."); return; }
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/points/topup/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, amountUsd: effectiveAmount }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Could not start checkout");
+      window.location.href = json.authorizationUrl;
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="card max-w-sm w-full p-6">
+        <div className="w-12 h-12 rounded-full bg-[var(--brand)]/12 flex items-center justify-center mb-4">
+          <IconCurrencyBitcoin size={22} className="text-[var(--brand)]" />
+        </div>
+        <h2 className="font-heading font-bold text-[var(--ink)] text-lg mb-1">Fund your account</h2>
+        <p className="text-sm text-[var(--ink-muted)] leading-relaxed mb-5">Pay with crypto — 100 points per $1, credited automatically once the payment confirms.</p>
+
+        <div className="grid grid-cols-4 gap-2 mb-3">
+          {TOPUP_PRESETS_USD.map((usd) => (
+            <button
+              key={usd}
+              onClick={() => { setAmount(usd); setCustom(""); }}
+              className={`h-11 rounded-lg border text-sm font-semibold transition-colors ${
+                !custom && amount === usd ? "border-[var(--brand)] bg-[var(--brand)]/8 text-[var(--brand)]" : "border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--brand)]/40"
+              }`}
+            >
+              ${usd}
+            </button>
+          ))}
+        </div>
+        <input
+          value={custom}
+          onChange={(e) => setCustom(e.target.value.replace(/[^0-9.]/g, ""))}
+          placeholder="Custom amount (USD)"
+          className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] py-2.5 px-3.5 mb-4 focus:outline-none focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)]/30 transition-colors"
+        />
+
+        <div className="flex items-center justify-between text-sm mb-4 px-1">
+          <span className="text-[var(--ink-muted)]">You&apos;ll receive</span>
+          <span className="font-heading font-bold text-[var(--brand)]">{points.toLocaleString()} points</span>
+        </div>
+
+        {error && <div className="flex items-center gap-2 text-[var(--bad)] text-xs mb-3"><IconAlertCircle size={14} className="shrink-0" /><span>{error}</span></div>}
+
+        <button onClick={fund} disabled={busy} className="btn-primary w-full h-11 text-sm mb-2">
+          {busy ? <IconLoader2 size={16} className="animate-spin" /> : <IconCurrencyBitcoin size={16} />}
+          {busy ? "Redirecting…" : `Pay $${effectiveAmount || 0} with crypto`}
+        </button>
+        <button onClick={onClose} className="w-full h-9 text-sm text-[var(--ink-faint)] hover:text-[var(--ink)] transition-colors">Cancel</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
    Dashboard body — subscription status, points balance, rewards, ledger
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -222,6 +316,7 @@ function DashboardBody({ email }: { email: string }) {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showWatchAd, setShowWatchAd] = useState(false);
+  const [showFund, setShowFund] = useState(false);
   const [redeemingId, setRedeemingId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
@@ -307,16 +402,27 @@ function DashboardBody({ email }: { email: string }) {
             </div>
             <div>
               <p className="font-heading font-semibold text-[var(--ink)] text-lg leading-tight">{summary.points.balance} points</p>
-              <p className="text-xs text-[var(--ink-muted)]">Earned across the TechBuddy ecosystem — spend on rewards below</p>
+              <p className="text-xs text-[var(--ink-muted)]">Earned across the TechBuddy ecosystem — spend on rewards below or in the store</p>
             </div>
           </div>
-          <button onClick={() => setShowWatchAd(true)} className="btn-secondary h-10 px-4 text-sm">
-            <IconPlayerPlay size={14} />
-            Watch an ad — earn 10
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setShowFund(true)} className="btn-primary h-10 px-4 text-sm">
+              <IconCurrencyBitcoin size={14} />
+              Fund with crypto
+            </button>
+            <button onClick={() => setShowWatchAd(true)} className="btn-secondary h-10 px-4 text-sm">
+              <IconPlayerPlay size={14} />
+              Watch an ad — earn 10
+            </button>
+          </div>
         </div>
 
-        <p className="eyebrow mb-3">Redeem points</p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="eyebrow mb-0">Redeem points</p>
+          <a href="/store" className="text-xs font-semibold text-[var(--brand)] hover:underline flex items-center gap-1">
+            <IconShoppingBag size={12} />Browse the full store →
+          </a>
+        </div>
         <div className="grid sm:grid-cols-3 gap-3">
           {summary.points.rewards.map((r) => {
             const canAfford = summary.points.balance >= r.cost;
@@ -336,6 +442,27 @@ function DashboardBody({ email }: { email: string }) {
           })}
         </div>
       </div>
+
+      {/* My purchases */}
+      {summary.purchases.length > 0 && (
+        <div className="card p-6">
+          <p className="eyebrow mb-4">My purchases</p>
+          <div className="space-y-1">
+            {summary.purchases.map((p) => (
+              <div key={p.purchaseId} className="flex items-center justify-between py-2 border-b border-[var(--border)] last:border-0">
+                <div className="flex items-center gap-2.5 text-sm text-[var(--ink)]">
+                  {p.type === "download" ? <IconDownload size={14} className="text-[var(--ink-faint)]" /> : <IconLockOpen size={14} className="text-[var(--ink-faint)]" />}
+                  {p.name}
+                </div>
+                <span className="text-xs text-[var(--ink-faint)] font-mono tabular-nums">{p.pricePaidPoints} pts</span>
+              </div>
+            ))}
+          </div>
+          <a href="/store" className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--brand)] hover:underline mt-4">
+            <IconShoppingBag size={12} />Visit the store for re-downloads →
+          </a>
+        </div>
+      )}
 
       {/* Recent activity */}
       {summary.points.transactions.length > 0 && (
@@ -367,6 +494,8 @@ function DashboardBody({ email }: { email: string }) {
           onEarned={() => { setShowWatchAd(false); load(); }}
         />
       )}
+
+      {showFund && <FundAccountModal email={email} onClose={() => setShowFund(false)} />}
     </div>
   );
 }

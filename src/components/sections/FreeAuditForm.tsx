@@ -49,13 +49,13 @@ export function FreeAuditForm() {
     setTypes((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
 
   const inputCls = (err: string | null, val: string, isTouched: boolean) => [
-    "h-11 rounded-xl border px-4 text-sm text-[var(--fg)] bg-[var(--surface)]",
-    "placeholder:text-[var(--fg)]/25 focus:outline-none focus:ring-1 transition-colors w-full",
+    "h-11 rounded-xl border px-4 text-sm text-[var(--ink)] bg-[var(--surface)]",
+    "placeholder:text-[var(--ink)]/25 focus:outline-none focus:ring-1 transition-colors w-full",
     isTouched && err
       ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400/20"
       : isTouched && val && !err
       ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500/20"
-      : "border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/30",
+      : "border-[var(--border)] focus:border-[var(--brand)] focus:ring-[var(--brand)]/30",
   ].join(" ");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,16 +86,16 @@ export function FreeAuditForm() {
 
   if (status === "success") {
     return (
-      <div className="glass rounded-[var(--radius-card)] border border-[var(--primary)]/30 p-10 text-center max-w-md mx-auto">
-        <div className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/10 mb-5">
-          <IconCheck size={28} className="text-[var(--primary)]" />
+      <div className="glass rounded-[var(--radius-card)] border border-[var(--brand)]/30 p-10 text-center max-w-md mx-auto">
+        <div className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/10 mb-5">
+          <IconCheck size={28} className="text-[var(--brand)]" />
         </div>
-        <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">Audit Request Received!</h2>
-        <p className="text-[var(--fg)]/50 text-sm leading-relaxed mb-1">
-          We&apos;ll manually audit <span className="text-[var(--primary)] font-mono break-all">{url}</span> and send
+        <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">Audit Request Received!</h2>
+        <p className="text-[var(--ink)]/50 text-sm leading-relaxed mb-1">
+          We&apos;ll manually audit <span className="text-[var(--brand)] font-mono break-all">{url}</span> and send
           your report to <strong>{email}</strong> within 48 hours.
         </p>
-        <p className="text-xs text-[var(--fg)]/30 mb-6">Questions before then? WhatsApp us directly.</p>
+        <p className="text-xs text-[var(--ink)]/30 mb-6">Questions before then? WhatsApp us directly.</p>
         <a
           href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I just submitted a free audit request for ${url}.`)}`}
           target="_blank"
@@ -114,8 +114,8 @@ export function FreeAuditForm() {
       {/* Name + Email */}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-[var(--fg)]/60 mb-1" htmlFor="audit-name">
-            Your name <span className="text-[var(--primary)]">*</span>
+          <label className="block text-xs font-semibold text-[var(--ink)]/60 mb-1" htmlFor="audit-name">
+            Your name <span className="text-[var(--brand)]">*</span>
           </label>
           <input
             id="audit-name"
@@ -129,8 +129,8 @@ export function FreeAuditForm() {
           <FieldError msg={nameErr} />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[var(--fg)]/60 mb-1" htmlFor="audit-email">
-            Email address <span className="text-[var(--primary)]">*</span>
+          <label className="block text-xs font-semibold text-[var(--ink)]/60 mb-1" htmlFor="audit-email">
+            Email address <span className="text-[var(--brand)]">*</span>
           </label>
           <input
             id="audit-email"
@@ -147,8 +147,8 @@ export function FreeAuditForm() {
 
       {/* URL */}
       <div>
-        <label className="block text-xs font-semibold text-[var(--fg)]/60 mb-1" htmlFor="audit-url">
-          Website or app URL <span className="text-[var(--primary)]">*</span>
+        <label className="block text-xs font-semibold text-[var(--ink)]/60 mb-1" htmlFor="audit-url">
+          Website or app URL <span className="text-[var(--brand)]">*</span>
         </label>
         <input
           id="audit-url"
@@ -164,8 +164,8 @@ export function FreeAuditForm() {
 
       {/* Audit types */}
       <div>
-        <p className="text-xs font-semibold text-[var(--fg)]/60 mb-3">
-          What should we audit? <span className="text-[var(--primary)]">*</span>
+        <p className="text-xs font-semibold text-[var(--ink)]/60 mb-3">
+          What should we audit? <span className="text-[var(--brand)]">*</span>
         </p>
         <div className="flex flex-col gap-2">
           {AUDIT_TYPES.map((t) => (
@@ -174,22 +174,22 @@ export function FreeAuditForm() {
               className={[
                 "flex items-center gap-4 rounded-xl border px-4 py-3 cursor-pointer transition-all",
                 types.includes(t.id)
-                  ? "border-[var(--primary)]/60 bg-[var(--primary)]/5"
-                  : "border-[var(--border)] hover:border-[var(--primary)]/30",
+                  ? "border-[var(--brand)]/60 bg-[var(--brand)]/5"
+                  : "border-[var(--border)] hover:border-[var(--brand)]/30",
               ].join(" ")}
             >
               <input
                 type="checkbox"
                 checked={types.includes(t.id)}
                 onChange={() => toggle(t.id)}
-                className="accent-[var(--primary)] h-4 w-4 shrink-0"
+                className="accent-[var(--brand)] h-4 w-4 shrink-0"
               />
               <span className="flex-1">
-                <span className="block text-sm font-medium text-[var(--fg)]">{t.label}</span>
-                <span className="block text-xs text-[var(--fg)]/40">{t.hint}</span>
+                <span className="block text-sm font-medium text-[var(--ink)]">{t.label}</span>
+                <span className="block text-xs text-[var(--ink)]/40">{t.hint}</span>
               </span>
               {types.includes(t.id) && (
-                <span className="text-[var(--primary)] text-xs font-mono">✓</span>
+                <span className="text-[var(--brand)] text-xs font-mono">✓</span>
               )}
             </label>
           ))}
@@ -215,12 +215,12 @@ export function FreeAuditForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full h-12 rounded-full bg-[var(--primary)] font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-sky)] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full h-12 rounded-full bg-[var(--brand)] font-semibold text-[var(--page)] hover:opacity-90 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === "loading" ? "Submitting…" : "Request free audit →"}
       </button>
 
-      <p className="text-center text-xs text-[var(--fg)]/25">
+      <p className="text-center text-xs text-[var(--ink)]/25">
         No sign-up required. Report delivered within 48 hours.
       </p>
     </form>

@@ -234,34 +234,34 @@ export default async function ServicePage({ params }: Props) {
     : ALL_PROJECTS.slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-[var(--section-y)] pb-16 border-b border-[var(--border)]">
         <PageVectors variant="top-right" intensity={0.35} />
         <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
           <div className="max-w-3xl">
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--brand)]">
               {service?.tag ?? "Service"}
             </span>
-            <h1 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-[var(--fg)] leading-[1.1] mb-4">
+            <h1 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] leading-[1.1] mb-4">
               {title}
             </h1>
             {detail && (
-              <p className="text-xl text-[var(--fg)]/55 leading-relaxed mb-3">
+              <p className="text-xl text-[var(--ink)]/55 leading-relaxed mb-3">
                 {detail.tagline}
               </p>
             )}
             <Link
               href="/tools/cost-estimator"
-              className="inline-flex items-center gap-1.5 font-mono text-xs text-[var(--primary)]/70 hover:text-[var(--primary)] transition-colors mt-1"
+              className="inline-flex items-center gap-1.5 font-mono text-xs text-[var(--brand)]/70 hover:text-[var(--brand)] transition-colors mt-1"
             >
               💰 Use the free estimator to get a cost range →
             </Link>
             <div className="flex flex-wrap gap-4 mt-8">
               <Link
                 href={`/quote?service=${encodeURIComponent(title)}`}
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+                className="btn-primary h-11 px-7 text-sm"
               >
                 Get a quote for {title}
               </Link>
@@ -269,7 +269,7 @@ export default async function ServicePage({ params }: Props) {
                 href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I'm interested in ${title} services.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-7 font-heading font-semibold text-sm text-[var(--fg)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
+                className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-7 font-heading font-semibold text-sm text-[var(--ink)] hover:border-[#25D366] hover:text-[#25D366] transition-colors"
               >
                 <IconBrandWhatsapp size={16} />
                 Ask on WhatsApp
@@ -286,18 +286,18 @@ export default async function ServicePage({ params }: Props) {
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Problem */}
               <div>
-                <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-4">
+                <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-4">
                   The problem we solve
                 </h2>
-                <p className="text-[var(--fg)]/65 leading-[1.85] text-[15px]">{detail.problem}</p>
+                <p className="text-[var(--ink)]/65 leading-[1.85] text-[15px]">{detail.problem}</p>
 
-                <h3 className="font-display text-lg font-bold text-[var(--fg)] mt-8 mb-3">
+                <h3 className="font-display text-lg font-bold text-[var(--ink)] mt-8 mb-3">
                   Who is this for?
                 </h3>
                 <ul className="space-y-2">
                   {detail.whoFor.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-[var(--fg)]/65">
-                      <IconArrowRight size={13} className="text-[var(--primary)] shrink-0 mt-0.5" />
+                    <li key={item} className="flex items-start gap-2 text-sm text-[var(--ink)]/65">
+                      <IconArrowRight size={13} className="text-[var(--brand)] shrink-0 mt-0.5" />
                       {item}
                     </li>
                   ))}
@@ -306,16 +306,16 @@ export default async function ServicePage({ params }: Props) {
 
               {/* Deliverables */}
               <div>
-                <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-4">
+                <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-4">
                   What you get
                 </h2>
                 <ul className="space-y-3">
                   {detail.deliverables.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/12 mt-0.5">
-                        <IconCheck size={11} className="text-[var(--primary)]" />
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand)]/12 mt-0.5">
+                        <IconCheck size={11} className="text-[var(--brand)]" />
                       </span>
-                      <span className="text-sm text-[var(--fg)]/70 leading-snug">{item}</span>
+                      <span className="text-sm text-[var(--ink)]/70 leading-snug">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -328,15 +328,15 @@ export default async function ServicePage({ params }: Props) {
       {/* ── Related work ─────────────────────────────────────────────────── */}
       <section className="py-16 bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
-          <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">Related work</h2>
-          <p className="text-sm text-[var(--fg)]/45 mb-8">Projects where we applied this service.</p>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">Related work</h2>
+          <p className="text-sm text-[var(--ink)]/45 mb-8">Projects where we applied this service.</p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((project) => (
               <AppCard key={project.name} {...project} />
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link href="/portfolio" className="text-sm font-semibold text-[var(--primary)] hover:underline">
+            <Link href="/portfolio" className="text-sm font-semibold text-[var(--brand)] hover:underline">
               View all projects →
             </Link>
           </div>
@@ -347,14 +347,14 @@ export default async function ServicePage({ params }: Props) {
       {detail?.faqs.length && (
         <section className="py-16">
           <div className="mx-auto max-w-3xl px-[var(--container-px)]">
-            <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-8">
+            <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-8">
               Common questions
             </h2>
             <div className="space-y-6">
               {detail.faqs.map(({ q, a }) => (
                 <div key={q} className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6">
-                  <p className="font-heading font-semibold text-[var(--fg)] mb-2">{q}</p>
-                  <p className="text-sm text-[var(--fg)]/60 leading-relaxed">{a}</p>
+                  <p className="font-heading font-semibold text-[var(--ink)] mb-2">{q}</p>
+                  <p className="text-sm text-[var(--ink)]/60 leading-relaxed">{a}</p>
                 </div>
               ))}
             </div>
@@ -365,20 +365,20 @@ export default async function ServicePage({ params }: Props) {
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
       <section className="py-16 bg-[var(--surface)] text-center">
         <div className="mx-auto max-w-xl px-[var(--container-px)]">
-          <h2 className="font-display text-3xl font-extrabold text-[var(--fg)] mb-3">
+          <h2 className="font-display text-3xl font-extrabold text-[var(--ink)] mb-3">
             Ready to get started?
           </h2>
-          <p className="text-[var(--fg)]/50 mb-8 text-sm">
+          <p className="text-[var(--ink)]/50 mb-8 text-sm">
             Tell us what you&apos;re building. We&apos;ll reply with a realistic scope, timeline, and Naira range within 24 hours.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link
               href={`/quote?service=${encodeURIComponent(title)}`}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+              className="btn-primary h-11 px-7 text-sm"
             >
               Get a free quote
             </Link>
-            <Link href="/pricing" className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-7 font-heading font-semibold text-sm text-[var(--fg)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
+            <Link href="/pricing" className="btn-ghost h-11 px-7 text-sm">
               Estimate the cost
             </Link>
           </div>

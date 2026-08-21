@@ -21,14 +21,14 @@ export const metadata: Metadata = {
 
 export default function InvestPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative grain overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
         <PageVectors variant="scattered" intensity={0.5} />
         <div className="relative z-10">
-          <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none">
+          <h1 className="h-display">
             We Invest in Ideas<br />Worth Building
           </h1>
-          <p className="mt-6 text-lg text-[var(--fg)]/60 max-w-xl mx-auto">
+          <p className="mt-6 text-lg text-[var(--ink)]/60 max-w-xl mx-auto">
             We don&apos;t just build — we partner. Equity, revenue share, incubation, and advisory.
           </p>
         </div>
@@ -44,15 +44,15 @@ export default function InvestPage() {
 
       {/* Application CTA */}
       <section className="px-[var(--container-px)] py-[var(--section-y)] text-center bg-[var(--surface)]">
-        <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-3">
+        <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-3">
           Ready to pitch your idea?
         </h2>
-        <p className="text-[var(--fg)]/55 mb-6 max-w-md mx-auto">
+        <p className="text-[var(--ink)]/55 mb-6 max-w-md mx-auto">
           Submit a short brief and we&apos;ll review it within 5 business days. No lengthy decks required.
         </p>
         <a
           href="/invest/apply"
-          className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95"
+          className="btn-primary h-11 px-8"
         >
           Apply now — it&apos;s free
         </a>

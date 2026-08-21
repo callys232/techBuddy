@@ -70,8 +70,8 @@ export function TemplatesContent() {
             className={[
               "h-9 px-5 rounded-full text-sm font-semibold transition-all",
               sourceTab === t.id
-                ? "bg-[var(--primary)] text-[var(--bg)]"
-                : "border border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)] hover:text-[var(--fg)]",
+                ? "bg-[var(--brand)] text-[var(--page)]"
+                : "border border-[var(--border)] text-[var(--ink)]/60 hover:border-[var(--brand)] hover:text-[var(--ink)]",
             ].join(" ")}
           >
             {t.label}
@@ -81,16 +81,16 @@ export function TemplatesContent() {
 
       {/* ── Context note for external ────────────────────────────────── */}
       {sourceTab === "external" && (
-        <div className="mb-6 glass rounded-xl border border-[var(--border)] px-5 py-3.5 text-sm text-[var(--fg)]/55 leading-relaxed">
+        <div className="mb-6 glass rounded-xl border border-[var(--border)] px-5 py-3.5 text-sm text-[var(--ink)]/55 leading-relaxed">
           <div className="flex items-start justify-between gap-4">
             <p>
-              These are curated references from <strong className="text-[var(--fg)]">ThemeForest</strong> and <strong className="text-[var(--fg)]">GitHub</strong> (MIT-licensed). We use them as starting points — we build a fully custom version for your brand, stack and requirements. Prices shown are our customisation fee.
+              These are curated references from <strong className="text-[var(--ink)]">ThemeForest</strong> and <strong className="text-[var(--ink)]">GitHub</strong> (MIT-licensed). We use them as starting points — we build a fully custom version for your brand, stack and requirements. Prices shown are our customisation fee.
             </p>
             <button
               type="button"
               onClick={fetchGithub}
               disabled={ghLoading}
-              className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1 text-[11px] font-semibold text-[var(--fg)]/50 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all disabled:opacity-40"
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1 text-[11px] font-semibold text-[var(--ink)]/50 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-all disabled:opacity-40"
             >
               <IconRefresh size={11} className={ghLoading ? "animate-spin" : ""} />
               {ghLive ? "Live from GitHub" : "Refresh"}
@@ -115,11 +115,11 @@ export function TemplatesContent() {
             ))}
             {/* Custom build slot */}
             <div className="flex flex-col items-center justify-center rounded-[var(--radius-card)] border border-dashed border-[var(--border)] p-10 text-center">
-              <p className="font-display text-lg font-bold text-[var(--fg)] mb-2">Build From Scratch</p>
-              <p className="text-sm text-[var(--fg)]/50 mb-6">Custom design for unique requirements.</p>
+              <p className="font-display text-lg font-bold text-[var(--ink)] mb-2">Build From Scratch</p>
+              <p className="text-sm text-[var(--ink)]/50 mb-6">Custom design for unique requirements.</p>
               <a
                 href="/quote"
-                className="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--primary)] px-6 text-sm font-semibold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-all"
+                className="inline-flex h-10 items-center gap-2 rounded-full border border-[var(--brand)] px-6 text-sm font-semibold text-[var(--brand)] hover:bg-[var(--brand)] hover:text-[var(--page)] transition-all"
               >
                 Start custom build
               </a>
@@ -140,7 +140,7 @@ export function TemplatesContent() {
 
       {/* ── Disclaimer ───────────────────────────────────────────────── */}
       {sourceTab === "external" && (
-        <p className="mt-8 text-center text-xs text-[var(--fg)]/25 max-w-xl mx-auto leading-relaxed">
+        <p className="mt-8 text-center text-xs text-[var(--ink)]/25 max-w-xl mx-auto leading-relaxed">
           ThemeForest items are sold under Envato license — purchase of the original theme is the client&apos;s responsibility. GitHub templates are MIT-licensed. We charge only for our customisation and development work.
         </p>
       )}

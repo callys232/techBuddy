@@ -48,13 +48,13 @@ export function EstimatorModal({ open, onClose }: Props) {
             transition={{ duration: 0.25, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--bg)] shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
+            <div className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--page)] shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
 
               {/* Header */}
-              <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--border)] bg-[var(--bg)] px-8 py-5">
+              <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--border)] bg-[var(--page)] px-8 py-5">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]">Free tool</p>
-                  <h2 className="font-display text-xl font-extrabold text-[var(--fg)] mt-0.5">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--brand)]">Free tool</p>
+                  <h2 className="font-display text-xl font-extrabold text-[var(--ink)] mt-0.5">
                     What Will Your Build Cost?
                   </h2>
                 </div>
@@ -62,7 +62,7 @@ export function EstimatorModal({ open, onClose }: Props) {
                   type="button"
                   onClick={onClose}
                   aria-label="Close estimator"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)]/50 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink)]/50 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-all"
                 >
                   <IconX size={16} />
                 </button>

@@ -19,25 +19,23 @@ export const metadata: Metadata = {
 
 export default function NDPRCheckerPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="top-right" intensity={0.38} />
         <div className="relative z-10 max-w-5xl mx-auto">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
-            Free Tool · Nigeria-specific
-          </p>
-          <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-4 max-w-2xl">
+          <p className="eyebrow mb-4">Free Tool · Nigeria-specific</p>
+          <h1 className="h-display mb-4 max-w-2xl">
             How NDPR Compliant Is Your Product?
           </h1>
-          <p className="text-[var(--fg)]/50 max-w-xl mb-4 leading-relaxed">
+          <p className="text-[var(--ink-muted)] max-w-xl mb-4 leading-relaxed">
             The Nigerian Data Protection Regulation (NDPR) requires every business that processes personal data to meet 16 core requirements. Answer honestly — this isn&apos;t a sales pitch, it&apos;s a real compliance check.
           </p>
-          <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--fg)]/35 mb-12">
-            <span>â± ~8 minutes</span>
+          <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--ink-faint)] mb-12">
+            <span>⏱ ~8 minutes</span>
             <span>·</span>
-            <span>ðŸ"‹ 16 questions across 6 categories</span>
+            <span>📋 16 questions across 6 categories</span>
             <span>·</span>
-            <span>âš–ï¸ Based on NDPR 2019 & NITDA guidelines</span>
+            <span>⚖️ Based on NDPR 2019 & NITDA guidelines</span>
           </div>
 
           <NDPRChecker />
@@ -46,8 +44,8 @@ export default function NDPRCheckerPage() {
 
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="relative z-10 max-w-5xl mx-auto">
-          <p className="text-sm text-[var(--fg)]/35 leading-relaxed max-w-2xl">
-            <strong className="text-[var(--fg)]/50">Disclaimer:</strong> This tool is for educational and preliminary self-assessment purposes only. It does not constitute legal advice. For a formal NDPR compliance audit or filing with NITDA, engage a licensed Data Protection Compliance Organisation (DPCO). The questions are based on the NDPR 2019, the NDPR Implementation Framework, and NITDA guidelines as of 2026.
+          <p className="text-sm text-[var(--ink-faint)] leading-relaxed max-w-2xl">
+            <strong className="text-[var(--ink-muted)]">Disclaimer:</strong> This tool is for educational and preliminary self-assessment purposes only. It does not constitute legal advice. For a formal NDPR compliance audit or filing with NITDA, engage a licensed Data Protection Compliance Organisation (DPCO). The questions are based on the NDPR 2019, the NDPR Implementation Framework, and NITDA guidelines as of 2026.
           </p>
         </div>
       </section>

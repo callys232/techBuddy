@@ -46,8 +46,8 @@ function ScoreRing({ score, color }: { score: number; color: string }) {
 function SectionBar({ name, score, color }: { name: string; score: number; color: string }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="w-32 shrink-0 text-xs text-[var(--fg)]/45 text-right">{name}</span>
-      <div className="flex-1 h-4 bg-[var(--bg)] rounded-full overflow-hidden">
+      <span className="w-32 shrink-0 text-xs text-[var(--ink)]/45 text-right">{name}</span>
+      <div className="flex-1 h-4 bg-[var(--page)] rounded-full overflow-hidden">
         <motion.div
           className={`h-full rounded-full ${color}`}
           initial={{ width: 0 }}
@@ -55,7 +55,7 @@ function SectionBar({ name, score, color }: { name: string; score: number; color
           transition={{ duration: 0.6, ease: "easeOut" }}
         />
       </div>
-      <span className="w-10 text-xs font-mono text-[var(--fg)]/45 text-right">{score}%</span>
+      <span className="w-10 text-xs font-mono text-[var(--ink)]/45 text-right">{score}%</span>
     </div>
   );
 }
@@ -107,14 +107,14 @@ export function PMFScorer() {
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Score card */}
         <div className="glass rounded-[var(--radius-card)] border border-[var(--border)] p-8 text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--primary)] mb-5">Your PMF Score</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--brand)] mb-5">Your PMF Score</p>
           <ScoreRing score={result.score} color={result.gradeColor} />
           <p className={`font-display text-xl font-bold mt-4 ${result.gradeColor}`}>{result.gradeLabel}</p>
         </div>
 
         {/* Section breakdown */}
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6">
-          <h3 className="font-heading font-bold text-[var(--fg)] mb-5">Score by dimension</h3>
+          <h3 className="font-heading font-bold text-[var(--ink)] mb-5">Score by dimension</h3>
           <div className="space-y-3">
             {result.sections.map((s) => (
               <SectionBar key={s.name} name={s.name} score={s.score} color={s.color} />
@@ -123,11 +123,11 @@ export function PMFScorer() {
         </div>
 
         {/* Top action */}
-        <div className="rounded-[var(--radius-card)] border border-[var(--primary)]/30 bg-[var(--primary)]/5 p-6">
-          <p className="font-heading font-bold text-[var(--primary)] mb-2 flex items-center gap-2">
+        <div className="rounded-[var(--radius-card)] border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-6">
+          <p className="font-heading font-bold text-[var(--brand)] mb-2 flex items-center gap-2">
             <IconArrowRight size={15} /> Your single most important next action
           </p>
-          <p className="text-sm text-[var(--fg)]/65 leading-relaxed">{result.topAction}</p>
+          <p className="text-sm text-[var(--ink)]/65 leading-relaxed">{result.topAction}</p>
         </div>
 
         {/* Gaps */}
@@ -141,10 +141,10 @@ export function PMFScorer() {
               {result.gaps.map(({ q, score, advice }) => (
                 <div key={q.id} className="border-l-2 border-amber-400/40 pl-4">
                   <div className="flex items-center gap-3 mb-1">
-                    <p className="font-heading font-semibold text-[var(--fg)] text-sm">{q.question}</p>
+                    <p className="font-heading font-semibold text-[var(--ink)] text-sm">{q.question}</p>
                     <span className="font-mono text-xs text-amber-400 shrink-0">{score}/100</span>
                   </div>
-                  <p className="text-xs text-[var(--fg)]/50 leading-relaxed">{advice}</p>
+                  <p className="text-xs text-[var(--ink)]/50 leading-relaxed">{advice}</p>
                 </div>
               ))}
             </div>
@@ -159,7 +159,7 @@ export function PMFScorer() {
             </h3>
             <div className="space-y-1">
               {result.strengths.map(({ q }) => (
-                <div key={q.id} className="flex items-center gap-2 text-xs text-[var(--fg)]/55">
+                <div key={q.id} className="flex items-center gap-2 text-xs text-[var(--ink)]/55">
                   <IconCheck size={11} className="text-emerald-400 shrink-0" />
                   {q.question}
                 </div>
@@ -170,17 +170,17 @@ export function PMFScorer() {
 
         {/* CTA */}
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6 text-center">
-          <p className="font-heading font-bold text-[var(--fg)] mb-1">
+          <p className="font-heading font-bold text-[var(--ink)] mb-1">
             {result.grade === "achieved" ? "Ready to scale? Let's build the infrastructure." : "Want help addressing these gaps?"}
           </p>
-          <p className="text-sm text-[var(--fg)]/45 mb-5">Full report sent to <strong>{email}</strong>.</p>
+          <p className="text-sm text-[var(--ink)]/45 mb-5">Full report sent to <strong>{email}</strong>.</p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link href="/contact"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity">
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-opacity">
               Talk to our team <IconArrowRight size={14} />
             </Link>
             <button type="button" onClick={reset}
-              className="inline-flex h-11 items-center px-5 text-sm text-[var(--fg)]/30 hover:text-[var(--fg)] transition-colors">
+              className="inline-flex h-11 items-center px-5 text-sm text-[var(--ink)]/30 hover:text-[var(--ink)] transition-colors">
               Retake
             </button>
           </div>
@@ -194,19 +194,19 @@ export function PMFScorer() {
     return (
       <div className="max-w-xl mx-auto">
         <div className="w-full bg-[var(--border)] rounded-full h-1.5 mb-8">
-          <div className="bg-[var(--primary)] h-1.5 rounded-full w-[95%]" />
+          <div className="bg-[var(--brand)] h-1.5 rounded-full w-[95%]" />
         </div>
-        <p className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.25em] mb-3">Almost done</p>
-        <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+        <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.25em] mb-3">Almost done</p>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">
           Where should we send your PMF report?
         </h2>
-        <p className="text-sm text-[var(--fg)]/45 mb-8 leading-relaxed">
+        <p className="text-sm text-[var(--ink)]/45 mb-8 leading-relaxed">
           You&apos;ll receive your score, a section-by-section breakdown, your specific gaps, and the single most important action to take this week.
         </p>
         <div className="space-y-4">
           <div>
-            <label className="block font-heading text-sm font-semibold text-[var(--fg)] mb-1.5">
-              Email address <span className="text-[var(--primary)]">*</span>
+            <label className="block font-heading text-sm font-semibold text-[var(--ink)] mb-1.5">
+              Email address <span className="text-[var(--brand)]">*</span>
             </label>
             <input
               ref={emailRef} type="email" value={email} autoFocus
@@ -214,10 +214,10 @@ export function PMFScorer() {
               onBlur={() => { setEmailTouched(true); setEmailError(validateEmail(email)); }}
               placeholder="you@startup.ng"
               className={[
-                "w-full rounded-xl border px-4 py-3 text-sm text-[var(--fg)] bg-[var(--surface)] placeholder:text-[var(--fg)]/30 focus:outline-none focus:ring-1 transition-colors",
+                "w-full rounded-xl border px-4 py-3 text-sm text-[var(--ink)] bg-[var(--surface)] placeholder:text-[var(--ink)]/30 focus:outline-none focus:ring-1 transition-colors",
                 emailTouched && emailError ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400/20"
                   : isEmailValid && emailTouched ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500/20"
-                  : "border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/20",
+                  : "border-[var(--border)] focus:border-[var(--brand)] focus:ring-[var(--brand)]/20",
               ].join(" ")}
             />
             {emailTouched && emailError && (
@@ -225,15 +225,15 @@ export function PMFScorer() {
                 <IconAlertCircle size={11} />{emailError}
               </span>
             )}
-            <p className="text-xs text-[var(--fg)]/30 mt-2">Added to our newsletter — unsubscribe anytime.</p>
+            <p className="text-xs text-[var(--ink)]/30 mt-2">Added to our newsletter — unsubscribe anytime.</p>
           </div>
           <CategoryPicker value={industry} onChange={setIndustry} />
           <div className="flex items-center gap-3 pt-1">
             <button type="button" onClick={next}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-all active:scale-95">
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-all active:scale-95">
               Show my PMF score →
             </button>
-            <button type="button" onClick={back} className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] transition-colors">← Back</button>
+            <button type="button" onClick={back} className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors">← Back</button>
           </div>
         </div>
       </div>
@@ -247,30 +247,30 @@ export function PMFScorer() {
     <div className="max-w-xl mx-auto">
       {/* Section progress */}
       <div className="flex items-center justify-between mb-2">
-        <span className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.2em]">
+        <span className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em]">
           {currentQ?.section}
         </span>
-        <span className="text-xs text-[var(--fg)]/30">{step + 1} / {PMF_QUESTIONS.length}</span>
+        <span className="text-xs text-[var(--ink)]/30">{step + 1} / {PMF_QUESTIONS.length}</span>
       </div>
       <div className="w-full bg-[var(--border)] rounded-full h-1.5 mb-2">
-        <motion.div className="bg-[var(--primary)] h-1.5 rounded-full" animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
+        <motion.div className="bg-[var(--brand)] h-1.5 rounded-full" animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
       </div>
 
       {/* Section dots */}
       <div className="flex gap-1.5 mb-8">
         {PMF_SECTIONS.map((s, i) => (
           <div key={s} className={["h-1 flex-1 rounded-full transition-all duration-300",
-            i < sectionIdx ? "bg-[var(--primary)]" : i === sectionIdx ? "bg-[var(--primary)]/60" : "bg-[var(--border)]",
+            i < sectionIdx ? "bg-[var(--brand)]" : i === sectionIdx ? "bg-[var(--brand)]/60" : "bg-[var(--border)]",
           ].join(" ")} />
         ))}
       </div>
 
       <AnimatePresence mode="wait">
         <motion.div key={step} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
-          <h2 className="font-display text-xl font-extrabold text-[var(--fg)] mb-2 leading-snug">
+          <h2 className="font-display text-xl font-extrabold text-[var(--ink)] mb-2 leading-snug">
             {currentQ?.question}
           </h2>
-          <p className="text-sm text-[var(--fg)]/45 mb-6 leading-relaxed">{currentQ?.subtitle}</p>
+          <p className="text-sm text-[var(--ink)]/45 mb-6 leading-relaxed">{currentQ?.subtitle}</p>
 
           <div className="space-y-3">
             {currentQ?.options.map((opt) => {
@@ -280,15 +280,15 @@ export function PMFScorer() {
                   onClick={() => setAnswers((prev) => ({ ...prev, [currentQ.id]: opt.id }))}
                   className={[
                     "flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-all",
-                    on ? "border-[var(--primary)] bg-[var(--primary)]/8" : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface)]",
+                    on ? "border-[var(--brand)] bg-[var(--brand)]/8" : "border-[var(--border)] hover:border-[var(--brand)]/40 bg-[var(--surface)]",
                   ].join(" ")}>
                   <span className={["flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded-full border transition-all",
-                    on ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]"].join(" ")}>
-                    {on && <span className="block h-2 w-2 rounded-full bg-[var(--bg)]" />}
+                    on ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]"].join(" ")}>
+                    {on && <span className="block h-2 w-2 rounded-full bg-[var(--page)]" />}
                   </span>
                   <div>
-                    <span className="block font-heading font-semibold text-[var(--fg)] text-sm">{opt.label}</span>
-                    {opt.hint && <span className="block text-xs text-[var(--fg)]/40 mt-0.5">{opt.hint}</span>}
+                    <span className="block font-heading font-semibold text-[var(--ink)] text-sm">{opt.label}</span>
+                    {opt.hint && <span className="block text-xs text-[var(--ink)]/40 mt-0.5">{opt.hint}</span>}
                   </div>
                 </button>
               );
@@ -299,9 +299,9 @@ export function PMFScorer() {
 
       <div className="flex items-center justify-between mt-10 pt-6 border-t border-[var(--border)]">
         <button type="button" onClick={back} disabled={step === 0}
-          className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] disabled:opacity-0 transition-all">← Back</button>
+          className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] disabled:opacity-0 transition-all">← Back</button>
         <button type="button" onClick={next} disabled={!canAdvance}
-          className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 disabled:opacity-30 transition-all active:scale-95">
+          className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-heading font-semibold text-sm text-[var(--page)] hover:opacity-90 disabled:opacity-30 transition-all active:scale-95">
           {step === PMF_QUESTIONS.length - 1 ? "Continue →" : "Continue →"}
         </button>
       </div>

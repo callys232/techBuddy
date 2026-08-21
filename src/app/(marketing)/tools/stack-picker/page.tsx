@@ -15,17 +15,17 @@ export const metadata: Metadata = {
 
 export default function StackPickerPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="technical" intensity={0.38} />
         <div className="relative z-10 max-w-2xl mx-auto text-center mb-12">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
+          <p className="eyebrow mb-4">
             Free Tool
           </p>
-          <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-4">
+          <h1 className="h-display mb-4">
             What&apos;s the Right Stack for Your Product?
           </h1>
-          <p className="text-[var(--fg)]/50 leading-relaxed">
+          <p className="text-[var(--ink)]/50 leading-relaxed">
             Four questions. One recommendation. Based on what our engineers actually use in production, from African markets to global scale.
           </p>
         </div>

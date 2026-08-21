@@ -6,6 +6,9 @@ export interface Testimonial {
   industry: string;
   rating: number;
   avatar: string;
+  /** True for every entry right now — these are illustrative of the kind of
+   *  feedback we're built to earn, not quotes from a real completed engagement. */
+  illustrative: boolean;
 }
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -18,6 +21,7 @@ export const TESTIMONIALS: Testimonial[] = [
     industry: "Fintech",
     rating: 5,
     avatar: "/placeholder.png",
+    illustrative: true,
   },
   {
     quote:
@@ -28,6 +32,7 @@ export const TESTIMONIALS: Testimonial[] = [
     industry: "AgriTech",
     rating: 5,
     avatar: "/placeholder.png",
+    illustrative: true,
   },
   {
     quote:
@@ -38,6 +43,7 @@ export const TESTIMONIALS: Testimonial[] = [
     industry: "Logistics",
     rating: 5,
     avatar: "/placeholder.png",
+    illustrative: true,
   },
   {
     quote:
@@ -48,6 +54,7 @@ export const TESTIMONIALS: Testimonial[] = [
     industry: "Healthtech",
     rating: 5,
     avatar: "/placeholder.png",
+    illustrative: true,
   },
   {
     quote:
@@ -58,6 +65,7 @@ export const TESTIMONIALS: Testimonial[] = [
     industry: "E-commerce",
     rating: 5,
     avatar: "/placeholder.png",
+    illustrative: true,
   },
   {
     quote:
@@ -68,5 +76,6 @@ export const TESTIMONIALS: Testimonial[] = [
     industry: "EdTech",
     rating: 5,
     avatar: "/placeholder.png",
+    illustrative: true,
   },
 ];

@@ -30,7 +30,7 @@ const GOALS = [
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
@@ -43,9 +43,9 @@ export default function BlogPage() {
           </h1>
 
           <p className="lead max-w-lg mx-auto mb-8">
-            Real engineering write-ups, fintech integration guides, and startup strategy from a
-            team that&apos;s shipped 35+ products. No thought-leadership — just what worked, what
-            broke, and what we&apos;d do differently.
+            Engineering write-ups, fintech integration guides, and startup strategy from the
+            team building TechBuddy. No thought-leadership — just what works, what
+            breaks, and what we&apos;d do differently.
           </p>
 
           {/* Real, sourced counts — not invented */}

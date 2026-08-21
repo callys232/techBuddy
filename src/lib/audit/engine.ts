@@ -1,3 +1,6 @@
+import dns from "node:dns/promises";
+import net from "node:net";
+
 export interface AuditFinding {
   category: "security" | "seo" | "performance" | "best-practices";
   label: string;
@@ -34,6 +37,47 @@ function extractMeta(html: string, name: string): string | null {
   return html.match(re)?.[1] ?? null;
 }
 
+/** Blocks the classic SSRF trick of pointing a "audit my site" tool at an
+ *  internal address (localhost, cloud metadata endpoints, RFC1918 ranges). */
+function isPrivateIp(address: string, family: number): boolean {
+  if (family === 4) {
+    const [a, b] = address.split(".").map(Number);
+    if (a === 10) return true;
+    if (a === 127) return true;
+    if (a === 169 && b === 254) return true; // link-local + cloud metadata (169.254.169.254)
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a === 0) return true;
+    return false;
+  }
+  const lower = address.toLowerCase();
+  if (lower === "::1") return true; // loopback
+  if (lower.startsWith("fe80:")) return true; // link-local
+  if (lower.startsWith("fc") || lower.startsWith("fd")) return true; // unique local (fc00::/7)
+  if (lower.startsWith("::ffff:")) return isPrivateIp(lower.slice(7), 4); // IPv4-mapped
+  return false;
+}
+
+async function assertPublicHost(urlString: string): Promise<void> {
+  const url = new URL(urlString);
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error("Only http/https URLs can be audited");
+  }
+  if (net.isIP(url.hostname)) {
+    if (isPrivateIp(url.hostname, net.isIP(url.hostname))) {
+      throw new Error("This URL points at a private/internal address and can't be audited");
+    }
+    return;
+  }
+  const addresses = await dns.lookup(url.hostname, { all: true });
+  if (addresses.length === 0) throw new Error("Could not resolve this hostname");
+  for (const { address, family } of addresses) {
+    if (isPrivateIp(address, family)) {
+      throw new Error("This URL resolves to a private/internal address and can't be audited");
+    }
+  }
+}
+
 async function checkExists(base: string, path: string): Promise<boolean> {
   try {
     const res = await fetch(new URL(path, base).toString(), { method: "GET", signal: AbortSignal.timeout(5000) });
@@ -43,11 +87,30 @@ async function checkExists(base: string, path: string): Promise<boolean> {
   }
 }
 
+const MAX_REDIRECTS = 5;
+
+/** Manually follows redirects (rather than `redirect: "follow"`) so every hop
+ *  — not just the original URL — gets the private-address check. Otherwise a
+ *  public URL that 302s to an internal address would sail through. */
+async function fetchWithGuardedRedirects(startUrl: string, init: RequestInit): Promise<{ res: Response; finalUrl: string }> {
+  let url = startUrl;
+  for (let i = 0; i <= MAX_REDIRECTS; i++) {
+    await assertPublicHost(url);
+    const res = await fetch(url, { ...init, redirect: "manual" });
+    if (res.status >= 300 && res.status < 400 && res.headers.has("location")) {
+      url = new URL(res.headers.get("location")!, url).toString();
+      continue;
+    }
+    return { res, finalUrl: url };
+  }
+  throw new Error("Too many redirects");
+}
+
 export async function runAudit(targetUrl: string): Promise<AuditReport> {
   const findings: AuditFinding[] = [];
   const start = Date.now();
 
-  const res = await fetch(targetUrl, { signal: AbortSignal.timeout(10000), redirect: "follow" });
+  const { res, finalUrl } = await fetchWithGuardedRedirects(targetUrl, { signal: AbortSignal.timeout(10000) });
   const latencyMs = Date.now() - start;
   const html = await res.text();
 

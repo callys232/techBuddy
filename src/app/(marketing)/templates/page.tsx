@@ -20,13 +20,13 @@ export const metadata: Metadata = {
 
 export default function TemplatesPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
         <PageVectors variant="top-right" intensity={0.35} />
-        <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none">
+        <h1 className="h-display">
           Start Fast, Launch Faster
         </h1>
-        <p className="mt-6 text-lg text-[var(--fg)]/60 max-w-xl mx-auto">
+        <p className="mt-6 text-lg text-[var(--ink)]/60 max-w-xl mx-auto">
           Production-ready templates — customized to your brand, deployed in days.
         </p>
       </section>

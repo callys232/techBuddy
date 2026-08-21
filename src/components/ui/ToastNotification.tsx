@@ -15,15 +15,15 @@ interface ToastProps {
 const CONFIG: Record<ToastType, { icon: React.ElementType; colors: string }> = {
   success: {
     icon: IconCheck,
-    colors: "border-[var(--color-accent-teal)] bg-[var(--color-accent-teal)]/10 text-[var(--color-accent-teal)]",
+    colors: "border-[var(--good)] bg-[var(--good)]/10 text-[var(--good)]",
   },
   error: {
     icon: IconAlertCircle,
-    colors: "border-[var(--color-accent-coral)] bg-[var(--color-accent-coral)]/10 text-[var(--color-accent-coral)]",
+    colors: "border-[var(--bad)] bg-[var(--bad)]/10 text-[var(--bad)]",
   },
   info: {
     icon: IconInfoCircle,
-    colors: "border-[var(--color-accent-amber)] bg-[var(--color-accent-amber)]/10 text-[var(--color-accent-amber)]",
+    colors: "border-[var(--brand)] bg-[var(--brand)]/10 text-[var(--brand)]",
   },
 };
 
@@ -45,10 +45,10 @@ export function ToastNotification({ type, message, duration = 4000, onClose }: T
       ].join(" ")}
     >
       <Icon size={18} className="shrink-0" />
-      <p className="flex-1 text-sm font-medium text-[var(--fg)]">{message}</p>
+      <p className="flex-1 text-sm font-medium text-[var(--ink)]">{message}</p>
       <button
         onClick={onClose}
-        className="ml-2 text-[var(--fg)]/40 hover:text-[var(--fg)] transition-colors"
+        className="ml-2 text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors"
         aria-label="Dismiss"
       >
         <IconX size={14} />

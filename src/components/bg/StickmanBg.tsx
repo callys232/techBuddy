@@ -18,7 +18,7 @@ export function StickmanBg() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, var(--bg) 0%, var(--bg) 45%, transparent 75%)",
+            "linear-gradient(to bottom, var(--page) 0%, var(--page) 45%, transparent 75%)",
         }}
       />
 

@@ -26,46 +26,46 @@ export function HomeCostEstimator() {
 
             {/* Left: copy */}
             <div>
-              <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">
+              <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">
                 Free tool
               </span>
-              <h2 className="mt-2 font-display text-4xl md:text-5xl font-extrabold text-[var(--fg)] leading-[1.1] mb-5">
+              <h2 className="mt-2 font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] leading-[1.1] mb-5">
                 What Will Your Build Cost?
               </h2>
-              <p className="text-[var(--fg)]/50 leading-relaxed mb-8 max-w-md">
+              <p className="text-[var(--ink)]/50 leading-relaxed mb-8 max-w-md">
                 Select your project type, features, and timeline. Get an instant Naira estimate based on real projects we&apos;ve shipped — no sign-up, no commitment.
               </p>
 
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="inline-flex h-13 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-heading font-bold text-base text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-sky)] transition-all active:scale-95"
+                className="inline-flex h-13 items-center gap-2 rounded-full bg-[var(--brand)] px-8 font-heading font-bold text-base text-[var(--page)] hover:opacity-90 transition-all active:scale-95"
               >
                 <IconSparkles size={16} className="opacity-80" />
                 Get an instant estimate
               </button>
 
-              <p className="mt-4 text-xs text-[var(--fg)]/30">
+              <p className="mt-4 text-xs text-[var(--ink)]/30">
                 Takes 60 seconds · Free · No commitment
               </p>
 
               {/* Cross-links */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-8 pt-8 border-t border-[var(--border)]">
-                <span className="text-xs text-[var(--fg)]/30">More free tools:</span>
+                <span className="text-xs text-[var(--ink)]/30">More free tools:</span>
                 <Link href="/tools/timeline-estimator"
-                  className="text-xs font-semibold text-[var(--fg)]/45 hover:text-[var(--primary)] transition-colors">
+                  className="text-xs font-semibold text-[var(--ink)]/45 hover:text-[var(--brand)] transition-colors">
                   📅 Timeline
                 </Link>
                 <Link href="/tools/build-vs-buy"
-                  className="text-xs font-semibold text-[var(--fg)]/45 hover:text-[var(--primary)] transition-colors">
+                  className="text-xs font-semibold text-[var(--ink)]/45 hover:text-[var(--brand)] transition-colors">
                   ⚖️ Build vs Buy
                 </Link>
                 <Link href="/tools/pmf-score"
-                  className="text-xs font-semibold text-[var(--fg)]/45 hover:text-[var(--primary)] transition-colors">
+                  className="text-xs font-semibold text-[var(--ink)]/45 hover:text-[var(--brand)] transition-colors">
                   📈 PMF Score
                 </Link>
                 <Link href="/tools"
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)] hover:underline">
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--brand)] hover:underline">
                   All 8 tools <IconArrowRight size={11} />
                 </Link>
               </div>
@@ -78,15 +78,15 @@ export function HomeCostEstimator() {
                   key={type}
                   type="button"
                   onClick={() => setOpen(true)}
-                  className="group flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--bg)] p-5 text-left hover:border-[var(--primary)]/60 hover:-translate-y-1 hover:shadow-[var(--shadow-glow-sky)] transition-all duration-300"
+                  className="group flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--page)] p-5 text-left hover:border-[var(--brand)]/60 hover:-translate-y-1 transition-all duration-300"
                 >
-                  <span className="text-xs font-semibold text-[var(--fg)]/45 group-hover:text-[var(--primary)] transition-colors">
+                  <span className="text-xs font-semibold text-[var(--ink)]/45 group-hover:text-[var(--brand)] transition-colors">
                     {type}
                   </span>
-                  <span className="font-display text-lg font-extrabold text-[var(--fg)] leading-tight">
+                  <span className="font-display text-lg font-extrabold text-[var(--ink)] leading-tight">
                     {range}
                   </span>
-                  <span className="text-[10px] font-mono text-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-[10px] font-mono text-[var(--brand)] opacity-0 group-hover:opacity-100 transition-opacity">
                     Estimate mine →
                   </span>
                 </button>

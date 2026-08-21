@@ -7,6 +7,7 @@ import { IconArrowRight, IconBrandWhatsapp, IconArrowDown } from "@tabler/icons-
 import { HERO_PAIN_CHIPS } from "@/mock/quote";
 import { HeroHub } from "@/components/ui/HeroHub";
 import { RotatingWord } from "@/components/ui/RotatingWord";
+import { STATS } from "@/mock/stats";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
@@ -64,14 +65,10 @@ export function Hero() {
           {/* Proof strip */}
           <motion.div variants={item}
             className="flex flex-wrap justify-center gap-x-10 gap-y-4 pb-7 mb-7 border-b border-[var(--border)]">
-            {[
-              { v: "8 wks", l: "idea → live MVP"    },
-              { v: "35+",   l: "products shipped"    },
-              { v: "94%",   l: "client re-engagement" },
-            ].map(({ v, l }) => (
-              <div key={l} className="text-center">
-                <span className="block font-display font-semibold text-2xl text-[var(--brand)]">{v}</span>
-                <span className="stat-label">{l}</span>
+            {[STATS.timeToMvp, STATS.productsShipped, STATS.clientReEngagement].map((s) => (
+              <div key={s.id} className="text-center">
+                <span className="block font-display font-semibold text-2xl text-[var(--brand)]">{s.value}</span>
+                <span className="stat-label">{s.label}</span>
               </div>
             ))}
           </motion.div>

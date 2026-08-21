@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@/lib/supabase/client";
 import { getPointsBalance, POINTS_REWARDS } from "@/lib/points";
+import { listPurchases } from "@/lib/store";
 
 export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get("email");
@@ -26,8 +27,11 @@ export async function GET(req: NextRequest) {
     .order("created_at", { ascending: false })
     .limit(10);
 
+  const purchases = await listPurchases(normalized);
+
   return NextResponse.json({
     subscription: subscription ?? null,
     points: { balance, rewards: POINTS_REWARDS, transactions: transactions ?? [] },
+    purchases,
   });
 }

@@ -41,7 +41,7 @@ function AnswersSidebar({ answers, questions, step }: {
   return (
     <div className="hidden lg:block w-56 shrink-0">
       <div className="sticky top-24 rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-4">
-        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--fg)]/35 mb-3">Your answers</p>
+        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--ink)]/35 mb-3">Your answers</p>
         <div className="space-y-2.5">
           {filled.map((q) => {
             const val = answers[q.id];
@@ -50,8 +50,8 @@ function AnswersSidebar({ answers, questions, step }: {
               : q.options?.find((o) => o.id === val)?.label ?? val;
             return (
               <div key={q.id}>
-                <p className="text-[10px] text-[var(--fg)]/35 leading-snug">{q.question}</p>
-                <p className="text-[11px] font-semibold text-[var(--primary)] leading-snug mt-0.5 line-clamp-2">{display}</p>
+                <p className="text-[10px] text-[var(--ink)]/35 leading-snug">{q.question}</p>
+                <p className="text-[11px] font-semibold text-[var(--brand)] leading-snug mt-0.5 line-clamp-2">{display}</p>
               </div>
             );
           })}
@@ -141,19 +141,19 @@ export function MVPScopeGenerator() {
     return (
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Header */}
-        <div className="glass rounded-[var(--radius-card)] border border-[var(--primary)]/30 p-6">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--primary)] mb-1">Your MVP Scope</p>
-          <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-1">
+        <div className="glass rounded-[var(--radius-card)] border border-[var(--brand)]/30 p-6">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--brand)] mb-1">Your MVP Scope</p>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-1">
             {flatAnswers.description || "Your product"}
           </h2>
-          <p className="text-sm text-[var(--fg)]/45 mb-4">
+          <p className="text-sm text-[var(--ink)]/45 mb-4">
             {flatAnswers["core-action"] ? `Core feature: ${flatAnswers["core-action"]}` : ""}
           </p>
           <div className="flex flex-wrap gap-3 text-xs">
-            <span className="flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1 text-[var(--fg)]/55">
+            <span className="flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1 text-[var(--ink)]/55">
               <IconClock size={11} /> {result.weekRange} weeks estimated
             </span>
-            <span className="flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1 text-[var(--fg)]/55">
+            <span className="flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1 text-[var(--ink)]/55">
               Stack: {result.stackHint}
             </span>
           </div>
@@ -167,7 +167,7 @@ export function MVPScopeGenerator() {
             </p>
             <div className="space-y-3">
               {result.insights.map((ins, i) => (
-                <p key={i} className="text-sm text-[var(--fg)]/60 leading-relaxed pl-4 border-l-2 border-amber-400/30">{ins}</p>
+                <p key={i} className="text-sm text-[var(--ink)]/60 leading-relaxed pl-4 border-l-2 border-amber-400/30">{ins}</p>
               ))}
             </div>
           </div>
@@ -178,14 +178,14 @@ export function MVPScopeGenerator() {
           <h3 className="font-display font-bold text-emerald-400 mb-1 flex items-center gap-2">
             <IconCheck size={16} /> Build in Phase 1 ({result.phase1.length} features)
           </h3>
-          <p className="text-xs text-[var(--fg)]/40 mb-4">These are the features without which your product cannot deliver its core value.</p>
+          <p className="text-xs text-[var(--ink)]/40 mb-4">These are the features without which your product cannot deliver its core value.</p>
           <div className="space-y-3">
             {result.phase1.map((f) => (
               <div key={f.feature} className="flex items-start gap-3">
                 <PhaseBadge phase={1} />
                 <div>
-                  <p className="font-heading font-semibold text-[var(--fg)] text-sm leading-snug">{f.feature}</p>
-                  <p className="text-xs text-[var(--fg)]/40 mt-0.5 leading-relaxed">{f.reason}</p>
+                  <p className="font-heading font-semibold text-[var(--ink)] text-sm leading-snug">{f.feature}</p>
+                  <p className="text-xs text-[var(--ink)]/40 mt-0.5 leading-relaxed">{f.reason}</p>
                 </div>
               </div>
             ))}
@@ -197,14 +197,14 @@ export function MVPScopeGenerator() {
           <h3 className="font-display font-bold text-sky-400 mb-1 flex items-center gap-2">
             <IconArrowRight size={16} /> Build after you have paying users ({result.phase2.length} features)
           </h3>
-          <p className="text-xs text-[var(--fg)]/40 mb-4">
+          <p className="text-xs text-[var(--ink)]/40 mb-4">
             These are real features your users will want — just not before you&apos;ve validated the core.
           </p>
           <div className="space-y-2">
             {result.phase2.map((f) => (
               <div key={f.feature} className="flex items-start gap-3">
                 <PhaseBadge phase={2} />
-                <p className="text-sm text-[var(--fg)]/55 leading-snug">{f.feature}</p>
+                <p className="text-sm text-[var(--ink)]/55 leading-snug">{f.feature}</p>
               </div>
             ))}
           </div>
@@ -212,12 +212,12 @@ export function MVPScopeGenerator() {
 
         {/* Never build */}
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-5">
-          <h3 className="font-heading font-semibold text-[var(--fg)]/60 text-sm mb-3 flex items-center gap-2">
+          <h3 className="font-heading font-semibold text-[var(--ink)]/60 text-sm mb-3 flex items-center gap-2">
             <IconX size={14} className="text-rose-400" /> Do NOT build in Phase 1
           </h3>
           <div className="space-y-1.5">
             {result.neverBuild.map((item) => (
-              <div key={item} className="flex items-start gap-2 text-xs text-[var(--fg)]/45">
+              <div key={item} className="flex items-start gap-2 text-xs text-[var(--ink)]/45">
                 <IconX size={10} className="text-rose-400 shrink-0 mt-0.5" />
                 {item}
               </div>
@@ -227,23 +227,23 @@ export function MVPScopeGenerator() {
 
         {/* CTAs */}
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6 text-center">
-          <p className="font-display font-bold text-[var(--fg)] mb-1">Ready to build Phase 1?</p>
-          <p className="text-sm text-[var(--fg)]/50 mb-5">
+          <p className="font-display font-bold text-[var(--ink)] mb-1">Ready to build Phase 1?</p>
+          <p className="text-sm text-[var(--ink)]/50 mb-5">
             Full scope sent to <strong>{email}</strong>. Get an exact cost and timeline for your Phase 1 feature set.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link
               href={`/quote?scope=${encodeURIComponent(flatAnswers.description ?? "")}&features=${result.phase1.length}`}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-opacity"
             >
               Get a quote for Phase 1 <IconArrowRight size={14} />
             </Link>
             <Link href="/tools/cost-estimator"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 text-sm font-semibold text-[var(--fg)]/60 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 text-sm font-semibold text-[var(--ink)]/60 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors">
               Estimate the cost
             </Link>
             <button type="button" onClick={reset}
-              className="text-sm text-[var(--fg)]/30 hover:text-[var(--fg)] transition-colors px-4">
+              className="text-sm text-[var(--ink)]/30 hover:text-[var(--ink)] transition-colors px-4">
               Start over
             </button>
           </div>
@@ -259,19 +259,19 @@ export function MVPScopeGenerator() {
         <AnswersSidebar answers={answers} questions={MVP_QUESTIONS} step={step} />
         <div className="flex-1 min-w-0">
           <div className="w-full bg-[var(--border)] rounded-full h-1.5 mb-8">
-            <div className="bg-[var(--primary)] h-1.5 rounded-full w-[90%]" />
+            <div className="bg-[var(--brand)] h-1.5 rounded-full w-[90%]" />
           </div>
-          <p className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.25em] mb-3">Almost done</p>
-          <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+          <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.25em] mb-3">Almost done</p>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">
             Where should we send your scope?
           </h2>
-          <p className="text-sm text-[var(--fg)]/45 mb-8 leading-relaxed">
+          <p className="text-sm text-[var(--ink)]/45 mb-8 leading-relaxed">
             You&apos;ll receive a full Phase 1 / Phase 2 feature list, strategic notes, and a stack recommendation — ready to share with your co-founders or investors.
           </p>
           <div className="space-y-4">
             <div>
-              <label className="block font-heading text-sm font-semibold text-[var(--fg)] mb-1.5">
-                Email address <span className="text-[var(--primary)]">*</span>
+              <label className="block font-heading text-sm font-semibold text-[var(--ink)] mb-1.5">
+                Email address <span className="text-[var(--brand)]">*</span>
               </label>
               <input
                 ref={emailRef}
@@ -282,13 +282,13 @@ export function MVPScopeGenerator() {
                 onBlur={() => { setEmailTouched(true); setEmailError(validateEmail(email)); }}
                 placeholder="you@company.ng"
                 className={[
-                  "w-full rounded-xl border px-4 py-3 text-sm text-[var(--fg)] bg-[var(--surface)]",
-                  "placeholder:text-[var(--fg)]/30 focus:outline-none focus:ring-1 transition-colors",
+                  "w-full rounded-xl border px-4 py-3 text-sm text-[var(--ink)] bg-[var(--surface)]",
+                  "placeholder:text-[var(--ink)]/30 focus:outline-none focus:ring-1 transition-colors",
                   emailTouched && emailError
                     ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400/20"
                     : isEmailValid && emailTouched
                     ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500/20"
-                    : "border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/20",
+                    : "border-[var(--border)] focus:border-[var(--brand)] focus:ring-[var(--brand)]/20",
                 ].join(" ")}
               />
               {emailTouched && emailError && (
@@ -296,18 +296,18 @@ export function MVPScopeGenerator() {
                   <IconAlertCircle size={11} />{emailError}
                 </span>
               )}
-              <p className="text-xs text-[var(--fg)]/30 mt-2">Added to our newsletter — unsubscribe anytime.</p>
+              <p className="text-xs text-[var(--ink)]/30 mt-2">Added to our newsletter — unsubscribe anytime.</p>
             </div>
             <div className="mt-1">
               <CategoryPicker value={category} onChange={setCategory} />
             </div>
             <div className="flex items-center gap-3">
               <button type="button" onClick={next}
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-all active:scale-95">
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-all active:scale-95">
                 Generate my MVP scope →
               </button>
               <button type="button" onClick={back}
-                className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] transition-colors">
+                className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors">
                 ← Back
               </button>
             </div>
@@ -326,17 +326,17 @@ export function MVPScopeGenerator() {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.2em]">
+          <span className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em]">
             Question {step + 1} of {Q_COUNT}
           </span>
           {isMulti && (
-            <span className="text-[10px] font-mono text-[var(--fg)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-mono text-[var(--ink)]/30 bg-[var(--surface)] border border-[var(--border)] px-2 py-0.5 rounded-full">
               Select all that apply
             </span>
           )}
         </div>
         <div className="w-full bg-[var(--border)] rounded-full h-1.5 mb-8">
-          <motion.div className="bg-[var(--primary)] h-1.5 rounded-full" animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
+          <motion.div className="bg-[var(--brand)] h-1.5 rounded-full" animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
         </div>
 
         <AnimatePresence mode="wait">
@@ -347,10 +347,10 @@ export function MVPScopeGenerator() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
           >
-            <h2 className="font-display text-xl font-extrabold text-[var(--fg)] mb-1 leading-snug">
+            <h2 className="font-display text-xl font-extrabold text-[var(--ink)] mb-1 leading-snug">
               {currentQ?.question}
             </h2>
-            <p className="text-sm text-[var(--fg)]/40 mb-6 leading-relaxed">{currentQ?.subtitle}</p>
+            <p className="text-sm text-[var(--ink)]/40 mb-6 leading-relaxed">{currentQ?.subtitle}</p>
 
             {/* Text input */}
             {isText && (
@@ -362,10 +362,10 @@ export function MVPScopeGenerator() {
                   placeholder={currentQ?.placeholder}
                   maxLength={currentQ?.maxLength}
                   rows={3}
-                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/25 focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/20 transition-colors resize-none"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/25 focus:border-[var(--brand)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]/20 transition-colors resize-none"
                 />
                 <div className="flex justify-end mt-1">
-                  <span className="text-[10px] text-[var(--fg)]/25">
+                  <span className="text-[10px] text-[var(--ink)]/25">
                     {(currentVal as string)?.length ?? 0} / {currentQ?.maxLength}
                   </span>
                 </div>
@@ -383,17 +383,17 @@ export function MVPScopeGenerator() {
                       className={[
                         "flex items-center justify-between w-full rounded-xl border px-5 py-3.5 text-left transition-all group active:scale-[0.98]",
                         sel
-                          ? "border-[var(--primary)] bg-[var(--primary)]/8 text-[var(--primary)]"
-                          : "border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--primary)]/4",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/8 text-[var(--brand)]"
+                          : "border-[var(--border)] hover:border-[var(--brand)]/50 hover:bg-[var(--brand)]/4",
                       ].join(" ")}>
                       <span>
-                        <span className="block font-heading font-semibold text-[var(--fg)] text-sm group-hover:text-[var(--primary)] transition-colors">{opt.label}</span>
-                        {opt.hint && <span className="block text-xs text-[var(--fg)]/40 mt-0.5">{opt.hint}</span>}
+                        <span className="block font-heading font-semibold text-[var(--ink)] text-sm group-hover:text-[var(--brand)] transition-colors">{opt.label}</span>
+                        {opt.hint && <span className="block text-xs text-[var(--ink)]/40 mt-0.5">{opt.hint}</span>}
                       </span>
                       <span className={["flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all",
-                        sel ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                        sel ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                       ].join(" ")}>
-                        {sel && <IconCheck size={10} className="text-[var(--bg)]" />}
+                        {sel && <IconCheck size={10} className="text-[var(--page)]" />}
                       </span>
                     </button>
                   );
@@ -412,17 +412,17 @@ export function MVPScopeGenerator() {
                       className={[
                         "flex items-center gap-3 w-full rounded-xl border px-5 py-3.5 text-left transition-all active:scale-[0.98]",
                         sel
-                          ? "border-[var(--primary)] bg-[var(--primary)]/8"
-                          : "border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--primary)]/4",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/8"
+                          : "border-[var(--border)] hover:border-[var(--brand)]/50 hover:bg-[var(--brand)]/4",
                       ].join(" ")}>
                       <span className={["flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-all",
-                        sel ? "bg-[var(--primary)] border-[var(--primary)]" : "border-[var(--border)]",
+                        sel ? "bg-[var(--brand)] border-[var(--brand)]" : "border-[var(--border)]",
                       ].join(" ")}>
-                        {sel && <IconCheck size={10} className="text-[var(--bg)]" />}
+                        {sel && <IconCheck size={10} className="text-[var(--page)]" />}
                       </span>
                       <span>
-                        <span className="block font-heading font-semibold text-[var(--fg)] text-sm">{opt.label}</span>
-                        {opt.hint && <span className="block text-xs text-[var(--fg)]/40 mt-0.5">{opt.hint}</span>}
+                        <span className="block font-heading font-semibold text-[var(--ink)] text-sm">{opt.label}</span>
+                        {opt.hint && <span className="block text-xs text-[var(--ink)]/40 mt-0.5">{opt.hint}</span>}
                       </span>
                     </button>
                   );
@@ -435,11 +435,11 @@ export function MVPScopeGenerator() {
         {/* Nav */}
         <div className="flex items-center justify-between mt-10 pt-6 border-t border-[var(--border)]">
           <button type="button" onClick={back} disabled={step === 0}
-            className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] disabled:opacity-0 transition-all">
+            className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] disabled:opacity-0 transition-all">
             ← Back
           </button>
           <button type="button" onClick={next} disabled={!canAdvance}
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-heading font-semibold text-sm text-[var(--bg)] hover:opacity-90 disabled:opacity-30 transition-all active:scale-95">
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-heading font-semibold text-sm text-[var(--page)] hover:opacity-90 disabled:opacity-30 transition-all active:scale-95">
             {step === Q_COUNT - 1 ? "Continue →" : isMulti && !(currentVal as string[])?.length ? "Skip →" : "Continue →"}
           </button>
         </div>

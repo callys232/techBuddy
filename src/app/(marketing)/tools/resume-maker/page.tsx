@@ -18,17 +18,17 @@ export const metadata: Metadata = {
 
 export default function ResumeMakerPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="technical" intensity={0.32} />
         <div className="relative z-10 max-w-7xl mx-auto">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
+          <p className="eyebrow mb-4">
             Free Tool
           </p>
-          <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-3 max-w-2xl">
+          <h1 className="h-display mb-3 max-w-2xl">
             Build Your Resume — Free
           </h1>
-          <p className="text-[var(--fg)]/50 max-w-xl mb-10 leading-relaxed">
+          <p className="text-[var(--ink)]/50 max-w-xl mb-10 leading-relaxed">
             Fill in your details, pick a template, and download a professional PDF resume at no cost. No watermarks.
           </p>
           <ResumeMaker />

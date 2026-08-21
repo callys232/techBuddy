@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase/client";
 import { getResendClient } from "@/lib/email/resend";
 
-const resend = getResendClient();
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
 
@@ -270,6 +269,7 @@ export async function POST(req: Request) {
   /* ── 3. Team alert — always sent ─────────────────────────────── */
   const teamSubject = `🔧 ${toolLabel} lead — ${email ?? "anonymous"} (${sourceLabel})`;
 
+  const resend = getResendClient();
   if (resend) {
     await resend.emails
       .send({

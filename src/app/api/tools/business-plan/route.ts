@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { isEmailSubscribed } from "@/lib/subscription";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "" });
 
@@ -38,6 +39,11 @@ export async function POST(req: Request) {
   const subscribed = await isEmailSubscribed(email);
   if (!subscribed) {
     return NextResponse.json({ error: "The AI Business Plan Generator is a TechBuddy Premium feature" }, { status: 403 });
+  }
+
+  const allowed = await checkRateLimit("business-plan", getClientIp(req), 10);
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many requests — try again in a minute." }, { status: 429 });
   }
 
   const userPrompt = `Idea: ${input.idea}

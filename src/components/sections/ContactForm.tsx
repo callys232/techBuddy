@@ -40,13 +40,13 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-[var(--radius-card)] border border-[var(--primary)]/40 bg-[var(--primary)]/5 p-8 text-center">
-        <p className="font-display text-xl font-bold text-[var(--fg)] mb-2">Message sent!</p>
-        <p className="text-sm text-[var(--fg)]/60 mb-5">We&apos;ll reply within 24 hours.</p>
+      <div className="rounded-[var(--radius-card)] border border-[var(--brand)]/40 bg-[var(--brand)]/5 p-8 text-center">
+        <p className="font-display text-xl font-bold text-[var(--ink)] mb-2">Message sent!</p>
+        <p className="text-sm text-[var(--ink)]/60 mb-5">We&apos;ll reply within 24 hours.</p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="text-sm font-semibold text-[var(--primary)] hover:underline"
+          className="text-sm font-semibold text-[var(--brand)] hover:underline"
         >
           Send another
         </button>
@@ -63,7 +63,7 @@ export function ContactForm() {
           onChange={set("name")}
           type="text"
           placeholder="Your name"
-          className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
+          className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors"
         />
         <input
           required
@@ -71,7 +71,7 @@ export function ContactForm() {
           onChange={set("email")}
           type="email"
           placeholder="your@email.com"
-          className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
+          className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors"
         />
       </div>
 
@@ -80,7 +80,7 @@ export function ContactForm() {
         value={form.department}
         onChange={set("department")}
         aria-label="Department"
-        className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] focus:border-[var(--primary)] focus:outline-none transition-colors"
+        className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] focus:border-[var(--brand)] focus:outline-none transition-colors"
       >
         <option value="">Department</option>
         {DEPARTMENTS.map((d) => (
@@ -94,7 +94,7 @@ export function ContactForm() {
         onChange={set("message")}
         rows={5}
         placeholder="Tell us about your project..."
-        className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors resize-none"
+        className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors resize-none"
       />
 
       {status === "error" && (
@@ -104,7 +104,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full h-12 rounded-full bg-[var(--primary)] font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-teal)] transition-all active:scale-95 disabled:opacity-50"
+        className="w-full h-12 rounded-full bg-[var(--brand)] font-semibold text-[var(--page)] hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
       >
         {status === "loading" ? "Sending..." : "Send message"}
       </button>

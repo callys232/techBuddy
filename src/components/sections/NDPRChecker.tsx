@@ -36,11 +36,11 @@ function AnswerBtn({
           :                       "bg-rose-400 border-rose-400"
           : "border-[var(--border)]",
       ].join(" ")}>
-        {selected && <IconCheck size={10} className="text-[var(--bg)]" />}
+        {selected && <IconCheck size={10} className="text-[var(--page)]" />}
       </span>
       <span>
-        <span className="block font-heading font-semibold text-[var(--fg)] text-sm">{label}</span>
-        {hint && <span className="block text-xs text-[var(--fg)]/40 mt-0.5">{hint}</span>}
+        <span className="block font-heading font-semibold text-[var(--ink)] text-sm">{label}</span>
+        {hint && <span className="block text-xs text-[var(--ink)]/40 mt-0.5">{hint}</span>}
       </span>
     </button>
   );
@@ -139,7 +139,7 @@ export function NDPRChecker() {
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Score card */}
         <div className="glass rounded-[var(--radius-card)] border border-[var(--border)] p-8 text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-6">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--brand)] mb-6">
             Your NDPR Compliance Score
           </p>
           <ScoreRing score={result.score} color={result.gradeColor} />
@@ -148,9 +148,9 @@ export function NDPRChecker() {
             <span className={`font-display text-lg font-bold ${result.gradeColor}`}>{result.gradeLabel}</span>
           </div>
           <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-[var(--border)] text-sm">
-            <div><p className="font-bold text-emerald-400">{result.passed.length}</p><p className="text-[var(--fg)]/40 text-xs">Passing</p></div>
-            <div><p className="font-bold text-amber-400">{result.partial.length}</p><p className="text-[var(--fg)]/40 text-xs">Partial</p></div>
-            <div><p className="font-bold text-rose-400">{result.failed.length}</p><p className="text-[var(--fg)]/40 text-xs">Failing</p></div>
+            <div><p className="font-bold text-emerald-400">{result.passed.length}</p><p className="text-[var(--ink)]/40 text-xs">Passing</p></div>
+            <div><p className="font-bold text-amber-400">{result.partial.length}</p><p className="text-[var(--ink)]/40 text-xs">Partial</p></div>
+            <div><p className="font-bold text-rose-400">{result.failed.length}</p><p className="text-[var(--ink)]/40 text-xs">Failing</p></div>
           </div>
         </div>
 
@@ -164,8 +164,8 @@ export function NDPRChecker() {
             <div className="space-y-4">
               {result.critical.map((q) => (
                 <div key={q.id} className="border-l-2 border-rose-400/40 pl-4">
-                  <p className="font-heading font-semibold text-[var(--fg)] text-sm">{q.question}</p>
-                  <p className="text-xs text-[var(--fg)]/50 mt-1 leading-relaxed">{q.failAdvice}</p>
+                  <p className="font-heading font-semibold text-[var(--ink)] text-sm">{q.question}</p>
+                  <p className="text-xs text-[var(--ink)]/50 mt-1 leading-relaxed">{q.failAdvice}</p>
                 </div>
               ))}
             </div>
@@ -182,8 +182,8 @@ export function NDPRChecker() {
             <div className="space-y-4">
               {result.partial.map((q) => (
                 <div key={q.id} className="border-l-2 border-amber-400/40 pl-4">
-                  <p className="font-heading font-semibold text-[var(--fg)] text-sm">{q.question}</p>
-                  <p className="text-xs text-[var(--fg)]/50 mt-1 leading-relaxed">{q.failAdvice}</p>
+                  <p className="font-heading font-semibold text-[var(--ink)] text-sm">{q.question}</p>
+                  <p className="text-xs text-[var(--ink)]/50 mt-1 leading-relaxed">{q.failAdvice}</p>
                 </div>
               ))}
             </div>
@@ -193,14 +193,14 @@ export function NDPRChecker() {
         {/* Other failed */}
         {result.failed.filter((q) => q.weight < 3).length > 0 && (
           <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6">
-            <h3 className="font-heading font-bold text-[var(--fg)]/70 mb-4">
+            <h3 className="font-heading font-bold text-[var(--ink)]/70 mb-4">
               {result.failed.filter((q) => q.weight < 3).length} Additional Gaps
             </h3>
             <div className="space-y-4">
               {result.failed.filter((q) => q.weight < 3).map((q) => (
                 <div key={q.id} className="border-l-2 border-[var(--border)] pl-4">
-                  <p className="font-heading font-semibold text-[var(--fg)] text-sm">{q.question}</p>
-                  <p className="text-xs text-[var(--fg)]/50 mt-1 leading-relaxed">{q.failAdvice}</p>
+                  <p className="font-heading font-semibold text-[var(--ink)] text-sm">{q.question}</p>
+                  <p className="text-xs text-[var(--ink)]/50 mt-1 leading-relaxed">{q.failAdvice}</p>
                 </div>
               ))}
             </div>
@@ -215,7 +215,7 @@ export function NDPRChecker() {
             </h3>
             <div className="space-y-1">
               {result.passed.map((q) => (
-                <div key={q.id} className="flex items-center gap-2 text-xs text-[var(--fg)]/55">
+                <div key={q.id} className="flex items-center gap-2 text-xs text-[var(--ink)]/55">
                   <IconCheck size={11} className="text-emerald-400 shrink-0" />
                   {q.question}
                 </div>
@@ -226,27 +226,27 @@ export function NDPRChecker() {
 
         {/* CTAs */}
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-6 text-center">
-          <p className="font-display font-bold text-[var(--fg)] mb-2">
+          <p className="font-display font-bold text-[var(--ink)] mb-2">
             {result.grade === "compliant" ? "Maintain your compliance posture" : "Need help fixing these gaps?"}
           </p>
-          <p className="text-sm text-[var(--fg)]/50 mb-5">
+          <p className="text-sm text-[var(--ink)]/50 mb-5">
             A full report has been sent to <strong>{email}</strong>. Our team can implement every fix listed above.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link
               href="/quote?service=NDPR+Compliance"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-opacity"
             >
               Get a compliance quote <IconArrowRight size={14} />
             </Link>
             <Link
               href="/services/security-pentesting"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 text-sm font-semibold text-[var(--fg)]/60 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--border)] px-6 text-sm font-semibold text-[var(--ink)]/60 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
             >
               See our security services
             </Link>
             <button type="button" onClick={reset}
-              className="text-sm text-[var(--fg)]/30 hover:text-[var(--fg)] transition-colors px-4">
+              className="text-sm text-[var(--ink)]/30 hover:text-[var(--ink)] transition-colors px-4">
               Retake
             </button>
           </div>
@@ -261,19 +261,19 @@ export function NDPRChecker() {
       <div className="max-w-xl mx-auto">
         {/* Progress */}
         <div className="w-full bg-[var(--border)] rounded-full h-1.5 mb-8">
-          <div className="bg-[var(--primary)] h-1.5 rounded-full transition-all duration-500 w-[95%]" />
+          <div className="bg-[var(--brand)] h-1.5 rounded-full transition-all duration-500 w-[95%]" />
         </div>
-        <p className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.25em] mb-3">Almost done</p>
-        <h2 className="font-display text-2xl font-extrabold text-[var(--fg)] mb-2">
+        <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.25em] mb-3">Almost done</p>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">
           Where should we send your compliance report?
         </h2>
-        <p className="text-sm text-[var(--fg)]/45 mb-8 leading-relaxed">
+        <p className="text-sm text-[var(--ink)]/45 mb-8 leading-relaxed">
           You&apos;ll receive a full breakdown of every gap, the legal requirement behind it, and what to do next — ready to share with your team or legal counsel.
         </p>
         <div className="space-y-4">
           <div>
-            <label className="block font-heading text-sm font-semibold text-[var(--fg)] mb-1.5">
-              Email address <span className="text-[var(--primary)]">*</span>
+            <label className="block font-heading text-sm font-semibold text-[var(--ink)] mb-1.5">
+              Email address <span className="text-[var(--brand)]">*</span>
             </label>
             <input
               ref={emailRef}
@@ -284,11 +284,11 @@ export function NDPRChecker() {
               onBlur={() => { setEmailTouched(true); setEmailError(validateEmail(email)); }}
               placeholder="you@company.ng"
               className={[
-                "w-full rounded-xl border px-4 py-3 text-sm text-[var(--fg)] bg-[var(--surface)]",
-                "placeholder:text-[var(--fg)]/30 focus:outline-none focus:ring-1 transition-colors",
+                "w-full rounded-xl border px-4 py-3 text-sm text-[var(--ink)] bg-[var(--surface)]",
+                "placeholder:text-[var(--ink)]/30 focus:outline-none focus:ring-1 transition-colors",
                 emailTouched && emailError ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400/20"
                   : isEmailValid && emailTouched ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500/20"
-                  : "border-[var(--border)] focus:border-[var(--primary)] focus:ring-[var(--primary)]/20",
+                  : "border-[var(--border)] focus:border-[var(--brand)] focus:ring-[var(--brand)]/20",
               ].join(" ")}
             />
             {emailTouched && emailError && (
@@ -296,18 +296,18 @@ export function NDPRChecker() {
                 <IconAlertCircle size={11} />{emailError}
               </span>
             )}
-            <p className="text-xs text-[var(--fg)]/30 mt-2">Added to our newsletter — unsubscribe anytime.</p>
+            <p className="text-xs text-[var(--ink)]/30 mt-2">Added to our newsletter — unsubscribe anytime.</p>
           </div>
           <div className="mt-1">
             <CategoryPicker value={category} onChange={setCategory} />
           </div>
           <div className="flex items-center gap-3">
             <button type="button" onClick={next}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 transition-all active:scale-95">
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 transition-all active:scale-95">
               Show my compliance score →
             </button>
             <button type="button" onClick={back}
-              className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] transition-colors">
+              className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors">
               ← Back
             </button>
           </div>
@@ -323,14 +323,14 @@ export function NDPRChecker() {
     <div className="max-w-xl mx-auto">
       {/* Section label + progress */}
       <div className="flex items-center justify-between mb-2">
-        <span className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.2em]">
+        <span className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em]">
           {currentQ?.section}
         </span>
-        <span className="text-xs text-[var(--fg)]/30">{step + 1} / {NDPR_QUESTIONS.length}</span>
+        <span className="text-xs text-[var(--ink)]/30">{step + 1} / {NDPR_QUESTIONS.length}</span>
       </div>
       <div className="w-full bg-[var(--border)] rounded-full h-1.5 mb-8">
         <motion.div
-          className="bg-[var(--primary)] h-1.5 rounded-full"
+          className="bg-[var(--brand)] h-1.5 rounded-full"
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3 }}
         />
@@ -340,8 +340,8 @@ export function NDPRChecker() {
       <div className="flex items-center gap-1.5 mb-6">
         {NDPR_SECTIONS.map((s, i) => (
           <div key={s} className={["h-1 rounded-full transition-all duration-300 flex-1",
-            i < sectionIdx ? "bg-[var(--primary)]"
-            : i === sectionIdx ? "bg-[var(--primary)]/60"
+            i < sectionIdx ? "bg-[var(--brand)]"
+            : i === sectionIdx ? "bg-[var(--brand)]/60"
             : "bg-[var(--border)]",
           ].join(" ")} />
         ))}
@@ -355,7 +355,7 @@ export function NDPRChecker() {
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
         >
-          <h2 className="font-display text-xl font-extrabold text-[var(--fg)] mb-2 leading-snug">
+          <h2 className="font-display text-xl font-extrabold text-[var(--ink)] mb-2 leading-snug">
             {currentQ?.question}
           </h2>
           {currentQ?.weight === 3 && (
@@ -363,7 +363,7 @@ export function NDPRChecker() {
               <IconAlertCircle size={9} /> Critical NDPR requirement
             </span>
           )}
-          <p className="text-sm text-[var(--fg)]/45 mb-6 leading-relaxed">{currentQ?.guidance}</p>
+          <p className="text-sm text-[var(--ink)]/45 mb-6 leading-relaxed">{currentQ?.guidance}</p>
 
           <div className="space-y-3">
             <AnswerBtn value="yes" selected={currentAns === "yes"} onClick={() => answerQ("yes")}
@@ -382,11 +382,11 @@ export function NDPRChecker() {
       {/* Nav */}
       <div className="flex items-center justify-between mt-10 pt-6 border-t border-[var(--border)]">
         <button type="button" onClick={back} disabled={step === 0}
-          className="text-sm text-[var(--fg)]/40 hover:text-[var(--fg)] disabled:opacity-0 transition-all">
+          className="text-sm text-[var(--ink)]/40 hover:text-[var(--ink)] disabled:opacity-0 transition-all">
           ← Back
         </button>
         <button type="button" onClick={next} disabled={!currentAns}
-          className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-sm text-[var(--bg)] hover:opacity-90 disabled:opacity-30 transition-all active:scale-95">
+          className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--brand)] px-7 font-semibold text-sm text-[var(--page)] hover:opacity-90 disabled:opacity-30 transition-all active:scale-95">
           {step === NDPR_QUESTIONS.length - 1 ? "Continue to your score →" : "Next →"}
         </button>
       </div>

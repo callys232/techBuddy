@@ -112,10 +112,10 @@ export function QuoteWizard() {
           {step === 0 && (
             <div className="space-y-6">
               <div>
-                <h2 className="font-display text-2xl font-bold text-[var(--fg)] mb-2">
+                <h2 className="font-display text-2xl font-bold text-[var(--ink)] mb-2">
                   What&apos;s your main challenge?
                 </h2>
-                <p className="text-sm text-[var(--fg)]/50">Select all that apply.</p>
+                <p className="text-sm text-[var(--ink)]/50">Select all that apply.</p>
               </div>
               <div className="flex flex-wrap gap-2">
                 {PAIN_CHIPS.map((chip) => (
@@ -126,8 +126,8 @@ export function QuoteWizard() {
                     className={[
                       "rounded-full border px-4 py-1.5 text-sm font-medium transition-all active:scale-95",
                       form.pains.includes(chip)
-                        ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
-                        : "border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)]/50",
+                        ? "border-[var(--brand)] bg-[var(--brand)]/10 text-[var(--brand)]"
+                        : "border-[var(--border)] text-[var(--ink)]/60 hover:border-[var(--brand)]/50",
                     ].join(" ")}
                   >
                     {chip}
@@ -137,7 +137,7 @@ export function QuoteWizard() {
               <textarea
                 rows={3}
                 placeholder="Or describe it in your own words..."
-                className="w-full rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors resize-none"
+                className="w-full rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors resize-none"
               />
             </div>
           )}
@@ -146,17 +146,17 @@ export function QuoteWizard() {
           {step === 1 && (
             <div className="space-y-6">
               <div>
-                <h2 className="font-display text-2xl font-bold text-[var(--fg)] mb-2">
+                <h2 className="font-display text-2xl font-bold text-[var(--ink)] mb-2">
                   Start with a template?
                 </h2>
-                <p className="text-sm text-[var(--fg)]/50">Or go fully custom.</p>
+                <p className="text-sm text-[var(--ink)]/50">Or go fully custom.</p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {QUOTE_TEMPLATES.map((t) => (
                   <div key={t.name} className="relative">
                     {form.template === t.name && (
-                      <span className="absolute -top-2 -right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--primary)]">
-                        <IconCheck size={13} className="text-[var(--bg)]" />
+                      <span className="absolute -top-2 -right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand)]">
+                        <IconCheck size={13} className="text-[var(--page)]" />
                       </span>
                     )}
                     <TemplateCard
@@ -171,11 +171,11 @@ export function QuoteWizard() {
                   className={[
                     "flex flex-col items-center justify-center rounded-[var(--radius-card)] border border-dashed p-8 transition-all",
                     form.template === "custom"
-                      ? "border-[var(--primary)] bg-[var(--primary)]/5"
-                      : "border-[var(--border)] hover:border-[var(--primary)]/50",
+                      ? "border-[var(--brand)] bg-[var(--brand)]/5"
+                      : "border-[var(--border)] hover:border-[var(--brand)]/50",
                   ].join(" ")}
                 >
-                  <p className="font-display font-bold text-[var(--fg)]">I want something custom</p>
+                  <p className="font-display font-bold text-[var(--ink)]">I want something custom</p>
                 </button>
               </div>
             </div>
@@ -184,19 +184,19 @@ export function QuoteWizard() {
           {/* Step 2 — Scope */}
           {step === 2 && (
             <div className="space-y-8">
-              <h2 className="font-display text-2xl font-bold text-[var(--fg)]">Scope & Budget</h2>
+              <h2 className="font-display text-2xl font-bold text-[var(--ink)]">Scope & Budget</h2>
 
               {/* Live computed estimate — updates as template/features change */}
-              <div className="rounded-xl border border-[var(--primary)]/30 bg-[var(--primary)]/5 px-5 py-4">
-                <p className="text-xs text-[var(--fg)]/50 mb-1">Based on your template and features so far</p>
-                <p className="font-display text-xl font-extrabold text-[var(--primary)]">
+              <div className="rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 px-5 py-4">
+                <p className="text-xs text-[var(--ink)]/50 mb-1">Based on your template and features so far</p>
+                <p className="font-display text-xl font-extrabold text-[var(--brand)]">
                   {formatPriceRange(estimate)}
                 </p>
               </div>
 
               <div>
-                <label className="text-sm font-semibold text-[var(--fg)] block mb-3">
-                  Budget: <span className="text-[var(--primary)]">{budgetDisplay(form.budget)}</span>
+                <label className="text-sm font-semibold text-[var(--ink)] block mb-3">
+                  Budget: <span className="text-[var(--brand)]">{budgetDisplay(form.budget)}</span>
                 </label>
                 <input
                   type="range"
@@ -207,15 +207,15 @@ export function QuoteWizard() {
                   title="Budget range"
                   aria-label="Budget range"
                   onChange={(e) => setForm((f) => ({ ...f, budget: Number(e.target.value) }))}
-                  className="w-full accent-[var(--primary)]"
+                  className="w-full accent-[var(--brand)]"
                 />
-                <div className="flex justify-between text-xs text-[var(--fg)]/30 mt-1">
+                <div className="flex justify-between text-xs text-[var(--ink)]/30 mt-1">
                   <span>₦500k</span><span>₦50M+</span>
                 </div>
               </div>
 
               <div>
-                <label className="text-sm font-semibold text-[var(--fg)] block mb-3">Timeline</label>
+                <label className="text-sm font-semibold text-[var(--ink)] block mb-3">Timeline</label>
                 <div className="flex flex-wrap gap-2">
                   {TIMELINE_OPTIONS.map((t) => (
                     <button
@@ -225,8 +225,8 @@ export function QuoteWizard() {
                       className={[
                         "rounded-full border px-4 py-1.5 text-sm font-medium transition-all",
                         form.timeline === t
-                          ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
-                          : "border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)]/50",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/10 text-[var(--brand)]"
+                          : "border-[var(--border)] text-[var(--ink)]/60 hover:border-[var(--brand)]/50",
                       ].join(" ")}
                     >
                       {t}
@@ -236,7 +236,7 @@ export function QuoteWizard() {
               </div>
 
               <div>
-                <label className="text-sm font-semibold text-[var(--fg)] block mb-3">Features needed</label>
+                <label className="text-sm font-semibold text-[var(--ink)] block mb-3">Features needed</label>
                 <div className="flex flex-wrap gap-2">
                   {SCOPE_FEATURES.map((feat) => (
                     <button
@@ -246,8 +246,8 @@ export function QuoteWizard() {
                       className={[
                         "rounded-full border px-4 py-1.5 text-sm font-medium transition-all",
                         form.features.includes(feat)
-                          ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
-                          : "border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)]/50",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/10 text-[var(--brand)]"
+                          : "border-[var(--border)] text-[var(--ink)]/60 hover:border-[var(--brand)]/50",
                       ].join(" ")}
                     >
                       {feat}
@@ -257,10 +257,10 @@ export function QuoteWizard() {
               </div>
 
               <div>
-                <label className="text-sm font-semibold text-[var(--fg)] block mb-1">
-                  Preferred brand colors <span className="text-[var(--fg)]/35 font-normal">(pick up to 3)</span>
+                <label className="text-sm font-semibold text-[var(--ink)] block mb-1">
+                  Preferred brand colors <span className="text-[var(--ink)]/35 font-normal">(pick up to 3)</span>
                 </label>
-                <p className="text-xs text-[var(--fg)]/40 mb-3">We&apos;ll design your first mockup around these.</p>
+                <p className="text-xs text-[var(--ink)]/40 mb-3">We&apos;ll design your first mockup around these.</p>
                 <div className="flex flex-wrap gap-3">
                   {BRAND_COLOR_SWATCHES.map((c) => {
                     const on = form.colors.includes(c.hex);
@@ -275,13 +275,13 @@ export function QuoteWizard() {
                         disabled={!on && form.colors.length >= 3}
                         className={[
                           "relative flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all disabled:opacity-25",
-                          on ? "border-[var(--fg)] scale-110" : "border-transparent hover:scale-105",
+                          on ? "border-[var(--ink)] scale-110" : "border-transparent hover:scale-105",
                         ].join(" ")}
                       >
                         <span className="h-8 w-8 rounded-full" style={{ backgroundColor: c.hex }} />
                         {on && (
-                          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--primary)]">
-                            <IconCheck size={10} className="text-[var(--bg)]" />
+                          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--brand)]">
+                            <IconCheck size={10} className="text-[var(--page)]" />
                           </span>
                         )}
                       </button>
@@ -295,7 +295,7 @@ export function QuoteWizard() {
           {/* Step 3 — Contact */}
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="font-display text-2xl font-bold text-[var(--fg)]">
+              <h2 className="font-display text-2xl font-bold text-[var(--ink)]">
                 Almost done — who are we talking to?
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">
@@ -303,26 +303,26 @@ export function QuoteWizard() {
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder="Your name *"
-                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
+                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors"
                 />
                 <input
                   value={form.email}
                   onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                   type="email"
                   placeholder="Email *"
-                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
+                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors"
                 />
                 <input
                   value={form.whatsapp}
                   onChange={(e) => setForm((f) => ({ ...f, whatsapp: e.target.value }))}
                   placeholder="WhatsApp number *"
-                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
+                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors"
                 />
                 <input
                   value={form.company}
                   onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
                   placeholder="Company / project name"
-                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--fg)]/30 focus:border-[var(--primary)] focus:outline-none transition-colors"
+                  className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/30 focus:border-[var(--brand)] focus:outline-none transition-colors"
                 />
               </div>
               <select
@@ -330,7 +330,7 @@ export function QuoteWizard() {
                 aria-label="How did you hear about us?"
                 title="How did you hear about us?"
                 onChange={(e) => setForm((f) => ({ ...f, source: e.target.value }))}
-                className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--fg)] focus:border-[var(--primary)] focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--ink)] focus:border-[var(--brand)] focus:outline-none transition-colors"
               >
                 <option value="">How did you hear about us?</option>
                 {REFERRAL_SOURCES.map((s) => (
@@ -338,7 +338,7 @@ export function QuoteWizard() {
                 ))}
               </select>
               <div>
-                <label className="text-sm font-semibold text-[var(--fg)] block mb-3">Preferred contact</label>
+                <label className="text-sm font-semibold text-[var(--ink)] block mb-3">Preferred contact</label>
                 <div className="flex gap-2">
                   {CONTACT_METHODS.map((m) => (
                     <button
@@ -348,8 +348,8 @@ export function QuoteWizard() {
                       className={[
                         "rounded-full border px-4 py-1.5 text-sm font-medium capitalize transition-all",
                         form.contactMethod === m
-                          ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
-                          : "border-[var(--border)] text-[var(--fg)]/60 hover:border-[var(--primary)]/50",
+                          ? "border-[var(--brand)] bg-[var(--brand)]/10 text-[var(--brand)]"
+                          : "border-[var(--border)] text-[var(--ink)]/60 hover:border-[var(--brand)]/50",
                       ].join(" ")}
                     >
                       {m}
@@ -367,7 +367,7 @@ export function QuoteWizard() {
             type="button"
             onClick={() => setStep((s) => Math.max(0, s - 1))}
             disabled={step === 0}
-            className="h-10 rounded-full border border-[var(--border)] px-5 text-sm font-semibold text-[var(--fg)] disabled:opacity-30 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
+            className="h-10 rounded-full border border-[var(--border)] px-5 text-sm font-semibold text-[var(--ink)] disabled:opacity-30 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-all"
           >
             Back
           </button>
@@ -375,7 +375,7 @@ export function QuoteWizard() {
             <button
               type="button"
               onClick={() => setStep((s) => s + 1)}
-              className="h-10 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95"
+              className="h-10 rounded-full bg-[var(--brand)] px-6 text-sm font-semibold text-[var(--page)] hover:opacity-90 transition-opacity active:scale-95"
             >
               Next →
             </button>
@@ -384,7 +384,7 @@ export function QuoteWizard() {
               type="button"
               onClick={handleSubmit}
               disabled={submitting || !form.name || !form.email || !form.whatsapp}
-              className="h-10 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95 disabled:opacity-40"
+              className="h-10 rounded-full bg-[var(--brand)] px-6 text-sm font-semibold text-[var(--page)] hover:opacity-90 transition-opacity active:scale-95 disabled:opacity-40"
             >
               {submitting ? "Submitting..." : "Submit Quote"}
             </button>

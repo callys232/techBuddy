@@ -5,6 +5,7 @@ import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { AppShowcase } from "@/components/sections/AppShowcase";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
+import { FAQS } from "@/mock/faqs";
 import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
 import { BlogTeaser } from "@/components/sections/BlogTeaser";
 import { RevealSection } from "@/components/ui/ScrollReveal";
@@ -28,9 +29,20 @@ export const metadata: Metadata = {
   },
 };
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export default function HomePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Hero />
       <WhyWebsiteSection />
       <RevealSection><StatsBar /></RevealSection>

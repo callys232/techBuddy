@@ -8,6 +8,10 @@ export const POINTS_RULES = {
   subscribe: 250,
 } as const;
 
+/** Crypto top-up conversion — 100 points per $1. */
+export const POINTS_PER_USD = 100;
+export const TOPUP_PRESETS_USD = [5, 10, 25, 50] as const;
+
 /** What points can actually buy — the "closed loop." Redeeming debits the
  *  ledger; what it unlocks is enforced by whatever calls redeemPoints(). */
 export const POINTS_REWARDS = [

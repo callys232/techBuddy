@@ -19,25 +19,23 @@ export const metadata: Metadata = {
 
 export default function MVPScopePage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="scattered" intensity={0.38} />
         <div className="relative z-10 max-w-5xl mx-auto">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
-            Free Tool · For Founders
-          </p>
-          <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-4 max-w-2xl">
+          <p className="eyebrow mb-4">Free Tool · For Founders</p>
+          <h1 className="h-display mb-4 max-w-2xl">
             What Should Your Phase 1 Actually Include?
           </h1>
-          <p className="text-[var(--fg)]/50 max-w-xl mb-4 leading-relaxed">
+          <p className="text-[var(--ink-muted)] max-w-xl mb-4 leading-relaxed">
             Most founders over-build their first version and run out of money or time before they validate anything. Answer 8 questions about your idea and get an honest, prioritised feature list — built around what real users actually need.
           </p>
-          <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--fg)]/35 mb-12">
-            <span>â± ~5 minutes</span>
+          <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--ink-faint)] mb-12">
+            <span>⏱ ~5 minutes</span>
             <span>·</span>
-            <span>ðŸ"‹ 8 questions</span>
+            <span>📋 8 questions</span>
             <span>·</span>
-            <span>ðŸ—ºï¸ Phase 1, Phase 2, and a "never build" list</span>
+            <span>🗺️ Phase 1, Phase 2, and a "never build" list</span>
           </div>
 
           <MVPScopeGenerator />
@@ -46,8 +44,8 @@ export default function MVPScopePage() {
 
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="relative z-10 max-w-5xl mx-auto">
-          <p className="text-sm text-[var(--fg)]/35 leading-relaxed max-w-2xl">
-            <strong className="text-[var(--fg)]/50">How is this generated?</strong> Feature recommendations are based on our experience shipping 35+ products for startups and businesses across Africa and beyond. The rules account for what actually slows down real-world builds — payment API onboarding, low-connectivity UX, multi-stakeholder sign-offs. This is not an AI-generated list. It&apos;s hand-coded logic from real projects.
+          <p className="text-sm text-[var(--ink-faint)] leading-relaxed max-w-2xl">
+            <strong className="text-[var(--ink-muted)]">How is this generated?</strong> Feature recommendations come from hand-coded rules, not an AI model — logic built around what actually slows down real-world builds in African markets: payment API onboarding, low-connectivity UX, multi-stakeholder sign-offs.
           </p>
         </div>
       </section>

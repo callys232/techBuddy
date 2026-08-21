@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase/client";
 import { getResendClient } from "@/lib/email/resend";
 
-const resend = getResendClient();
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "team@techbuddy.ng";
 
 export async function POST(req: Request) {
@@ -33,6 +32,7 @@ export async function POST(req: Request) {
     // Supabase not configured yet, or insert failed — non-fatal, emails still send below
   }
 
+  const resend = getResendClient();
   if (resend) {
     await Promise.all([
       /* Confirmation to applicant */

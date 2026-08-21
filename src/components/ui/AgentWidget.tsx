@@ -293,9 +293,9 @@ export function AgentWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="Open project scoping assistant"
-        className="fixed bottom-4 right-4 z-50 relative flex h-14 w-14 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--bg)] shadow-[var(--shadow-glow-sky)] hover:scale-105 active:scale-95 transition-transform"
+        className="fixed bottom-4 right-4 z-50 relative flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--page)] hover:scale-105 active:scale-95 transition-transform"
       >
-        <span className="absolute inset-0 rounded-full bg-[var(--primary)] animate-ping opacity-25" />
+        <span className="absolute inset-0 rounded-full bg-[var(--brand)] animate-ping opacity-25" />
         {open ? <IconX size={22} /> : <IconRobot size={22} />}
       </button>
 
@@ -311,11 +311,11 @@ export function AgentWidget() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border)] shrink-0">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)]/15">
-                <IconRobot size={17} className="text-[var(--primary)]" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand)]/15">
+                <IconRobot size={17} className="text-[var(--brand)]" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-heading font-semibold text-[var(--fg)] text-sm leading-none">
+                <p className="font-heading font-semibold text-[var(--ink)] text-sm leading-none">
                   Project Scoping Assistant
                 </p>
 
@@ -333,8 +333,8 @@ export function AgentWidget() {
                           active
                             ? current
                               ? STAGE_DOT_BG[stage]
-                              : "bg-[var(--primary)]/40"
-                            : "bg-[var(--fg)]/10",
+                              : "bg-[var(--brand)]/40"
+                            : "bg-[var(--ink)]/10",
                         ].join(" ")}
                       />
                     );
@@ -349,7 +349,7 @@ export function AgentWidget() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="ml-1 flex h-7 w-7 items-center justify-center rounded-full text-[var(--fg)]/40 hover:bg-[var(--surface)] hover:text-[var(--fg)] transition-colors"
+                className="ml-1 flex h-7 w-7 items-center justify-center rounded-full text-[var(--ink)]/40 hover:bg-[var(--surface)] hover:text-[var(--ink)] transition-colors"
               >
                 <IconX size={15} />
               </button>
@@ -366,8 +366,8 @@ export function AgentWidget() {
                     className={[
                       "max-w-[82%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed whitespace-pre-wrap",
                       msg.role === "user"
-                        ? "bg-[var(--primary)] text-[var(--bg)] rounded-br-sm"
-                        : "bg-[var(--surface)] text-[var(--fg)] rounded-bl-sm border border-[var(--border)]",
+                        ? "bg-[var(--brand)] text-[var(--page)] rounded-br-sm"
+                        : "bg-[var(--surface)] text-[var(--ink)] rounded-bl-sm border border-[var(--border)]",
                       msg.pending ? "opacity-60" : "",
                     ].join(" ")}
                   >
@@ -376,7 +376,7 @@ export function AgentWidget() {
                         {[0, 1, 2].map((d) => (
                           <span
                             key={d}
-                            className="h-1.5 w-1.5 rounded-full bg-[var(--fg)]/40 animate-bounce"
+                            className="h-1.5 w-1.5 rounded-full bg-[var(--ink)]/40 animate-bounce"
                             style={{ animationDelay: `${d * 150}ms` }}
                           />
                         ))}
@@ -393,28 +393,28 @@ export function AgentWidget() {
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-2xl border border-[var(--primary)]/40 bg-[var(--primary)]/5 p-4 space-y-3"
+                  className="rounded-2xl border border-[var(--brand)]/40 bg-[var(--brand)]/5 p-4 space-y-3"
                 >
                   {/* Label */}
-                  <p className="font-mono text-[var(--primary)] text-[10px] uppercase tracking-[0.2em]">
+                  <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em]">
                     Project Scope
                   </p>
 
                   {/* Business need headline */}
-                  <p className="text-[14px] text-[var(--fg)] leading-snug font-bold">
+                  <p className="text-[14px] text-[var(--ink)] leading-snug font-bold">
                     {quote.businessNeed}
                   </p>
 
                   {/* Target user + core feature */}
                   {quote.targetUser && (
-                    <p className="text-[12px] text-[var(--fg)]/70 leading-snug">
-                      <span className="text-[var(--fg)]/40">For: </span>
+                    <p className="text-[12px] text-[var(--ink)]/70 leading-snug">
+                      <span className="text-[var(--ink)]/40">For: </span>
                       {quote.targetUser}
                     </p>
                   )}
                   {quote.coreFeature && (
-                    <p className="text-[12px] text-[var(--fg)]/70 leading-snug">
-                      <span className="text-[var(--fg)]/40">Core: </span>
+                    <p className="text-[12px] text-[var(--ink)]/70 leading-snug">
+                      <span className="text-[var(--ink)]/40">Core: </span>
                       {quote.coreFeature}
                     </p>
                   )}
@@ -422,11 +422,11 @@ export function AgentWidget() {
                   {/* Phase 1 */}
                   {quote.phase1.length > 0 && (
                     <div className="space-y-1">
-                      <p className="font-mono text-[9px] uppercase tracking-widest text-[var(--fg)]/35 mb-1">
+                      <p className="font-mono text-[9px] uppercase tracking-widest text-[var(--ink)]/35 mb-1">
                         Phase 1 — Build first
                       </p>
                       {quote.phase1.map((f) => (
-                        <div key={f} className="flex items-start gap-2 text-[12px] text-[var(--fg)]/80">
+                        <div key={f} className="flex items-start gap-2 text-[12px] text-[var(--ink)]/80">
                           <IconCheck size={11} className="text-sky-400 shrink-0 mt-0.5" />
                           {f}
                         </div>
@@ -437,12 +437,12 @@ export function AgentWidget() {
                   {/* Phase 2 */}
                   {quote.phase2.length > 0 && (
                     <div className="space-y-1">
-                      <p className="font-mono text-[9px] uppercase tracking-widest text-[var(--fg)]/25 mb-1">
+                      <p className="font-mono text-[9px] uppercase tracking-widest text-[var(--ink)]/25 mb-1">
                         Coming next — Phase 2
                       </p>
                       {quote.phase2.map((f) => (
-                        <div key={f} className="flex items-start gap-2 text-[12px] text-[var(--fg)]/40">
-                          <IconCheck size={11} className="text-[var(--fg)]/25 shrink-0 mt-0.5" />
+                        <div key={f} className="flex items-start gap-2 text-[12px] text-[var(--ink)]/40">
+                          <IconCheck size={11} className="text-[var(--ink)]/25 shrink-0 mt-0.5" />
                           {f}
                         </div>
                       ))}
@@ -458,10 +458,10 @@ export function AgentWidget() {
 
                   {/* Estimate + timeline */}
                   <div className="flex items-center justify-between pt-1 border-t border-[var(--border)]">
-                    <span className="font-display text-lg font-extrabold text-[var(--primary)]">
+                    <span className="font-display text-lg font-extrabold text-[var(--brand)]">
                       {fmt(quote.estimatedRange.min)} – {fmt(quote.estimatedRange.max)}
                     </span>
-                    <span className="font-mono text-[10px] text-[var(--fg)]/35">{quote.timeline}</span>
+                    <span className="font-mono text-[10px] text-[var(--ink)]/35">{quote.timeline}</span>
                   </div>
 
                   {/* Action buttons */}
@@ -485,7 +485,7 @@ export function AgentWidget() {
                           "flex-1 flex h-9 items-center justify-center gap-1.5 rounded-full text-[12px] font-semibold transition-all active:scale-95",
                           emailSent
                             ? "bg-emerald-500/10 text-emerald-400 cursor-default"
-                            : "border border-[var(--border)] text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)]",
+                            : "border border-[var(--border)] text-[var(--ink)]/70 hover:border-[var(--brand)] hover:text-[var(--brand)]",
                         ].join(" ")}
                       >
                         {emailSent ? (
@@ -499,7 +499,7 @@ export function AgentWidget() {
                     {/* Start quote form CTA */}
                     <a
                       href={buildQuoteFormUrl(quote)}
-                      className="flex h-9 w-full items-center justify-center gap-1.5 rounded-full bg-[var(--primary)] text-[var(--bg)] text-[12px] font-semibold hover:opacity-90 transition-opacity active:scale-95"
+                      className="flex h-9 w-full items-center justify-center gap-1.5 rounded-full bg-[var(--brand)] text-[var(--page)] text-[12px] font-semibold hover:opacity-90 transition-opacity active:scale-95"
                     >
                       Start quote form
                       <IconArrowRight size={13} />
@@ -521,13 +521,13 @@ export function AgentWidget() {
                 onKeyDown={handleKey}
                 disabled={loading}
                 placeholder={loading ? "Thinking…" : "Describe your problem…"}
-                className="flex-1 bg-[var(--surface)] rounded-full px-4 py-2 text-[13px] text-[var(--fg)] placeholder:text-[var(--fg)]/30 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/20 transition-colors disabled:opacity-40"
+                className="flex-1 bg-[var(--surface)] rounded-full px-4 py-2 text-[13px] text-[var(--ink)] placeholder:text-[var(--ink)]/30 border border-[var(--border)] focus:border-[var(--brand)] focus:outline-none focus:ring-1 focus:ring-[var(--brand)]/20 transition-colors disabled:opacity-40"
               />
               <button
                 type="button"
                 onClick={sendMessage}
                 disabled={!input.trim() || loading}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--bg)] disabled:opacity-30 hover:opacity-90 active:scale-90 transition-all"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--page)] disabled:opacity-30 hover:opacity-90 active:scale-90 transition-all"
               >
                 <IconSend size={15} />
               </button>

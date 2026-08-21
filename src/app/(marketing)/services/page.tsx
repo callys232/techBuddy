@@ -23,13 +23,13 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
         <PageVectors variant="flow" intensity={0.35} />
-        <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-none">
+        <h1 className="h-display">
           Everything Your Business Needs to Win Online
         </h1>
-        <p className="mt-6 text-lg text-[var(--fg)]/60 max-w-2xl mx-auto">
+        <p className="mt-6 text-lg text-[var(--ink-muted)] max-w-2xl mx-auto">
           From strategy to deployment — we cover every layer of the stack.
         </p>
       </section>
@@ -39,7 +39,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <h2 className="font-display text-4xl font-bold text-center text-[var(--fg)] mb-12">Maintenance Plans</h2>
+        <h2 className="h-section text-center mb-12">Maintenance Plans</h2>
         <div className="grid gap-6 sm:grid-cols-3 max-w-5xl mx-auto">
           {PRICING_TIERS.map((tier) => (
             <PricingCard key={tier.tier} {...tier} />

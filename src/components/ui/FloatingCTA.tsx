@@ -18,7 +18,7 @@ export function FloatingCTA({ whatsappNumber, quoteHref }: FloatingCTAProps) {
       {/* Quick quote */}
       <Link
         href={quoteHref}
-        className="flex items-center gap-2 rounded-full bg-[var(--surface)] border border-[var(--border)] px-4 py-2.5 text-sm font-semibold text-[var(--fg)] shadow-lg transition-all hover:border-[var(--primary)] hover:text-[var(--primary)] hover:shadow-[var(--shadow-glow-teal)] active:scale-95"
+        className="flex items-center gap-2 rounded-full bg-[var(--surface)] border border-[var(--border)] px-4 py-2.5 text-sm font-semibold text-[var(--ink)] shadow-lg transition-all hover:border-[var(--brand)] hover:text-[var(--brand)] active:scale-95"
       >
         <IconPencil size={16} />
         Quick quote

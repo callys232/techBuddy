@@ -219,7 +219,7 @@ export function PageStickman() {
       aria-hidden
       animate={controls}
       initial={{ x: EDGE, y: 600, opacity: 0 }}
-      className="fixed top-0 left-0 pointer-events-none z-10 hidden lg:block text-[var(--fg)]"
+      className="fixed top-0 left-0 pointer-events-none z-10 hidden lg:block text-[var(--ink)]"
     >
       <Figure pose={pose} frame={frame} />
     </motion.div>

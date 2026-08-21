@@ -3,6 +3,7 @@ import { Document, Page, View, Text, StyleSheet, renderToBuffer, Font } from "@r
 import type { ResumeData, ResumeTemplate } from "@/types/resume";
 import { RESUME_TEMPLATES } from "@/types/resume";
 import { isEmailSubscribed } from "@/lib/subscription";
+import { isUnlocked } from "@/lib/store";
 
 Font.registerHyphenationCallback((word) => [word]);
 
@@ -531,8 +532,9 @@ export async function POST(req: Request) {
 
     const meta = RESUME_TEMPLATES.find((t) => t.id === template);
     if (meta?.premium) {
-      if (!email || !(await isEmailSubscribed(email))) {
-        return NextResponse.json({ error: "This template requires a Resume Premium subscription" }, { status: 403 });
+      const hasAccess = !!email && ((await isEmailSubscribed(email)) || (await isUnlocked(email, "resume-premium-templates")));
+      if (!hasAccess) {
+        return NextResponse.json({ error: "This template requires Resume Premium or the template unlock from the store" }, { status: 403 });
       }
     }
 

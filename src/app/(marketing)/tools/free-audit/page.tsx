@@ -23,7 +23,7 @@ const WHAT_YOU_GET = [
 
 export default function FreeAuditPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
 
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="technical" intensity={0.38} />
@@ -31,13 +31,13 @@ export default function FreeAuditPage() {
 
           {/* Left: pitch */}
           <div>
-            <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-4">
+            <p className="eyebrow mb-4">
               Free Tool
             </p>
-            <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-5">
+            <h1 className="h-display mb-5">
               Get a Free Manual Tech Audit
             </h1>
-            <p className="text-[var(--fg)]/55 leading-relaxed mb-10">
+            <p className="text-[var(--ink)]/55 leading-relaxed mb-10">
               Submit your URL — our engineers will review it by hand and send you an honest, actionable report. No automated Lighthouse screenshots. Real engineers, real findings.
             </p>
 
@@ -46,16 +46,16 @@ export default function FreeAuditPage() {
                 <div key={item.title} className="flex gap-4">
                   <span className="text-xl shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <p className="font-heading font-semibold text-[var(--fg)] mb-0.5">{item.title}</p>
-                    <p className="text-sm text-[var(--fg)]/45 leading-relaxed">{item.body}</p>
+                    <p className="font-heading font-semibold text-[var(--ink)] mb-0.5">{item.title}</p>
+                    <p className="text-sm text-[var(--ink)]/45 leading-relaxed">{item.body}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="glass rounded-[var(--radius-card)] border border-[var(--border)] p-5">
-              <p className="font-heading font-semibold text-[var(--fg)] mb-1">Why is this free?</p>
-              <p className="text-sm text-[var(--fg)]/45 leading-relaxed">
+              <p className="font-heading font-semibold text-[var(--ink)] mb-1">Why is this free?</p>
+              <p className="text-sm text-[var(--ink)]/45 leading-relaxed">
                 We do this because it starts a real conversation. Most audits surface issues you&apos;ll want help fixing — and we&apos;re the team that can fix them. No hard pitch, just an honest report.
               </p>
             </div>

@@ -22,7 +22,7 @@ export function StepWizard({ steps, currentStep, onStepChange, children }: StepW
       <div className="mb-8">
         <div className="h-1 w-full rounded-full bg-[var(--border)]">
           <div
-            className="h-full rounded-full bg-[var(--primary)] transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-[var(--brand)] transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -41,15 +41,15 @@ export function StepWizard({ steps, currentStep, onStepChange, children }: StepW
                 className={[
                   "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all duration-300",
                   i < currentStep
-                    ? "bg-[var(--primary)] text-[var(--bg)]"
+                    ? "bg-[var(--brand)] text-[var(--brand-ink)]"
                     : i === currentStep
-                    ? "border-2 border-[var(--primary)] text-[var(--primary)]"
-                    : "border border-[var(--border)] text-[var(--fg)]/30",
+                    ? "border-2 border-[var(--brand)] text-[var(--brand)]"
+                    : "border border-[var(--border)] text-[var(--ink-faint)]",
                 ].join(" ")}
               >
                 {i < currentStep ? "✓" : i + 1}
               </span>
-              <span className={`hidden sm:block text-xs ${i === currentStep ? "text-[var(--fg)]" : "text-[var(--fg)]/40"}`}>
+              <span className={`hidden sm:block text-xs ${i === currentStep ? "text-[var(--ink)]" : "text-[var(--ink-faint)]"}`}>
                 {step.label}
               </span>
             </button>

@@ -23,14 +23,14 @@ export function CurrencyBanner({ location }: { location: UserLocation }) {
   }
 
   return (
-    <div className="lm-card flex items-center gap-3 px-4 py-3 mb-8 max-w-2xl">
+    <div className="card-quiet flex items-center gap-3 px-4 py-3 mb-8 max-w-2xl">
       <span className="icon-square shrink-0">
         <IconWorld size={18} />
       </span>
-      <p className="flex-1 text-left text-sm text-[var(--fg)]/70 leading-snug">
-        Looks like you&apos;re browsing from <strong className="text-[var(--fg)]">{location.countryName}</strong> — prices below are in Naira, but we quote in{" "}
-        <strong className="text-[var(--primary)]">{location.currency}</strong> for international clients.{" "}
-        <Link href="/quote" className="font-semibold text-[var(--primary)] hover:underline whitespace-nowrap">
+      <p className="flex-1 text-left text-sm text-[var(--ink)]/70 leading-snug">
+        Looks like you&apos;re browsing from <strong className="text-[var(--ink)]">{location.countryName}</strong> — prices below are in Naira, but we quote in{" "}
+        <strong className="text-[var(--brand)]">{location.currency}</strong> for international clients.{" "}
+        <Link href="/quote" className="font-semibold text-[var(--brand)] hover:underline whitespace-nowrap">
           Get a quote in {location.currency} →
         </Link>
       </p>
@@ -38,7 +38,7 @@ export function CurrencyBanner({ location }: { location: UserLocation }) {
         type="button"
         onClick={dismiss}
         aria-label="Dismiss"
-        className="shrink-0 text-[var(--fg)]/30 hover:text-[var(--fg)] transition-colors"
+        className="shrink-0 text-[var(--ink)]/30 hover:text-[var(--ink)] transition-colors"
       >
         <IconX size={15} />
       </button>

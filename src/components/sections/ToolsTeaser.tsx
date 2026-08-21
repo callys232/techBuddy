@@ -12,19 +12,19 @@ export function ToolsTeaser() {
         {/* Header */}
         <div className="mb-12 flex items-end justify-between">
           <div>
-            <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">
+            <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">
               Free tools
             </span>
-            <h2 className="mt-2 font-display text-4xl font-extrabold text-[var(--fg)]">
+            <h2 className="mt-2 font-display text-4xl font-extrabold text-[var(--ink)]">
               Plan Before You Build
             </h2>
-            <p className="mt-3 text-[var(--fg)]/50 text-sm max-w-md leading-relaxed">
+            <p className="mt-3 text-[var(--ink)]/50 text-sm max-w-md leading-relaxed">
               Six free tools to estimate cost, map your timeline, pick a tech stack, check NDPR compliance, scope your MVP, and audit your site — no sign-up required.
             </p>
           </div>
           <Link
             href="/tools"
-            className="hidden sm:inline text-sm font-semibold text-[var(--primary)] hover:underline shrink-0"
+            className="hidden sm:inline text-sm font-semibold text-[var(--brand)] hover:underline shrink-0"
           >
             All tools →
           </Link>
@@ -36,7 +36,7 @@ export function ToolsTeaser() {
             <Link
               key={tool.slug}
               href={tool.href}
-              className="group flex flex-col rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--bg)] p-6 hover:border-[var(--primary)]/60 hover:-translate-y-1 hover:shadow-[var(--shadow-glow-sky)] transition-all duration-300"
+              className="group flex flex-col rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--page)] p-6 hover:border-[var(--brand)]/60 hover:-translate-y-1 transition-all duration-300"
             >
               {/* Icon + badge */}
               <div className="flex items-start justify-between mb-4">
@@ -45,7 +45,7 @@ export function ToolsTeaser() {
                   <span className={[
                     "font-mono text-[10px] font-semibold rounded-full px-2.5 py-0.5 uppercase tracking-wide",
                     i === 0
-                      ? "bg-[var(--primary)]/10 text-[var(--primary)]"
+                      ? "bg-[var(--brand)]/10 text-[var(--brand)]"
                       : i === 1
                       ? "bg-amber-500/10 text-amber-400"
                       : "bg-emerald-500/10 text-emerald-400",
@@ -56,15 +56,15 @@ export function ToolsTeaser() {
               </div>
 
               {/* Title + desc */}
-              <h3 className="font-heading font-bold text-[var(--fg)] mb-2 group-hover:text-[var(--primary)] transition-colors">
+              <h3 className="font-heading font-bold text-[var(--ink)] mb-2 group-hover:text-[var(--brand)] transition-colors">
                 {tool.title}
               </h3>
-              <p className="text-sm text-[var(--fg)]/50 leading-relaxed flex-1 mb-4">
+              <p className="text-sm text-[var(--ink)]/50 leading-relaxed flex-1 mb-4">
                 {tool.desc}
               </p>
 
               {/* CTA */}
-              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--primary)] group-hover:gap-2.5 transition-all">
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--brand)] group-hover:gap-2.5 transition-all">
                 Use for free →
               </span>
             </Link>
@@ -73,7 +73,7 @@ export function ToolsTeaser() {
 
         {/* Mobile "view all" */}
         <div className="mt-8 text-center sm:hidden">
-          <Link href="/tools" className="text-sm font-semibold text-[var(--primary)] hover:underline">
+          <Link href="/tools" className="text-sm font-semibold text-[var(--brand)] hover:underline">
             View all free tools →
           </Link>
         </div>

@@ -57,11 +57,11 @@ export function Popup({ isOpen, onClose, title, children, size = "md" }: PopupPr
       >
         <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
           {title && (
-            <h2 className="font-display text-xl font-bold text-[var(--fg)]">{title}</h2>
+            <h2 className="font-display text-xl font-bold text-[var(--ink)]">{title}</h2>
           )}
           <button
             onClick={onClose}
-            className="ml-auto flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] text-[var(--fg)]/50 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
+            className="ml-auto flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink)]/50 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-all"
             aria-label="Close"
           >
             <IconX size={15} />

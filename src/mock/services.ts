@@ -29,6 +29,8 @@ export interface ServiceTab {
 export interface PricingTier {
   tier: string;
   price: string;
+  period: string;
+  desc: string;
   features: string[];
   recommended: boolean;
   ctaText: string;
@@ -225,29 +227,36 @@ export const ALL_SERVICES: ServiceItem[] = [
 /** Home page preview — first 6 services */
 export const FEATURED_SERVICES: ServiceItem[] = ALL_SERVICES.slice(0, 6);
 
+/** Single source of truth for the maintenance/retainer tiers — shown on both
+ *  /services and /pricing. Previously these were two separately hand-written
+ *  arrays that had already drifted slightly out of sync with each other. */
 export const PRICING_TIERS: PricingTier[] = [
   {
     tier: "Starter",
-    price: "₦200k/mo",
+    price: "₦200k",
+    period: "/month",
+    desc: "Keep your product running smoothly with monthly maintenance and monitoring.",
     features: [
-      "Monthly code updates",
-      "Security patches & monitoring",
-      "99.5% uptime SLA",
-      "Hosting & SSL management",
-      "Monthly status report",
+      "Security patches & dependency updates",
+      "99.5% uptime monitoring",
+      "SSL & hosting management",
+      "Monthly performance report",
+      "Bug fixes (up to 4 hrs/mo)",
     ],
     recommended: false,
     ctaText: "Get started",
   },
   {
     tier: "Growth",
-    price: "₦450k/mo",
+    price: "₦450k",
+    period: "/month",
+    desc: "Active product development alongside maintenance. Ideal for products with a growing user base.",
     features: [
       "Everything in Starter",
-      "Up to 8 hrs feature additions",
+      "Up to 8 hrs of feature additions",
       "Priority WhatsApp support",
-      "Performance + SEO reports",
-      "Quarterly security audit",
+      "Monthly SEO + performance audit",
+      "Quarterly security assessment",
       "Dedicated account manager",
     ],
     recommended: true,
@@ -255,10 +264,12 @@ export const PRICING_TIERS: PricingTier[] = [
   },
   {
     tier: "Enterprise",
-    price: "₦900k+/mo",
+    price: "₦900k+",
+    period: "/month",
+    desc: "A dedicated engineer embedded in your team. For products that can't afford to be down.",
     features: [
       "Everything in Growth",
-      "Dedicated full-time engineer",
+      "Full-time dedicated engineer",
       "4-hour response SLA",
       "Slack / WhatsApp war room",
       "Bi-weekly strategy calls",

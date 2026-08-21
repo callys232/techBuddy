@@ -6,31 +6,35 @@ interface InvestCardProps {
   ctaText: string;
 }
 
-const TYPE_COLORS: Record<string, string> = {
-  Equity: "bg-[var(--color-accent-teal)]/10 text-[var(--color-accent-teal)]",
-  Revenue: "bg-[var(--color-accent-amber)]/10 text-[var(--color-accent-amber)]",
-  Incubation: "bg-[var(--color-accent-coral)]/10 text-[var(--color-accent-coral)]",
-  Advisory: "bg-[var(--color-accent-teal)]/10 text-[var(--color-accent-teal)]",
-  Partnership: "bg-[var(--color-accent-amber)]/10 text-[var(--color-accent-amber)]",
+/** Five investment types get five distinct suite hues instead of squeezing
+ *  into the old 3-color teal/amber/coral system. */
+const TYPE_TINT: Record<string, string> = {
+  Equity: "var(--suite-1)",
+  Revenue: "var(--suite-4)",
+  Incubation: "var(--suite-3)",
+  Advisory: "var(--suite-7)",
+  Partnership: "var(--suite-5)",
 };
 
 export function InvestCard({ name, type, description, eligibility, ctaText }: InvestCardProps) {
+  const tint = TYPE_TINT[type] ?? "var(--suite-7)";
+
   return (
-    <div className="flex flex-col rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--primary)]/50 hover:shadow-[var(--shadow-glow-teal)]">
+    <div style={{ "--suite-tint": tint } as React.CSSProperties} className="card-interactive flex flex-col p-4">
       <div className="flex items-start justify-between mb-3">
-        <h3 className="font-display text-base font-bold text-[var(--fg)]">{name}</h3>
-        <span className={`font-mono text-xs font-semibold rounded-[var(--radius-badge)] px-2.5 py-1 ${TYPE_COLORS[type] ?? TYPE_COLORS.Advisory}`}>
+        <h3 className="font-heading text-base font-bold text-[var(--ink)]">{name}</h3>
+        <span
+          className="font-mono text-xs font-semibold rounded-[var(--radius-badge)] px-2.5 py-1"
+          style={{ backgroundColor: "color-mix(in srgb, var(--suite-tint) 12%, transparent)", color: "var(--suite-tint)" }}
+        >
           {type}
         </span>
       </div>
-      <p className="text-sm text-[var(--fg)]/60 leading-relaxed mb-3">{description}</p>
-      <p className="text-xs text-[var(--fg)]/40 mb-4">
-        <span className="font-semibold text-[var(--fg)]/60">Eligibility:</span> {eligibility}
+      <p className="text-sm text-[var(--ink-muted)] leading-relaxed mb-3">{description}</p>
+      <p className="text-xs text-[var(--ink-faint)] mb-4">
+        <span className="font-semibold text-[var(--ink-muted)]">Eligibility:</span> {eligibility}
       </p>
-      <a
-        href="/invest/apply"
-        className="mt-auto flex h-10 items-center justify-center rounded-full border border-[var(--primary)] text-sm font-semibold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-all active:scale-95"
-      >
+      <a href="/invest/apply" className="btn-secondary mt-auto h-10 text-sm">
         {ctaText}
       </a>
     </div>

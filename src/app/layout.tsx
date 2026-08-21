@@ -49,6 +49,24 @@ export const metadata: Metadata = {
   },
 };
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "TechAgency",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo-mark.png`,
+  description:
+    "Digital product studio building web apps, mobile products, fintech integrations and DevOps systems for ambitious businesses everywhere.",
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: process.env.TEAM_EMAIL ?? "team@techbuddy.ng",
+    availableLanguage: ["en"],
+  },
+};
+
 /* Applied before paint so there's never a light→dark flash. Light is the
    default for new visitors — dark only activates on an explicit saved choice,
    it does not follow the OS preference. */
@@ -68,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       </head>
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>

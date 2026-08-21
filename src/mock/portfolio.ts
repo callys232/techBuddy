@@ -10,6 +10,10 @@ export interface Project {
   result: string;
   highlight: string;
   client: string;
+  /** True for every entry right now — these are concept builds showing our
+   *  design/engineering approach, not completed client engagements. Flip to
+   *  false only for a project that actually shipped for a real client. */
+  illustrative: boolean;
 }
 
 export interface PortfolioTab {
@@ -41,6 +45,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "12,000 monthly active users within 6 months of launch",
     highlight: "₦2.1B in transactions tracked monthly",
     client: "Lagos-based fintech startup",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -55,6 +60,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "₦800M in gross merchandise value in year one",
     highlight: "40% cost reduction for registered farmers",
     client: "AgriTech NGO backed by USAID",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -69,6 +75,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "35% average fuel cost reduction across 4 logistics clients",
     highlight: "1,200 vehicles tracked simultaneously in real time",
     client: "Series A logistics startup, Lagos",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -83,6 +90,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "Claims processing time reduced from 14 days to under 24 hours",
     highlight: "98.7% platform uptime since launch in 2025",
     client: "HMO operator serving 25,000 enrollees",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -97,6 +105,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "Adopted by 180+ schools across 8 Nigerian states",
     highlight: "₦45M in school fees processed monthly",
     client: "Edtech startup (private school networks)",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -111,6 +120,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "2,400 deliveries completed daily on the platform",
     highlight: "18% improvement in on-time delivery rate vs industry average",
     client: "Courier startup serving 300+ e-commerce merchants",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -125,6 +135,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "650+ successful hires facilitated in the first 12 months",
     highlight: "5-day median time from job post to first interview",
     client: "HR consultancy firm, Abuja",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -139,6 +150,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "3 retail chains now managing over ₦1.2B in inventory",
     highlight: "28% reduction in stockout incidents",
     client: "FMCG distribution group, Lagos",
+    illustrative: true,
   },
   {
     image: "/placeholder.png",
@@ -153,6 +165,7 @@ export const ALL_PROJECTS: Project[] = [
     result: "₦340M in corporate spend managed monthly",
     highlight: "72-hour card issuance turnaround from signup",
     client: "B2B fintech, serving 60+ SME clients",
+    illustrative: true,
   },
 ];
 

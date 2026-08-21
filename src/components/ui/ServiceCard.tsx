@@ -24,22 +24,12 @@ const ICONS = {
   settings: IconSettings,
 } as const;
 
-const GLOW = {
-  teal:  "hover:border-[var(--accent-teal)] hover:shadow-[0_0_24px_rgba(0,229,192,0.15)]",
-  amber: "hover:border-[var(--accent-amber)] hover:shadow-[0_0_24px_rgba(245,166,35,0.15)]",
-  coral: "hover:border-[var(--accent-coral)] hover:shadow-[0_0_24px_rgba(255,92,77,0.15)]",
-} as const;
-
-const ICON_COLOR = {
-  teal:  "text-[var(--color-accent-teal)]",
-  amber: "text-[var(--color-accent-amber)]",
-  coral: "text-[var(--color-accent-coral)]",
-} as const;
-
-const TAG_COLOR = {
-  teal:  "bg-[var(--color-accent-teal)]/10 text-[var(--color-accent-teal)]",
-  amber: "bg-[var(--color-accent-amber)]/10 text-[var(--color-accent-amber)]",
-  coral: "bg-[var(--color-accent-coral)]/10 text-[var(--color-accent-coral)]",
+/** teal/amber/coral from the old 3-accent system map onto the suite-tint
+ *  palette — avoiding suite-1 (blue) since that's already the brand color. */
+const SUITE_TINT = {
+  teal: "var(--suite-6)",
+  amber: "var(--suite-4)",
+  coral: "var(--suite-5)",
 } as const;
 
 interface ServiceCardProps {
@@ -49,7 +39,7 @@ interface ServiceCardProps {
   outcome: string;
   tag: string;
   href: string;
-  color?: keyof typeof GLOW;
+  color?: keyof typeof SUITE_TINT;
   startingFrom: string;
 }
 
@@ -61,36 +51,36 @@ export function ServiceCard({
   return (
     <Link
       href={href}
-      className={[
-        "group relative flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--border)]",
-        "bg-[var(--surface)] p-4 transition-all duration-300 hover:-translate-y-1.5",
-        GLOW[color],
-      ].join(" ")}
+      style={{ "--suite-tint": SUITE_TINT[color] } as React.CSSProperties}
+      className="card-interactive group flex flex-col gap-3 p-4"
     >
       {/* Icon + tag */}
       <div className="flex items-start justify-between">
-        <span className={`flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--bg)] ${ICON_COLOR[color]}`}>
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--page)]" style={{ color: "var(--suite-tint)" }}>
           <Icon size={18} />
         </span>
-        <span className={`font-mono text-xs font-semibold rounded-[var(--radius-badge)] px-2.5 py-1 ${TAG_COLOR[color]}`}>
+        <span
+          className="font-mono text-xs font-semibold rounded-[var(--radius-badge)] px-2.5 py-1"
+          style={{ backgroundColor: "color-mix(in srgb, var(--suite-tint) 12%, transparent)", color: "var(--suite-tint)" }}
+        >
           {tag}
         </span>
       </div>
 
       {/* Title + description */}
       <div>
-        <h3 className="font-display text-base font-bold text-[var(--fg)] mb-1.5">{title}</h3>
-        <p className="text-sm text-[var(--fg)]/60 leading-relaxed">{desc}</p>
+        <h3 className="font-heading text-base font-bold text-[var(--ink)] mb-1.5">{title}</h3>
+        <p className="text-sm text-[var(--ink-muted)] leading-relaxed">{desc}</p>
       </div>
 
       {/* Outcome line */}
-      <p className="text-xs text-[var(--fg)]/45 italic leading-relaxed border-l-2 border-[var(--border)] pl-3">
+      <p className="text-xs text-[var(--ink-faint)] italic leading-relaxed border-l-2 border-[var(--border)] pl-3">
         {outcome}
       </p>
 
       {/* Footer: CTA only */}
       <div className="mt-auto flex items-center justify-between pt-3 border-t border-[var(--border)]">
-        <span className="flex items-center gap-1 text-sm font-semibold text-[var(--primary)] group-hover:gap-2 transition-all">
+        <span className="flex items-center gap-1 text-sm font-semibold text-[var(--brand)] group-hover:gap-2 transition-all">
           Learn more <IconArrowRight size={13} />
         </span>
       </div>

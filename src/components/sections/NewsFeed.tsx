@@ -78,7 +78,7 @@ function NewsCard({ article }: { article: NormalizedArticle }) {
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] overflow-hidden transition-all duration-200 hover:-translate-y-[2px] hover:border-[var(--primary)] hover:shadow-md"
+      className="group flex flex-col rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] overflow-hidden transition-all duration-200 hover:-translate-y-[2px] hover:border-[var(--brand)] hover:shadow-md"
     >
       {/* Thumbnail */}
       {article.imageUrl && (
@@ -99,28 +99,28 @@ function NewsCard({ article }: { article: NormalizedArticle }) {
       <div className="flex flex-col flex-1 p-4">
         {/* Source badge */}
         <div className="flex items-center justify-between mb-3">
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--primary)] border border-[var(--primary)]/30 bg-[var(--primary)]/8 rounded-full px-2.5 py-0.5">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--brand)] border border-[var(--brand)]/30 bg-[var(--brand)]/8 rounded-full px-2.5 py-0.5">
             <SourceIcon />
             {article.sourceName}
           </span>
-          <span className="text-[11px] text-[var(--fg)]/40">{relativeTime(article.publishedAt)}</span>
+          <span className="text-[11px] text-[var(--ink)]/40">{relativeTime(article.publishedAt)}</span>
         </div>
 
         {/* Title */}
-        <p className="font-bold text-sm text-[var(--fg)] leading-snug line-clamp-2 mb-2 group-hover:text-[var(--primary)] transition-colors">
+        <p className="font-bold text-sm text-[var(--ink)] leading-snug line-clamp-2 mb-2 group-hover:text-[var(--brand)] transition-colors">
           {article.title}
         </p>
 
         {/* Summary */}
         {article.summary && (
-          <p className="text-xs text-[var(--fg)]/55 leading-relaxed line-clamp-3 flex-1">
+          <p className="text-xs text-[var(--ink)]/55 leading-relaxed line-clamp-3 flex-1">
             {article.summary}
           </p>
         )}
 
         {/* Footer */}
         <div className="mt-3 pt-3 border-t border-[var(--border)] flex items-center justify-between">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--fg)]/35">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--ink)]/35">
             {article.category}
           </span>
           <ExternalLinkIcon />
@@ -153,7 +153,7 @@ function ExternalLinkIcon() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="text-[var(--primary)] flex-shrink-0"
+      className="text-[var(--brand)] flex-shrink-0"
       aria-hidden="true"
     >
       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
@@ -174,7 +174,7 @@ function RefreshIcon() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="text-[var(--primary)]"
+      className="text-[var(--brand)]"
       aria-hidden="true"
     >
       <polyline points="23 4 23 10 17 10" />
@@ -237,8 +237,8 @@ export function NewsFeed() {
             onClick={() => handleFilterChange(f.label)}
             className={`px-4 py-1.5 rounded-full text-xs font-semibold font-mono uppercase tracking-widest transition-all duration-150 border ${
               activeFilter === f.label
-                ? "bg-[var(--primary)] text-[var(--bg)] border-[var(--primary)]"
-                : "bg-transparent text-[var(--fg)]/60 border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                ? "bg-[var(--brand)] text-[var(--page)] border-[var(--brand)]"
+                : "bg-transparent text-[var(--ink)]/60 border-[var(--border)] hover:border-[var(--brand)] hover:text-[var(--brand)]"
             }`}
           >
             {f.label}
@@ -257,10 +257,10 @@ export function NewsFeed() {
 
       {!loading && error && (
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-8 text-center">
-          <p className="text-sm text-[var(--fg)]/60 mb-4">{error}</p>
+          <p className="text-sm text-[var(--ink)]/60 mb-4">{error}</p>
           <button
             onClick={fetchNews}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[var(--primary)] text-[var(--primary)] text-sm font-semibold hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[var(--brand)] text-[var(--brand)] text-sm font-semibold hover:bg-[var(--brand)] hover:text-[var(--page)] transition-colors"
           >
             <RefreshIcon />
             Retry
@@ -270,7 +270,7 @@ export function NewsFeed() {
 
       {!loading && !error && filtered.length === 0 && (
         <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-8 text-center">
-          <p className="text-sm text-[var(--fg)]/50">No articles found for this filter.</p>
+          <p className="text-sm text-[var(--ink)]/50">No articles found for this filter.</p>
         </div>
       )}
 
@@ -286,7 +286,7 @@ export function NewsFeed() {
             <div className="mt-10 text-center">
               <button
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm font-semibold text-[var(--fg)]/70 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm font-semibold text-[var(--ink)]/70 hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
               >
                 Load more articles
               </button>

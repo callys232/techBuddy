@@ -36,8 +36,8 @@ export function TabGroup({ tabs, activeTab, onChange, variant = "default" }: Tab
               className={[
                 "rounded-full px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-widest transition-all duration-200 border",
                 active
-                  ? "bg-[var(--primary)] text-[var(--bg)] border-[var(--primary)] shadow-[0_0_16px_rgba(56,189,248,0.35)]"
-                  : "border-[var(--border)] text-[var(--fg)]/55 hover:border-[var(--primary)]/50 hover:text-[var(--primary)]",
+                  ? "bg-[var(--brand)] text-[var(--brand-ink)] border-[var(--brand)]"
+                  : "border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--brand)]/50 hover:text-[var(--brand)]",
               ].join(" ")}
             >
               {tab.label}
@@ -60,8 +60,8 @@ export function TabGroup({ tabs, activeTab, onChange, variant = "default" }: Tab
             className={[
               "relative shrink-0 rounded-t-lg px-5 py-3 font-heading text-sm font-semibold transition-colors duration-200",
               active
-                ? "text-[var(--primary)]"
-                : "text-[var(--fg)]/40 hover:text-[var(--fg)]/70 hover:bg-[var(--surface)]/50",
+                ? "text-[var(--brand)]"
+                : "text-[var(--ink-faint)] hover:text-[var(--ink-muted)] hover:bg-[var(--surface)]/50",
             ].join(" ")}
           >
             {tab.label}
@@ -70,7 +70,7 @@ export function TabGroup({ tabs, activeTab, onChange, variant = "default" }: Tab
       })}
       {/* Sliding bottom indicator */}
       <span
-        className="absolute bottom-0 h-0.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(56,189,248,0.6)] transition-all duration-250 ease-in-out"
+        className="absolute bottom-0 h-0.5 rounded-full bg-[var(--brand)] transition-all duration-250 ease-in-out"
         style={indicatorStyle}
       />
     </div>

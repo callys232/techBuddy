@@ -54,14 +54,14 @@ export function LiveActivityFeed({ embedded = false }: { embedded?: boolean }) {
     : (
       <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)]/90 backdrop-blur-sm overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--border)]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--fg)]/45">Recent activity</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--ink)]/45">Recent activity</span>
           <span className="flex items-center gap-1.5 text-[10px] font-semibold text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />Live
           </span>
         </div>
         {content}
         <div className="px-5 py-3 border-t border-[var(--border)] text-center">
-          <span className="text-[10px] text-[var(--fg)]/25">Founders using our free tools right now</span>
+          <span className="text-[10px] text-[var(--ink)]/25">Founders using our free tools right now</span>
         </div>
       </div>
     );
@@ -82,14 +82,14 @@ export function LiveActivityFeed({ embedded = false }: { embedded?: boolean }) {
             <span className="text-xl shrink-0 mt-0.5">{a.icon}</span>
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-2">
-                <span className="font-heading font-semibold text-[var(--fg)] text-sm truncate">
+                <span className="font-heading font-semibold text-[var(--ink)] text-sm truncate">
                   {a.name}
-                  <span className="font-normal text-[var(--fg)]/35 text-xs ml-1.5">· {a.city}</span>
+                  <span className="font-normal text-[var(--ink)]/35 text-xs ml-1.5">· {a.city}</span>
                 </span>
-                <span className="font-mono text-[10px] text-[var(--fg)]/25 shrink-0">{a.ago}</span>
+                <span className="font-mono text-[10px] text-[var(--ink)]/25 shrink-0">{a.ago}</span>
               </div>
-              <p className="text-xs text-[var(--fg)]/45 mt-0.5">{a.tool} — {a.detail}</p>
-              <p className="text-xs font-semibold text-[var(--primary)] mt-1">{a.result}</p>
+              <p className="text-xs text-[var(--ink)]/45 mt-0.5">{a.tool} — {a.detail}</p>
+              <p className="text-xs font-semibold text-[var(--brand)] mt-1">{a.result}</p>
             </div>
           </motion.div>
         ))}

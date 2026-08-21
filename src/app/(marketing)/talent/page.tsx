@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { STATS } from "@/mock/stats";
 
 export const metadata: Metadata = {
   title: "Talent Hub — Hire Vetted African Engineers, Anywhere",
@@ -42,41 +43,36 @@ const STEPS = [
   { n: "04", title: "Start building",     body: "Get matched to a project within 5 business days. Ship your first PR in week 1." },
 ];
 
-const STATS = [
-  { value: "120+", label: "Engineers vetted" },
-  { value: "35+",  label: "Active projects" },
-  { value: "94%",  label: "Client re-hire rate" },
-  { value: "5 days", label: "Avg. placement time" },
-];
+const TALENT_STATS = [STATS.engineersInNetwork, STATS.productsShipped, STATS.clientReEngagement, STATS.avgPlacementTime];
 
 export default function TalentPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative grain overflow-hidden px-[var(--container-px)] py-[var(--section-y)]">
         <PageVectors variant="top-right" intensity={0.7} />
         <div className="relative z-10 max-w-3xl">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-5">
+          <p className="eyebrow mb-5">
             Talent Hub
           </p>
-          <h1 className="font-display text-[var(--text-display)] font-extrabold text-[var(--fg)] leading-[1.05] mb-6">
+          <h1 className="h-display mb-6">
             Africa&apos;s Vetted Tech Talent,<br />Working Worldwide
           </h1>
-          <p className="text-lg text-[var(--fg)]/60 max-w-xl mb-10 leading-relaxed">
+          <p className="text-lg text-[var(--ink)]/60 max-w-xl mb-10 leading-relaxed">
             Pre-screened engineers, designers and DevOps specialists — matched to your project in days, wherever you&apos;re building.
             Or join our network and work on products that matter.
           </p>
           <div className="flex flex-wrap gap-4">
             <a
               href="#hire"
-              className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-semibold text-[var(--bg)] hover:opacity-90 hover:shadow-[var(--shadow-glow-sky)] transition-all active:scale-95"
+              className="btn-primary h-12 px-8"
             >
               Hire an engineer
             </a>
             <a
               href="#join"
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-[var(--border)] px-8 font-semibold text-[var(--fg)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all active:scale-95"
+              className="btn-ghost h-12 px-8"
             >
               Join the network
             </a>
@@ -87,10 +83,10 @@ export default function TalentPage() {
       {/* ── Stats bar ─────────────────────────────────────────────────────── */}
       <section className="bg-[var(--surface)] border-y border-[var(--border)]">
         <div className="px-[var(--container-px)] py-10 grid grid-cols-2 sm:grid-cols-4 gap-6">
-          {STATS.map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="font-display text-3xl font-extrabold text-[var(--primary)] mb-1">{s.value}</p>
-              <p className="text-sm text-[var(--fg)]/50">{s.label}</p>
+          {TALENT_STATS.map((s) => (
+            <div key={s.id} className="text-center">
+              <p className="font-heading text-3xl font-extrabold text-[var(--brand)] mb-1">{s.value}</p>
+              <p className="text-sm text-[var(--ink-muted)]">{s.label}</p>
             </div>
           ))}
         </div>
@@ -99,9 +95,9 @@ export default function TalentPage() {
       {/* ── Hire section ──────────────────────────────────────────────────── */}
       <section id="hire" className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="mb-10">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-3">For Businesses</p>
-          <h2 className="text-3xl font-bold text-[var(--fg)] mb-3">Open Roles &amp; Profiles</h2>
-          <p className="text-[var(--fg)]/50 max-w-lg">
+          <p className="eyebrow mb-3">For Businesses</p>
+          <h2 className="text-3xl font-bold text-[var(--ink)] mb-3">Open Roles &amp; Profiles</h2>
+          <p className="text-[var(--ink)]/50 max-w-lg">
             Browse by skill. All engineers have passed a technical screen and culture assessment.
             Full profiles unlock after sign-in.
           </p>
@@ -114,30 +110,30 @@ export default function TalentPage() {
               className="glass rounded-[var(--radius-card)] p-6 flex flex-col gap-3"
             >
               <div className="flex items-start justify-between gap-2">
-                <p className="font-heading font-semibold text-[var(--fg)]">{role.title}</p>
+                <p className="font-heading font-semibold text-[var(--ink)]">{role.title}</p>
                 <span className={[
                   "shrink-0 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
                   role.open
                     ? "bg-emerald-500/10 text-emerald-400"
-                    : "bg-[var(--fg)]/5 text-[var(--fg)]/30",
+                    : "bg-[var(--ink)]/5 text-[var(--ink)]/30",
                 ].join(" ")}>
                   {role.open ? "Open" : "Waitlist"}
                 </span>
               </div>
-              <p className="font-mono text-xs text-[var(--primary)]/80">{role.stack}</p>
-              <p className="text-xs text-[var(--fg)]/40 mt-auto">{role.type}</p>
+              <p className="font-mono text-xs text-[var(--brand)]/80">{role.stack}</p>
+              <p className="text-xs text-[var(--ink)]/40 mt-auto">{role.type}</p>
             </div>
           ))}
         </div>
 
         <div className="glass rounded-[var(--radius-card)] p-8 text-center max-w-lg mx-auto">
-          <p className="font-heading font-semibold text-[var(--fg)] mb-2">View full engineer profiles</p>
-          <p className="text-sm text-[var(--fg)]/50 mb-6">
+          <p className="font-heading font-semibold text-[var(--ink)] mb-2">View full engineer profiles</p>
+          <p className="text-sm text-[var(--ink)]/50 mb-6">
             Detailed skills, past projects, availability and rates — available after a free account sign-in.
           </p>
           <a
             href="/sign-in?redirect=/talent/hire"
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-7 font-semibold text-[var(--bg)] hover:opacity-90 transition-opacity active:scale-95"
+            className="btn-primary h-11 px-7"
           >
             Browse profiles
           </a>
@@ -147,16 +143,16 @@ export default function TalentPage() {
       {/* ── Benefits ──────────────────────────────────────────────────────── */}
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)]">
         <div className="mb-10">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-3">Why join us</p>
-          <h2 className="text-3xl font-bold text-[var(--fg)]">Built for African Builders</h2>
+          <p className="eyebrow mb-3">Why join us</p>
+          <h2 className="text-3xl font-bold text-[var(--ink)]">Built for African Builders</h2>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((b) => (
             <div key={b.title} className="flex gap-4">
               <span className="text-2xl shrink-0 mt-0.5">{b.icon}</span>
               <div>
-                <p className="font-heading font-semibold text-[var(--fg)] mb-1">{b.title}</p>
-                <p className="text-sm text-[var(--fg)]/50 leading-relaxed">{b.body}</p>
+                <p className="font-heading font-semibold text-[var(--ink)] mb-1">{b.title}</p>
+                <p className="text-sm text-[var(--ink)]/50 leading-relaxed">{b.body}</p>
               </div>
             </div>
           ))}
@@ -166,9 +162,9 @@ export default function TalentPage() {
       {/* ── How it works / Join ───────────────────────────────────────────── */}
       <section id="join" className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="mb-10">
-          <p className="font-mono text-[var(--primary)] text-xs uppercase tracking-[0.25em] mb-3">For Engineers</p>
-          <h2 className="text-3xl font-bold text-[var(--fg)] mb-3">How to Join the Network</h2>
-          <p className="text-[var(--fg)]/50 max-w-lg">
+          <p className="eyebrow mb-3">For Engineers</p>
+          <h2 className="text-3xl font-bold text-[var(--ink)] mb-3">How to Join the Network</h2>
+          <p className="text-[var(--ink)]/50 max-w-lg">
             No gatekeeping. If you can build, we want you in the network.
           </p>
         </div>
@@ -179,12 +175,12 @@ export default function TalentPage() {
           <div className="flex flex-col gap-8">
             {STEPS.map((step) => (
               <div key={step.n} className="flex gap-6 items-start">
-                <div className="shrink-0 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/5 text-[var(--primary)] font-mono text-sm font-bold z-10">
+                <div className="shrink-0 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/5 text-[var(--brand)] font-mono text-sm font-bold z-10">
                   {step.n}
                 </div>
                 <div className="pt-3">
-                  <p className="font-heading font-semibold text-[var(--fg)] mb-1">{step.title}</p>
-                  <p className="text-sm text-[var(--fg)]/50 leading-relaxed">{step.body}</p>
+                  <p className="font-heading font-semibold text-[var(--ink)] mb-1">{step.title}</p>
+                  <p className="text-sm text-[var(--ink)]/50 leading-relaxed">{step.body}</p>
                 </div>
               </div>
             ))}
@@ -192,13 +188,13 @@ export default function TalentPage() {
         </div>
 
         <div className="mt-14 glass rounded-[var(--radius-card)] p-8 text-center max-w-lg mx-auto">
-          <p className="font-heading font-semibold text-[var(--fg)] mb-2">Ready to join?</p>
-          <p className="text-sm text-[var(--fg)]/50 mb-6">
+          <p className="font-heading font-semibold text-[var(--ink)] mb-2">Ready to join?</p>
+          <p className="text-sm text-[var(--ink)]/50 mb-6">
             Sign in and submit your engineer profile. We review applications every Monday.
           </p>
           <a
             href="/sign-in?redirect=/talent/join"
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--primary)] px-7 font-semibold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-all active:scale-95"
+            className="inline-flex h-11 items-center gap-2 rounded-full border border-[var(--brand)] px-7 font-semibold text-[var(--brand)] hover:bg-[var(--brand)] hover:text-[var(--page)] transition-all active:scale-95"
           >
             Apply to the network
           </a>
@@ -207,8 +203,8 @@ export default function TalentPage() {
 
       {/* ── Contact CTA ───────────────────────────────────────────────────── */}
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)] text-center border-t border-[var(--border)]">
-        <h2 className="text-2xl font-bold text-[var(--fg)] mb-3">Not sure where to start?</h2>
-        <p className="text-[var(--fg)]/50 max-w-sm mx-auto mb-8">
+        <h2 className="text-2xl font-bold text-[var(--ink)] mb-3">Not sure where to start?</h2>
+        <p className="text-[var(--ink)]/50 max-w-sm mx-auto mb-8">
           Message us on WhatsApp and we&apos;ll help you figure out whether hiring or joining is the right fit.
         </p>
         <a

@@ -192,6 +192,82 @@ export interface Database {
         };
         Relationships: [];
       };
+      products: {
+        Row: {
+          id: string;
+          slug: string;
+          name: string;
+          description: string;
+          type: "download" | "unlock";
+          price_points: number;
+          file_path: string | null;
+          unlock_key: string | null;
+          category: string | null;
+          active: boolean;
+          created_at: string;
+        };
+        Insert: {
+          slug: string;
+          name: string;
+          description: string;
+          type: "download" | "unlock";
+          price_points: number;
+          file_path?: string | null;
+          unlock_key?: string | null;
+          category?: string | null;
+          active?: boolean;
+        };
+        Update: {
+          slug?: string;
+          name?: string;
+          description?: string;
+          type?: "download" | "unlock";
+          price_points?: number;
+          file_path?: string | null;
+          unlock_key?: string | null;
+          category?: string | null;
+          active?: boolean;
+        };
+        Relationships: [];
+      };
+      purchases: {
+        Row: {
+          id: string;
+          email: string;
+          product_id: string;
+          price_paid_points: number;
+          created_at: string;
+        };
+        Insert: {
+          email: string;
+          product_id: string;
+          price_paid_points: number;
+        };
+        Update: {
+          email?: string;
+          product_id?: string;
+          price_paid_points?: number;
+        };
+        Relationships: [];
+      };
+      rate_limits: {
+        Row: {
+          key: string;
+          count: number;
+          window_start: string;
+        };
+        Insert: {
+          key: string;
+          count?: number;
+          window_start?: string;
+        };
+        Update: {
+          key?: string;
+          count?: number;
+          window_start?: string;
+        };
+        Relationships: [];
+      };
       points_balances: {
         Row: {
           email: string;

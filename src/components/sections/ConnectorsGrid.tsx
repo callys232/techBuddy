@@ -32,18 +32,14 @@ const ICON_MAP: Record<Connector["icon"], typeof IconCreditCard> = {
 export function ConnectorsGrid() {
   return (
     <section className="relative overflow-hidden py-16">
-      <div className="gradient-line mb-16" />
       <div className="mx-auto max-w-6xl px-[var(--container-px)]">
         <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="eyebrow-pill mb-5 inline-flex">
-            <span className="pulse-dot" />
-            Third-party connectors
-          </span>
-          <h2 className="mt-5 font-display font-extrabold text-[var(--fg)] leading-[1.1] mb-4 tracking-[-0.02em]
+          <p className="eyebrow justify-center mb-5">Third-party connectors</p>
+          <h2 className="mt-5 font-heading font-extrabold text-[var(--ink)] leading-[1.1] mb-4 tracking-[-0.02em]
                          text-[clamp(1.75rem,3vw,2.5rem)]">
-            Built With <span className="gradient-text">Tools You Already Trust</span>
+            Built With <span className="text-[var(--brand)]">Tools You Already Trust</span>
           </h2>
-          <p className="text-[var(--fg)]/50 leading-relaxed text-[14.5px]">
+          <p className="text-[var(--ink-muted)] leading-relaxed text-[14.5px]">
             Every build plugs into the payments, infrastructure, and AI APIs your business already runs on — wired up, tested, and documented.
           </p>
         </div>
@@ -52,13 +48,13 @@ export function ConnectorsGrid() {
           {CONNECTORS.map((c) => {
             const Icon = ICON_MAP[c.icon];
             return (
-              <div key={c.name} className="lm-card lm-card-hover flex items-center gap-3 p-4">
+              <div key={c.name} className="card-interactive flex items-center gap-3 p-4">
                 <span className="icon-square shrink-0">
                   <Icon size={20} />
                 </span>
                 <div className="min-w-0">
-                  <p className="font-heading text-sm font-semibold text-[var(--fg)] truncate">{c.name}</p>
-                  <p className="text-[11px] text-[var(--fg)]/40 truncate">{c.category}</p>
+                  <p className="font-heading text-sm font-semibold text-[var(--ink)] truncate">{c.name}</p>
+                  <p className="text-[11px] text-[var(--ink)]/40 truncate">{c.category}</p>
                 </div>
               </div>
             );

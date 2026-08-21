@@ -79,7 +79,7 @@ export function HeroRoad() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden text-[var(--fg)] opacity-[0.14]"
+      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden text-[var(--ink)] opacity-[0.14]"
     >
       <svg
         width="100%"
@@ -92,13 +92,13 @@ export function HeroRoad() {
             <circle cx="24" cy="24" r="1" fill="currentColor" opacity="0.06" />
           </pattern>
           <linearGradient id="hrFade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="var(--bg)" stopOpacity="1" />
-            <stop offset="52%"  stopColor="var(--bg)" stopOpacity="0.75" />
-            <stop offset="80%"  stopColor="var(--bg)" stopOpacity="0" />
+            <stop offset="0%"   stopColor="var(--page)" stopOpacity="1" />
+            <stop offset="52%"  stopColor="var(--page)" stopOpacity="0.75" />
+            <stop offset="80%"  stopColor="var(--page)" stopOpacity="0" />
           </linearGradient>
           <radialGradient id="hrGlow" cx="50%" cy="100%" r="55%">
-            <stop offset="0%"   stopColor="var(--primary)" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+            <stop offset="0%"   stopColor="var(--brand)" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="var(--brand)" stopOpacity="0" />
           </radialGradient>
         </defs>
 

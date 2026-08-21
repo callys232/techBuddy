@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { isEmailSubscribed } from "@/lib/subscription";
+import { isUnlocked } from "@/lib/store";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import type { ResumeData } from "@/types/resume";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "" });
@@ -26,9 +28,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "email and resumeData are required" }, { status: 400 });
   }
 
-  const subscribed = await isEmailSubscribed(email);
-  if (!subscribed) {
+  const hasAccess = (await isEmailSubscribed(email)) || (await isUnlocked(email, "resume-premium-templates"));
+  if (!hasAccess) {
     return NextResponse.json({ error: "AI suggestions are a Resume Premium feature" }, { status: 403 });
+  }
+
+  const allowed = await checkRateLimit("resume-suggest", getClientIp(req), 10);
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many requests — try again in a minute." }, { status: 429 });
   }
 
   try {

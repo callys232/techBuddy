@@ -40,39 +40,39 @@ export default async function BlogPostPage({ params }: Props) {
   });
 
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--page)]">
       <div className="relative overflow-hidden">
         <PageVectors variant="bottom-left" intensity={0.28} />
       </div>
       <article className="relative mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-[var(--fg)]/40 mb-8">
-          <Link href="/blog" className="hover:text-[var(--primary)] transition-colors">Blog</Link>
+        <nav className="flex items-center gap-2 text-sm text-[var(--ink)]/40 mb-8">
+          <Link href="/blog" className="hover:text-[var(--brand)] transition-colors">Blog</Link>
           <span>/</span>
-          <span className="text-[var(--primary)]">{post.category}</span>
+          <span className="text-[var(--brand)]">{post.category}</span>
         </nav>
 
         {/* Category tag */}
-        <span className="inline-block font-mono text-xs text-[var(--primary)] uppercase tracking-[0.2em] border border-[var(--primary)]/30 bg-[var(--primary)]/8 rounded-full px-3 py-1">
+        <span className="inline-block font-mono text-xs text-[var(--brand)] uppercase tracking-[0.2em] border border-[var(--brand)]/30 bg-[var(--brand)]/8 rounded-full px-3 py-1">
           {post.category}
         </span>
 
         {/* Title */}
-        <h1 className="mt-5 font-display text-4xl md:text-5xl font-extrabold text-[var(--fg)] leading-[1.12] tracking-[-0.02em]">
+        <h1 className="mt-5 font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] leading-[1.12] tracking-[-0.02em]">
           {post.title}
         </h1>
 
         {/* Meta */}
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--fg)]/45">
-          <span className="font-medium text-[var(--fg)]/65">{post.author.name}</span>
-          <span className="w-1 h-1 rounded-full bg-[var(--fg)]/20" />
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--ink)]/45">
+          <span className="font-medium text-[var(--ink)]/65">{post.author.name}</span>
+          <span className="w-1 h-1 rounded-full bg-[var(--ink)]/20" />
           <time dateTime={post.date}>{formattedDate}</time>
-          <span className="w-1 h-1 rounded-full bg-[var(--fg)]/20" />
+          <span className="w-1 h-1 rounded-full bg-[var(--ink)]/20" />
           <span>{post.readTime} min read</span>
         </div>
 
         {/* Excerpt / lead */}
-        <p className="mt-8 text-lg text-[var(--fg)]/60 leading-relaxed border-l-2 border-[var(--primary)]/40 pl-5">
+        <p className="mt-8 text-lg text-[var(--ink)]/60 leading-relaxed border-l-2 border-[var(--brand)]/40 pl-5">
           {post.excerpt}
         </p>
 
@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: Props) {
         <hr className="my-10 border-[var(--border)]" />
 
         {/* Body */}
-        <div className="space-y-6 text-[var(--fg)]/80 leading-[1.85] text-[15.5px]">
+        <div className="space-y-6 text-[var(--ink)]/80 leading-[1.85] text-[15.5px]">
           {post.body.map((para, i) => (
             <p key={i}>{para}</p>
           ))}
@@ -91,7 +91,7 @@ export default async function BlogPostPage({ params }: Props) {
           {["Nigeria Tech", post.category, "TechAgency"].map((tag) => (
             <span
               key={tag}
-              className="font-mono text-xs rounded-full border border-[var(--border)] px-3 py-1 text-[var(--fg)]/50"
+              className="font-mono text-xs rounded-full border border-[var(--border)] px-3 py-1 text-[var(--ink)]/50"
             >
               #{tag.toLowerCase().replace(/\s+/g, "-")}
             </span>
@@ -100,18 +100,18 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* CTA card */}
         <div className="mt-16 rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] p-8 text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--primary)] mb-2">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--brand)] mb-2">
             Work with us
           </p>
-          <p className="font-display text-xl font-bold text-[var(--fg)] mb-2">
+          <p className="font-display text-xl font-bold text-[var(--ink)] mb-2">
             Need help implementing this?
           </p>
-          <p className="text-sm text-[var(--fg)]/50 mb-6 max-w-xs mx-auto">
+          <p className="text-sm text-[var(--ink)]/50 mb-6 max-w-xs mx-auto">
             Our engineers have shipped production systems across every topic we write about.
           </p>
           <Link
             href="/quote"
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--primary)] px-8 font-heading font-bold text-sm text-[var(--bg)] hover:opacity-90 transition-opacity"
+            className="btn-primary h-11 px-8 text-sm"
           >
             Get a free quote
           </Link>
@@ -119,7 +119,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Back link */}
         <div className="mt-10 text-center">
-          <Link href="/blog" className="text-sm text-[var(--fg)]/40 hover:text-[var(--primary)] transition-colors">
+          <Link href="/blog" className="text-sm text-[var(--ink)]/40 hover:text-[var(--brand)] transition-colors">
             ← Back to all articles
           </Link>
         </div>

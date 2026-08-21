@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "" });
 
@@ -22,6 +23,11 @@ export async function POST(req: Request) {
 
   if (!name?.trim() || !role?.trim() || !strengths?.trim()) {
     return NextResponse.json({ error: "name, role and strengths are required" }, { status: 400 });
+  }
+
+  const allowed = await checkRateLimit("cover-letter", getClientIp(req), 5);
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many requests — try again in a minute." }, { status: 429 });
   }
 
   const userPrompt = `Candidate name: ${name}

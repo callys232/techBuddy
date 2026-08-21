@@ -11,23 +11,23 @@ const LAST_UPDATED = "1 June 2026";
 
 export default function NdprPage() {
   return (
-    <div className="relative overflow-hidden min-h-screen bg-[var(--bg)]">
+    <div className="relative overflow-hidden min-h-screen bg-[var(--page)]">
       <PageVectors variant="minimal" intensity={0.5} />
       <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)] py-[var(--section-y)]">
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--primary)]">Legal · Compliance</span>
-        <h1 className="mt-3 font-display text-4xl font-extrabold text-[var(--fg)] mb-2">NDPR Compliance Statement</h1>
-        <p className="text-sm text-[var(--fg)]/40 mb-10">Last updated: {LAST_UPDATED}</p>
+        <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--brand)]">Legal · Compliance</span>
+        <h1 className="mt-3 font-display text-4xl font-extrabold text-[var(--ink)] mb-2">NDPR Compliance Statement</h1>
+        <p className="text-sm text-[var(--ink)]/40 mb-10">Last updated: {LAST_UPDATED}</p>
 
-        <div className="space-y-10 text-[var(--fg)]/75 text-[15px] leading-[1.85]">
+        <div className="space-y-10 text-[var(--ink)]/75 text-[15px] leading-[1.85]">
 
-          <div className="rounded-xl border border-[var(--primary)]/30 bg-[var(--primary)]/5 p-5">
-            <p className="text-sm text-[var(--fg)]/80">
-              This statement covers TechAgency Africa&apos;s compliance with the <strong className="text-[var(--fg)]">Nigeria Data Protection Regulation 2019 (NDPR)</strong> and the <strong className="text-[var(--fg)]">Nigeria Data Protection Act 2023 (NDPA)</strong>, which together form the primary data protection framework for Nigeria. We also build NDPR/NDPA compliance into every product we ship for clients.
+          <div className="rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-5">
+            <p className="text-sm text-[var(--ink)]/80">
+              This statement covers TechAgency Africa&apos;s compliance with the <strong className="text-[var(--ink)]">Nigeria Data Protection Regulation 2019 (NDPR)</strong> and the <strong className="text-[var(--ink)]">Nigeria Data Protection Act 2023 (NDPA)</strong>, which together form the primary data protection framework for Nigeria. We also build NDPR/NDPA compliance into every product we ship for clients.
             </p>
           </div>
 
           <section>
-            <h2 className="font-display text-xl font-bold text-[var(--fg)] mb-3">Our compliance measures</h2>
+            <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Our compliance measures</h2>
             <div className="space-y-4">
               {[
                 {
@@ -72,12 +72,12 @@ export default function NdprPage() {
                 },
               ].map(({ title, body }) => (
                 <div key={title} className="flex gap-4">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/15">
-                    <span className="block h-1.5 w-1.5 rounded-full bg-[var(--primary)]" />
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand)]/15">
+                    <span className="block h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />
                   </span>
                   <div>
-                    <p className="font-heading font-semibold text-[var(--fg)] mb-0.5">{title}</p>
-                    <p className="text-sm text-[var(--fg)]/60 leading-relaxed">{body}</p>
+                    <p className="font-heading font-semibold text-[var(--ink)] mb-0.5">{title}</p>
+                    <p className="text-sm text-[var(--ink)]/60 leading-relaxed">{body}</p>
                   </div>
                 </div>
               ))}
@@ -85,28 +85,28 @@ export default function NdprPage() {
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-bold text-[var(--fg)] mb-3">NDPR compliance in client projects</h2>
+            <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">NDPR compliance in client projects</h2>
             <p>
               Every product we build for clients includes NDPR/NDPA compliance as a default, not an optional add-on. This includes: privacy policy templates, consent capture flows, data deletion workflows, cookie consent banners, and secure data handling practices. We will advise clients on their specific compliance obligations during the discovery phase.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-bold text-[var(--fg)] mb-3">Your data subject rights</h2>
-            <p>Under the NDPA 2023, you have the right to access, correct, delete, and port your personal data. See our full <Link href="/privacy" className="text-[var(--primary)] hover:underline">Privacy Policy</Link> for details on how to exercise these rights.</p>
+            <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Your data subject rights</h2>
+            <p>Under the NDPA 2023, you have the right to access, correct, delete, and port your personal data. See our full <Link href="/privacy" className="text-[var(--brand)] hover:underline">Privacy Policy</Link> for details on how to exercise these rights.</p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-bold text-[var(--fg)] mb-3">Complaints</h2>
+            <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Complaints</h2>
             <p>
-              If you believe we have not handled your data in accordance with the NDPA, please contact us first at <strong className="text-[var(--fg)]">privacy@techagency.africa</strong>. You also have the right to lodge a complaint directly with the Nigeria Data Protection Commission (NDPC) at <strong className="text-[var(--fg)]">ndpc.gov.ng</strong>.
+              If you believe we have not handled your data in accordance with the NDPA, please contact us first at <strong className="text-[var(--ink)]">privacy@techagency.africa</strong>. You also have the right to lodge a complaint directly with the Nigeria Data Protection Commission (NDPC) at <strong className="text-[var(--ink)]">ndpc.gov.ng</strong>.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-bold text-[var(--fg)] mb-3">Contact</h2>
+            <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Contact</h2>
             <p>
-              Data Protection Officer: <strong className="text-[var(--fg)]">privacy@techagency.africa</strong><br />
+              Data Protection Officer: <strong className="text-[var(--ink)]">privacy@techagency.africa</strong><br />
               TechAgency Africa · Lagos, Nigeria
             </p>
           </section>
