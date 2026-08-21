@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 import Link from "next/link";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "NDPR Compliance Statement",
@@ -84,25 +85,32 @@ export default function NdprPage() {
             </div>
           </section>
 
+          <RevealSection>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">NDPR compliance in client projects</h2>
             <p>
               Every product we build for clients includes NDPR/NDPA compliance as a default, not an optional add-on. This includes: privacy policy templates, consent capture flows, data deletion workflows, cookie consent banners, and secure data handling practices. We will advise clients on their specific compliance obligations during the discovery phase.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Your data subject rights</h2>
             <p>Under the NDPA 2023, you have the right to access, correct, delete, and port your personal data. See our full <Link href="/privacy" className="text-[var(--brand)] hover:underline">Privacy Policy</Link> for details on how to exercise these rights.</p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Complaints</h2>
             <p>
               If you believe we have not handled your data in accordance with the NDPA, please contact us first at <strong className="text-[var(--ink)]">privacy@techagency.africa</strong>. You also have the right to lodge a complaint directly with the Nigeria Data Protection Commission (NDPC) at <strong className="text-[var(--ink)]">ndpc.gov.ng</strong>.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Contact</h2>
             <p>
@@ -110,6 +118,7 @@ export default function NdprPage() {
               TechAgency Africa · Lagos, Nigeria
             </p>
           </section>
+          </RevealSection>
         </div>
       </div>
     </div>

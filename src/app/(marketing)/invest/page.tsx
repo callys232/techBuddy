@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { InvestCard } from "@/components/ui/InvestCard";
 import { INVEST_SCHEMES } from "@/mock/invest";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Investment & Incubation — We Co-Build With Ambitious Founders",
@@ -34,6 +35,7 @@ export default function InvestPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {INVEST_SCHEMES.map((scheme) => (
@@ -41,8 +43,10 @@ export default function InvestPage() {
           ))}
         </div>
       </section>
+      </RevealSection>
 
       {/* Application CTA */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] text-center bg-[var(--surface)]">
         <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-3">
           Ready to pitch your idea?
@@ -57,6 +61,7 @@ export default function InvestPage() {
           Apply now — it&apos;s free
         </a>
       </section>
+      </RevealSection>
     </div>
   );
 }

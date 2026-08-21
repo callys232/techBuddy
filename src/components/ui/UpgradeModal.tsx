@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { authFetch } from "@/lib/authFetch";
 import {
   IconX,
   IconCheck,
@@ -46,7 +47,7 @@ export function UpgradeModal({ email, onClose, feature }: { email: string; onClo
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`/api/points/balance?email=${encodeURIComponent(email)}`);
+        const res = await authFetch("/api/points/balance");
         const json = await res.json();
         setPointsBalance(json.balance ?? 0);
         const reward = (json.rewards as { id: string; cost: number }[] | undefined)?.find((r) => r.id === POINTS_REWARD_ID);
@@ -62,7 +63,7 @@ export function UpgradeModal({ email, onClose, feature }: { email: string; onClo
     setError(null);
     try {
       const endpoint = PAYMENT_PROVIDERS.find((p) => p.id === provider)!.endpoint;
-      const res = await fetch(endpoint, {
+      const res = await authFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -80,10 +81,10 @@ export function UpgradeModal({ email, onClose, feature }: { email: string; onClo
     setRedeeming(true);
     setError(null);
     try {
-      const res = await fetch("/api/points/redeem", {
+      const res = await authFetch("/api/points/redeem", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, rewardId: POINTS_REWARD_ID }),
+        body: JSON.stringify({ rewardId: POINTS_REWARD_ID }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Could not redeem points");

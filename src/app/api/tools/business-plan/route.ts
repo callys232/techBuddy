@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { isEmailSubscribed } from "@/lib/subscription";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { getVerifiedEmail } from "@/lib/auth";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "" });
 
@@ -28,12 +29,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Business plan generation is not configured" }, { status: 503 });
   }
 
+  const email = await getVerifiedEmail(req);
+  if (!email) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+
   const body = await req.json().catch(() => null);
-  const email = body?.email as string | undefined;
   const input = body?.input as BusinessPlanInput | undefined;
 
-  if (!email || !input?.idea?.trim()) {
-    return NextResponse.json({ error: "email and a business idea are required" }, { status: 400 });
+  if (!input?.idea?.trim()) {
+    return NextResponse.json({ error: "A business idea is required" }, { status: 400 });
   }
 
   const subscribed = await isEmailSubscribed(email);

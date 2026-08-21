@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { TemplatesContent } from "@/components/sections/TemplatesContent";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Web Templates — Launch-Ready Starters for Growing Businesses",
@@ -30,9 +31,11 @@ export default function TemplatesPage() {
           Production-ready templates — customized to your brand, deployed in days.
         </p>
       </section>
+      <RevealSection>
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
         <TemplatesContent />
       </section>
+      </RevealSection>
     </div>
   );
 }

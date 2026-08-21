@@ -4,6 +4,7 @@ import type { ResumeData, ResumeTemplate } from "@/types/resume";
 import { RESUME_TEMPLATES } from "@/types/resume";
 import { isEmailSubscribed } from "@/lib/subscription";
 import { isUnlocked } from "@/lib/store";
+import { getVerifiedEmail } from "@/lib/auth";
 
 Font.registerHyphenationCallback((word) => [word]);
 
@@ -524,7 +525,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     const resumeData = body.resumeData as ResumeData;
     const template = (body.template as ResumeTemplate) ?? "classic";
-    const email = body.email as string | undefined;
 
     if (!resumeData || typeof resumeData !== "object") {
       return NextResponse.json({ error: "Missing resumeData" }, { status: 400 });
@@ -532,6 +532,9 @@ export async function POST(req: Request) {
 
     const meta = RESUME_TEMPLATES.find((t) => t.id === template);
     if (meta?.premium) {
+      // Verified from the session token, never the client-supplied body — otherwise
+      // anyone could claim a victim's email and use their premium entitlement.
+      const email = await getVerifiedEmail(req);
       const hasAccess = !!email && ((await isEmailSubscribed(email)) || (await isUnlocked(email, "resume-premium-templates")));
       if (!hasAccess) {
         return NextResponse.json({ error: "This template requires Resume Premium or the template unlock from the store" }, { status: 403 });

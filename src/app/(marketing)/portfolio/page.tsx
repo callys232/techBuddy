@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PortfolioContent } from "@/components/sections/PortfolioContent";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Portfolio — Concept Projects Showing How We Build",
@@ -32,9 +33,11 @@ export default function PortfolioPage() {
           </p>
         </div>
       </section>
+      <RevealSection>
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
         <PortfolioContent />
       </section>
+      </RevealSection>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { STATS } from "@/mock/stats";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Talent Hub — Hire Vetted African Engineers, Anywhere",
@@ -81,6 +82,7 @@ export default function TalentPage() {
       </section>
 
       {/* ── Stats bar ─────────────────────────────────────────────────────── */}
+      <RevealSection>
       <section className="bg-[var(--surface)] border-y border-[var(--border)]">
         <div className="px-[var(--container-px)] py-10 grid grid-cols-2 sm:grid-cols-4 gap-6">
           {TALENT_STATS.map((s) => (
@@ -91,8 +93,10 @@ export default function TalentPage() {
           ))}
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Hire section ──────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section id="hire" className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="mb-10">
           <p className="eyebrow mb-3">For Businesses</p>
@@ -139,8 +143,10 @@ export default function TalentPage() {
           </a>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Benefits ──────────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)]">
         <div className="mb-10">
           <p className="eyebrow mb-3">Why join us</p>
@@ -158,8 +164,10 @@ export default function TalentPage() {
           ))}
         </div>
       </section>
+      </RevealSection>
 
       {/* ── How it works / Join ───────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section id="join" className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="mb-10">
           <p className="eyebrow mb-3">For Engineers</p>
@@ -200,8 +208,10 @@ export default function TalentPage() {
           </a>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Contact CTA ───────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)] text-center border-t border-[var(--border)]">
         <h2 className="text-2xl font-bold text-[var(--ink)] mb-3">Not sure where to start?</h2>
         <p className="text-[var(--ink)]/50 max-w-sm mx-auto mb-8">
@@ -219,6 +229,7 @@ export default function TalentPage() {
           Chat on WhatsApp
         </a>
       </section>
+      </RevealSection>
     </div>
   );
 }

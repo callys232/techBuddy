@@ -2,12 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { IconArrowRight, IconBrandWhatsapp, IconArrowDown } from "@tabler/icons-react";
 import { HERO_PAIN_CHIPS } from "@/mock/quote";
 import { HeroHub } from "@/components/ui/HeroHub";
 import { RotatingWord } from "@/components/ui/RotatingWord";
 import { STATS } from "@/mock/stats";
+
+/* Client-only, code-split — three.js/R3F never ships in the initial bundle
+   or on screens below lg where the layer is hidden anyway. */
+const Hero3D = dynamic(() => import("@/components/three/Hero3D").then((m) => m.Hero3D), {
+  ssr: false,
+  loading: () => null,
+});
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
@@ -30,10 +38,15 @@ export function Hero() {
     setSelected((p) => p.includes(chip) ? p.filter((c) => c !== chip) : [...p, chip]);
 
   return (
-    <section className="shell min-h-[92vh] flex items-center py-[var(--section-y)]">
+    <section className="shell min-h-[92vh] flex items-center py-[var(--section-y)] relative overflow-hidden">
+      {/* Decorative 3D layer — desktop only, sits behind both panels */}
+      <div className="absolute inset-0 z-0 hidden lg:block" aria-hidden="true">
+        <Hero3D />
+      </div>
+
       {/* ── Two-panel layout — flex so the hub's animated collapse/expand
          width actually reflows the left panel, unlike a fixed grid track ── */}
-      <div className="w-full flex flex-col lg:flex-row gap-5 lg:gap-6 items-stretch">
+      <div className="relative z-10 w-full flex flex-col lg:flex-row gap-5 lg:gap-6 items-stretch">
 
         {/* ══ Left panel ══════════════════════════════════════════════ */}
         <motion.div

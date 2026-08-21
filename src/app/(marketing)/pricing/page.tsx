@@ -8,6 +8,7 @@ import { ComparisonTable, type ComparisonRow } from "@/components/ui/ComparisonT
 import { PricingCard } from "@/components/ui/PricingCard";
 import { PRICING_TIERS } from "@/mock/services";
 import { getUserLocation } from "@/lib/geo";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Pricing — What It Costs to Build with TechAgency",
@@ -138,6 +139,7 @@ export default async function PricingPage() {
       </section>
 
       {/* ── One-off project pricing ───────────────────────────────────── */}
+      <RevealSection>
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-5">Project builds</p>
@@ -179,8 +181,10 @@ export default async function PricingPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Retainer / maintenance ────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-16 bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-5">Monthly plans</p>
@@ -196,8 +200,10 @@ export default async function PricingPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Add-ons ──────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-5">Add-ons</p>
@@ -215,8 +221,10 @@ export default async function PricingPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── How we compare ──────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-16">
         <div className="shell">
           <p className="eyebrow mb-5">Comparison</p>
@@ -235,11 +243,15 @@ export default async function PricingPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Third-party connectors ──────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <ConnectorsGrid />
+      </RevealSection>
 
       {/* ── Note + CTA ───────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="relative overflow-hidden py-16 text-center">
         <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
           <p className="text-sm text-[var(--ink-faint)] leading-relaxed mb-8">
@@ -255,6 +267,7 @@ export default async function PricingPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

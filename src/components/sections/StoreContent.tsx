@@ -11,6 +11,7 @@ import {
   IconShoppingCart,
 } from "@tabler/icons-react";
 import { getSupabase } from "@/lib/supabase/client";
+import { authFetch } from "@/lib/authFetch";
 
 interface Product {
   id: string;
@@ -109,7 +110,7 @@ export function StoreContent() {
     }
     if (email) {
       try {
-        const res = await fetch(`/api/account/summary?email=${encodeURIComponent(email)}`);
+        const res = await authFetch("/api/account/summary");
         const json = await res.json();
         setBalance(json.points?.balance ?? 0);
         setOwned(new Set((json.purchases ?? []).map((p: { slug: string }) => p.slug)));
@@ -127,19 +128,19 @@ export function StoreContent() {
     setError(null);
     setMessage(null);
     try {
-      const res = await fetch("/api/store/purchase", {
+      const res = await authFetch("/api/store/purchase", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug: product.slug }),
+        body: JSON.stringify({ slug: product.slug }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Purchase failed");
 
       if (product.type === "download") {
-        const dlRes = await fetch("/api/store/download", {
+        const dlRes = await authFetch("/api/store/download", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, slug: product.slug }),
+          body: JSON.stringify({ slug: product.slug }),
         });
         const dlJson = await dlRes.json();
         if (dlRes.ok && dlJson.url) window.open(dlJson.url, "_blank");
@@ -158,10 +159,10 @@ export function StoreContent() {
   const download = async (product: Product) => {
     if (!email) return;
     try {
-      const res = await fetch("/api/store/download", {
+      const res = await authFetch("/api/store/download", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug: product.slug }),
+        body: JSON.stringify({ slug: product.slug }),
       });
       const json = await res.json();
       if (res.ok && json.url) window.open(json.url, "_blank");

@@ -19,6 +19,7 @@ import {
   IconShoppingBag,
 } from "@tabler/icons-react";
 import { getSupabase } from "@/lib/supabase/client";
+import { authFetch } from "@/lib/authFetch";
 import type { RewardId } from "@/lib/points";
 import { TOPUP_PRESETS_USD, POINTS_PER_USD } from "@/lib/points";
 
@@ -129,7 +130,7 @@ function SignInGate({ onSignedIn }: { onSignedIn: (email: string) => void }) {
    Watch-ad flow — self-verified timed watch (no ad-network credentials yet)
 ───────────────────────────────────────────────────────────────────────────── */
 
-function WatchAdModal({ email, onClose, onEarned }: { email: string; onClose: () => void; onEarned: (balance: number) => void }) {
+function WatchAdModal({ onClose, onEarned }: { onClose: () => void; onEarned: (balance: number) => void }) {
   const [token, setToken] = useState<string | null>(null);
   const [remaining, setRemaining] = useState(MIN_WATCH_SECONDS);
   const [error, setError] = useState<string | null>(null);
@@ -139,11 +140,7 @@ function WatchAdModal({ email, onClose, onEarned }: { email: string; onClose: ()
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("/api/points/earn/watch-ad/start", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
+        const res = await authFetch("/api/points/earn/watch-ad/start", { method: "POST" });
         const json = await res.json();
         if (!res.ok) throw new Error(json.error ?? "Could not start");
         setToken(json.token);
@@ -151,7 +148,7 @@ function WatchAdModal({ email, onClose, onEarned }: { email: string; onClose: ()
         setError(err instanceof Error ? err.message : "Something went wrong.");
       }
     })();
-  }, [email]);
+  }, []);
 
   useEffect(() => {
     if (!token || remaining <= 0) return;
@@ -222,7 +219,7 @@ function WatchAdModal({ email, onClose, onEarned }: { email: string; onClose: ()
    Fund account — buy points with crypto (100 points = $1)
 ───────────────────────────────────────────────────────────────────────────── */
 
-function FundAccountModal({ email, onClose }: { email: string; onClose: () => void }) {
+function FundAccountModal({ onClose }: { onClose: () => void }) {
   const [amount, setAmount] = useState<number>(TOPUP_PRESETS_USD[0]);
   const [custom, setCustom] = useState("");
   const [busy, setBusy] = useState(false);
@@ -236,10 +233,10 @@ function FundAccountModal({ email, onClose }: { email: string; onClose: () => vo
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/points/topup/checkout", {
+      const res = await authFetch("/api/points/topup/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, amountUsd: effectiveAmount }),
+        body: JSON.stringify({ amountUsd: effectiveAmount }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Could not start checkout");
@@ -321,14 +318,14 @@ function DashboardBody({ email }: { email: string }) {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch(`/api/account/summary?email=${encodeURIComponent(email)}`);
+      const res = await authFetch("/api/account/summary");
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Could not load your account");
       setSummary(json);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     }
-  }, [email]);
+  }, []);
 
   useEffect(() => { load(); }, [load]);
 
@@ -336,10 +333,10 @@ function DashboardBody({ email }: { email: string }) {
     setRedeemingId(rewardId);
     setError(null);
     try {
-      const res = await fetch("/api/points/redeem", {
+      const res = await authFetch("/api/points/redeem", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, rewardId }),
+        body: JSON.stringify({ rewardId }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Could not redeem");
@@ -489,13 +486,12 @@ function DashboardBody({ email }: { email: string }) {
 
       {showWatchAd && (
         <WatchAdModal
-          email={email}
           onClose={() => setShowWatchAd(false)}
           onEarned={() => { setShowWatchAd(false); load(); }}
         />
       )}
 
-      {showFund && <FundAccountModal email={email} onClose={() => setShowFund(false)} />}
+      {showFund && <FundAccountModal onClose={() => setShowFund(false)} />}
     </div>
   );
 }

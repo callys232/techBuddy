@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -26,6 +27,7 @@ export default function PrivacyPage() {
             </p>
           </section>
 
+          <RevealSection>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">2. What data we collect</h2>
             <p>We collect the following categories of personal data when you use our website or engage our services:</p>
@@ -37,7 +39,9 @@ export default function PrivacyPage() {
               <li><strong className="text-[var(--ink)]">Newsletter data</strong> — email address and content preferences if you subscribe to our newsletter</li>
             </ul>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">3. How we use your data</h2>
             <p>We use your data only for the purposes described at the time of collection:</p>
@@ -50,7 +54,9 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-3">We do not sell your personal data to third parties. We do not use your data for automated decision-making or profiling.</p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">4. Legal basis for processing</h2>
             <p>Under the NDPA 2023, we process your data on the following lawful bases:</p>
@@ -60,7 +66,9 @@ export default function PrivacyPage() {
               <li><strong className="text-[var(--ink)]">Legitimate interests</strong> — responding to project enquiries, improving our services</li>
             </ul>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">5. Data storage and security</h2>
             <p>
@@ -70,7 +78,9 @@ export default function PrivacyPage() {
               We retain your enquiry and project data for three years from the end of our engagement, after which it is deleted. Newsletter subscriber data is retained until you unsubscribe. Analytics data is aggregated and anonymised within 26 months.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">6. Third-party service providers</h2>
             <p>We share data with the following processors under data processing agreements:</p>
@@ -82,7 +92,9 @@ export default function PrivacyPage() {
               <li><strong className="text-[var(--ink)]">PostHog</strong> — product analytics (self-hostable, GDPR/NDPA compliant)</li>
             </ul>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">7. Your rights</h2>
             <p>Under the NDPA 2023, you have the right to:</p>
@@ -96,14 +108,18 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-3">To exercise any of these rights, email us at <strong className="text-[var(--ink)]">privacy@techagency.africa</strong>. We will respond within 30 days.</p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">8. Changes to this policy</h2>
             <p>
               We may update this policy from time to time. We will notify subscribers by email of material changes at least 14 days before they take effect. The "last updated" date at the top of this page always reflects the current version.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">9. Contact</h2>
             <p>
@@ -111,6 +127,7 @@ export default function PrivacyPage() {
               Data Protection Officer: privacy@techagency.africa
             </p>
           </section>
+          </RevealSection>
         </div>
       </div>
     </div>

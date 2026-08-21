@@ -3,14 +3,17 @@ import { isEmailSubscribed } from "@/lib/subscription";
 import { isUnlocked } from "@/lib/store";
 import { runAudit } from "@/lib/audit/engine";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { getVerifiedEmail } from "@/lib/auth";
 
 export async function POST(req: Request) {
+  const email = await getVerifiedEmail(req);
+  if (!email) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+
   const body = await req.json().catch(() => null);
-  const email = body?.email as string | undefined;
   const url = body?.url as string | undefined;
 
-  if (!email || !url) {
-    return NextResponse.json({ error: "email and url are required" }, { status: 400 });
+  if (!url) {
+    return NextResponse.json({ error: "url is required" }, { status: 400 });
   }
 
   const hasAccess = (await isEmailSubscribed(email)) || (await isUnlocked(email, "premium-audit-unlock"));

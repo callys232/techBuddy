@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { BlogContent } from "@/components/sections/BlogContent";
 import { NewsFeed } from "@/components/sections/NewsFeed";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Blog — Tech Insights for Founders & Builders Everywhere",
@@ -76,13 +77,16 @@ export default function BlogPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
         <Suspense fallback={null}>
           <BlogContent />
         </Suspense>
       </section>
+      </RevealSection>
 
       {/* ── Live news feed ───────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
         <div className="mb-10">
           <span className="eyebrow mb-4 inline-flex">Live from around the world</span>
@@ -95,6 +99,7 @@ export default function BlogPage() {
         </div>
         <NewsFeed />
       </section>
+      </RevealSection>
     </div>
   );
 }

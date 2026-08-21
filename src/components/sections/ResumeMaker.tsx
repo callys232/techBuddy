@@ -32,6 +32,7 @@ import {
   IconStarFilled,
 } from "@tabler/icons-react";
 import { getSupabase } from "@/lib/supabase/client";
+import { authFetch } from "@/lib/authFetch";
 import {
   type ResumeData,
   type ResumeTemplate,
@@ -221,7 +222,7 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`/api/points/balance?email=${encodeURIComponent(email)}`);
+        const res = await authFetch("/api/points/balance");
         const json = await res.json();
         setPointsBalance(json.balance ?? 0);
         const reward = (json.rewards as { id: string; cost: number }[] | undefined)?.find((r) => r.id === POINTS_REWARD_ID);
@@ -237,7 +238,7 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
     setError(null);
     try {
       const endpoint = PAYMENT_PROVIDERS.find((p) => p.id === provider)!.endpoint;
-      const res = await fetch(endpoint, {
+      const res = await authFetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -255,10 +256,10 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
     setRedeeming(true);
     setError(null);
     try {
-      const res = await fetch("/api/points/redeem", {
+      const res = await authFetch("/api/points/redeem", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, rewardId: POINTS_REWARD_ID }),
+        body: JSON.stringify({ rewardId: POINTS_REWARD_ID }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Could not redeem points");
@@ -373,7 +374,7 @@ export function ResumeMaker() {
         const email = sessionData.session?.user.email ?? null;
         setUserEmail(email);
         if (email) {
-          const res = await fetch(`/api/subscription/status?email=${encodeURIComponent(email)}`);
+          const res = await authFetch("/api/subscription/status");
           const json = await res.json();
           setSubscribed(!!json.active);
         }
@@ -451,10 +452,10 @@ export function ResumeMaker() {
     setSuggestLoading(true);
     setSuggestError(null);
     try {
-      const res = await fetch("/api/resume/suggest", {
+      const res = await authFetch("/api/resume/suggest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: userEmail, resumeData: data }),
+        body: JSON.stringify({ resumeData: data }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Could not generate suggestions");
@@ -486,10 +487,10 @@ export function ResumeMaker() {
     setDownloading(true);
     setDownloadError(null);
     try {
-      const res = await fetch("/api/resume/pdf", {
+      const res = await authFetch("/api/resume/pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resumeData: data, template, email: userEmail }),
+        body: JSON.stringify({ resumeData: data, template }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));

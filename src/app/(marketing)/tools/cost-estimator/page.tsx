@@ -3,6 +3,7 @@ import { CostEstimator } from "@/components/sections/CostEstimator";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
 import { getUserLocation } from "@/lib/geo";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Project Cost Estimator — How Much Does a Website or App Cost?",
@@ -37,6 +38,7 @@ export default async function CostEstimatorPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="relative z-10 max-w-5xl mx-auto">
           <p className="text-sm text-[var(--ink)]/35 leading-relaxed max-w-2xl">
@@ -44,6 +46,7 @@ export default async function CostEstimatorPage() {
           </p>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

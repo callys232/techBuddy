@@ -3,6 +3,7 @@ import { PricingCard } from "@/components/ui/PricingCard";
 import { ServicesContent } from "@/components/sections/ServicesContent";
 import { PRICING_TIERS } from "@/mock/services";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Services — Web, Mobile, Fintech & DevOps Engineering",
@@ -34,10 +35,13 @@ export default function ServicesPage() {
         </p>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] pb-16">
         <ServicesContent />
       </section>
+      </RevealSection>
 
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <h2 className="h-section text-center mb-12">Maintenance Plans</h2>
         <div className="grid gap-6 sm:grid-cols-3 max-w-5xl mx-auto">
@@ -46,6 +50,7 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

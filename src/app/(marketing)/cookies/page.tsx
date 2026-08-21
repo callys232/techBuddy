@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 import Link from "next/link";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
@@ -27,6 +28,7 @@ export default function CookiesPage() {
             </p>
           </section>
 
+          <RevealSection>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Cookies we use</h2>
 
@@ -78,7 +80,9 @@ export default function CookiesPage() {
               ))}
             </div>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Managing cookies</h2>
             <p>
@@ -91,20 +95,25 @@ export default function CookiesPage() {
               <li>Email <strong className="text-[var(--ink)]">privacy@techagency.africa</strong> to request removal of your analytics data</li>
             </ul>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Third-party cookies</h2>
             <p>
               We do not allow third-party advertising networks to place cookies on our website. The only third-party analytics tool we use is PostHog, which we operate in a privacy-preserving configuration. See our <Link href="/privacy" className="text-[var(--brand)] hover:underline">Privacy Policy</Link> for full details of third-party processors.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Contact</h2>
             <p>
               Questions about our cookie use? Email <strong className="text-[var(--ink)]">privacy@techagency.africa</strong>.
             </p>
           </section>
+          </RevealSection>
         </div>
       </div>
     </div>

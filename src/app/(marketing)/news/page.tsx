@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NewsFeed } from "@/components/sections/NewsFeed";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Tech News — Global & African",
@@ -42,9 +43,11 @@ export default function NewsPage() {
       </section>
 
       {/* Feed */}
+      <RevealSection>
       <section className="px-[var(--container-px)] pb-[var(--section-y)]">
         <NewsFeed />
       </section>
+      </RevealSection>
     </div>
   );
 }

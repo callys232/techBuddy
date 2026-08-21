@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BuildVsBuyCalc } from "@/components/sections/BuildVsBuyCalc";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Build vs Buy Calculator — Should You Build Custom or Use a SaaS Tool?",
@@ -38,6 +39,7 @@ export default function BuildVsBuyPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="max-w-5xl mx-auto flex flex-wrap gap-6 items-start justify-between">
           <p className="text-sm text-[var(--ink)]/35 leading-relaxed max-w-xl">
@@ -48,6 +50,7 @@ export default function BuildVsBuyPage() {
           </Link>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

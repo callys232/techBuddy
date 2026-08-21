@@ -6,6 +6,7 @@ import { ALL_SERVICES } from "@/mock/services";
 import { ALL_PROJECTS } from "@/mock/portfolio";
 import { AppCard } from "@/components/ui/AppCard";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -281,6 +282,7 @@ export default async function ServicePage({ params }: Props) {
 
       {/* ── Problem + Deliverables ────────────────────────────────────────── */}
       {detail && (
+        <RevealSection>
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-[var(--container-px)]">
             <div className="grid lg:grid-cols-2 gap-12">
@@ -323,9 +325,11 @@ export default async function ServicePage({ params }: Props) {
             </div>
           </div>
         </section>
+        </RevealSection>
       )}
 
       {/* ── Related work ─────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-16 bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">Related work</h2>
@@ -342,9 +346,11 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── FAQs ─────────────────────────────────────────────────────────── */}
       {detail?.faqs.length && (
+        <RevealSection delay={0.05}>
         <section className="py-16">
           <div className="mx-auto max-w-3xl px-[var(--container-px)]">
             <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-8">
@@ -360,9 +366,11 @@ export default async function ServicePage({ params }: Props) {
             </div>
           </div>
         </section>
+        </RevealSection>
       )}
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-16 bg-[var(--surface)] text-center">
         <div className="mx-auto max-w-xl px-[var(--container-px)]">
           <h2 className="font-display text-3xl font-extrabold text-[var(--ink)] mb-3">
@@ -384,6 +392,7 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

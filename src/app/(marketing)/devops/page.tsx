@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DEVOPS_SERVICES, DEVOPS_STACK } from "@/mock/services";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "DevOps & CI/CD — Production-Grade Infrastructure for Growing Systems",
@@ -39,6 +40,7 @@ export default function DevOpsPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <h2 className="font-display text-3xl font-bold text-[var(--ink)] mb-8">Services</h2>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,7 +54,9 @@ export default function DevOpsPage() {
           ))}
         </ul>
       </section>
+      </RevealSection>
 
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)]">
         <h2 className="font-display text-3xl font-bold text-[var(--ink)] mb-8">
           Infrastructure Stack
@@ -68,6 +72,7 @@ export default function DevOpsPage() {
           ))}
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

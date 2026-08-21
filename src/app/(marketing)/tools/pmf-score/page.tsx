@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PMFScorer } from "@/components/sections/PMFScorer";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Product-Market Fit Score — Do You Have PMF?",
@@ -38,6 +39,7 @@ export default function PMFScorePage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="max-w-5xl mx-auto flex flex-wrap gap-6 items-start justify-between">
           <p className="text-sm text-[var(--ink-faint)] leading-relaxed max-w-xl">
@@ -48,6 +50,7 @@ export default function PMFScorePage() {
           </Link>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

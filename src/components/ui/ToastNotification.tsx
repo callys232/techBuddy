@@ -12,7 +12,7 @@ interface ToastProps {
   onClose: () => void;
 }
 
-const CONFIG: Record<ToastType, { icon: React.ElementType; colors: string }> = {
+const CONFIG: Record<ToastType, { icon: React.ComponentType<{ size?: number; className?: string }>; colors: string }> = {
   success: {
     icon: IconCheck,
     colors: "border-[var(--good)] bg-[var(--good)]/10 text-[var(--good)]",

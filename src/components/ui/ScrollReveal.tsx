@@ -1,7 +1,12 @@
 "use client";
 
-import { motion, useInView, type TargetAndTransition } from "framer-motion";
-import { useRef, type ReactNode } from "react";
+import { useRef, useLayoutEffect, type ReactNode } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type Dir = "up" | "down" | "left" | "right" | "scale" | "fade";
 
@@ -12,25 +17,17 @@ interface Props {
   dir?:       Dir;
   className?: string;
   once?:      boolean;
+  /** Kept for call-site compatibility; GSAP uses a fixed 88%-of-viewport trigger instead. */
   margin?:    string;
 }
 
-const HIDDEN: Record<Dir, TargetAndTransition> = {
-  up:    { opacity: 0, y: 36   },
-  down:  { opacity: 0, y: -36  },
-  left:  { opacity: 0, x: -36  },
-  right: { opacity: 0, x: 36   },
-  scale: { opacity: 0, scale: 0.90 },
-  fade:  { opacity: 0 },
-};
-
-const SHOWN: Record<Dir, TargetAndTransition> = {
-  up:    { opacity: 1, y: 0 },
-  down:  { opacity: 1, y: 0 },
-  left:  { opacity: 1, x: 0 },
-  right: { opacity: 1, x: 0 },
-  scale: { opacity: 1, scale: 1 },
-  fade:  { opacity: 1 },
+const FROM: Record<Dir, gsap.TweenVars> = {
+  up:    { y: 36 },
+  down:  { y: -36 },
+  left:  { x: -36 },
+  right: { x: 36 },
+  scale: { scale: 0.9 },
+  fade:  {},
 };
 
 export function ScrollReveal({
@@ -40,25 +37,51 @@ export function ScrollReveal({
   dir      = "up",
   className,
   once     = true,
-  margin   = "-72px",
 }: Props) {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once, margin: margin as `${number}px` });
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.set(el, { opacity: 0, ...FROM[dir] });
+        const tween = gsap.to(el, {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration,
+          delay,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 88%",
+            toggleActions: once ? "play none none none" : "play reverse play reverse",
+          },
+        });
+        return () => { tween.scrollTrigger?.kill(); tween.kill(); };
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(el, { opacity: 1, x: 0, y: 0, scale: 1 });
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, [dir, delay, duration, once]);
 
   return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial={HIDDEN[dir]}
-      animate={inView ? SHOWN[dir] : HIDDEN[dir]}
-      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-/** Drop-in wrapper for homepage sections — server components work as children */
+/** Drop-in wrapper for page sections — server components work as children */
 export function RevealSection({
   children,
   delay = 0,
@@ -69,7 +92,7 @@ export function RevealSection({
   className?: string;
 }) {
   return (
-    <ScrollReveal delay={delay} dir="up" duration={0.6} margin="-60px" className={className}>
+    <ScrollReveal delay={delay} dir="up" duration={0.6} className={className}>
       {children}
     </ScrollReveal>
   );

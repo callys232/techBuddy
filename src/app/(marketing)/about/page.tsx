@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { STATS } from "@/mock/stats";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "About TechAgency — Who We Are",
@@ -89,6 +90,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Stats bar ────────────────────────────────────────────────────── */}
+      <RevealSection>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)] py-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -101,8 +103,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Values ───────────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-[var(--section-y)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-3">How we work</p>
@@ -117,8 +121,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── How we work ──────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-[var(--section-y)] bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-3">Our approach</p>
@@ -151,8 +157,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Process ──────────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-[var(--section-y)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-3">How we deliver</p>
@@ -179,8 +187,10 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="py-[var(--section-y)] bg-[var(--surface)]">
         <div className="mx-auto max-w-3xl px-[var(--container-px)] text-center">
           <h2 className="h-section mb-4">Ready to build together?</h2>
@@ -197,6 +207,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

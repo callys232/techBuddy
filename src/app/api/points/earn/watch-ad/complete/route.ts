@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { verifyWatchToken, MAX_WATCHES_PER_DAY } from "@/lib/adToken";
+import { verifyWatchToken, claimAdToken, MAX_WATCHES_PER_DAY } from "@/lib/adToken";
 import { awardPoints, countTodayTransactions, POINTS_RULES } from "@/lib/points";
 
 export async function POST(req: NextRequest) {
@@ -10,6 +10,13 @@ export async function POST(req: NextRequest) {
   const verified = verifyWatchToken(token);
   if (!verified) {
     return NextResponse.json({ error: "Invalid or expired watch session" }, { status: 400 });
+  }
+
+  // Claim the jti before awarding anything — a second submission of the same
+  // token fails this insert (unique constraint) and never reaches awardPoints.
+  const claimed = await claimAdToken(verified.jti, verified.email);
+  if (!claimed) {
+    return NextResponse.json({ error: "This watch session was already claimed" }, { status: 409 });
   }
 
   const watchedToday = await countTodayTransactions(verified.email, "watch_ad");

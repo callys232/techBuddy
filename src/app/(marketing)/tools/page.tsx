@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FREE_TOOLS } from "@/mock/tools";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Free & Premium Tools — Resume Maker, Invoice Generator, QR Codes, AI Business Plans & More",
@@ -46,6 +47,7 @@ export default function ToolsPage() {
       </section>
 
       {/* ── Stats strip ──────────────────────────────────────────────────── */}
+      <RevealSection>
       <div className="bg-[var(--surface)] border-y border-[var(--border)]">
         <div className="px-[var(--container-px)] py-8 flex flex-wrap gap-8 justify-center">
           {STATS.map((s) => (
@@ -56,8 +58,10 @@ export default function ToolsPage() {
           ))}
         </div>
       </div>
+      </RevealSection>
 
       {/* ── Tool cards ───────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           {FREE_TOOLS.map((tool) => (
@@ -105,8 +109,10 @@ export default function ToolsPage() {
           ))}
         </div>
       </section>
+      </RevealSection>
 
       {/* ── Points store CTA ────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-16 text-center">
         <p className="eyebrow justify-center mb-3">Points store</p>
         <h2 className="text-2xl font-bold text-[var(--ink)] mb-3">Unlock premium tools with points</h2>
@@ -117,8 +123,10 @@ export default function ToolsPage() {
           Visit the store →
         </Link>
       </section>
+      </RevealSection>
 
       {/* ── Bottom CTA ───────────────────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)] text-center border-t border-[var(--border)]">
         <h2 className="text-2xl font-bold text-[var(--ink)] mb-3">Ready for a real quote?</h2>
         <p className="text-[var(--ink-muted)] max-w-sm mx-auto mb-8">
@@ -131,6 +139,7 @@ export default function ToolsPage() {
           Get a detailed quote →
         </Link>
       </section>
+      </RevealSection>
     </div>
   );
 }

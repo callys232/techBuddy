@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { IconSparkles, IconLoader2, IconAlertCircle, IconDownload, IconCrown } from "@tabler/icons-react";
 import { UpgradeModal } from "@/components/ui/UpgradeModal";
+import { EmailAuthGate } from "@/components/ui/EmailAuthGate";
+import { authFetch } from "@/lib/authFetch";
 
 interface BusinessPlan {
   executiveSummary: string;
@@ -45,7 +47,10 @@ function Field({ label, value, onChange, placeholder }: {
 }
 
 export function BusinessPlanGenerator() {
-  const [email, setEmail] = useState("");
+  return <EmailAuthGate>{(email) => <BusinessPlanGeneratorInner email={email} />}</EmailAuthGate>;
+}
+
+function BusinessPlanGeneratorInner({ email }: { email: string }) {
   const [idea, setIdea] = useState("");
   const [industry, setIndustry] = useState("");
   const [targetMarket, setTargetMarket] = useState("");
@@ -60,17 +65,17 @@ export function BusinessPlanGenerator() {
   const [showUpgrade, setShowUpgrade] = useState(false);
 
   const generate = async () => {
-    if (!email.trim() || !idea.trim()) {
-      setError("Enter your email and describe your business idea.");
+    if (!idea.trim()) {
+      setError("Describe your business idea.");
       return;
     }
     setGenerating(true);
     setError(null);
     try {
-      const res = await fetch("/api/tools/business-plan", {
+      const res = await authFetch("/api/tools/business-plan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, input: { idea, industry, targetMarket, stage, fundingAsk, team } }),
+        body: JSON.stringify({ input: { idea, industry, targetMarket, stage, fundingAsk, team } }),
       });
       const json = await res.json();
       if (res.status === 403) { setShowUpgrade(true); return; }
@@ -87,10 +92,10 @@ export function BusinessPlanGenerator() {
     if (!plan) return;
     setDownloading(true);
     try {
-      const res = await fetch("/api/tools/business-plan-pdf", {
+      const res = await authFetch("/api/tools/business-plan-pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, idea, plan }),
+        body: JSON.stringify({ idea, plan }),
       });
       if (res.status === 403) { setShowUpgrade(true); return; }
       if (!res.ok) throw new Error("Could not generate PDF");
@@ -114,7 +119,7 @@ export function BusinessPlanGenerator() {
     <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 items-start">
       {/* ── Form ─────────────────────────────────────────────────────────── */}
       <div className="card p-6 space-y-4">
-        <Field label="Your email" value={email} onChange={setEmail} placeholder="you@example.com" />
+        <p className="text-xs text-[var(--ink-faint)]">Generating as <strong className="text-[var(--ink-muted)]">{email}</strong></p>
         <div>
           <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Business idea</label>
           <textarea

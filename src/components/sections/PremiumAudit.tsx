@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { IconRocket, IconLoader2, IconAlertCircle, IconDownload, IconCheck, IconX, IconCrown } from "@tabler/icons-react";
 import { UpgradeModal } from "@/components/ui/UpgradeModal";
+import { EmailAuthGate } from "@/components/ui/EmailAuthGate";
+import { authFetch } from "@/lib/authFetch";
 import { validateUrl } from "@/lib/validate";
 
 interface AuditFinding {
@@ -36,7 +38,10 @@ const GRADE_COLOR: Record<string, string> = {
 };
 
 export function PremiumAudit() {
-  const [email, setEmail] = useState("");
+  return <EmailAuthGate>{(email) => <PremiumAuditInner email={email} />}</EmailAuthGate>;
+}
+
+function PremiumAuditInner({ email }: { email: string }) {
   const [url, setUrl] = useState("");
   const [report, setReport] = useState<AuditReport | null>(null);
   const [running, setRunning] = useState(false);
@@ -46,17 +51,16 @@ export function PremiumAudit() {
 
   const run = async () => {
     const urlError = validateUrl(url);
-    if (!email.trim()) { setError("Enter your email."); return; }
     if (urlError) { setError(urlError); return; }
 
     setRunning(true);
     setError(null);
     setReport(null);
     try {
-      const res = await fetch("/api/tools/premium-audit", {
+      const res = await authFetch("/api/tools/premium-audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, url }),
+        body: JSON.stringify({ url }),
       });
       const json = await res.json();
       if (res.status === 403) { setShowUpgrade(true); return; }
@@ -73,10 +77,10 @@ export function PremiumAudit() {
     if (!report) return;
     setDownloading(true);
     try {
-      const res = await fetch("/api/tools/premium-audit-pdf", {
+      const res = await authFetch("/api/tools/premium-audit-pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, report }),
+        body: JSON.stringify({ report }),
       });
       if (res.status === 403) { setShowUpgrade(true); return; }
       if (!res.ok) throw new Error("Could not generate PDF");
@@ -99,18 +103,9 @@ export function PremiumAudit() {
   return (
     <div className="max-w-3xl">
       <div className="card p-6 mb-8">
-        <div className="grid sm:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+        <div className="grid sm:grid-cols-[1fr_auto] gap-3 items-end">
           <div>
-            <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Your email</label>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] py-2.5 px-3.5 focus:outline-none focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)]/30 transition-colors"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Website URL</label>
+            <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Website URL <span className="text-[var(--ink-faint)] font-normal">— auditing as {email}</span></label>
             <input
               value={url}
               onChange={(e) => setUrl(e.target.value)}

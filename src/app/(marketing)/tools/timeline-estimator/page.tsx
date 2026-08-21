@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { TimelineEstimator } from "@/components/sections/TimelineEstimator";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Project Timeline Estimator — How Long Will My Build Take?",
@@ -46,6 +47,7 @@ export default function TimelineEstimatorPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="relative z-10 max-w-5xl mx-auto">
           <p className="text-sm text-[var(--ink-faint)] leading-relaxed max-w-2xl">
@@ -54,6 +56,7 @@ export default function TimelineEstimatorPage() {
           </p>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

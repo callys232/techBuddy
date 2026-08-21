@@ -1,13 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { spendPoints, fulfillReward, POINTS_REWARDS, type RewardId } from "@/lib/points";
+import { getVerifiedEmail } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
+  const email = await getVerifiedEmail(req);
+  if (!email) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+
   const body = await req.json().catch(() => null);
-  const email = body?.email as string | undefined;
   const rewardId = body?.rewardId as RewardId | undefined;
 
-  if (!email || !rewardId) {
-    return NextResponse.json({ error: "email and rewardId are required" }, { status: 400 });
+  if (!rewardId) {
+    return NextResponse.json({ error: "rewardId is required" }, { status: 400 });
   }
 
   const reward = POINTS_REWARDS.find((r) => r.id === rewardId);

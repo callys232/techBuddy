@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { POINTS_PER_USD } from "@/lib/points";
+import { getVerifiedEmail } from "@/lib/auth";
 
 const NOWPAYMENTS_API_KEY = process.env.NOWPAYMENTS_API_KEY ?? "";
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
@@ -13,13 +14,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Payments not configured" }, { status: 503 });
   }
 
+  const email = await getVerifiedEmail(req);
+  if (!email) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+
   const body = await req.json().catch(() => null);
-  const email = body?.email as string | undefined;
   const amountUsd = Number(body?.amountUsd);
 
-  if (!email) {
-    return NextResponse.json({ error: "email is required" }, { status: 400 });
-  }
   if (!Number.isFinite(amountUsd) || amountUsd < MIN_USD || amountUsd > MAX_USD) {
     return NextResponse.json({ error: `Amount must be between $${MIN_USD} and $${MAX_USD}` }, { status: 400 });
   }

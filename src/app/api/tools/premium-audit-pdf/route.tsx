@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Document, Page, View, Text, StyleSheet, renderToBuffer, Font } from "@react-pdf/renderer";
 import { isEmailSubscribed } from "@/lib/subscription";
 import { isUnlocked } from "@/lib/store";
+import { getVerifiedEmail } from "@/lib/auth";
 import type { AuditReport } from "@/lib/audit/engine";
 
 Font.registerHyphenationCallback((word) => [word]);
@@ -69,14 +70,14 @@ function AuditPDF({ report }: { report: AuditReport }) {
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const email = body.email as string | undefined;
-    const report = body.report as AuditReport;
-
+    const email = await getVerifiedEmail(req);
     const hasAccess = !!email && ((await isEmailSubscribed(email)) || (await isUnlocked(email, "premium-audit-unlock")));
     if (!hasAccess) {
       return NextResponse.json({ error: "This report requires TechBuddy Premium or the audit unlock from the store" }, { status: 403 });
     }
+
+    const body = await req.json();
+    const report = body.report as AuditReport;
     if (!report) {
       return NextResponse.json({ error: "Missing report data" }, { status: 400 });
     }

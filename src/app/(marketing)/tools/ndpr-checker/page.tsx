@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NDPRChecker } from "@/components/sections/NDPRChecker";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "NDPR Compliance Checker — How Compliant Is Your Nigerian Product?",
@@ -42,6 +43,7 @@ export default function NDPRCheckerPage() {
         </div>
       </section>
 
+      <RevealSection>
       <section className="px-[var(--container-px)] py-12 bg-[var(--surface)] border-t border-[var(--border)]">
         <div className="relative z-10 max-w-5xl mx-auto">
           <p className="text-sm text-[var(--ink-faint)] leading-relaxed max-w-2xl">
@@ -49,6 +51,7 @@ export default function NDPRCheckerPage() {
           </p>
         </div>
       </section>
+      </RevealSection>
     </div>
   );
 }

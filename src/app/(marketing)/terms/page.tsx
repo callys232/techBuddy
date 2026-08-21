@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -25,6 +26,7 @@ export default function TermsPage() {
             </p>
           </section>
 
+          <RevealSection>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">2. Services</h2>
             <p>
@@ -34,7 +36,9 @@ export default function TermsPage() {
               Use of our free tools (cost estimator, stack picker, free audit) is subject to these Terms. These tools provide estimates only and do not constitute a binding quote.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">3. Payment terms</h2>
             <p>
@@ -47,7 +51,9 @@ export default function TermsPage() {
               Late payments (beyond 14 days of invoice date) may attract a 2% monthly interest charge. We reserve the right to suspend work on active projects where invoices are overdue by more than 30 days.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">4. Intellectual property</h2>
             <p>
@@ -57,42 +63,54 @@ export default function TermsPage() {
               TechAgency retains the right to display the project in our portfolio and marketing materials unless you request confidentiality in writing before project commencement.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">5. Confidentiality</h2>
             <p>
               Both parties agree to keep confidential any non-public information disclosed during the engagement. This obligation survives termination of the agreement for two years. TechAgency will sign an NDA upon request before any project discovery session.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">6. Limitation of liability</h2>
             <p>
               To the maximum extent permitted by Nigerian law, TechAgency&apos;s total liability for any claim arising out of these Terms or any service engagement shall not exceed the total fees paid by you in the three months preceding the claim. TechAgency shall not be liable for indirect, incidental, consequential, or punitive damages.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">7. Website use</h2>
             <p>
               You may use our website for lawful purposes only. You must not: transmit any malicious code, attempt to gain unauthorised access to our systems, scrape our content in bulk, or use our tools to build a competing service.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">8. Dispute resolution</h2>
             <p>
               Disputes shall first be addressed by good-faith negotiation between the parties. If unresolved within 30 days, disputes shall be referred to mediation under the Lagos Multi-Door Courthouse (LMDC) rules. Litigation as a first step is expressly waived by both parties.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">9. Changes to these terms</h2>
             <p>
               We may update these Terms at any time. Continued use of our website or services after changes are published constitutes acceptance of the revised Terms. Active client engagements are governed by the Terms in effect at the date of the SoW unless both parties agree to updated Terms in writing.
             </p>
           </section>
+          </RevealSection>
 
+          <RevealSection delay={0.05}>
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">10. Contact</h2>
             <p>
@@ -100,6 +118,7 @@ export default function TermsPage() {
               For legal notices: legal@techagency.africa
             </p>
           </section>
+          </RevealSection>
         </div>
       </div>
     </div>

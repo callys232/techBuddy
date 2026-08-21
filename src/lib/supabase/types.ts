@@ -250,6 +250,22 @@ export interface Database {
         };
         Relationships: [];
       };
+      used_ad_tokens: {
+        Row: {
+          jti: string;
+          email: string;
+          used_at: string;
+        };
+        Insert: {
+          jti: string;
+          email: string;
+        };
+        Update: {
+          jti?: string;
+          email?: string;
+        };
+        Relationships: [];
+      };
       rate_limits: {
         Row: {
           key: string;

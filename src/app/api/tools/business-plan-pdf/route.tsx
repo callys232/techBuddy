@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Document, Page, View, Text, StyleSheet, renderToBuffer, Font } from "@react-pdf/renderer";
 import { isEmailSubscribed } from "@/lib/subscription";
+import { getVerifiedEmail } from "@/lib/auth";
 
 Font.registerHyphenationCallback((word) => [word]);
 
@@ -66,14 +67,14 @@ function BusinessPlanPDF({ idea, plan }: { idea: string; plan: BusinessPlan }) {
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const email = body.email as string | undefined;
-    const idea = body.idea as string;
-    const plan = body.plan as BusinessPlan;
-
+    const email = await getVerifiedEmail(req);
     if (!email || !(await isEmailSubscribed(email))) {
       return NextResponse.json({ error: "This report requires a TechBuddy Premium subscription" }, { status: 403 });
     }
+
+    const body = await req.json();
+    const idea = body.idea as string;
+    const plan = body.plan as BusinessPlan;
     if (!plan || !idea) {
       return NextResponse.json({ error: "Missing plan data" }, { status: 400 });
     }

@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server";
 import { getDownloadUrl } from "@/lib/store";
+import { getVerifiedEmail } from "@/lib/auth";
 
 export async function POST(req: Request) {
+  const email = await getVerifiedEmail(req);
+  if (!email) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+
   const body = await req.json().catch(() => null);
-  const email = body?.email as string | undefined;
   const slug = body?.slug as string | undefined;
 
-  if (!email || !slug) {
-    return NextResponse.json({ error: "email and slug are required" }, { status: 400 });
+  if (!slug) {
+    return NextResponse.json({ error: "slug is required" }, { status: 400 });
   }
 
   try {
