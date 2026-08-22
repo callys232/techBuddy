@@ -7,7 +7,8 @@ export type ServiceIcon =
   | "cloud"
   | "credit-card"
   | "search"
-  | "settings";
+  | "settings"
+  | "coin";
 
 export interface ServiceItem {
   icon: ServiceIcon;
@@ -19,6 +20,8 @@ export interface ServiceItem {
   color: ServiceColor;
   category: string;
   startingFrom: string;
+  /** Not yet bookable — card renders as a non-clickable teaser instead of linking to a detail page or quote flow. */
+  comingSoon?: boolean;
 }
 
 export interface ServiceTab {
@@ -29,6 +32,8 @@ export interface ServiceTab {
 export interface PricingTier {
   tier: string;
   price: string;
+  /** Numeric NGN value backing `price`, used to render a converted-currency hint. */
+  ngnValue: number;
   period: string;
   desc: string;
   features: string[];
@@ -48,6 +53,7 @@ export const SERVICE_TABS: ServiceTab[] = [
   { id: "data",       label: "Data" },
   { id: "training",   label: "Training" },
   { id: "maintenance", label: "Maintenance" },
+  { id: "web3",       label: "Web3" },
 ];
 
 export const ALL_SERVICE_SLUGS: string[] = [
@@ -222,6 +228,18 @@ export const ALL_SERVICES: ServiceItem[] = [
     category: "training",
     startingFrom: "from ₦300k",
   },
+  {
+    icon: "coin",
+    title: "Web3 & Blockchain",
+    desc: "Smart contracts, wallet integrations, and on-chain payment rails — for teams exploring what's next.",
+    outcome: "Be ready to ship when your Web3 use case is",
+    tag: "Coming soon",
+    href: "/services",
+    color: "coral",
+    category: "web3",
+    startingFrom: "",
+    comingSoon: true,
+  },
 ];
 
 /** Home page preview — first 6 services */
@@ -234,6 +252,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     tier: "Starter",
     price: "₦200k",
+    ngnValue: 200_000,
     period: "/month",
     desc: "Keep your product running smoothly with monthly maintenance and monitoring.",
     features: [
@@ -249,6 +268,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     tier: "Growth",
     price: "₦450k",
+    ngnValue: 450_000,
     period: "/month",
     desc: "Active product development alongside maintenance. Ideal for products with a growing user base.",
     features: [
@@ -265,6 +285,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     tier: "Enterprise",
     price: "₦900k+",
+    ngnValue: 900_000,
     period: "/month",
     desc: "A dedicated engineer embedded in your team. For products that can't afford to be down.",
     features: [

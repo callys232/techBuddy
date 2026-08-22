@@ -3,6 +3,16 @@ import Link from "next/link";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { STATS } from "@/mock/stats";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { ALL_PROJECTS } from "@/mock/portfolio";
+import { IconTrendingUp } from "@tabler/icons-react";
+
+/** A handful of concept builds that show the range of problems we design for —
+ *  same "target outcome, not a measured result" disclosure as /portfolio. We're
+ *  a small, growing studio without a public client roster yet, so this shows
+ *  how we think rather than overclaiming who we've worked with. */
+const DESIGN_EXAMPLES = ALL_PROJECTS.filter((p) =>
+  ["HealthPay", "AgriMarket", "LogiSync"].includes(p.name)
+);
 
 export const metadata: Metadata = {
   title: "About TechAgency — Who We Are",
@@ -119,6 +129,39 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+      </RevealSection>
+
+      {/* ── What we design toward ───────────────────────────────────────── */}
+      <RevealSection delay={0.05}>
+      <section className="py-[var(--section-y)]">
+        <div className="mx-auto max-w-7xl px-[var(--container-px)]">
+          <p className="eyebrow mb-3">What that looks like</p>
+          <h2 className="h-section mb-3">What we design toward</h2>
+          <p className="text-sm text-[var(--ink-muted)] max-w-xl mb-12">
+            We&apos;re a small, growing studio without a public client roster yet — so instead of
+            case studies we can&apos;t back up, here&apos;s the kind of outcome we design for, worked
+            through as concept builds. Same disclosure as our portfolio: these are targets, not measured results.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {DESIGN_EXAMPLES.map((p) => (
+              <div key={p.name} className="card p-6 flex flex-col gap-3">
+                <span className="font-mono text-[9px] uppercase tracking-wide rounded-full border border-[var(--border)] px-2 py-0.5 self-start text-[var(--ink-faint)]">
+                  Concept build
+                </span>
+                <p className="font-heading font-bold text-[var(--ink)] leading-snug">{p.name}</p>
+                <div className="flex items-start gap-2">
+                  <IconTrendingUp size={14} className="text-[var(--brand)] shrink-0 mt-0.5" />
+                  <p className="text-sm text-[var(--ink-muted)] leading-relaxed">{p.result}</p>
+                </div>
+                <p className="text-xs text-[var(--ink-faint)]">{p.client}</p>
+              </div>
+            ))}
+          </div>
+          <Link href="/portfolio" className="link-underline inline-block mt-8 text-sm font-semibold">
+            See all concept builds →
+          </Link>
         </div>
       </section>
       </RevealSection>

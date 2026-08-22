@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
 export const metadata: Metadata = {
   title: "Quote Received — We'll Be in Touch",
@@ -128,6 +129,7 @@ export default function QuoteConfirmPage() {
               <p className="text-sm text-[var(--ink)]/45">
                 From ₦150k/mo — updates, monitoring, priority support and monthly reports.
               </p>
+              <CurrencyApprox ngn={150_000} className="block text-[11px] text-[var(--ink-faint)] mt-0.5" />
             </div>
             <Link
               href="/services/maintenance"

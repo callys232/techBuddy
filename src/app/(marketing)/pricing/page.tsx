@@ -6,6 +6,7 @@ import { ConnectorsGrid } from "@/components/sections/ConnectorsGrid";
 import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
 import { ComparisonTable, type ComparisonRow } from "@/components/ui/ComparisonTable";
 import { PricingCard } from "@/components/ui/PricingCard";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 import { PRICING_TIERS } from "@/mock/services";
 import { getUserLocation } from "@/lib/geo";
 import { RevealSection } from "@/components/ui/ScrollReveal";
@@ -20,6 +21,8 @@ const PROJECT_TIERS = [
   {
     name: "Landing Page",
     range: "₦200k – ₦500k",
+    ngnMin: 200_000,
+    ngnMax: 500_000,
     duration: "2–4 weeks",
     desc: "A conversion-focused marketing page or company website. Perfect for validating an idea or launching a product fast.",
     includes: [
@@ -36,6 +39,8 @@ const PROJECT_TIERS = [
   {
     name: "MVP / Web App",
     range: "₦900k – ₦4M",
+    ngnMin: 900_000,
+    ngnMax: 4_000_000,
     duration: "8–14 weeks",
     desc: "A working product with user auth, core flows, and payment integration. The fastest path from idea to paying users.",
     includes: [
@@ -53,6 +58,8 @@ const PROJECT_TIERS = [
   {
     name: "Mobile App",
     range: "₦1.5M – ₦6M",
+    ngnMin: 1_500_000,
+    ngnMax: 6_000_000,
     duration: "10–18 weeks",
     desc: "iOS + Android from one React Native codebase. Offline support, push notifications, and app store submission included.",
     includes: [
@@ -69,6 +76,8 @@ const PROJECT_TIERS = [
   {
     name: "Full Platform",
     range: "₦5M – ₦20M+",
+    ngnMin: 5_000_000,
+    ngnMax: 20_000_000,
     duration: "3–8 months",
     desc: "Multi-role SaaS platforms, fintech systems, or enterprise tools. Discovery, design, engineering, and DevOps included.",
     includes: [
@@ -86,14 +95,14 @@ const PROJECT_TIERS = [
 ];
 
 const ADD_ONS = [
-  { name: "UI/UX Design (per screen flow)", price: "₦80k – ₦250k" },
-  { name: "Paystack / Flutterwave integration", price: "₦250k – ₦600k" },
-  { name: "WhatsApp Business API bot", price: "₦250k – ₦1M" },
-  { name: "AI chatbot / LLM integration", price: "₦400k – ₦3M" },
-  { name: "NDPR compliance audit", price: "₦200k – ₦500k" },
-  { name: "Security pentest", price: "₦300k – ₦1.5M" },
-  { name: "Performance optimisation", price: "₦200k – ₦800k" },
-  { name: "DevOps setup (CI/CD + cloud)", price: "₦300k – ₦1.2M" },
+  { name: "UI/UX Design (per screen flow)", price: "₦80k – ₦250k", ngnMin: 80_000, ngnMax: 250_000 },
+  { name: "Paystack / Flutterwave integration", price: "₦250k – ₦600k", ngnMin: 250_000, ngnMax: 600_000 },
+  { name: "WhatsApp Business API bot", price: "₦250k – ₦1M", ngnMin: 250_000, ngnMax: 1_000_000 },
+  { name: "AI chatbot / LLM integration", price: "₦400k – ₦3M", ngnMin: 400_000, ngnMax: 3_000_000 },
+  { name: "NDPR compliance audit", price: "₦200k – ₦500k", ngnMin: 200_000, ngnMax: 500_000 },
+  { name: "Security pentest", price: "₦300k – ₦1.5M", ngnMin: 300_000, ngnMax: 1_500_000 },
+  { name: "Performance optimisation", price: "₦200k – ₦800k", ngnMin: 200_000, ngnMax: 800_000 },
+  { name: "DevOps setup (CI/CD + cloud)", price: "₦300k – ₦1.2M", ngnMin: 300_000, ngnMax: 1_200_000 },
 ];
 
 const COMPARISON_ROWS: ComparisonRow[] = [
@@ -159,6 +168,7 @@ export default async function PricingPage() {
                 <div className="mb-4">
                   <p className="font-heading font-semibold text-[var(--ink)] text-sm">{tier.name}</p>
                   <p className="font-heading text-2xl font-extrabold text-[var(--brand)] mt-1">{tier.range}</p>
+                  <CurrencyApprox ngn={tier.ngnMin} ngnMax={tier.ngnMax} />
                   <p className="font-mono text-xs text-[var(--ink-faint)] mt-0.5">{tier.duration}</p>
                 </div>
                 <p className="text-xs text-[var(--ink-muted)] leading-relaxed mb-5">{tier.desc}</p>
@@ -212,10 +222,13 @@ export default async function PricingPage() {
           </h2>
           <p className="text-sm text-[var(--ink-faint)] mb-8">Typically added to a base project build.</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {ADD_ONS.map(({ name, price }) => (
+            {ADD_ONS.map(({ name, price, ngnMin, ngnMax }) => (
               <div key={name} className="card-interactive flex items-center justify-between gap-4 px-4 py-3">
                 <span className="text-sm text-[var(--ink)]/80">{name}</span>
-                <span className="font-mono text-xs text-[var(--brand)] shrink-0">{price}</span>
+                <span className="text-right shrink-0">
+                  <span className="block font-mono text-xs text-[var(--brand)]">{price}</span>
+                  <CurrencyApprox ngn={ngnMin} ngnMax={ngnMax} className="block text-[10px] text-[var(--ink-faint)]" />
+                </span>
               </div>
             ))}
           </div>

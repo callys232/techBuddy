@@ -7,7 +7,7 @@ import { RevealSection } from "@/components/ui/ScrollReveal";
 export const metadata: Metadata = {
   title: "Free & Premium Tools — Resume Maker, Invoice Generator, QR Codes, AI Business Plans & More",
   description:
-    "Seventeen tools for founders, job seekers and builders everywhere: cost estimator, invoice generator, QR codes, AI business plan generator, resume maker, and more. Most are free — no sign-up required.",
+    `${FREE_TOOLS.length} tools for founders, job seekers and builders everywhere: cost estimator, invoice generator, QR codes, AI business plan generator, resume maker, and more. Most are free — no sign-up required.`,
   keywords: [
     "project cost estimator", "tech stack picker",
     "free website audit", "how much does an app cost",
@@ -20,8 +20,10 @@ export const metadata: Metadata = {
   },
 };
 
+/* Derived from FREE_TOOLS.length rather than hardcoded — a hardcoded "17" is
+   exactly how this page drifted out of sync with the actual catalog before. */
 const STATS = [
-  { value: "17",     label: "Tools in the ecosystem" },
+  { value: String(FREE_TOOLS.length), label: "Tools in the ecosystem" },
   { value: "Free",   label: "No sign-up for most" },
   { value: "48 hrs", label: "Manual audit turnaround" },
 ];
@@ -41,7 +43,7 @@ export default function ToolsPage() {
             Plan Your Build Before You Spend a Dime
           </h1>
           <p className="text-lg text-[var(--ink)]/55 leading-relaxed">
-            Seventeen tools — estimate costs, generate invoices and QR codes, write a cover letter, name your business, build your resume, and more. A few premium tools go deeper with AI. No sign-up for most.
+            {FREE_TOOLS.length} tools — estimate costs, generate invoices and QR codes, write a cover letter, name your business, build your resume, and more. A few premium tools go deeper with AI. No sign-up for most.
           </p>
         </div>
       </section>

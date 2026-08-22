@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     "wifi qr code generator", "whatsapp qr code",
     "vcard qr code generator",
   ],
+  openGraph: {
+    title: "Free QR Code Generator — Links, WiFi & vCards | TechAgency",
+    description: "Custom-colour QR codes for links, WiFi, WhatsApp, and contact cards. Instant PNG/SVG download.",
+  },
 };
 
 export default function QrCodeGeneratorPage() {

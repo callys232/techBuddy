@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     "whatsapp bot builder", "whatsapp auto reply",
     "whatsapp business api", "whatsapp chatbot flow",
   ],
+  openGraph: {
+    title: "WhatsApp Bot Flow Builder — Design It Free | TechAgency",
+    description: "Build your auto-reply menu with a live chat preview. We deploy it on WhatsApp Business API.",
+  },
 };
 
 export default function WhatsappBotBuilderPage() {

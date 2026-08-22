@@ -22,6 +22,7 @@ import {
   estimateQuotePrice,
 } from "@/mock/quote";
 import { formatPriceRange } from "@/mock/templates";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
 interface FormData {
   pains: string[];
@@ -197,6 +198,7 @@ export function QuoteWizard() {
               <div>
                 <label className="text-sm font-semibold text-[var(--ink)] block mb-3">
                   Budget: <span className="text-[var(--brand)]">{budgetDisplay(form.budget)}</span>
+                  <CurrencyApprox ngn={form.budget} className="ml-2 text-xs text-[var(--ink-faint)] font-normal" />
                 </label>
                 <input
                   type="range"

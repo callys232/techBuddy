@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     "how much does it cost to build an app",
     "software development cost Africa", "web app price estimator",
   ],
+  openGraph: {
+    title: "Project Cost Estimator — Website & App Pricing | TechAgency",
+    description: "Instant cost estimates in Naira and USD, based on real project delivery data. Adjust for features and timeline.",
+  },
 };
 
 export default async function CostEstimatorPage() {

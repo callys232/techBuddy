@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     "website performance check", "free SEO audit",
     "free tech audit",
   ],
+  openGraph: {
+    title: "Free Tech Audit — Performance, Security & SEO | TechAgency",
+    description: "Submit your URL — get a manual engineer review of performance, security and SEO within 48 hours.",
+  },
 };
 
 const WHAT_YOU_GET = [

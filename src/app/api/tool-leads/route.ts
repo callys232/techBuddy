@@ -227,7 +227,15 @@ export async function POST(req: Request) {
                                   ? "Premium Audit Report"
                                   : tool === "whatsapp-bot-builder"
                                     ? "WhatsApp Bot Flow Builder"
-                                    : tool;
+                                    : tool === "fintech-fees-calculator"
+                                      ? "Fintech Fees Calculator"
+                                      : tool === "downtime-cost-calculator"
+                                        ? "Downtime Cost Calculator"
+                                        : tool === "repo-health-scan"
+                                          ? "Repo Health Scan"
+                                          : tool === "hire-rate-calculator"
+                                            ? "Nigerian Tech Hire Rate Calculator"
+                                            : tool;
 
   const sourceLabel =
     source === "email-capture"

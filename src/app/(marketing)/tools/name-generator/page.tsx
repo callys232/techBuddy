@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     "AI business name ideas", "domain name checker",
     "company name generator Nigeria",
   ],
+  openGraph: {
+    title: "Free Business Name Generator — AI Names | TechAgency",
+    description: "Describe your idea, get 12 AI name ideas with an instant domain availability check.",
+  },
 };
 
 export default function NameGeneratorPage() {

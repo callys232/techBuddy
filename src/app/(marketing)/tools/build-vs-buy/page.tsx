@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     "should I build or buy software", "software ROI calculator",
     "CRM build or buy", "helpdesk build or buy",
   ],
+  openGraph: {
+    title: "Build vs Buy Calculator — Custom or SaaS? | TechAgency",
+    description: "Compare 3-year total cost of custom software vs the best SaaS alternatives, with break-even analysis.",
+  },
 };
 
 export default function BuildVsBuyPage() {

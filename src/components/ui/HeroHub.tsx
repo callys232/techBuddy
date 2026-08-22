@@ -59,7 +59,10 @@ function EmptyRow({ label }: { label: string }) {
 /* ── Component ────────────────────────────────────────────────────────────── */
 
 export function HeroHub() {
-  const [collapsed, setCollapsed] = useState(false);
+  // Starts collapsed so the primary "get a quote" CTA in the left panel owns
+  // the above-the-fold viewport uncontested — this rail is a secondary,
+  // opt-in surface, not something that should compete with it on first paint.
+  const [collapsed, setCollapsed] = useState(true);
   const [tab, setTab]             = useState<TabId>("articles");
 
   const [articles, setArticles]   = useState<NormalizedArticle[] | null>(null);

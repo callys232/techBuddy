@@ -7,6 +7,7 @@ import { PROJECT_TYPES, FEATURE_ADDONS, TIMELINE_MULTIPLIERS } from "@/mock/tool
 import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail } from "@/lib/validate";
 import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 
@@ -202,6 +203,7 @@ export function CostEstimator() {
           </p>
           <p className="font-display text-3xl font-extrabold text-[var(--ink)] leading-none mb-1">{fmt(low)}</p>
           <p className="font-display text-lg text-[var(--ink)]/40">– {fmt(high)}</p>
+          <CurrencyApprox ngn={low} ngnMax={high} className="block text-xs text-[var(--ink-faint)] mt-1.5" />
         </div>
 
         {/* Breakdown */}

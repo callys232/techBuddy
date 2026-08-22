@@ -1,8 +1,10 @@
 import { IconCheck } from "@tabler/icons-react";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
 interface PricingCardProps {
   tier: string;
   price: string;
+  ngnValue?: number;
   period?: string;
   desc?: string;
   features: string[];
@@ -10,7 +12,7 @@ interface PricingCardProps {
   ctaText: string;
 }
 
-export function PricingCard({ tier, price, period, desc, features, recommended, ctaText }: PricingCardProps) {
+export function PricingCard({ tier, price, ngnValue, period, desc, features, recommended, ctaText }: PricingCardProps) {
   return (
     <div
       className={[
@@ -29,6 +31,7 @@ export function PricingCard({ tier, price, period, desc, features, recommended, 
           <span className="font-heading text-2xl font-extrabold text-[var(--ink)]">{price}</span>
           {period && <span className="text-xs text-[var(--ink-faint)]">{period}</span>}
         </div>
+        {ngnValue != null && <CurrencyApprox ngn={ngnValue} className="block text-[11px] text-[var(--ink-faint)] mt-0.5" />}
       </div>
       {desc && <p className="text-xs text-[var(--ink-muted)] leading-relaxed mb-5">{desc}</p>}
       <ul className="flex-1 space-y-2.5 mb-6">

@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     "automated website audit", "security headers checker",
     "SEO audit tool", "website performance report",
   ],
+  openGraph: {
+    title: "Premium Audit Report — Instant Site Deep-Dive | TechAgency",
+    description: "Security headers, SEO signals, performance and best practices — as a branded PDF report.",
+  },
 };
 
 export default function PremiumAuditPage() {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
+import { CurrencyProvider } from "@/components/providers/CurrencyProvider";
 import "./globals.css";
 
 /* ── Root Metadata ──────────────────────────────────────────────────────────── */
@@ -91,7 +92,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <PostHogProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <CurrencyProvider>{children}</CurrencyProvider>
+          </ThemeProvider>
         </PostHogProvider>
       </body>
     </html>

@@ -22,6 +22,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import { authFetch } from "@/lib/authFetch";
 import type { RewardId } from "@/lib/points";
 import { TOPUP_PRESETS_USD, POINTS_PER_USD } from "@/lib/points";
+import { RewardedAdSlot, AD_NETWORK_CONFIGURED } from "@/components/ui/RewardedAdSlot";
 
 interface Subscription {
   status: string;
@@ -189,9 +190,13 @@ function WatchAdModal({ onClose, onEarned }: { onClose: () => void; onEarned: (b
           </>
         ) : (
           <>
-            <div className="w-16 h-16 rounded-2xl bg-[var(--page)] border border-[var(--border)] flex items-center justify-center mx-auto mb-4">
-              <IconPlayerPlay size={26} className="text-[var(--brand)]" />
-            </div>
+            {AD_NETWORK_CONFIGURED ? (
+              <RewardedAdSlot className="mb-4 min-h-[120px] rounded-xl overflow-hidden bg-[var(--page)] border border-[var(--border)]" />
+            ) : (
+              <div className="w-16 h-16 rounded-2xl bg-[var(--page)] border border-[var(--border)] flex items-center justify-center mx-auto mb-4">
+                <IconPlayerPlay size={26} className="text-[var(--brand)]" />
+              </div>
+            )}
             <p className="font-heading font-semibold text-[var(--ink)] mb-1">Sponsored break</p>
             <p className="text-sm text-[var(--ink-muted)] mb-5">Stay on this screen for {remaining}s to earn points.</p>
             <div className="h-1.5 rounded-full bg-[var(--border)] overflow-hidden mb-5">

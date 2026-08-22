@@ -146,6 +146,38 @@ export const FREE_TOOLS: FreeTool[] = [
     badge: "New",
     href: "/tools/whatsapp-bot-builder",
   },
+  {
+    slug: "fintech-fees-calculator",
+    icon: "💳",
+    title: "Fintech Fees Calculator",
+    desc: "Compare Paystack vs Flutterwave transaction costs at your real volume — local and international cards, side by side.",
+    badge: "New",
+    href: "/tools/fintech-fees-calculator",
+  },
+  {
+    slug: "downtime-cost-calculator",
+    icon: "🔥",
+    title: "Downtime Cost Calculator",
+    desc: "See what an hour of downtime actually costs your business — revenue at risk plus team productivity loss, by business type.",
+    badge: "New",
+    href: "/tools/downtime-cost-calculator",
+  },
+  {
+    slug: "repo-health-scan",
+    icon: "🩺",
+    title: "Repo Health Scan",
+    desc: "Paste a public GitHub repo URL — get an instant health score on staleness, licensing, and issue backlog.",
+    badge: "New",
+    href: "/tools/repo-health-scan",
+  },
+  {
+    slug: "hire-rate-calculator",
+    icon: "🇳🇬",
+    title: "Nigerian Tech Hire Rate Calculator",
+    desc: "Typical monthly rates for engineers, designers and PMs in the Lagos/Abuja market, by role and seniority.",
+    badge: "New",
+    href: "/tools/hire-rate-calculator",
+  },
 ];
 
 /* ── Cost estimator data ─────────────────────────────────────────────────── */
@@ -353,3 +385,104 @@ export const TIMELINE_INTEGRATIONS: TimelineOption[] = [
   { id: "legacy",   label: "Legacy or existing codebase",    desc: "Integrating with an old system or continuing someone's work",  weeksDelta: 3 },
   { id: "hardware", label: "Hardware, IoT, or unusual tech", desc: "Physical devices, unusual protocols, or undocumented systems", weeksDelta: 5 },
 ];
+
+/* ── Fintech fees calculator data ────────────────────────────────────────────
+   Rates as publicly listed by each provider as of 2026 — verify current
+   pricing on paystack.com / flutterwave.com before relying on this for a
+   real financial decision; providers change rates without much notice. ── */
+
+export interface FeeProvider {
+  id: string;
+  name: string;
+  localRate: number;       // fraction, e.g. 0.015 = 1.5%
+  localFlatFeeNgn: number; // added on top of the percentage, local cards
+  localCapNgn: number;     // fee never exceeds this, local cards
+  localFreeUnderNgn: number; // transactions at/under this pay zero fee (0 = no such threshold)
+  intlRate: number;
+  intlFlatFeeNgn: number;
+}
+
+export const FEE_PROVIDERS: FeeProvider[] = [
+  { id: "paystack",    name: "Paystack",    localRate: 0.015, localFlatFeeNgn: 100, localCapNgn: 2000, localFreeUnderNgn: 2500, intlRate: 0.039, intlFlatFeeNgn: 100 },
+  { id: "flutterwave", name: "Flutterwave", localRate: 0.014, localFlatFeeNgn: 0,   localCapNgn: 2000, localFreeUnderNgn: 0,    intlRate: 0.038, intlFlatFeeNgn: 0   },
+];
+
+/** Per-transaction fee in NGN for a given provider, amount, and card type. */
+export function computeProviderFee(provider: FeeProvider, amountNgn: number, cardType: "local" | "intl"): number {
+  if (cardType === "local") {
+    if (provider.localFreeUnderNgn > 0 && amountNgn <= provider.localFreeUnderNgn) return 0;
+    return Math.min(amountNgn * provider.localRate + provider.localFlatFeeNgn, provider.localCapNgn);
+  }
+  return amountNgn * provider.intlRate + provider.intlFlatFeeNgn;
+}
+
+/* ── Downtime cost calculator data ───────────────────────────────────────── */
+
+export interface DowntimeBusinessType {
+  id: string;
+  label: string;
+  desc: string;
+  /** Fraction of hourly revenue actually at risk during downtime — a SaaS
+   *  losing login access isn't losing 100% of its hourly run-rate the way a
+   *  storefront going dark is, but a fintech outage costs more than raw
+   *  revenue once you count trust and compliance exposure. */
+  revenueFactor: number;
+}
+
+export const DOWNTIME_BUSINESS_TYPES: DowntimeBusinessType[] = [
+  { id: "ecommerce", label: "E-commerce / online store", desc: "Checkout stops the moment the site goes down",                     revenueFactor: 1.0  },
+  { id: "saas",      label: "SaaS / subscription product", desc: "Users locked out — support load and churn risk, not a direct sale lost", revenueFactor: 0.4  },
+  { id: "fintech",   label: "Fintech / payments",         desc: "Failed transactions plus trust and compliance exposure on top",    revenueFactor: 1.2  },
+  { id: "internal",  label: "Internal tool",              desc: "No direct revenue loss — this is pure team productivity cost",     revenueFactor: 0.25 },
+];
+
+/* ── Repo health scan data ───────────────────────────────────────────────── */
+
+export interface RepoHealthFlag {
+  ok: boolean;
+  label: string;
+}
+
+/* ── Nigerian tech hire rate calculator data ─────────────────────────────────
+   General Lagos/Abuja market estimates as of 2026 — not sourced from a
+   survey, so treat these as a starting conversation with a candidate, not a
+   guarantee. Real offers vary by company stage, exact skill set, and whether
+   the role is remote-for-a-foreign-company (which pays meaningfully more). ── */
+
+export interface HireRole {
+  id: string;
+  label: string;
+}
+
+export const HIRE_ROLES: HireRole[] = [
+  { id: "frontend",  label: "Frontend Engineer" },
+  { id: "backend",   label: "Backend Engineer" },
+  { id: "fullstack", label: "Full-Stack Engineer" },
+  { id: "mobile",    label: "Mobile Engineer" },
+  { id: "devops",    label: "DevOps Engineer" },
+  { id: "design",    label: "Product Designer" },
+  { id: "pm",        label: "Product Manager" },
+];
+
+export interface HireSeniority {
+  id: string;
+  label: string;
+  yearsRange: string;
+}
+
+export const HIRE_SENIORITY: HireSeniority[] = [
+  { id: "junior", label: "Junior",     yearsRange: "0–2 years" },
+  { id: "mid",    label: "Mid-level",  yearsRange: "2–5 years" },
+  { id: "senior", label: "Senior",     yearsRange: "5+ years" },
+];
+
+/** Monthly NGN band [min, max] by role then seniority. */
+export const HIRE_RATE_BANDS: Record<string, Record<string, [number, number]>> = {
+  frontend:  { junior: [180_000, 400_000], mid: [450_000, 900_000],   senior: [900_000,   2_000_000] },
+  backend:   { junior: [200_000, 450_000], mid: [500_000, 1_000_000], senior: [1_000_000, 2_300_000] },
+  fullstack: { junior: [220_000, 480_000], mid: [550_000, 1_100_000], senior: [1_100_000, 2_500_000] },
+  mobile:    { junior: [200_000, 450_000], mid: [500_000, 1_000_000], senior: [1_000_000, 2_200_000] },
+  devops:    { junior: [250_000, 500_000], mid: [600_000, 1_200_000], senior: [1_200_000, 2_600_000] },
+  design:    { junior: [180_000, 380_000], mid: [420_000, 850_000],   senior: [850_000,   1_800_000] },
+  pm:        { junior: [220_000, 450_000], mid: [500_000, 1_000_000], senior: [1_000_000, 2_200_000] },
+};

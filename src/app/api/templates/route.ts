@@ -42,8 +42,20 @@ interface GithubSearchResponse {
   items?: GithubRepo[];
 }
 
+/** In-place Fisher–Yates shuffle. */
+function shuffle<T>(arr: T[]): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 async function fetchCategory({ type, query }: CategoryQuery): Promise<ExternalTemplate[]> {
-  const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=6`;
+  // Pull a wider pool (12) than we need (4) so there's something to shuffle —
+  // sort=stars still ranks the API response, but we sample randomly from the
+  // qualifying pool below rather than always taking the fixed top 4.
+  const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=12`;
 
   const res = await fetch(url, {
     headers: {
@@ -59,9 +71,11 @@ async function fetchCategory({ type, query }: CategoryQuery): Promise<ExternalTe
   const data: GithubSearchResponse = await res.json();
   const priceRange = CATEGORY_PRICE_RANGE[type] ?? { min: 300, max: 1000 };
 
-  return (data.items ?? [])
+  const qualifying = (data.items ?? [])
     .filter((r) => !r.fork && r.stargazers_count >= 20)
-    .filter((r) => !r.license || PERMISSIVE_LICENSES.has(r.license.spdx_id.toLowerCase()))
+    .filter((r) => !r.license || PERMISSIVE_LICENSES.has(r.license.spdx_id.toLowerCase()));
+
+  return shuffle(qualifying)
     .slice(0, 4)
     .map((r) => ({
       name: r.name,
@@ -92,7 +106,7 @@ export async function GET() {
     }
   }
 
-  templates.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0));
+  shuffle(templates);
 
   return NextResponse.json({
     templates: templates.slice(0, 24),

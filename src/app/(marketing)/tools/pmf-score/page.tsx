@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     "do I have product market fit", "startup PMF test",
     "Sean Ellis PMF survey online",
   ],
+  openGraph: {
+    title: "Product-Market Fit Score — Do You Have PMF? | TechAgency",
+    description: "10 questions on retention and growth. An honest PMF score and the one thing to fix this week.",
+  },
 };
 
 export default function PMFScorePage() {

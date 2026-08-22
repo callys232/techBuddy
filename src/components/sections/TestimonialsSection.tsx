@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { IconStarFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { TESTIMONIALS } from "@/mock/testimonials";
-import { STATS } from "@/mock/stats";
 
 const N = TESTIMONIALS.length;
 
@@ -69,6 +68,12 @@ function Card({ t }: { t: typeof TESTIMONIALS[0] }) {
 }
 
 export function TestimonialsSection() {
+  if (N === 0) return null;
+
+  return <TestimonialsCarousel />;
+}
+
+function TestimonialsCarousel() {
   const [active, setActive]   = useState(0);
   const [exiting, setExiting] = useState<number | null>(null);
   const activeRef             = useRef(active);
@@ -152,19 +157,9 @@ export function TestimonialsSection() {
               Next →
             </button>
 
-            {/* Stats */}
-            <div className="mt-10 grid grid-cols-3 gap-4 pt-8 border-t border-[var(--border)]">
-              {[STATS.timeToMvp, STATS.productsShipped, STATS.clientReEngagement].map((s) => (
-                <div key={s.id}>
-                  <p className="font-heading text-2xl font-extrabold text-[var(--brand)]">{s.value}</p>
-                  <p className="text-xs text-[var(--ink-faint)] mt-0.5">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
             <Link
               href="/portfolio"
-              className="inline-block mt-6 text-sm font-semibold text-[var(--brand)] hover:underline"
+              className="inline-block mt-10 pt-8 border-t border-[var(--border)] text-sm font-semibold text-[var(--brand)] hover:underline"
             >
               See our concept work →
             </Link>

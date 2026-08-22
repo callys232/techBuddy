@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     "Next.js vs Django", "React Native vs Flutter",
     "tech stack for startup",
   ],
+  openGraph: {
+    title: "Tech Stack Picker — Best Stack for Your Product | TechAgency",
+    description: "4 questions. One recommended production stack, based on what actually ships in fast-growing markets.",
+  },
 };
 
 export default function StackPickerPage() {

@@ -7,6 +7,7 @@ import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { FAQS } from "@/mock/faqs";
 import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
+import { ToolsTeaser } from "@/components/sections/ToolsTeaser";
 import { BlogTeaser } from "@/components/sections/BlogTeaser";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 import { WhyWebsiteSection } from "@/components/sections/WhyWebsiteSection";
@@ -49,6 +50,7 @@ export default function HomePage() {
       <RevealSection delay={0.05}><ServicesGrid /></RevealSection>
       <RevealSection delay={0.05}><AppShowcase /></RevealSection>
       <RevealSection delay={0.05}><HomeCostEstimator /></RevealSection>
+      <RevealSection delay={0.05}><ToolsTeaser /></RevealSection>
       <RevealSection delay={0.05}><TestimonialsSection /></RevealSection>
       <RevealSection delay={0.05}><FAQSection /></RevealSection>
       <RevealSection delay={0.05}><BlogTeaser /></RevealSection>

@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     "PDF invoice generator", "Nigerian VAT invoice",
     "small business invoice template",
   ],
+  openGraph: {
+    title: "Free Invoice Generator — Branded PDF in Minutes | TechAgency",
+    description: "Line items, tax, multi-currency. Download a professional PDF invoice — free, no sign-up.",
+  },
 };
 
 export default function InvoiceGeneratorPage() {

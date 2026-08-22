@@ -5,12 +5,13 @@ import Link from "next/link";
 import { IconSparkles, IconArrowRight } from "@tabler/icons-react";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { EstimatorModal } from "@/components/ui/EstimatorModal";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
 const EXAMPLES = [
-  { type: "Landing page",    range: "₦200k – ₦500k" },
-  { type: "Mobile app",      range: "₦1.5M – ₦6M"   },
-  { type: "Web app / MVP",   range: "₦900k – ₦4M"   },
-  { type: "SaaS platform",   range: "₦5M – ₦20M+"   },
+  { type: "Landing page",    range: "₦200k – ₦500k", ngnMin: 200_000,   ngnMax: 500_000    },
+  { type: "Mobile app",      range: "₦1.5M – ₦6M",   ngnMin: 1_500_000, ngnMax: 6_000_000  },
+  { type: "Web app / MVP",   range: "₦900k – ₦4M",   ngnMin: 900_000,   ngnMax: 4_000_000  },
+  { type: "SaaS platform",   range: "₦5M – ₦20M+",   ngnMin: 5_000_000, ngnMax: 20_000_000 },
 ];
 
 export function HomeCostEstimator() {
@@ -73,7 +74,7 @@ export function HomeCostEstimator() {
 
             {/* Right: price range cards */}
             <div className="grid grid-cols-2 gap-3">
-              {EXAMPLES.map(({ type, range }) => (
+              {EXAMPLES.map(({ type, range, ngnMin, ngnMax }) => (
                 <button
                   key={type}
                   type="button"
@@ -86,6 +87,7 @@ export function HomeCostEstimator() {
                   <span className="font-display text-lg font-extrabold text-[var(--ink)] leading-tight">
                     {range}
                   </span>
+                  <CurrencyApprox ngn={ngnMin} ngnMax={ngnMax} className="block text-[10px] text-[var(--ink-faint)]" />
                   <span className="text-[10px] font-mono text-[var(--brand)] opacity-0 group-hover:opacity-100 transition-opacity">
                     Estimate mine →
                   </span>

@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     "ATS resume builder",
     "download resume PDF free",
   ],
+  openGraph: {
+    title: "Free Resume Maker — ATS-Friendly PDF | TechAgency",
+    description: "Pick a template, fill in your details, and download a polished, ATS-friendly resume instantly.",
+  },
 };
 
 export default function ResumeMakerPage() {

@@ -8,6 +8,7 @@ import { BVB_CATEGORIES, BVB_QUESTIONS, computeBvB, type BvBCategory } from "@/m
 import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail } from "@/lib/validate";
 import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
+import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
 const fmt = (n: number) => "₦" + Math.round(n).toLocaleString("en-NG");
 
@@ -108,6 +109,7 @@ export function BuildVsBuyCalc() {
             <div className={`rounded-xl border p-5 ${verdict !== "buy" ? "border-sky-500/30 bg-sky-500/5" : "border-[var(--border)]"}`}>
               <p className="font-mono text-xs uppercase tracking-wide text-[var(--ink)]/40 mb-1">Build custom</p>
               <p className="font-display text-2xl font-extrabold text-[var(--ink)]">{fmt(totalBuildCost)}</p>
+              <CurrencyApprox ngn={totalBuildCost} className="block text-[11px] text-[var(--ink-faint)]" />
               <p className="text-xs text-[var(--ink)]/35 mt-1">over {years} years (incl. maintenance)</p>
               <ul className="mt-3 space-y-1">
                 {selCat.buildPros.map((p) => <li key={p} className="flex items-start gap-1.5 text-xs text-[var(--ink)]/55"><IconCheck size={10} className="text-sky-400 shrink-0 mt-0.5" />{p}</li>)}
@@ -116,6 +118,7 @@ export function BuildVsBuyCalc() {
             <div className={`rounded-xl border p-5 ${verdict === "buy" ? "border-emerald-500/30 bg-emerald-500/5" : "border-[var(--border)]"}`}>
               <p className="font-mono text-xs uppercase tracking-wide text-[var(--ink)]/40 mb-1">Buy ({cheapestSaaS.name})</p>
               <p className="font-display text-2xl font-extrabold text-[var(--ink)]">{fmt(totalSaaSCost)}</p>
+              <CurrencyApprox ngn={totalSaaSCost} className="block text-[11px] text-[var(--ink-faint)]" />
               <p className="text-xs text-[var(--ink)]/35 mt-1">
                 {monthlySaaS === 0 ? "Free tier available" : `${fmt(monthlySaaS)}/mo × ${years * 12} months`}
               </p>

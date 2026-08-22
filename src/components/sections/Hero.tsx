@@ -77,13 +77,22 @@ export function Hero() {
 
           {/* Proof strip */}
           <motion.div variants={item}
-            className="flex flex-wrap justify-center gap-x-10 gap-y-4 pb-7 mb-7 border-b border-[var(--border)]">
+            className="flex flex-wrap justify-center gap-x-10 gap-y-4 pb-5 border-b border-[var(--border)]">
             {[STATS.timeToMvp, STATS.productsShipped, STATS.clientReEngagement].map((s) => (
               <div key={s.id} className="text-center">
                 <span className="block font-display font-semibold text-2xl text-[var(--brand)]">{s.value}</span>
                 <span className="stat-label">{s.label}</span>
               </div>
             ))}
+          </motion.div>
+
+          {/* Concept example — explicitly labeled, matches the "Concept project" /
+             "Target outcome" disclosure convention on /portfolio. Not a claimed result. */}
+          <motion.div variants={item} className="mb-7 pt-4">
+            <Link href="/portfolio" className="group inline-flex items-center gap-2 text-xs text-[var(--ink-faint)] hover:text-[var(--brand)] transition-colors">
+              <span className="font-mono text-[9px] uppercase tracking-wide rounded-full border border-[var(--border)] px-2 py-0.5 shrink-0">Concept build</span>
+              <span className="italic">Claims processing cut from 14 days to under 24 hours — see how →</span>
+            </Link>
           </motion.div>
 
           {/* Service chips */}

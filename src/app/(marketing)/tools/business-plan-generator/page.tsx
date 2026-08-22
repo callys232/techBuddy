@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     "AI business plan generator", "business plan template",
     "startup business plan generator", "investor pitch generator",
   ],
+  openGraph: {
+    title: "AI Business Plan Generator — Investor-Ready | TechAgency",
+    description: "Turn your idea into a structured plan — market analysis, business model, go-to-market, financials.",
+  },
 };
 
 export default function BusinessPlanGeneratorPage() {

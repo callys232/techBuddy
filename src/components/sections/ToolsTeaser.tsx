@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FREE_TOOLS } from "@/mock/tools";
 import { PageVectors } from "@/components/bg/PageVectors";
@@ -9,8 +10,8 @@ export function ToolsTeaser() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
 
-        {/* Header */}
-        <div className="mb-12 flex items-end justify-between">
+        {/* Header + real product screenshot */}
+        <div className="mb-14 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">
               Free tools
@@ -21,18 +22,38 @@ export function ToolsTeaser() {
             <p className="mt-3 text-[var(--ink)]/50 text-sm max-w-md leading-relaxed">
               Six free tools to estimate cost, map your timeline, pick a tech stack, check NDPR compliance, scope your MVP, and audit your site — no sign-up required.
             </p>
+            <Link
+              href="/tools"
+              className="mt-6 hidden sm:inline-flex text-sm font-semibold text-[var(--brand)] hover:underline"
+            >
+              All tools →
+            </Link>
           </div>
-          <Link
-            href="/tools"
-            className="hidden sm:inline text-sm font-semibold text-[var(--brand)] hover:underline shrink-0"
-          >
-            All tools →
+
+          {/* Real interface, not a mockup — the Fintech Fees Calculator, live */}
+          <Link href="/tools/fintech-fees-calculator" className="group block">
+            <div className="rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--page)] shadow-lg overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
+              <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-[var(--border)] bg-[var(--surface)]">
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--border)]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--border)]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--border)]" />
+                <span className="ml-2 font-mono text-[10px] text-[var(--ink-faint)] truncate">techbuddy.ng/tools/fintech-fees-calculator</span>
+              </div>
+              <Image
+                src="/screenshots/fintech-fees-calculator.png"
+                alt="Fintech Fees Calculator interface — Paystack vs Flutterwave transaction cost comparison"
+                width={1440}
+                height={1024}
+                className="w-full h-auto"
+              />
+            </div>
           </Link>
         </div>
 
-        {/* Tool cards */}
+        {/* Tool cards — curated to match the "Six free tools" copy above; the
+           rest of the 21-tool catalog lives behind the "All tools" link. */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FREE_TOOLS.map((tool, i) => (
+          {FREE_TOOLS.slice(0, 6).map((tool, i) => (
             <Link
               key={tool.slug}
               href={tool.href}

@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     "cover letter maker", "cover letter template",
     "job application letter generator",
   ],
+  openGraph: {
+    title: "Free AI Cover Letter Generator | TechAgency",
+    description: "Tell us the role and your strengths — get a tailored, ready-to-send cover letter in seconds.",
+  },
 };
 
 export default function CoverLetterGeneratorPage() {
