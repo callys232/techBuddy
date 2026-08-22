@@ -125,7 +125,7 @@ export default function AppsPage() {
           <RevealSection delay={0.05}>
           <section className="py-10 bg-[var(--surface)]">
             <div className="mx-auto max-w-5xl px-[var(--container-px)]">
-              <div className="grid sm:grid-cols-3 gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
                 {app.screenshots.map((s) => (
                   <div key={s.src} className="rounded-xl border border-[var(--border)] overflow-hidden">
                     <Image src={s.src} alt={s.alt} width={400} height={860} className="w-full h-auto" />
