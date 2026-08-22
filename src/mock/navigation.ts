@@ -42,6 +42,7 @@ export const FOOTER_LINKS: FooterLinkGroup = {
     { label: "News",       href: "/news" },
     { label: "Templates",  href: "/templates" },
     { label: "Free Tools", href: "/tools" },
+    { label: "Apps",       href: "/apps" },
     { label: "Invest",     href: "/invest" },
     { label: "Talent Hub", href: "/talent" },
     { label: "Contact",    href: "/contact" },
