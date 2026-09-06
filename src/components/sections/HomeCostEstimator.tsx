@@ -26,15 +26,13 @@ export function HomeCostEstimator() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
             {/* Left: copy */}
-            <div>
-              <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">
-                Free tool
-              </span>
-              <h2 className="mt-2 font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] leading-[1.1] mb-5">
-                What Will Your Build Cost?
+            <div className="lg:order-2">
+              <span className="eyebrow">Plan with confidence</span>
+              <h2 className="mt-2 h-section mb-5">
+                Know the likely cost before the first sales call
               </h2>
               <p className="text-[var(--ink)]/50 leading-relaxed mb-8 max-w-md">
-                Select your project type, features, and timeline. Get an instant Naira estimate based on real projects we&apos;ve shipped — no sign-up, no commitment.
+                Choose what you&apos;re building, the features you need, and your timeline. You&apos;ll get a practical Naira budget range you can use to plan the next step—without creating an account.
               </p>
 
               <button
@@ -73,7 +71,7 @@ export function HomeCostEstimator() {
             </div>
 
             {/* Right: price range cards */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 lg:order-1">
               {EXAMPLES.map(({ type, range, ngnMin, ngnMax }) => (
                 <button
                   key={type}

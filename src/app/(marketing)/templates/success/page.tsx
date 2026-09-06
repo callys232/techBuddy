@@ -18,7 +18,7 @@ export default async function TemplatePurchaseSuccessPage({ searchParams }: Prop
     return (
       <div className="min-h-screen bg-[var(--page)] flex flex-col items-center justify-center px-[var(--container-px)] text-center">
         <p className="font-mono text-red-400 text-xs uppercase tracking-[0.25em] mb-4">Payment issue</p>
-        <h1 className="font-display text-4xl font-extrabold text-[var(--ink)] mb-4">Payment not completed</h1>
+        <h1 className="h-display mb-4">Payment not completed</h1>
         <p className="text-[var(--ink)]/50 max-w-sm mb-8">
           {error === "payment_failed"
             ? "The payment was not completed. No charge was made."
@@ -49,7 +49,7 @@ export default async function TemplatePurchaseSuccessPage({ searchParams }: Prop
       </div>
 
       <p className="eyebrow mb-3">Payment successful</p>
-      <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[var(--ink)] mb-4">
+      <h1 className="h-display mb-4">
         {name ? `${name} is yours!` : "Purchase complete!"}
       </h1>
       <p className="text-[var(--ink)]/50 max-w-md mb-10 leading-relaxed">

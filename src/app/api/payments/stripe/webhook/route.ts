@@ -32,6 +32,8 @@ function verifySignature(payload: string, header: string): boolean {
   const timestamp = parts.t;
   const signature = parts.v1;
   if (!timestamp || !signature) return false;
+  const ageSeconds = Math.abs(Date.now() / 1000 - Number(timestamp));
+  if (!Number.isFinite(ageSeconds) || ageSeconds > 300) return false;
 
   const expected = crypto.createHmac("sha256", WEBHOOK_SECRET).update(`${timestamp}.${payload}`).digest("hex");
   const sigBuf = Buffer.from(signature, "hex");
@@ -113,6 +115,7 @@ export async function POST(req: Request) {
         break; // ignore events we don't act on
     }
   } catch {
+    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
     // best-effort — Stripe retries webhooks, so a transient DB error isn't fatal here
   }
 

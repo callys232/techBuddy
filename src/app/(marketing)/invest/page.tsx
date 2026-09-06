@@ -48,7 +48,7 @@ export default function InvestPage() {
       {/* Application CTA */}
       <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] text-center bg-[var(--surface)]">
-        <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-3">
+        <h2 className="h-section mb-3">
           Ready to pitch your idea?
         </h2>
         <p className="text-[var(--ink)]/55 mb-6 max-w-md mx-auto">

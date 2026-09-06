@@ -62,18 +62,18 @@ export function FAQSection() {
   return (
     <section className="relative overflow-hidden py-[var(--section-y)]">
       <div className="mx-auto max-w-6xl px-[var(--container-px)]">
-        <div className="grid lg:grid-cols-[340px,1fr] gap-16 items-start">
+        <div className="grid lg:grid-cols-[340px_1fr] gap-16 items-start">
 
           {/* Left — sticky */}
           <div className="lg:sticky lg:top-28">
             <p className="eyebrow mb-5">Common questions</p>
             <h2 className="mt-5 font-heading font-extrabold text-[var(--ink)] leading-tight mb-4 tracking-[-0.02em]
                            text-[clamp(1.75rem,3vw,2.4rem)]">
-              You probably have{" "}
-              <span className="text-[var(--brand)]">questions.</span>
+              What to know before{" "}
+              <span className="text-[var(--brand)]">the work begins.</span>
             </h2>
             <p className="text-[var(--ink-muted)] text-[14px] leading-relaxed mb-7">
-              We&apos;ve answered the ones that come up in almost every first conversation. If yours isn&apos;t here, just ask.
+              Direct answers about scope, ownership, delivery, support, and the decisions that affect cost.
             </p>
             <Link href="/contact" className="btn-primary px-7 py-3.5 text-[13px]">
               Ask us directly

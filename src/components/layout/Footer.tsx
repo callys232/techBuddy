@@ -4,6 +4,7 @@ import {
   IconBrandLinkedin,
   IconBrandGithub,
   IconBrandInstagram,
+  IconBrandFacebook,
 } from "@tabler/icons-react";
 import { FOOTER_LINKS, SOCIAL_LINKS } from "@/mock/navigation";
 import { CatalystTechLogo } from "@/components/ui/Logo";
@@ -14,6 +15,7 @@ const SOCIAL_ICON_MAP: Record<string, ComponentType<{ size: number }>> = {
   linkedin: IconBrandLinkedin,
   github: IconBrandGithub,
   instagram: IconBrandInstagram,
+  facebook: IconBrandFacebook,
 };
 
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "hello@techagency.africa";

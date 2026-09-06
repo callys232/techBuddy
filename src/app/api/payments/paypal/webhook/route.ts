@@ -56,7 +56,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Signature verification failed" }, { status: 401 });
   }
 
-  const email = (event.resource.custom_id ?? event.resource.subscriber?.email_address ?? "").toLowerCase().trim();
+  const customParts = event.resource.custom_id?.split(":") ?? [];
+  const email = (customParts.length > 1 ? customParts.slice(1).join(":") : event.resource.custom_id ?? event.resource.subscriber?.email_address ?? "").toLowerCase().trim();
   if (!email) return NextResponse.json({ ok: true }); // nothing to attribute this to
 
   const supabase = createServerClient();
@@ -88,6 +89,7 @@ export async function POST(req: Request) {
         break; // ignore events we don't act on
     }
   } catch {
+    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
     // best-effort — PayPal retries webhooks, so a transient DB error isn't fatal here
   }
 

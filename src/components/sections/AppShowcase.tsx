@@ -8,15 +8,18 @@ export function AppShowcase() {
     <section className="relative overflow-hidden bg-[var(--surface)] py-[var(--section-y)]">
       <PageVectors variant="top-right" intensity={0.35} />
       <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
-        <div className="mb-12 flex items-end justify-between">
+        <div className="mb-12 flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">Our work</span>
-            <h2 className="mt-2 font-display text-4xl font-extrabold text-[var(--ink)]">
-              Apps We&apos;ve Shipped
+            <span className="eyebrow">Selected portfolio</span>
+            <h2 className="mt-2 h-section">
+              Decisions, constraints, and intended outcomes
             </h2>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--ink-muted)]">
+              Each project explains the problem, the product decisions, and the technical approach. Concept work is labelled clearly, and projected outcomes are never presented as measured results.
+            </p>
           </div>
-          <Link href="/portfolio" className="hidden sm:inline text-sm font-semibold text-[var(--brand)] hover:underline">
-            All projects →
+          <Link href="/portfolio" className="link-underline shrink-0 text-sm font-semibold">
+            Explore the portfolio →
           </Link>
         </div>
 

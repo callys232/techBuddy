@@ -208,7 +208,7 @@ const PAYMENT_PROVIDERS: { id: PaymentProvider; label: string; price: string; en
   { id: "crypto", label: "Crypto", price: "$5 / 1 month", endpoint: "/api/payments/crypto/checkout", icon: <IconCurrencyBitcoin size={16} /> },
 ];
 
-const POINTS_REWARD_ID = "resume-premium-month";
+const POINTS_REWARD_ID = "all-tools-premium-month";
 
 function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }) {
   const [provider, setProvider] = useState<PaymentProvider>("paystack");
@@ -258,7 +258,7 @@ function UpgradeModal({ email, onClose }: { email: string; onClose: () => void }
     try {
       const res = await authFetch("/api/points/redeem", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
         body: JSON.stringify({ rewardId: POINTS_REWARD_ID }),
       });
       const json = await res.json();

@@ -10,7 +10,12 @@ import { createClient } from "@supabase/supabase-js";
  * anyone spend, read, or generate content as any email address they knew —
  * an IDOR, and a serious one here since points are bought with real crypto.
  */
-export async function getVerifiedEmail(req: Request): Promise<string | null> {
+export interface VerifiedUser {
+  id: string;
+  email: string;
+}
+
+export async function getVerifiedUser(req: Request): Promise<VerifiedUser | null> {
   const authHeader = req.headers.get("authorization");
   const token = authHeader?.replace(/^Bearer\s+/i, "").trim();
   if (!token) return null;
@@ -20,11 +25,15 @@ export async function getVerifiedEmail(req: Request): Promise<string | null> {
   if (!url || !anonKey) return null;
 
   try {
-    const supabase = createClient(url, anonKey);
+    const supabase = createClient(url, anonKey, { auth: { persistSession: false, autoRefreshToken: false } });
     const { data, error } = await supabase.auth.getUser(token);
     if (error || !data.user?.email) return null;
-    return data.user.email.toLowerCase().trim();
+    return { id: data.user.id, email: data.user.email.toLowerCase().trim() };
   } catch {
     return null;
   }
+}
+
+export async function getVerifiedEmail(req: Request): Promise<string | null> {
+  return (await getVerifiedUser(req))?.email ?? null;
 }

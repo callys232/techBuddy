@@ -13,14 +13,12 @@ export function ToolsTeaser() {
         {/* Header + real product screenshot */}
         <div className="mb-14 grid lg:grid-cols-2 gap-10 items-center">
           <div>
-            <span className="font-mono text-xs text-[var(--brand)] uppercase tracking-widest">
-              Free tools
-            </span>
-            <h2 className="mt-2 font-display text-4xl font-extrabold text-[var(--ink)]">
-              Plan Before You Build
+              <span className="eyebrow">Useful before you hire us</span>
+            <h2 className="mt-2 h-section">
+              Make the first decision with better information
             </h2>
             <p className="mt-3 text-[var(--ink)]/50 text-sm max-w-md leading-relaxed">
-              Six free tools to estimate cost, map your timeline, pick a tech stack, check NDPR compliance, scope your MVP, and audit your site — no sign-up required.
+              Estimate a software project, define an MVP, compare technology choices, check NDPR readiness, or audit an existing website. Use the tools freely, then talk to us when you need an expert pair of hands.
             </p>
             <Link
               href="/tools"

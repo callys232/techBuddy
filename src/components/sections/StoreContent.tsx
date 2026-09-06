@@ -120,6 +120,8 @@ export function StoreContent() {
     }
   }, [email]);
 
+  // Loading remote store ownership is the purpose of this mount effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { load(); }, [load]);
 
   const buy = async (product: Product) => {
@@ -130,7 +132,7 @@ export function StoreContent() {
     try {
       const res = await authFetch("/api/store/purchase", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
         body: JSON.stringify({ slug: product.slug }),
       });
       const json = await res.json();

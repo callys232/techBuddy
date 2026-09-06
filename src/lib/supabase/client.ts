@@ -18,8 +18,9 @@ export function getSupabase(): SupabaseClient<Database> {
 
 // Server client (for API routes / Server Actions) — created fresh per call, also lazy.
 export function createServerClient(): SupabaseClient<Database> {
-  if (!url) {
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !serviceKey) {
     throw new Error("Supabase is not configured — set NEXT_PUBLIC_SUPABASE_URL.");
   }
-  return createClient<Database>(url, process.env.SUPABASE_SERVICE_ROLE_KEY ?? anonKey ?? "");
+  return createClient<Database>(url, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
 }

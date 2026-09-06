@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -82,8 +82,8 @@ export function ServicesGrid() {
   const [deckHovered, setDeckHovered] = useState(false);
   const activeRef = useRef(active);
   const exitingRef = useRef(exiting);
-  activeRef.current = active;
-  exitingRef.current = exiting;
+  useEffect(() => { activeRef.current = active; }, [active]);
+  useEffect(() => { exitingRef.current = exiting; }, [exiting]);
 
   const go = (dir: "prev" | "next") => {
     if (exitingRef.current !== null) return;
@@ -153,13 +153,20 @@ export function ServicesGrid() {
     <section className="relative overflow-hidden py-[var(--section-y)]">
       <PageVectors variant="technical" intensity={0.2} />
       <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
-        <div className="grid lg:grid-cols-[1fr,480px] gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-[480px_1fr] gap-12 lg:gap-20 items-center">
           {/* ── Left panel ──────────────────────────────────────────────── */}
-          <div>
-            <span className="eyebrow mb-5 inline-flex">What we do</span>
-            <h2 className="h-section mb-5">Fourteen services. One team.</h2>
+          <div className="lg:order-2">
+            <span className="eyebrow mb-5 inline-flex">One accountable delivery team</span>
+            <h2
+              className="h-section mb-5 transition-[background-image] duration-300"
+              style={{
+                backgroundImage: `linear-gradient(135deg, var(--ink) 35%, ${tint(active)} 82%)`,
+              }}
+            >
+              One team, from product decisions to production.
+            </h2>
             <p className="muted leading-relaxed mb-10 max-w-sm text-[14.5px]">
-              Built around what African businesses need to scale.
+              We clarify the requirements, design the experience, build the system, and support it after launch. You get fewer handoffs, visible progress, and software your team can maintain.
             </p>
 
             {/* Active service info — animates in on change, color matches active card */}
@@ -244,9 +251,7 @@ export function ServicesGrid() {
                       ? "w-5 h-[6px]"
                       : "w-[6px] h-[6px] bg-[var(--border)]",
                   ].join(" ")}
-                  style={
-                    i === active ? { background: "var(--brand)" } : undefined
-                  }
+                  style={i === active ? { background: tint(active) } : undefined}
                 />
               ))}
             </div>
@@ -261,8 +266,17 @@ export function ServicesGrid() {
 
           {/* ── Right: 2-card stack ──────────────────────────────────────── */}
           <div
-            className="relative h-[420px] cursor-pointer select-none"
+            className="relative h-[420px] cursor-pointer select-none lg:order-1"
             onClick={() => go("next")}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                go("next");
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={`Show next service. Currently showing ${svc.title}`}
             onMouseEnter={() => setDeckHovered(true)}
             onMouseLeave={() => setDeckHovered(false)}
           >
@@ -340,7 +354,10 @@ export function ServicesGrid() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-display text-2xl font-semibold leading-snug mb-3 text-[var(--ink)]">
+                    <h3
+                      className="font-display text-2xl font-semibold leading-snug mb-3 transition-colors duration-300"
+                      style={{ color: top ? c : "var(--ink)" }}
+                    >
                       {s.title}
                     </h3>
 

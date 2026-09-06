@@ -7,10 +7,10 @@ export function BlogTeaser() {
     <section className="relative overflow-hidden mx-auto max-w-6xl px-[var(--container-px)] py-[var(--section-y)]">
       <div className="mb-10 flex items-end justify-between gap-6">
         <div>
-          <p className="eyebrow mb-4">From the blog</p>
+          <p className="eyebrow mb-4">Practical technology guidance</p>
           <h2 className="mt-4 font-heading font-extrabold text-[var(--ink)] tracking-[-0.02em]
                          text-[clamp(1.75rem,3vw,2.5rem)]">
-            Built by <span className="text-[var(--brand)]">Builders</span>
+            Clear reasoning for <span className="text-[var(--brand)]">important technology decisions</span>
           </h2>
         </div>
         <Link href="/blog" className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] hover:underline shrink-0">

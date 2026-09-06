@@ -9,9 +9,10 @@ export async function POST(req: Request) {
 
   const body = await req.json().catch(() => null);
   const slug = body?.slug as string | undefined;
+  const idempotencyKey = req.headers.get("idempotency-key") ?? body?.idempotencyKey;
 
-  if (!slug) {
-    return NextResponse.json({ error: "slug is required" }, { status: 400 });
+  if (!slug || !idempotencyKey) {
+    return NextResponse.json({ error: "slug and idempotency key are required" }, { status: 400 });
   }
 
   const allowed = await checkRateLimit("store-purchase", getClientIp(req), 20);
@@ -20,7 +21,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const result = await purchaseProduct(email, slug);
+    const result = await purchaseProduct(email, slug, idempotencyKey);
     return NextResponse.json(result);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Purchase failed";

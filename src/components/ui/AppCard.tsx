@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { IconTrendingUp } from "@tabler/icons-react";
+import { IconArrowUpRight, IconTrendingUp } from "@tabler/icons-react";
 import { Popup } from "./Popup";
 import type { Project } from "@/mock/portfolio";
 
@@ -27,61 +27,70 @@ export function AppCard({
     <>
       <div
         onClick={caseStudy ? () => setOpen(true) : undefined}
+        onKeyDown={caseStudy ? (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            setOpen(true);
+          }
+        } : undefined}
+        role={caseStudy ? "button" : undefined}
+        tabIndex={caseStudy ? 0 : undefined}
+        aria-label={caseStudy ? `Open ${name} case study` : undefined}
         className={[
           "card-interactive group relative overflow-hidden",
           caseStudy ? "cursor-pointer" : "",
         ].join(" ")}
       >
-        <div className="relative aspect-video w-full overflow-hidden">
+        <div className="card-media relative aspect-video w-full overflow-hidden">
           <Image
             src={image}
             alt={name}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035]"
           />
           {illustrative && (
-            <div className="absolute top-3 left-3 rounded-full bg-[var(--ink)]/80 backdrop-blur-sm px-2.5 py-1">
+            <div className="absolute top-3 left-3 rounded-full bg-[var(--ink)]/80 backdrop-blur-sm px-2.5 py-1 transition-transform duration-200 group-hover:-translate-y-0.5">
               <span className="font-mono text-[9px] uppercase tracking-wide text-white/90 leading-none">Concept project</span>
             </div>
           )}
           {/* Result badge overlay */}
           {highlight && (
-            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-[var(--surface)]/90 backdrop-blur-sm border border-[var(--border)] px-2.5 py-1">
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-[var(--surface)]/90 backdrop-blur-sm border border-[var(--border)] px-2.5 py-1 transition-transform duration-200 group-hover:-translate-y-0.5">
               <IconTrendingUp size={11} className="text-[var(--brand)] shrink-0" />
               <span className="font-mono text-[10px] text-[var(--ink)]/70 leading-none">{highlight}</span>
             </div>
           )}
         </div>
-        <div className="p-4">
-          <h3 className="font-heading text-base font-bold text-[var(--ink)] mb-1">{name}</h3>
+        <div className="flex min-h-[210px] flex-col p-5">
+          <h3 className="font-heading text-lg font-semibold leading-tight text-[var(--ink)] mb-2 transition-colors duration-200 group-hover:text-[var(--brand)]">{name}</h3>
           {description && (
-            <p className="text-xs text-[var(--ink-muted)] leading-relaxed mb-3 line-clamp-2">{description}</p>
+            <p className="text-sm text-[var(--ink-muted)] leading-relaxed mb-4 line-clamp-2">{description}</p>
           )}
           <div className="flex flex-wrap gap-2 mb-4">
             {tags.map((t) => (
               <span
                 key={t}
-                className="font-mono text-xs rounded-[var(--radius-badge)] border border-[var(--border)] px-2 py-0.5 text-[var(--ink-muted)]"
+                className="micro-chip font-mono text-xs rounded-[var(--radius-badge)] border border-[var(--border)] px-2 py-0.5 text-[var(--ink-muted)]"
               >
                 {t}
               </span>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="mt-auto flex items-center gap-4 border-t border-[var(--border)] pt-4">
             {liveUrl && liveUrl !== "#" && (
               <a
                 href={liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="text-sm font-semibold text-[var(--brand)] hover:underline"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] hover:underline"
               >
-                Live →
+                Live <span className="micro-arrow"><IconArrowUpRight size={13} /></span>
               </a>
             )}
             {caseStudy && (
-              <button type="button" className="text-sm font-semibold text-[var(--ink-muted)] hover:text-[var(--ink)] transition-colors">
-                {illustrative ? "See concept →" : "Case study →"}
+              <button type="button" className="group/link inline-flex items-center gap-1 text-sm font-semibold text-[var(--ink-muted)] hover:text-[var(--ink)] transition-colors">
+                {illustrative ? "See concept" : "Case study"} <span className="micro-arrow">→</span>
               </button>
             )}
           </div>

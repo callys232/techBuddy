@@ -17,6 +17,10 @@ import {
   IconDownload,
   IconLockOpen,
   IconShoppingBag,
+  IconLogout,
+  IconTrash,
+  IconUser,
+  IconReceipt,
 } from "@tabler/icons-react";
 import { getSupabase } from "@/lib/supabase/client";
 import { authFetch } from "@/lib/authFetch";
@@ -53,18 +57,42 @@ interface OwnedProduct {
 }
 
 interface Summary {
+  email: string;
+  profile: { display_name: string | null; primary_goal: string | null; marketing_opt_in: boolean; onboarding_completed_at: string | null } | null;
   subscription: Subscription | null;
+  entitlements: { id: string; entitlement_key: string; source: string; status: string; starts_at: string; ends_at: string | null }[];
+  payments: { id: string; provider: string; product_key: string; amount: number; currency: string; status: string; created_at: string }[];
+  deletionRequest: { id: string; status: string; created_at: string; reviewed_at: string | null; admin_note: string | null } | null;
   points: { balance: number; rewards: Reward[]; transactions: Transaction[] };
   purchases: OwnedProduct[];
 }
 
 const MIN_WATCH_SECONDS = 15;
 
+function Onboarding({ email, onComplete }: { email: string; onComplete: () => void }) {
+  const [name, setName] = useState("");
+  const [goal, setGoal] = useState("Use premium business tools");
+  const [busy, setBusy] = useState(false);
+  const save = async (event: React.FormEvent) => {
+    event.preventDefault(); setBusy(true);
+    const response = await authFetch("/api/account/profile", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ displayName: name, primaryGoal: goal, complete: true }) });
+    setBusy(false); if (response.ok) onComplete();
+  };
+  return <form onSubmit={save} className="card max-w-lg mx-auto p-7">
+    <div className="w-11 h-11 rounded-xl bg-[var(--brand)]/12 flex items-center justify-center mb-4"><IconUser size={20} className="text-[var(--brand)]" /></div>
+    <p className="eyebrow mb-2">Welcome to TechBuddy</p><h1 className="font-heading font-bold text-xl text-[var(--ink)] mb-2">Set up your account</h1>
+    <p className="text-sm text-[var(--ink-muted)] mb-5">Signed in as {email}. Tell us what you want to accomplish so your dashboard can stay useful.</p>
+    <label className="block text-xs font-semibold text-[var(--ink)] mb-1">Your name</label><input required value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg p-3 text-sm mb-4" />
+    <label className="block text-xs font-semibold text-[var(--ink)] mb-1">Primary goal</label><select value={goal} onChange={(e) => setGoal(e.target.value)} className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg p-3 text-sm mb-5"><option>Use premium business tools</option><option>Build or improve a product</option><option>Create career documents</option><option>Purchase templates and resources</option></select>
+    <button disabled={busy} className="btn-primary w-full h-11">{busy ? <IconLoader2 size={16} className="animate-spin" /> : "Open my dashboard"}</button>
+  </form>;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    Sign-in gate — reuses the same magic-link OTP flow as Resume Maker
 ───────────────────────────────────────────────────────────────────────────── */
 
-function SignInGate({ onSignedIn }: { onSignedIn: (email: string) => void }) {
+function SignInGate() {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -162,7 +190,7 @@ function WatchAdModal({ onClose, onEarned }: { onClose: () => void; onEarned: (b
     setClaiming(true);
     setError(null);
     try {
-      const res = await fetch("/api/points/earn/watch-ad/complete", {
+      const res = await authFetch("/api/points/earn/watch-ad/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
@@ -315,11 +343,14 @@ function reasonLabel(reason: string): string {
 }
 
 function DashboardBody({ email }: { email: string }) {
+  const [mountedAt] = useState(() => Date.now());
   const [summary, setSummary] = useState<Summary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showWatchAd, setShowWatchAd] = useState(false);
   const [showFund, setShowFund] = useState(false);
   const [redeemingId, setRedeemingId] = useState<string | null>(null);
+  const [deletionReason, setDeletionReason] = useState("");
+  const [accountMessage, setAccountMessage] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -332,6 +363,8 @@ function DashboardBody({ email }: { email: string }) {
     }
   }, []);
 
+  // Loading remote account state is the purpose of this mount effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { load(); }, [load]);
 
   const redeem = async (rewardId: RewardId) => {
@@ -340,7 +373,7 @@ function DashboardBody({ email }: { email: string }) {
     try {
       const res = await authFetch("/api/points/redeem", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
         body: JSON.stringify({ rewardId }),
       });
       const json = await res.json();
@@ -361,8 +394,18 @@ function DashboardBody({ email }: { email: string }) {
     );
   }
 
+  if (!summary.profile?.onboarding_completed_at) return <Onboarding email={email} onComplete={load} />;
+
   const sub = summary.subscription;
-  const active = sub && (sub.status === "active" || sub.status === "non-renewing");
+  const subActive = !!sub && (sub.status === "active" || sub.status === "non-renewing") && (!sub.current_period_end || new Date(sub.current_period_end).getTime() > mountedAt);
+  const pass = summary.entitlements.find((item) => item.entitlement_key === "premium-all-tools" && item.status === "active" && (!item.ends_at || new Date(item.ends_at).getTime() > mountedAt));
+  const active = subActive || !!pass;
+
+  const requestDeletion = async () => {
+    setAccountMessage(null);
+    const res = await authFetch("/api/account/deletion-request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ reason: deletionReason }) });
+    const json = await res.json(); setAccountMessage(json.message ?? json.error); if (res.ok) load();
+  };
 
   return (
     <div className="space-y-6">
@@ -376,11 +419,11 @@ function DashboardBody({ email }: { email: string }) {
               <IconCrown size={20} className={active ? "text-[var(--brand)]" : "text-[var(--ink-faint)]"} />
             </div>
             <div>
-              <p className="font-heading font-semibold text-[var(--ink)]">{active ? sub!.plan : "Free plan"}</p>
+              <p className="font-heading font-semibold text-[var(--ink)]">{active ? (pass ? "TechBuddy Premium (Points)" : sub!.plan) : "Free plan"}</p>
               <p className="text-xs text-[var(--ink-muted)]">
                 {active
-                  ? sub!.current_period_end
-                    ? `Renews ${new Date(sub!.current_period_end).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}`
+                  ? (pass?.ends_at ?? sub?.current_period_end)
+                    ? `${pass || sub?.status === "non-renewing" ? "Access until" : "Renews"} ${new Date((pass?.ends_at ?? sub?.current_period_end)!).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}`
                     : "Active"
                   : "Upgrade from any premium tool to unlock AI features"}
               </p>
@@ -392,6 +435,20 @@ function DashboardBody({ email }: { email: string }) {
               {sub!.status === "active" ? "Active" : "Ending soon"}
             </span>
           )}
+        </div>
+      </div>
+
+      <div className="card p-6">
+        <div className="flex items-center justify-between gap-4 flex-wrap mb-4"><div><p className="eyebrow mb-1">Payment history</p><p className="text-sm text-[var(--ink-muted)]">Your upgrades and points top-ups.</p></div><IconReceipt size={20} className="text-[var(--ink-faint)]" /></div>
+        {summary.payments.length ? <div className="space-y-1">{summary.payments.map((payment) => <div key={payment.id} className="flex items-center justify-between gap-4 py-2 border-b border-[var(--border)] last:border-0"><div><p className="text-sm text-[var(--ink)]">{payment.product_key.replace(/-/g, " ")}</p><p className="text-xs text-[var(--ink-faint)]">{payment.provider} · {new Date(payment.created_at).toLocaleDateString()}</p></div><div className="text-right"><p className="text-sm font-mono">{payment.currency} {Number(payment.amount).toLocaleString()}</p><p className="text-xs capitalize text-[var(--ink-muted)]">{payment.status}</p></div></div>)}</div> : <p className="text-sm text-[var(--ink-faint)] py-3">No payments yet. New and pending checkouts will appear here.</p>}
+      </div>
+
+      <div className="card p-6">
+        <p className="eyebrow mb-3">Account settings</p><p className="text-sm text-[var(--ink)] mb-1">{summary.profile.display_name}</p><p className="text-xs text-[var(--ink-muted)] mb-5">{email} · {summary.profile.primary_goal}</p>
+        <div className="flex flex-wrap gap-2 mb-5"><button onClick={() => getSupabase().auth.signOut()} className="btn-secondary h-10 px-4 text-sm"><IconLogout size={15} />Sign out</button></div>
+        <div className="border-t border-[var(--border)] pt-5"><p className="text-sm font-semibold text-[var(--ink)] mb-1">Request account deletion</p><p className="text-xs text-[var(--ink-muted)] mb-3">For your protection, deletion is reviewed and approved manually by an administrator. Submitting a request does not immediately remove your account.</p>
+          {summary.deletionRequest?.status === "pending" ? <p className="text-sm text-amber-500">Deletion request pending admin review since {new Date(summary.deletionRequest.created_at).toLocaleDateString()}.</p> : <div className="flex gap-2 flex-wrap"><input value={deletionReason} onChange={(e) => setDeletionReason(e.target.value)} placeholder="Reason (optional)" className="flex-1 min-w-52 bg-[var(--page)] border border-[var(--border)] rounded-lg px-3 text-sm" /><button onClick={requestDeletion} className="btn-ghost h-10 px-4 text-sm text-[var(--bad)]"><IconTrash size={14} />Request deletion</button></div>}
+          {accountMessage && <p className="text-xs text-[var(--ink-muted)] mt-2">{accountMessage}</p>}
         </div>
       </div>
 
@@ -412,10 +469,10 @@ function DashboardBody({ email }: { email: string }) {
               <IconCurrencyBitcoin size={14} />
               Fund with crypto
             </button>
-            <button onClick={() => setShowWatchAd(true)} className="btn-secondary h-10 px-4 text-sm">
+            {AD_NETWORK_CONFIGURED && <button onClick={() => setShowWatchAd(true)} className="btn-secondary h-10 px-4 text-sm">
               <IconPlayerPlay size={14} />
               Watch an ad — earn 10
-            </button>
+            </button>}
           </div>
         </div>
 
@@ -509,14 +566,17 @@ export function DashboardContent() {
   const [email, setEmail] = useState<string | null | undefined>(undefined);
 
   useEffect(() => {
+    let mounted = true;
     (async () => {
       try {
         const { data } = await getSupabase().auth.getSession();
-        setEmail(data.session?.user.email ?? null);
+        if (mounted) setEmail(data.session?.user.email ?? null);
       } catch {
-        setEmail(null);
+        if (mounted) setEmail(null);
       }
     })();
+    const { data: listener } = getSupabase().auth.onAuthStateChange((_event, session) => setEmail(session?.user.email ?? null));
+    return () => { mounted = false; listener.subscription.unsubscribe(); };
   }, []);
 
   if (email === undefined) {
@@ -527,7 +587,7 @@ export function DashboardContent() {
     );
   }
 
-  if (!email) return <SignInGate onSignedIn={setEmail} />;
+  if (!email) return <SignInGate />;
 
   return <DashboardBody email={email} />;
 }

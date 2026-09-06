@@ -19,18 +19,18 @@ export function CTAStrip() {
 
         <h2 className="font-heading font-extrabold text-[var(--ink)] leading-tight mb-4 tracking-[-0.02em]
                        text-[clamp(2rem,5vw,3.5rem)]">
-          Ready to Build<br />
-          <span className="text-[var(--brand)]">Something Serious?</span>
+          Start with the problem.<br />
+          <span className="text-[var(--brand)]">We&apos;ll help define the right build.</span>
         </h2>
 
         <p className="text-[var(--ink)]/50 mb-10 text-[15px] leading-relaxed max-w-xl mx-auto">
-          Tell us what you&apos;re building — we&apos;ll reply with an honest scope and Naira range within 24 hours. No sales pitch, no commitment.
+          Tell us what needs to work better. We&apos;ll review the context, identify the key unknowns, and reply with a practical next step and budget range.
         </p>
 
         {/* Two CTAs */}
         <div className="flex flex-wrap gap-4 justify-center mb-10">
           <Link href="/quote" className="btn-primary px-9 py-4 text-[14px]">
-            Get a Free Quote
+            Discuss your project
             <IconArrowRight size={15} />
           </Link>
           <a

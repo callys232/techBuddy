@@ -8,11 +8,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "TechAgency — Digital Product Studio, Built in Africa for the World",
+    default: "TechAgency — Software Development Company in Nigeria",
     template: "%s | TechAgency",
   },
   description:
-    "We build scalable web apps, mobile products, fintech integrations and DevOps systems for ambitious businesses everywhere. Born in Lagos, engineered for global standards.",
+    "Founder-led software development company in Lagos, Nigeria building web apps, mobile apps, AI tools, fintech platforms, and reliable cloud systems.",
   keywords: [
     "digital product studio",
     "software agency",
@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     "NDPR compliant software",
     "web development Nigeria",
     "React Next.js development",
+    "software development company Nigeria",
+    "Lagos software developer",
+    "AI development services",
   ],
   authors: [{ name: "TechAgency", url: "https://techagency.africa" }],
   creator: "TechAgency",
@@ -32,16 +35,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_NG",
     siteName: "TechAgency",
-    title: "TechAgency — Digital Product Studio, Built in Africa for the World",
+    title: "TechAgency — Software Development Company in Nigeria",
     description:
-      "End-to-end engineering for ambitious businesses that want to grow. Web, mobile, fintech, DevOps.",
+      "Founder-led web, mobile, AI, fintech, and DevOps engineering for ambitious businesses in Nigeria and worldwide.",
     images: [{ url: "/og-image.svg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechAgency — Digital Product Studio, Built in Africa for the World",
+    title: "TechAgency — Software Development Company in Nigeria",
     description:
-      "End-to-end engineering for ambitious businesses. Web · Mobile · Fintech · DevOps.",
+      "Web, mobile, AI, fintech, and DevOps engineering from Lagos, Nigeria.",
   },
   robots: {
     index: true,
@@ -54,12 +57,13 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "ProfessionalService",
   name: "TechAgency",
   url: SITE_URL,
   logo: `${SITE_URL}/logo-mark.png`,
   description:
-    "Digital product studio building web apps, mobile products, fintech integrations and DevOps systems for ambitious businesses everywhere.",
+    "Founder-led software development company in Lagos building web applications, mobile apps, AI integrations, fintech platforms, and cloud systems.",
+  areaServed: ["Nigeria", "Africa", "Worldwide"],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",

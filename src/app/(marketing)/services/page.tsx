@@ -6,14 +6,15 @@ import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Services — Web, Mobile, Fintech & DevOps Engineering",
+  title: "Software Development Services in Nigeria — Web, Mobile, AI & Fintech",
   description:
-    "Full-stack web applications, iOS & Android mobile apps, fintech integration, cloud DevOps, security auditing and ongoing maintenance — all under one roof, from a Lagos-born team serving clients worldwide.",
+    "Hire a founder-led software development team in Nigeria for web applications, mobile apps, AI integration, fintech payments, DevOps, cybersecurity, UI/UX design, and ongoing product support.",
   keywords: [
     "web development", "mobile app development",
     "fintech integration", "DevOps engineering",
     "React Next.js development", "cloud infrastructure",
-    "security audit",
+    "security audit", "software development company Nigeria",
+    "Lagos app developer", "AI development services",
   ],
   openGraph: {
     title: "Digital Services — Web, Mobile & Fintech Engineering | TechAgency",
@@ -28,10 +29,10 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden px-[var(--container-px)] py-[var(--section-y)] text-center">
         <PageVectors variant="flow" intensity={0.35} />
         <h1 className="h-display">
-          Everything Your Business Needs to Win Online
+          One expert team from product idea to production
         </h1>
         <p className="mt-6 text-lg text-[var(--ink-muted)] max-w-2xl mx-auto">
-          From strategy to deployment — we cover every layer of the stack.
+          Launch a focused product, replace a fragile workflow, or improve an existing system. We help determine what should be built, explain the tradeoffs, and remain accountable through release.
         </p>
       </section>
 
@@ -43,7 +44,7 @@ export default function ServicesPage() {
 
       <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <h2 className="h-section text-center mb-12">Maintenance Plans</h2>
+        <h2 className="h-section text-center mb-12">Support after launch</h2>
         <div className="grid gap-6 sm:grid-cols-3 max-w-5xl mx-auto">
           {PRICING_TIERS.map((tier) => (
             <PricingCard key={tier.tier} {...tier} />

@@ -70,13 +70,13 @@ export function ServiceCard({
       {/* Icon + tag */}
       <div className="flex items-start justify-between">
         <span
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--page)]"
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--page)] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-105"
           style={{ color: "var(--suite-tint)" }}
         >
           <Icon size={18} />
         </span>
         <span
-          className="flex items-center gap-1 font-mono text-xs font-semibold rounded-[var(--radius-badge)] px-2.5 py-1"
+          className="micro-chip flex items-center gap-1 font-mono text-xs font-semibold rounded-[var(--radius-badge)] border border-transparent px-2.5 py-1"
           style={{
             backgroundColor:
               "color-mix(in srgb, var(--suite-tint) 12%, transparent)",
@@ -99,7 +99,7 @@ export function ServiceCard({
       </div>
 
       {/* Outcome line */}
-      <p className="text-xs text-[var(--ink-faint)] italic leading-relaxed border-l-2 border-[var(--border)] pl-3">
+      <p className="text-xs text-[var(--ink-faint)] italic leading-relaxed border-l-2 border-[var(--border)] pl-3 transition-colors duration-200 group-hover:border-[var(--suite-tint)]">
         {outcome}
       </p>
 
@@ -107,7 +107,7 @@ export function ServiceCard({
       {!comingSoon && (
         <div className="mt-auto flex items-center justify-between pt-3 border-t border-[var(--border)]">
           <span className="flex items-center gap-1 text-sm font-semibold text-[var(--brand)] group-hover:gap-2 transition-all">
-            Learn more <IconArrowRight size={13} />
+            Learn more <span className="micro-arrow"><IconArrowRight size={13} /></span>
           </span>
         </div>
       )}

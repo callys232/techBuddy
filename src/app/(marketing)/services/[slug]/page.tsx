@@ -52,7 +52,7 @@ const SERVICE_DETAIL: Record<string, {
     relatedCategories: ["fintech", "saas", "ecommerce"],
   },
   "mobile-apps": {
-    tagline: "One codebase. iOS + Android. Built to work on 2G.",
+    tagline: "One maintainable codebase for iOS and Android",
     problem: "Users in emerging markets download apps on slow connections and use them on devices with limited RAM. We build React Native apps that are lightweight, offline-capable, and feel native on both platforms.",
     deliverables: ["React Native app (iOS + Android)", "Offline-first data sync", "Biometric authentication", "Push notifications (FCM + APNs)", "App store submission (both stores)", "USSD fallback option for low-connectivity users", "3 months post-launch support"],
     whoFor: ["Fintech startups needing a mobile product", "Logistics companies managing field agents", "Healthcare platforms serving remote areas", "E-commerce businesses wanting a native shopping experience"],
@@ -65,7 +65,7 @@ const SERVICE_DETAIL: Record<string, {
   },
   "fintech-payments": {
     tagline: "Accept money the way your customers actually pay",
-    problem: "Card payments, bank transfers, USSD, and mobile money — customers across Africa pay in every format, and global customers expect their own rails too. We integrate all of them cleanly, handle regulatory compliance, and keep your checkout conversion high.",
+    problem: "Card payments, bank transfers, USSD, and mobile money create different technical and operational requirements. We design the payment flow, webhook handling, reconciliation, and failure states as one system so customers can pay and your team can account for every transaction.",
     deliverables: ["Paystack, Flutterwave or Stripe integration", "Virtual account / NUBAN generation", "USSD payment flow", "Webhook handling + reconciliation", "Transaction dashboard + reporting", "CBN/PCI-DSS compliance consultation", "Refund and dispute workflows"],
     whoFor: ["E-commerce platforms accepting customer payments", "SaaS companies billing subscribers globally", "Marketplaces handling seller payouts", "Fintech startups building payment products"],
     faqs: [
@@ -77,18 +77,18 @@ const SERVICE_DETAIL: Record<string, {
   },
   "ai-integration": {
     tagline: "Automate the work eating your team's time",
-    problem: "Document extraction, customer support, invoice processing, WhatsApp bots — AI can eliminate 60–70% of manual tasks for most growing businesses. We build the integration that connects these tools to your actual workflow.",
+    problem: "Document extraction, customer support, invoice processing, and knowledge retrieval can consume hours of repetitive work. We first identify which steps are safe to automate, then connect the right models to your workflow with review paths for uncertain results.",
     deliverables: ["LLM integration (Claude, GPT-4, Gemini)", "Document / PDF extraction pipeline", "Custom chatbot with business context", "WhatsApp AI bot (via Business API)", "RAG system for company knowledge base", "Cost-optimised routing (Haiku for simple, Sonnet for complex)", "Analytics dashboard for AI usage"],
     whoFor: ["Operations teams drowning in manual document work", "Customer support teams handling repetitive queries", "HR teams processing applications at volume", "Any business with a WhatsApp customer-facing channel"],
     faqs: [
-      { q: "How much does AI cost to run monthly?", a: "Most SME use cases cost ₦20k–₦80k/month in API fees. We implement smart caching and model routing to minimise cost without sacrificing quality." },
+      { q: "How much does AI cost to run monthly?", a: "Cost depends on the model, volume, response length, and amount of context processed. We estimate usage from your workflow, set spending controls, and use caching or model routing where it produces a meaningful saving." },
       { q: "Is our data safe when sent to an LLM?", a: "We use API calls (not the AI company's training pipeline) and can set up data anonymisation before sending to the model. NDPR-compliant architecture by default." },
-      { q: "How accurate is document extraction?", a: "90–97% accuracy on most structured document types (invoices, IDs, bank statements). We build human-review fallbacks for the edge cases." },
+      { q: "How accurate is document extraction?", a: "Accuracy depends on document quality, layout consistency, language, and the fields being extracted. We test against representative samples, report the measured result, and add human review where errors carry operational risk." },
     ],
     relatedCategories: ["saas", "fintech"],
   },
   "devops": {
-    tagline: "Ship daily. Never go down. Know when something breaks.",
+    tagline: "Release safely and know when something breaks",
     problem: "Most growing engineering teams deploy manually and find out about outages from customer complaints. We set up automated pipelines, monitoring, and alerting so problems are caught before they cost you clients.",
     deliverables: ["GitHub Actions / GitLab CI pipelines", "Docker containerisation", "Kubernetes (for scale) or simpler orchestration", "Vercel / Railway / AWS / GCP deployment", "Grafana + Prometheus monitoring", "PagerDuty / Slack alerting", "Disaster recovery runbooks"],
     whoFor: ["Engineering teams deploying manually more than once a week", "Products that have had an outage in the last 6 months", "Startups preparing for a major growth event (launch, PR, investor demo)", "Companies moving from a monolith to microservices"],
@@ -124,7 +124,7 @@ const SERVICE_DETAIL: Record<string, {
     relatedCategories: ["fintech", "saas"],
   },
   "ui-ux-design": {
-    tagline: "Users figure out your product in 30 seconds, not 30 minutes",
+    tagline: "Make complex workflows clear from the first screen",
     problem: "Bad UX doesn't just frustrate users — it kills conversion. We do research-led design that accounts for the specific behaviours and constraints of real users everywhere: feature phone fallbacks, low-literacy flows, and data-cost sensitivity.",
     deliverables: ["User research & persona development", "Information architecture", "Low-fidelity wireframes", "High-fidelity Figma prototype (clickable)", "Design system + component library", "Handoff to engineering (Figma with tokens)", "Usability testing with real users"],
     whoFor: ["Founders building their first product and need to validate before coding", "Engineering teams that built something but users are confused", "Companies redesigning an existing product", "Anyone launching a public-facing consumer product"],
@@ -148,13 +148,13 @@ const SERVICE_DETAIL: Record<string, {
     relatedCategories: ["web", "saas"],
   },
   "cloud-scaling": {
-    tagline: "Handle 10× your current traffic without a rewrite",
+    tagline: "Prepare for more traffic without rebuilding by default",
     problem: "Most products are not architected for scale from day one — and that's fine. When you need to scale, we do it surgically: identifying the actual bottlenecks instead of over-engineering everything.",
     deliverables: ["Load testing and bottleneck identification", "CDN setup and optimisation", "Database query optimisation", "Horizontal scaling configuration", "Auto-scaling policies", "Cost audit (finding over-provisioned resources)", "99.9% uptime SLA architecture"],
     whoFor: ["Products approaching capacity limits", "Businesses preparing for a traffic spike (launch, PR, ad campaign)", "Teams that are spending too much on cloud infrastructure", "Companies that need to demonstrate uptime SLAs to enterprise clients"],
     faqs: [
       { q: "How do you find the bottleneck?", a: "We instrument your application with distributed tracing (Sentry, Datadog, or open-source equivalents), run load tests, and identify the slowest database queries and API calls before touching any code." },
-      { q: "Can you reduce our cloud bill?", a: "Usually yes. Most startups have over-provisioned VMs and pay for features they don't use. We typically identify 20–40% cost reduction opportunities in a standard cloud audit." },
+      { q: "Can you reduce our cloud bill?", a: "We compare actual usage with provisioned capacity, pricing plans, data transfer, and idle resources. Any saving we recommend is quantified from your current bill rather than assumed in advance." },
     ],
     relatedCategories: ["saas", "internal"],
   },
@@ -182,7 +182,7 @@ const SERVICE_DETAIL: Record<string, {
     relatedCategories: ["saas", "ecommerce"],
   },
   "seo-growth": {
-    tagline: "Get found by the businesses that can actually afford to hire you",
+    tagline: "Help qualified customers find you when they need the service",
     problem: "Most growing businesses rank for nothing because their site is slow, has thin content, or isn't indexed properly. We fix the technical foundation first, then build the content strategy that drives qualified traffic.",
     deliverables: ["Technical SEO audit + fix implementation", "Core Web Vitals optimisation", "Keyword research (local + global markets)", "Content strategy and brief creation", "Schema markup implementation", "Google Search Console + Analytics setup", "Monthly ranking reports"],
     whoFor: ["B2B businesses whose ideal clients search Google before buying", "E-commerce stores losing to competitors in search", "Service businesses with a local or regional audience", "SaaS companies wanting organic acquisition"],
@@ -194,7 +194,7 @@ const SERVICE_DETAIL: Record<string, {
   },
   "training": {
     tagline: "Your team ships faster and makes fewer expensive mistakes",
-    problem: "Hiring senior engineers is expensive and competitive. Upskilling your existing team is faster, cheaper, and builds loyalty. We run practical workshops — no PowerPoints, all code.",
+    problem: "A team can lose time when new tools and practices are introduced without shared understanding. We design practical workshops around your stack and use real code, reviews, and implementation exercises rather than generic presentations.",
     deliverables: ["Custom curriculum designed for your team's stack", "Hands-on workshops (not lectures)", "Code review of real team PRs as exercises", "Take-home reference materials + video recordings", "Post-workshop 30-day Q&A support", "Certificate of completion for team members"],
     whoFor: ["Engineering teams moving to a new framework or stack", "Companies whose juniors are slowing down seniors", "Teams that want to implement DevOps or security practices", "Founders who want to understand what their engineers are building"],
     faqs: [
@@ -245,7 +245,7 @@ export default async function ServicePage({ params }: Props) {
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--brand)]">
               {service?.tag ?? "Service"}
             </span>
-            <h1 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] leading-[1.1] mb-4">
+            <h1 className="mt-3 h-display mb-4">
               {title}
             </h1>
             {detail && (
@@ -264,7 +264,7 @@ export default async function ServicePage({ params }: Props) {
                 href={`/quote?service=${encodeURIComponent(title)}`}
                 className="btn-primary h-11 px-7 text-sm"
               >
-                Get a quote for {title}
+                Discuss {title}
               </Link>
               <a
                 href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hi! I'm interested in ${title} services.`)}`}
@@ -288,7 +288,7 @@ export default async function ServicePage({ params }: Props) {
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Problem */}
               <div>
-                <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-4">
+                <h2 className="h-section mb-4">
                   The problem we solve
                 </h2>
                 <p className="text-[var(--ink)]/65 leading-[1.85] text-[15px]">{detail.problem}</p>
@@ -308,7 +308,7 @@ export default async function ServicePage({ params }: Props) {
 
               {/* Deliverables */}
               <div>
-                <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-4">
+                <h2 className="h-section mb-4">
                   What you get
                 </h2>
                 <ul className="space-y-3">
@@ -332,8 +332,8 @@ export default async function ServicePage({ params }: Props) {
       <RevealSection delay={0.05}>
       <section className="py-16 bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
-          <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-2">Related work</h2>
-          <p className="text-sm text-[var(--ink)]/45 mb-8">Projects where we applied this service.</p>
+          <h2 className="h-section mb-2">Related work</h2>
+          <p className="text-sm text-[var(--ink)]/45 mb-8">Relevant examples, with concept work identified clearly.</p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((project) => (
               <AppCard key={project.name} {...project} />
@@ -353,7 +353,7 @@ export default async function ServicePage({ params }: Props) {
         <RevealSection delay={0.05}>
         <section className="py-16">
           <div className="mx-auto max-w-3xl px-[var(--container-px)]">
-            <h2 className="font-display text-2xl font-extrabold text-[var(--ink)] mb-8">
+            <h2 className="h-section mb-8">
               Common questions
             </h2>
             <div className="space-y-6">
@@ -373,8 +373,8 @@ export default async function ServicePage({ params }: Props) {
       <RevealSection delay={0.05}>
       <section className="py-16 bg-[var(--surface)] text-center">
         <div className="mx-auto max-w-xl px-[var(--container-px)]">
-          <h2 className="font-display text-3xl font-extrabold text-[var(--ink)] mb-3">
-            Ready to get started?
+          <h2 className="h-section mb-3">
+            Have a problem this service may solve?
           </h2>
           <p className="text-[var(--ink)]/50 mb-8 text-sm">
             Tell us what you&apos;re building. We&apos;ll reply with a realistic scope, timeline, and Naira range within 24 hours.
@@ -384,7 +384,7 @@ export default async function ServicePage({ params }: Props) {
               href={`/quote?service=${encodeURIComponent(title)}`}
               className="btn-primary h-11 px-7 text-sm"
             >
-              Get a free quote
+              Discuss your requirements
             </Link>
             <Link href="/pricing" className="btn-ghost h-11 px-7 text-sm">
               Estimate the cost

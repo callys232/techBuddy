@@ -47,7 +47,7 @@ export default function QuoteConfirmPage() {
           <p className="eyebrow mb-3">
             Quote Received
           </p>
-          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[var(--ink)] mb-4">
+          <h1 className="h-display mb-4">
             You&apos;re on the list!
           </h1>
           <p className="text-[var(--ink)]/50 max-w-md mx-auto leading-relaxed">

@@ -42,7 +42,7 @@ export default function DevOpsPage() {
 
       <RevealSection>
       <section className="px-[var(--container-px)] py-[var(--section-y)]">
-        <h2 className="font-display text-3xl font-bold text-[var(--ink)] mb-8">Services</h2>
+        <h2 className="h-section mb-8">Services</h2>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {DEVOPS_SERVICES.map((s) => (
             <li
@@ -58,7 +58,7 @@ export default function DevOpsPage() {
 
       <RevealSection delay={0.05}>
       <section className="px-[var(--container-px)] py-[var(--section-y)] bg-[var(--surface)]">
-        <h2 className="font-display text-3xl font-bold text-[var(--ink)] mb-8">
+        <h2 className="h-section mb-8">
           Infrastructure Stack
         </h2>
         <div className="flex flex-wrap gap-3">

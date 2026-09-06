@@ -24,7 +24,7 @@ const PAYMENT_PROVIDERS: { id: PaymentProvider; label: string; price: string; en
   { id: "crypto", label: "Crypto", price: "$5 / 1 month", endpoint: "/api/payments/crypto/checkout", icon: <IconCurrencyBitcoin size={16} /> },
 ];
 
-const POINTS_REWARD_ID = "resume-premium-month";
+const POINTS_REWARD_ID = "all-tools-premium-month";
 
 export interface UpgradeFeatureCopy {
   title: string;
@@ -83,7 +83,7 @@ export function UpgradeModal({ email, onClose, feature }: { email: string; onClo
     try {
       const res = await authFetch("/api/points/redeem", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
         body: JSON.stringify({ rewardId: POINTS_REWARD_ID }),
       });
       const json = await res.json();

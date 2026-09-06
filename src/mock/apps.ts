@@ -1,10 +1,12 @@
+export type AppFeatureIcon = "gauge" | "copy" | "chart-bar" | "folders";
+
 export interface DesktopApp {
   slug: string;
   name: string;
   tagline: string;
   description: string;
   icon: string;
-  features: { title: string; desc: string }[];
+  features: { icon: AppFeatureIcon; title: string; desc: string }[];
   screenshots: { src: string; alt: string }[];
   privacyHref: string;
   android: { downloadHref: string; fileSizeLabel: string; playStoreHref: string | null };
@@ -20,10 +22,10 @@ export const APPS: DesktopApp[] = [
       "Device Cleaner helps you see what's actually using space on your device and clean it up on your terms — nothing happens automatically, and nothing leaves your device.",
     icon: "/apps/device-cleaner/icon.svg",
     features: [
-      { title: "Dashboard", desc: "Real battery level, storage used/free, and the app's own cache size." },
-      { title: "Duplicate Finder", desc: "Scans a folder you pick for files with identical content, so you can delete the extras." },
-      { title: "Large File Finder", desc: "Finds the biggest files in a folder you pick, so you can see what's actually worth deleting." },
-      { title: "Folder Organizer", desc: "Sorts loose files in a folder you pick into subfolders by type — Images, Documents, Videos, Audio, Archives, Other." },
+      { icon: "gauge",     title: "Dashboard", desc: "Real battery level, storage used/free, and the app's own cache size." },
+      { icon: "copy",      title: "Duplicate Finder", desc: "Scans a folder you pick for files with identical content, so you can delete the extras." },
+      { icon: "chart-bar", title: "Large File Finder", desc: "Finds the biggest files in a folder you pick, so you can see what's actually worth deleting." },
+      { icon: "folders",   title: "Folder Organizer", desc: "Sorts loose files in a folder you pick into subfolders by type — Images, Documents, Videos, Audio, Archives, Other." },
     ],
     screenshots: [
       { src: "/apps/device-cleaner/screenshots/dashboard.png", alt: "Device Cleaner dashboard showing battery and storage" },

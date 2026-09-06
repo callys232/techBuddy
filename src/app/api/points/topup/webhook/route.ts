@@ -1,69 +1,42 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { awardPoints, POINTS_PER_USD } from "@/lib/points";
+import { createServerClient } from "@/lib/supabase/client";
 
 const IPN_SECRET = process.env.NOWPAYMENTS_IPN_SECRET ?? "";
-
-interface NowPaymentsIpn {
-  order_id: string;
-  payment_status: string;
-  [key: string]: unknown;
-}
-
-/** Same sorted-keys HMAC-SHA512 scheme as the other NOWPayments webhook. */
+interface Ipn { order_id: string; payment_status: string; payment_id?: string | number; price_amount?: number; [key: string]: unknown }
 function sortKeys(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(sortKeys);
-  if (value && typeof value === "object") {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .sort(([a], [b]) => a.localeCompare(b))
-        .map(([k, v]) => [k, sortKeys(v)])
-    );
-  }
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value as Record<string, unknown>).sort(([a],[b]) => a.localeCompare(b)).map(([k,v]) => [k, sortKeys(v)]));
   return value;
 }
-
-function verifySignature(payload: NowPaymentsIpn, signature: string): boolean {
-  const sorted = JSON.stringify(sortKeys(payload));
-  const expected = crypto.createHmac("sha512", IPN_SECRET).update(sorted).digest("hex");
-  const sigBuf = Buffer.from(signature, "hex");
-  const expectedBuf = Buffer.from(expected, "hex");
-  return sigBuf.length === expectedBuf.length && crypto.timingSafeEqual(sigBuf, expectedBuf);
+function verified(payload: Ipn, signature: string) {
+  const expected = crypto.createHmac("sha512", IPN_SECRET).update(JSON.stringify(sortKeys(payload))).digest("hex");
+  const a = Buffer.from(signature, "hex"); const b = Buffer.from(expected, "hex");
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
-/** NOWPayments IPN webhook for points top-ups — verifies the signature, then
- *  credits points on a finished/confirmed payment. Idempotent per order_id
- *  isn't tracked separately here; NOWPayments sends one terminal status per
- *  invoice, and points_transactions carries the order_id-derived reason for
- *  any later reconciliation. */
 export async function POST(req: Request) {
-  if (!IPN_SECRET) {
-    return NextResponse.json({ error: "Payments not configured" }, { status: 503 });
-  }
-
+  if (!IPN_SECRET) return NextResponse.json({ error: "Payments not configured" }, { status: 503 });
   const raw = await req.text();
+  let payload: Ipn;
+  try { payload = JSON.parse(raw) as Ipn; } catch { return NextResponse.json({ error: "Invalid payload" }, { status: 400 }); }
   const signature = req.headers.get("x-nowpayments-sig");
-  const payload = JSON.parse(raw) as NowPaymentsIpn;
+  if (!signature || !verified(payload, signature)) return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+  if (!["confirmed", "finished"].includes(payload.payment_status)) return NextResponse.json({ ok: true });
+  const [prefix, orderId] = payload.order_id?.split(":") ?? [];
+  if (prefix !== "topup" || !orderId) return NextResponse.json({ ok: true });
 
-  if (!signature || !verifySignature(payload, signature)) {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+  const supabase = createServerClient();
+  const { data: order, error } = await supabase.from("payment_orders").select("id, email, amount, currency").eq("id", orderId).eq("provider", "nowpayments").eq("product_key", "points-topup").maybeSingle();
+  if (error || !order) return NextResponse.json({ error: "Unknown payment order" }, { status: 400 });
+  if (order.currency !== "USD" || Number(payload.price_amount ?? 0) + 0.01 < Number(order.amount)) return NextResponse.json({ error: "Payment amount mismatch" }, { status: 400 });
+  try {
+    await awardPoints(order.email, Math.round(Number(order.amount) * POINTS_PER_USD), "crypto_topup", `nowpayments-topup:${payload.payment_id ?? order.id}`);
+    const { error: updateError } = await supabase.from("payment_orders").update({ status: "paid", updated_at: new Date().toISOString() }).eq("id", order.id);
+    if (updateError) throw updateError;
+    return NextResponse.json({ ok: true });
+  } catch (processingError: unknown) {
+    return NextResponse.json({ error: processingError instanceof Error ? processingError.message : "Processing failed" }, { status: 500 });
   }
-
-  const parts = payload.order_id?.split(":") ?? [];
-  const [prefix, email, amountUsdStr] = parts;
-  if (prefix !== "topup" || !email) return NextResponse.json({ ok: true });
-
-  if (payload.payment_status === "finished" || payload.payment_status === "confirmed") {
-    const amountUsd = Number(amountUsdStr) || 0;
-    const points = Math.round(amountUsd * POINTS_PER_USD);
-    if (points > 0) {
-      try {
-        await awardPoints(email, points, `crypto_topup:$${amountUsd}`);
-      } catch {
-        // best-effort — NOWPayments retries IPNs, so a transient DB error isn't fatal here
-      }
-    }
-  }
-
-  return NextResponse.json({ ok: true });
 }

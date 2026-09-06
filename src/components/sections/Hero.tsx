@@ -4,11 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { IconArrowRight, IconBrandWhatsapp, IconArrowDown } from "@tabler/icons-react";
+import { IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-react";
 import { HERO_PAIN_CHIPS } from "@/mock/quote";
 import { HeroHub } from "@/components/ui/HeroHub";
-import { RotatingWord } from "@/components/ui/RotatingWord";
-import { STATS } from "@/mock/stats";
 
 /* Client-only, code-split — three.js/R3F never ships in the initial bundle
    or on screens below lg where the layer is hidden anyway. */
@@ -18,8 +16,6 @@ const Hero3D = dynamic(() => import("@/components/three/Hero3D").then((m) => m.H
 });
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
-
-const BUILD_WORDS = ["web app", "mobile app", "AI tool", "fintech platform", "dashboard", "MVP"];
 
 const container = {
   hidden: {},
@@ -57,31 +53,33 @@ export function Hero() {
         >
           {/* Eyebrow */}
           <motion.div variants={item} className="mb-6">
-            <span className="eyebrow">Built in Africa · Working Worldwide</span>
+            <span className="eyebrow">Product strategy, design, and engineering</span>
           </motion.div>
 
           {/* Headline */}
           <motion.h1 variants={item} className="h-hero mb-5">
-            You have the <span className="text-[var(--brand)]">vision</span>.<br />
-            We have the <span className="text-[var(--brand)]">team</span>.<br />
-            Let&apos;s build your <RotatingWord words={BUILD_WORDS} />.
+            Make your business<br />
+            <span className="text-[var(--brand)]">easier to run</span> and<br />
+            easier to grow.
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p variants={item} className="lead max-w-lg mx-auto mb-7">
-            From fintech platforms to logistics systems — we engineer
-            the web apps, mobile products, and AI integrations that
-            help growing businesses move faster and scale further,
-            wherever their customers are.
+            We design and build reliable software that removes busywork, improves
+            customer experiences, and gives your team more time for what matters.
           </motion.p>
 
-          {/* Proof strip */}
+          {/* Capability strip — concrete expertise without unsupported claims */}
           <motion.div variants={item}
-            className="flex flex-wrap justify-center gap-x-10 gap-y-4 pb-5 border-b border-[var(--border)]">
-            {[STATS.timeToMvp, STATS.productsShipped, STATS.clientReEngagement].map((s) => (
-              <div key={s.id} className="text-center">
-                <span className="block font-display font-semibold text-2xl text-[var(--brand)]">{s.value}</span>
-                <span className="stat-label">{s.label}</span>
+            className="grid w-full max-w-2xl grid-cols-1 gap-3 border-b border-[var(--border)] pb-5 sm:grid-cols-3">
+            {[
+              ["01", "Product strategy"],
+              ["02", "Full-stack engineering"],
+              ["03", "Launch & support"],
+            ].map(([number, label]) => (
+              <div key={number} className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-left">
+                <span className="block font-mono text-[10px] text-[var(--brand)]">{number}</span>
+                <span className="mt-1 block text-xs font-semibold text-[var(--ink)]">{label}</span>
               </div>
             ))}
           </motion.div>
@@ -91,7 +89,7 @@ export function Hero() {
           <motion.div variants={item} className="mb-7 pt-4">
             <Link href="/portfolio" className="group inline-flex items-center gap-2 text-xs text-[var(--ink-faint)] hover:text-[var(--brand)] transition-colors">
               <span className="font-mono text-[9px] uppercase tracking-wide rounded-full border border-[var(--border)] px-2 py-0.5 shrink-0">Concept build</span>
-              <span className="italic">Claims processing cut from 14 days to under 24 hours — see how →</span>
+              <span className="italic">Explore the product thinking, interfaces, and technical choices behind the work →</span>
             </Link>
           </motion.div>
 
@@ -126,12 +124,12 @@ export function Hero() {
           {/* CTAs */}
           <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/quote" className="btn-primary px-7 py-3.5 text-[13px]">
-              Get a free quote
+              Discuss your project
               <IconArrowRight size={14} />
             </Link>
-            <a href="#why" className="btn-secondary px-7 py-3.5 text-[13px]">
-              Why it matters <IconArrowDown size={13} />
-            </a>
+            <Link href="/about" className="btn-secondary px-7 py-3.5 text-[13px]">
+              See how we work <IconArrowRight size={13} />
+            </Link>
           </motion.div>
 
           {/* WhatsApp link */}

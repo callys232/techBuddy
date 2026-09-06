@@ -1,8 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { verifyWatchToken, claimAdToken, MAX_WATCHES_PER_DAY } from "@/lib/adToken";
 import { awardPoints, countTodayTransactions, POINTS_RULES } from "@/lib/points";
+import { getVerifiedEmail } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_AD_SCRIPT_URL || !process.env.NEXT_PUBLIC_AD_ZONE_ID) return NextResponse.json({ error: "Rewarded ads are unavailable" }, { status: 503 });
+  const signedInEmail = await getVerifiedEmail(req);
+  if (!signedInEmail) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
   const body = await req.json().catch(() => null);
   const token = body?.token as string | undefined;
   if (!token) return NextResponse.json({ error: "token is required" }, { status: 400 });
@@ -11,6 +15,7 @@ export async function POST(req: NextRequest) {
   if (!verified) {
     return NextResponse.json({ error: "Invalid or expired watch session" }, { status: 400 });
   }
+  if (verified.email !== signedInEmail) return NextResponse.json({ error: "Watch session belongs to another account" }, { status: 403 });
 
   // Claim the jti before awarding anything — a second submission of the same
   // token fails this insert (unique constraint) and never reaches awardPoints.
@@ -24,6 +29,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Daily ad-watch limit reached — come back tomorrow" }, { status: 429 });
   }
 
-  const balance = await awardPoints(verified.email, POINTS_RULES.watchAd, "watch_ad");
+  const balance = await awardPoints(verified.email, POINTS_RULES.watchAd, "watch_ad", `watch-ad:${verified.jti}`);
   return NextResponse.json({ balance, earned: POINTS_RULES.watchAd });
 }

@@ -8,7 +8,7 @@ export interface FooterLinkGroup {
 }
 
 export interface SocialLink {
-  iconName: "x" | "linkedin" | "github" | "instagram";
+  iconName: "x" | "linkedin" | "github" | "instagram" | "facebook";
   href: string;
   label: string;
 }
@@ -58,6 +58,7 @@ export const FOOTER_LINKS: FooterLinkGroup = {
 export const SOCIAL_LINKS: SocialLink[] = [
   { iconName: "x",         href: "https://x.com/techagencyafrica",              label: "X / Twitter" },
   { iconName: "linkedin",  href: "https://linkedin.com/company/techagencyafrica", label: "LinkedIn"    },
-  { iconName: "github",    href: "https://github.com/techagencyafrica",           label: "GitHub"      },
+  { iconName: "github",    href: "https://github.com/callys232",                  label: "GitHub"      },
   { iconName: "instagram", href: "https://instagram.com/techagencyafrica",        label: "Instagram"   },
+  { iconName: "facebook",  href: "https://www.facebook.com/share/1EhwYk1wQv/",    label: "Facebook"    },
 ];

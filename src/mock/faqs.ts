@@ -1,22 +1,22 @@
 export const FAQS = [
   {
-    q: "How much does a project cost?",
-    a: "Every project is scoped differently, so we don't publish fixed prices — a landing page and a fintech platform are very different builds. Use our free Cost Estimator to get an instant Naira range based on your project type, features, and timeline. For a precise figure, our quote wizard gives you an exact number with a signed scope.",
+    q: "How much does custom software development cost in Nigeria?",
+    a: "The useful answer depends on the product, integrations, user roles, security requirements, and launch timeline. A marketing website and a regulated fintech platform should never share one price. Use our cost estimator for a planning range, then request a scoped proposal for the features your business actually needs.",
     link: { label: "Get an instant estimate →", href: "/tools/cost-estimator" },
   },
   {
     q: "How long will it take to build my product?",
-    a: "A standard MVP takes 8–14 weeks from signed contract to production launch. A full product with multiple user roles, payment flows, and an admin dashboard typically takes 3–5 months. We run 2-week sprints with a live staging environment, so you see real progress every week — not just a demo at the end.",
+    a: "The timeline follows the scope. A focused MVP can move quickly; a product with several user roles, payment flows, integrations, and an administration system needs more discovery, testing, and release work. We break delivery into visible milestones and share progress on a staging environment, so you can make decisions before launch day.",
     link: null,
   },
   {
     q: "What if I don't know exactly what I need?",
-    a: "That's what the discovery phase is for, and it's free. We start every engagement with a 60-minute strategy call where we ask the right questions, map your users' journeys, and scope the smallest version of your product that can generate revenue. Most clients come to us with a rough idea — we help turn it into a clear, costed plan.",
+    a: "That is exactly where product discovery helps. We start by understanding the customer, the business goal, and the constraint creating the most risk. Then we map the smallest useful version of the product and turn it into a clear, costed plan before serious development begins.",
     link: { label: "Book a free call →", href: "/contact" },
   },
   {
     q: "Do you work with early-stage startups or only established companies?",
-    a: "Both. We've worked with founders who had just an idea and an Aso-ebi budget, and with Series A companies scaling to millions of users. What matters is that you're serious about building — not how much funding you have. Use the cost estimator to see what your idea would take, then reach out. If you're pre-revenue, we can also discuss equity arrangements for the right opportunity.",
+    a: "Both. Early-stage founders often need help deciding what not to build, while established teams usually need integration, reliability, security, or delivery support. The engagement changes with your stage, but the standard stays the same: a clear problem, a realistic scope, and software built to last.",
     link: { label: "See how we invest →", href: "/invest" },
   },
   {

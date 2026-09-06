@@ -349,6 +349,36 @@ export interface Database {
         };
         Relationships: [];
       };
+      profiles: {
+        Row: { user_id: string; email: string; display_name: string | null; primary_goal: string | null; marketing_opt_in: boolean; onboarding_completed_at: string | null; created_at: string; updated_at: string };
+        Insert: { user_id: string; email: string; display_name?: string | null; primary_goal?: string | null; marketing_opt_in?: boolean; onboarding_completed_at?: string | null; updated_at?: string };
+        Update: { email?: string; display_name?: string | null; primary_goal?: string | null; marketing_opt_in?: boolean; onboarding_completed_at?: string | null; updated_at?: string };
+        Relationships: [];
+      };
+      entitlements: {
+        Row: { id: string; user_id: string | null; email: string; entitlement_key: string; source: string; source_reference: string; status: string; starts_at: string; ends_at: string | null; created_at: string; updated_at: string };
+        Insert: { user_id?: string | null; email: string; entitlement_key: string; source: string; source_reference: string; status?: string; starts_at?: string; ends_at?: string | null; updated_at?: string };
+        Update: { status?: string; ends_at?: string | null; updated_at?: string };
+        Relationships: [];
+      };
+      payment_orders: {
+        Row: { id: string; user_id: string | null; email: string; provider: string; provider_reference: string | null; product_key: string; amount: number; currency: string; status: string; metadata: Record<string, unknown>; created_at: string; updated_at: string };
+        Insert: { user_id?: string | null; email: string; provider: string; provider_reference?: string | null; product_key: string; amount: number; currency: string; status?: string; metadata?: Record<string, unknown>; updated_at?: string };
+        Update: { provider_reference?: string | null; status?: string; metadata?: Record<string, unknown>; updated_at?: string };
+        Relationships: [];
+      };
+      account_deletion_requests: {
+        Row: { id: string; user_id: string; email: string; reason: string | null; status: string; admin_note: string | null; reviewed_by: string | null; reviewed_at: string | null; created_at: string; updated_at: string };
+        Insert: { user_id: string; email: string; reason?: string | null; status?: string; updated_at?: string };
+        Update: { reason?: string | null; status?: string; admin_note?: string | null; reviewed_by?: string | null; reviewed_at?: string | null; updated_at?: string };
+        Relationships: [];
+      };
+      webhook_events: {
+        Row: { id: string; provider: string; provider_event_id: string; event_type: string; status: string; payload: Record<string, unknown>; error: string | null; created_at: string; processed_at: string | null };
+        Insert: { provider: string; provider_event_id: string; event_type: string; status?: string; payload: Record<string, unknown>; error?: string | null; processed_at?: string | null };
+        Update: { status?: string; error?: string | null; processed_at?: string | null };
+        Relationships: [];
+      };
       tool_leads: {
         Row: {
           id: string;
@@ -380,7 +410,20 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      mutate_points: {
+        Args: { p_email: string; p_delta: number; p_reason: string; p_idempotency_key?: string | null; p_metadata?: Record<string, unknown> };
+        Returns: number;
+      };
+      purchase_product_with_points: {
+        Args: { p_email: string; p_product_slug: string; p_idempotency_key: string };
+        Returns: { balance: number; purchase_id: string; product_id: string; product_name: string; product_type: string };
+      };
+      redeem_premium_month: {
+        Args: { p_email: string; p_user_id: string; p_cost: number; p_idempotency_key: string };
+        Returns: { balance: number; ends_at: string };
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

@@ -19,7 +19,7 @@ export default function MarketingError({
       <p className="font-mono text-[var(--brand)] text-xs uppercase tracking-[0.3em] mb-4">
         Something went wrong
       </p>
-      <h2 className="font-display text-4xl font-extrabold text-[var(--ink)] mb-4">
+      <h2 className="h-display mb-4">
         Page failed to load
       </h2>
       <p className="text-[var(--ink)]/50 max-w-sm mb-10 leading-relaxed">

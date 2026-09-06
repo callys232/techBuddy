@@ -14,7 +14,7 @@ export default function QuotePage() {
           <span className="font-mono text-sm text-[var(--brand)] uppercase tracking-widest">
             Free · No commitment
           </span>
-          <h1 className="mt-3 font-display text-5xl font-extrabold text-[var(--ink)]">
+          <h1 className="mt-3 h-display">
             Tell Us About Your Project
           </h1>
           <p className="mt-4 text-[var(--ink)]/60">

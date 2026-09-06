@@ -4,6 +4,7 @@ import { countTodayTransactions, POINTS_RULES } from "@/lib/points";
 import { getVerifiedEmail } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_AD_SCRIPT_URL || !process.env.NEXT_PUBLIC_AD_ZONE_ID) return NextResponse.json({ error: "Rewarded ads are unavailable" }, { status: 503 });
   const email = await getVerifiedEmail(req);
   if (!email) return NextResponse.json({ error: "Sign in required" }, { status: 401 });
 

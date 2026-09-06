@@ -60,7 +60,7 @@ export default function InvestApplyPage() {
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15 mx-auto mb-6">
             <IconCheck size={28} className="text-emerald-400" />
           </div>
-          <h1 className="font-display text-3xl font-extrabold text-[var(--ink)] mb-3">Application received</h1>
+          <h1 className="h-display mb-3">Application received</h1>
           <p className="text-[var(--ink)]/55 mb-2">
             We&apos;ll review your pitch and get back to you within 5 business days. Check your email for a confirmation.
           </p>
@@ -91,7 +91,7 @@ export default function InvestApplyPage() {
 
         {/* Header */}
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--brand)]">Apply</span>
-        <h1 className="mt-2 font-display text-3xl md:text-4xl font-extrabold text-[var(--ink)] mb-2">
+        <h1 className="mt-2 h-display mb-2">
           Tell us about your idea
         </h1>
         <p className="text-[var(--ink)]/50 mb-10 text-sm leading-relaxed">

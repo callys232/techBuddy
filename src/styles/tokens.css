@@ -6,6 +6,8 @@
   /* ── Surfaces ──────────────────────────────────────────────────── */
   --page:    #FBF9F8; /* warm off-white page background */
   --surface: #FFFFFF; /* raised cards — pure white reads clean against the warm page */
+  --surface-soft: #F5F2EF;
+  --surface-raised: #FFFFFF;
 
   /* ── Ink tiers ─────────────────────────────────────────────────── */
   --ink:       #1C1917; /* primary text */
@@ -14,11 +16,13 @@
 
   /* ── Hairline border ───────────────────────────────────────────── */
   --border: rgba(28, 25, 23, 0.11);
+  --border-strong: rgba(28, 25, 23, 0.2);
 
   /* ── Brand accent — rationed. Logo mark, CTA fills, checkmarks,
      eyebrow dots, stat numerals, suite glyphs. Never body text or washes. ── */
   --brand:     #1E3A8A; /* logo navy — dark enough for text-level contrast on white */
   --brand-ink: #FFFFFF; /* text/icon color drawn on top of a --brand fill */
+  --brand-gradient-to: #3B82F6; /* brighter blue — second stop for gradient headings, still one hue */
 
   /* ── Status — reserved separately from brand ──────────────────── */
   --good: #16A34A;
@@ -60,6 +64,8 @@
   --shell-max: 1240px;
 
   --radius-card:  16px;
+  --radius-control: 12px;
+  --radius-panel: 24px;
   --radius-badge: 9999px;
 
   --ease-card:   300ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -67,6 +73,7 @@
   --ease-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --shadow-card: 0 1px 2px rgba(28, 25, 23, 0.04), 0 8px 24px rgba(28, 25, 23, 0.06);
+  --shadow-raised: 0 2px 4px rgba(28, 25, 23, 0.05), 0 18px 48px rgba(28, 25, 23, 0.1);
 
   /* ── Legacy aliases — keep every existing component working while it's
      progressively migrated to the new class vocabulary (.card, .eyebrow,
@@ -87,15 +94,20 @@
 .dark {
   --page:    #000000;
   --surface: #0C0C0D;
+  --surface-soft: #121214;
+  --surface-raised: #171719;
 
   --ink:       #F5F3F1;
   --ink-muted: #A8A29B;
   --ink-faint: #6B6560;
 
   --border: rgba(245, 243, 241, 0.11);
+  --border-strong: rgba(245, 243, 241, 0.2);
 
   --brand:     #38BDF8; /* logo sky-blue — shifted brighter to clear true black without glowing */
   --brand-ink: #051425;
+  --brand-gradient-to: #93E2FF; /* lighter sky — reads as a glow against true black */
 
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.55), 0 20px 56px rgba(0, 0, 0, 0.65);
 }

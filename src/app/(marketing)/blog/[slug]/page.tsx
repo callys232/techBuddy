@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: Props) {
         </span>
 
         {/* Title */}
-        <h1 className="mt-5 font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] leading-[1.12] tracking-[-0.02em]">
+        <h1 className="mt-5 h-display">
           {post.title}
         </h1>
 
@@ -85,6 +85,23 @@ export default async function BlogPostPage({ params }: Props) {
             <p key={i}>{para}</p>
           ))}
         </div>
+
+        {post.sources?.length ? (
+          <aside className="mt-10 border-t border-[var(--border)] pt-6" aria-label="Article sources">
+            <p className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
+              Sources and further reading
+            </p>
+            <ul className="space-y-2">
+              {post.sources.map((source) => (
+                <li key={source.href}>
+                  <a href={source.href} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--ink-muted)] underline decoration-[var(--border-strong)] underline-offset-4 transition-colors hover:text-[var(--brand)]">
+                    {source.label} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        ) : null}
 
         {/* Tags / related */}
         <div className="mt-12 flex flex-wrap gap-2">

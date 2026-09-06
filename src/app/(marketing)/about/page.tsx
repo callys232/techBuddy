@@ -17,7 +17,7 @@ const DESIGN_EXAMPLES = ALL_PROJECTS.filter((p) =>
 export const metadata: Metadata = {
   title: "About TechAgency — Who We Are",
   description:
-    "We're a Lagos-born digital product studio building world-class software for ambitious businesses everywhere. Meet the team, learn our story, and understand how we work.",
+    "How our Lagos-based product studio scopes, designs, builds, and supports reliable software for businesses in Nigeria and worldwide.",
 };
 
 /** Role-based, not named individuals — this studio is small and growing, and
@@ -57,15 +57,15 @@ const VALUES = [
   },
   {
     title: "Ship fast, maintain properly",
-    body: "We believe in getting to production quickly and then maintaining relentlessly. A product launched and improved beats a perfect product delivered late every time.",
+    body: "We reduce scope before we reduce quality, release useful software in manageable stages, and maintain it after launch. Every release should be small enough to evaluate and safe enough to operate.",
   },
   {
     title: "Transparent pricing",
-    body: "No hidden costs. We tell you the range before we start, explain what drives the number, and stick to it. You always know exactly what you're paying for.",
+    body: "We explain what drives cost, what is included, and which assumptions could change the estimate. Work outside the agreed scope is discussed before it begins.",
   },
   {
-    title: "Long-term partnerships",
-    body: "We're not a one-off vendor — we design engagements so it makes sense to keep working together after launch, not just invoice you once.",
+    title: "The simplest suitable solution",
+    body: "Custom software is not always the right answer. If an existing tool, a smaller first release, or a process change solves the problem more responsibly, we will say so.",
   },
 ];
 
@@ -79,7 +79,7 @@ export default function AboutPage() {
         <div className="relative z-10 mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-4">Our story</p>
           <h1 className="h-hero max-w-3xl">
-            Built in Africa. Engineered for the World.
+            Software built around the realities of your business.
           </h1>
           <p className="mt-6 text-lg text-[var(--ink-muted)] max-w-2xl leading-relaxed">
             We started TechAgency in Lagos with a simple observation: fast-growing businesses were being underserved by generic agencies that didn&apos;t understand payments infrastructure, data compliance, or what it means to build for a user on a 3G connection.
@@ -171,7 +171,7 @@ export default function AboutPage() {
       <section className="py-[var(--section-y)] bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-3">Our approach</p>
-          <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-[var(--ink)] mb-3">
+          <h2 className="h-section mb-3">
             How the work gets done
           </h2>
           <p className="text-sm text-[var(--ink-muted)] max-w-xl mb-12">
@@ -207,13 +207,13 @@ export default function AboutPage() {
       <section className="py-[var(--section-y)]">
         <div className="mx-auto max-w-7xl px-[var(--container-px)]">
           <p className="eyebrow mb-3">How we deliver</p>
-          <h2 className="h-section mb-12">Our process</h2>
+          <h2 className="h-section mb-12">What you can expect</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 relative">
             {[
-              { step: "01", title: "Discovery", body: "We spend the first week understanding your business, users, and constraints — not just writing specs." },
-              { step: "02", title: "Design & scope", body: "Interactive Figma prototypes, a fixed scope, and a transparent Naira range before any code is written." },
-              { step: "03", title: "Build & iterate", body: "Weekly demos. Continuous deployment to a staging environment. You see real progress every 7 days." },
-              { step: "04", title: "Launch & maintain", body: "Production deploy, knowledge transfer, and optional monthly maintenance plans to keep it running." },
+              { step: "01", title: "Understand the problem", body: "We map the users, workflows, constraints, and business outcome before recommending technology." },
+              { step: "02", title: "Define the right scope", body: "You receive a prioritised feature set, technical direction, delivery plan, and transparent cost range." },
+              { step: "03", title: "Build with visibility", body: "Working software is demonstrated regularly, so decisions are made before problems become expensive." },
+              { step: "04", title: "Launch responsibly", body: "We handle testing, deployment, monitoring, documentation, and knowledge transfer, with ongoing support available." },
             ].map((s, i) => (
               <div
                 key={s.step}
@@ -236,13 +236,13 @@ export default function AboutPage() {
       <RevealSection delay={0.05}>
       <section className="py-[var(--section-y)] bg-[var(--surface)]">
         <div className="mx-auto max-w-3xl px-[var(--container-px)] text-center">
-          <h2 className="h-section mb-4">Ready to build together?</h2>
+          <h2 className="h-section mb-4">Start with the problem you need to solve.</h2>
           <p className="text-[var(--ink-muted)] mb-8">
             Tell us what you&apos;re working on. We&apos;ll respond within 24 hours with a realistic scope and budget range.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/quote" className="btn-primary h-12 px-8">
-              Get a free quote
+              Discuss your project
             </Link>
             <Link href="/talent" className="btn-ghost h-12 px-8">
               Join our talent network

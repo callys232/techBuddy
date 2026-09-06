@@ -1,5 +1,4 @@
 import { createServerClient } from "@/lib/supabase/client";
-import { spendPoints } from "@/lib/points";
 
 export interface Product {
   id: string;
@@ -62,32 +61,14 @@ export async function isUnlocked(email: string, unlockKey: string): Promise<bool
 /** Spends points and records the purchase. Throws on insufficient balance or
  *  an already-owned product (the unique (email, product_id) index enforces
  *  the latter at the DB level too, as a race-safety backstop). */
-export async function purchaseProduct(email: string, productSlug: string): Promise<{ balance: number; product: { id: string; name: string; type: string } }> {
+export async function purchaseProduct(email: string, productSlug: string, idempotencyKey: string): Promise<{ balance: number; product: { id: string; name: string; type: string } }> {
   const normalized = normalize(email);
   const supabase = createServerClient();
-
-  const { data: product } = await supabase
-    .from("products")
-    .select("id, name, type, price_points")
-    .eq("slug", productSlug)
-    .eq("active", true)
-    .maybeSingle();
-  if (!product) throw new Error("Product not found");
-
-  if (await hasPurchased(normalized, product.id)) {
-    throw new Error("You already own this");
-  }
-
-  const balance = await spendPoints(normalized, product.price_points, `purchase:${productSlug}`);
-
-  const { error } = await supabase.from("purchases").insert({
-    email: normalized,
-    product_id: product.id,
-    price_paid_points: product.price_points,
+  const { data, error } = await supabase.rpc("purchase_product_with_points", {
+    p_email: normalized, p_product_slug: productSlug, p_idempotency_key: idempotencyKey,
   });
-  if (error) throw new Error("Purchase could not be recorded — contact support with your points transaction");
-
-  return { balance, product: { id: product.id, name: product.name, type: product.type } };
+  if (error) throw new Error(error.message);
+  return { balance: data.balance, product: { id: data.product_id, name: data.product_name, type: data.product_type } };
 }
 
 /** Generates a short-lived signed download URL — only after verifying the

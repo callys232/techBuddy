@@ -28,7 +28,7 @@ export default function NotFound() {
         </div>
       </div>
 
-      <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[var(--ink)] mb-4">
+      <h1 className="h-display mb-4">
         Lost in the Build
       </h1>
       <p className="text-[var(--ink)]/50 max-w-sm mb-10 leading-relaxed">

@@ -33,7 +33,7 @@ export default function ContactPage() {
           {/* Left — info + team */}
           <div className="space-y-10">
             <div>
-              <h2 className="font-display text-2xl font-bold text-[var(--ink)] mb-4">Contact Info</h2>
+              <h2 className="h-section mb-4">Contact Info</h2>
               <ul className="space-y-3 text-[var(--ink)]/70">
                 <li>hello@techagency.africa</li>
                 <li>Response within 24 hours</li>
@@ -41,7 +41,7 @@ export default function ContactPage() {
               </ul>
             </div>
             <div>
-              <h2 className="font-display text-2xl font-bold text-[var(--ink)] mb-6">Meet the Team</h2>
+              <h2 className="h-section mb-6">Meet the Team</h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {TEAM_MEMBERS.map((member) => (
                   <TeamCard key={member.name} {...member} />
@@ -52,7 +52,7 @@ export default function ContactPage() {
 
           {/* Right — form */}
           <div className="space-y-6">
-            <h2 className="font-display text-2xl font-bold text-[var(--ink)]">Send a Message</h2>
+            <h2 className="h-section">Send a Message</h2>
             <ContactForm />
 
             {/* Calendar booking */}

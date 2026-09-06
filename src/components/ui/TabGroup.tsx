@@ -34,7 +34,7 @@ export function TabGroup({ tabs, activeTab, onChange, variant = "default" }: Tab
               key={tab.id}
               onClick={() => onChange(tab.id)}
               className={[
-                "rounded-full px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-widest transition-all duration-200 border",
+                "rounded-full px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-widest transition-all duration-200 border active:scale-95",
                 active
                   ? "bg-[var(--brand)] text-[var(--brand-ink)] border-[var(--brand)]"
                   : "border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--brand)]/50 hover:text-[var(--brand)]",
@@ -58,7 +58,7 @@ export function TabGroup({ tabs, activeTab, onChange, variant = "default" }: Tab
             ref={(el) => { tabRefs.current[tab.id] = el; }}
             onClick={() => onChange(tab.id)}
             className={[
-              "relative shrink-0 rounded-t-lg px-5 py-3 font-heading text-sm font-semibold transition-colors duration-200",
+              "relative shrink-0 rounded-t-lg px-5 py-3 font-heading text-sm font-semibold transition-all duration-200 active:scale-[0.97]",
               active
                 ? "text-[var(--brand)]"
                 : "text-[var(--ink-faint)] hover:text-[var(--ink-muted)] hover:bg-[var(--surface)]/50",

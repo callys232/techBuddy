@@ -2,74 +2,31 @@ import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { createServerClient } from "@/lib/supabase/client";
 
-const IPN_SECRET = process.env.NOWPAYMENTS_IPN_SECRET ?? "";
+const SECRET = process.env.NOWPAYMENTS_IPN_SECRET ?? "";
+interface Ipn { order_id: string; payment_status: string; payment_id?: string | number; price_amount?: number; [key: string]: unknown }
+function sortKeys(value: unknown): unknown { if (Array.isArray(value)) return value.map(sortKeys); if (value && typeof value === "object") return Object.fromEntries(Object.entries(value as Record<string,unknown>).sort(([a],[b]) => a.localeCompare(b)).map(([k,v]) => [k,sortKeys(v)])); return value; }
+function verified(payload: Ipn, sig: string) { const expected=crypto.createHmac("sha512",SECRET).update(JSON.stringify(sortKeys(payload))).digest("hex"); const a=Buffer.from(sig,"hex"), b=Buffer.from(expected,"hex"); return a.length===b.length&&crypto.timingSafeEqual(a,b); }
 
-interface NowPaymentsIpn {
-  order_id: string;
-  payment_status: string;
-  [key: string]: unknown;
-}
-
-/** NOWPayments signs the IPN body as HMAC-SHA512 of the JSON re-serialized with
- *  keys sorted alphabetically (recursively) and no extra whitespace. */
-function sortKeys(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(sortKeys);
-  if (value && typeof value === "object") {
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .sort(([a], [b]) => a.localeCompare(b))
-        .map(([k, v]) => [k, sortKeys(v)])
-    );
-  }
-  return value;
-}
-
-function verifySignature(payload: NowPaymentsIpn, signature: string): boolean {
-  const sorted = JSON.stringify(sortKeys(payload));
-  const expected = crypto.createHmac("sha512", IPN_SECRET).update(sorted).digest("hex");
-  const sigBuf = Buffer.from(signature, "hex");
-  const expectedBuf = Buffer.from(expected, "hex");
-  return sigBuf.length === expectedBuf.length && crypto.timingSafeEqual(sigBuf, expectedBuf);
-}
-
-/** NOWPayments IPN webhook — verifies the HMAC signature, then grants 30 days
- *  of Resume Premium on a finished/confirmed payment. */
 export async function POST(req: Request) {
-  if (!IPN_SECRET) {
-    return NextResponse.json({ error: "Payments not configured" }, { status: 503 });
-  }
-
-  const raw = await req.text();
-  const signature = req.headers.get("x-nowpayments-sig");
-  const payload = JSON.parse(raw) as NowPaymentsIpn;
-
-  if (!signature || !verifySignature(payload, signature)) {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
-  }
-
-  const email = payload.order_id?.split(":")[1]?.toLowerCase().trim();
-  if (!email) return NextResponse.json({ ok: true }); // nothing to attribute this to
-
-  if (payload.payment_status === "finished" || payload.payment_status === "confirmed") {
-    const periodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-    const supabase = createServerClient();
-
-    try {
-      await supabase.from("subscriptions").upsert(
-        {
-          email,
-          status: "active",
-          plan: "Resume Premium (Crypto)",
-          paystack_customer_code: null,
-          paystack_subscription_code: null,
-          current_period_end: periodEnd,
-        },
-        { onConflict: "email" }
-      );
-    } catch {
-      // best-effort — NOWPayments retries IPNs, so a transient DB error isn't fatal here
+  if (!SECRET) return NextResponse.json({ error: "Payments not configured" }, { status: 503 });
+  const raw=await req.text(); let payload: Ipn;
+  try { payload=JSON.parse(raw) as Ipn; } catch { return NextResponse.json({ error: "Invalid payload" }, { status: 400 }); }
+  const sig=req.headers.get("x-nowpayments-sig"); if(!sig||!verified(payload,sig)) return NextResponse.json({ error:"Invalid signature" },{status:401});
+  if(!["confirmed","finished"].includes(payload.payment_status)) return NextResponse.json({ok:true});
+  const [prefix,orderId]=payload.order_id?.split(":")??[]; if(prefix!=="premium"||!orderId) return NextResponse.json({ok:true,ignored:true});
+  const supabase=createServerClient();
+  const {data:order,error}=await supabase.from("payment_orders").select("*").eq("id",orderId).eq("provider","nowpayments").eq("product_key","premium-all-tools-month").maybeSingle();
+  if(error||!order) return NextResponse.json({error:"Unknown payment order"},{status:400});
+  if(order.currency!=="USD"||Number(payload.price_amount??0)+0.01<Number(order.amount)) return NextResponse.json({error:"Payment amount mismatch"},{status:400});
+  try {
+    const reference=String(payload.payment_id??order.id);
+    const existing=await supabase.from("entitlements").select("id").eq("source","nowpayments").eq("source_reference",reference).eq("entitlement_key","premium-all-tools").maybeSingle();
+    if(!existing.data){
+      const {data:latest}=await supabase.from("entitlements").select("ends_at").eq("email",order.email).eq("entitlement_key","premium-all-tools").eq("source","nowpayments").order("ends_at",{ascending:false}).limit(1).maybeSingle();
+      const base=latest?.ends_at&&new Date(latest.ends_at)>new Date()?new Date(latest.ends_at):new Date(); const endsAt=new Date(base.getTime()+30*86400000).toISOString();
+      const {error:grantError}=await supabase.from("entitlements").insert({user_id:order.user_id,email:order.email,entitlement_key:"premium-all-tools",source:"nowpayments",source_reference:reference,ends_at:endsAt}); if(grantError) throw grantError;
     }
-  }
-
-  return NextResponse.json({ ok: true });
+    const {error:updateError}=await supabase.from("payment_orders").update({status:"paid",updated_at:new Date().toISOString()}).eq("id",order.id); if(updateError) throw updateError;
+    return NextResponse.json({ok:true});
+  } catch { return NextResponse.json({error:"Webhook processing failed"},{status:500}); }
 }

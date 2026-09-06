@@ -5,10 +5,23 @@ import { createServerClient } from "@/lib/supabase/client";
 export async function isEmailSubscribed(email: string): Promise<boolean> {
   try {
     const supabase = createServerClient();
+    const normalized = email.toLowerCase().trim();
+    const now = new Date().toISOString();
+    const { data: entitlement } = await supabase
+      .from("entitlements")
+      .select("id")
+      .eq("email", normalized)
+      .eq("entitlement_key", "premium-all-tools")
+      .eq("status", "active")
+      .or(`ends_at.is.null,ends_at.gt.${now}`)
+      .limit(1)
+      .maybeSingle();
+    if (entitlement) return true;
+
     const { data, error } = await supabase
       .from("subscriptions")
       .select("status, current_period_end")
-      .eq("email", email.toLowerCase().trim())
+      .eq("email", normalized)
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();

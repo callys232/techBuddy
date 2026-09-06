@@ -13,6 +13,7 @@ export interface BlogPost {
   readTime: number;
   slug: string;
   date: string;
+  sources?: { label: string; href: string }[];
 }
 
 export interface BlogTab {
@@ -28,9 +29,71 @@ export const BLOG_TABS: BlogTab[] = [
   { id: "startup-tech", label: "Startup Tech" },
   { id: "nigeria-tech", label: "Nigeria Tech" },
   { id: "tools", label: "Tools" },
+  { id: "crypto", label: "Crypto" },
 ];
 
 export const ALL_POSTS: BlogPost[] = [
+  {
+    image: "/placeholder.png",
+    category: "Crypto",
+    title: "Where Crypto Is Useful—and Where It Is Not",
+    excerpt: "A balanced look at self-custody, cross-border transfers, programmable payments, volatility, fees, and the responsibility that comes with controlling your own keys.",
+    body: [
+      "Crypto is most useful when it solves a specific transfer, ownership, or settlement problem. It can let people move digital assets without relying on one custodian, make some cross-border transactions easier, and support programmable payments that execute according to software-defined rules. Those are infrastructure benefits—not a promise that an asset will rise in value.",
+      "Self-custody is one of the clearest benefits and one of the largest risks. A non-custodial wallet gives you control of the private keys used to authorise transactions. It also removes the familiar password-reset and account-recovery protections offered by many traditional services. If a recovery phrase is lost or exposed, access may be lost permanently and a fraudulent transfer usually cannot be reversed.",
+      "Crypto is a poor fit when price stability, chargebacks, simple customer support, or guaranteed recovery matter more than direct control. Network fees can change, tokens can be volatile, smart contracts can contain defects, and an unfamiliar interface can turn a small mistake into a permanent loss. A conventional bank transfer or regulated payment provider is often the more responsible choice.",
+      "Before using crypto, define the job it must perform, compare the complete cost with conventional alternatives, and decide who is responsible for custody, approvals, backups, accounting, and compliance. Treat any investment return as uncertain. This article is educational and is not financial advice.",
+    ],
+    author: { name: "TechAgency Team", avatar: "/placeholder.png" },
+    readTime: 6,
+    slug: "crypto-benefits-and-tradeoffs",
+    date: "2026-09-04",
+    sources: [
+      { label: "Ledger: custodial and non-custodial wallets", href: "https://www.ledger.com/academy/topics/security/custodial-vs-non-custodial-wallets" },
+      { label: "Ledger: self-custody and its responsibilities", href: "https://www.ledger.com/academy/topics/security/what-is-self-custody-in-crypto" },
+    ],
+  },
+  {
+    image: "/placeholder.png",
+    category: "Crypto",
+    title: "Crypto Scams: The Warning Signs to Recognise Early",
+    excerpt: "Fake investment platforms, recovery services, urgent wallet messages, impersonation, and seed-phrase theft often follow repeatable patterns. Learn where to stop before money moves.",
+    body: [
+      "Most crypto fraud begins with trust, urgency, or an offer that appears unusually profitable. A stranger may start a friendly conversation, move it to WhatsApp or Telegram, and gradually introduce an investment platform. The balance shown on that platform can be entirely fabricated even when early withdrawals are allowed to build confidence.",
+      "Stop when anyone guarantees returns, pressures you to act quickly, asks you to pay a tax or fee before withdrawing, or tells you to move funds to a wallet they control. A legitimate support agent will never need your recovery phrase. Anyone who has that phrase can recreate the wallet and move its assets without your permission.",
+      "Phishing messages often imitate exchanges, wallet manufacturers, or public figures. Do not follow a login or firmware-update link from an unsolicited email, text, advert, or direct message. Open the service through a saved official address, verify the domain carefully, and confirm transaction details on the hardware device itself before approving them.",
+      "If money has already been sent, stop sending more. Preserve wallet addresses, transaction IDs, messages, screenshots, phone numbers, and website domains. Contact the exchange or payment provider involved and report the incident to the appropriate local authority. Be cautious of recovery companies demanding an upfront payment; victims are frequently targeted a second time.",
+    ],
+    author: { name: "TechAgency Team", avatar: "/placeholder.png" },
+    readTime: 7,
+    slug: "crypto-scam-warning-signs",
+    date: "2026-09-03",
+    sources: [
+      { label: "FBI: cryptocurrency investment fraud", href: "https://www.fbi.gov/how-we-can-help-you/victim-services/national-crimes-and-victim-resources/cryptocurrency-investment-fraud" },
+      { label: "Ledger: hardware-wallet security practices", href: "https://www.ledger.com/academy/hardwarewallet/best-practices-when-using-a-hardware-wallet" },
+    ],
+  },
+  {
+    image: "/placeholder.png",
+    category: "Crypto",
+    title: "Hardware Wallet Safety: A Practical Setup Checklist",
+    excerpt: "Buying from an official source is only the beginning. Secure setup depends on recovery-phrase handling, device verification, transaction checks, and a tested recovery plan.",
+    body: [
+      "A hardware wallet does not hold cryptocurrency inside the device. The assets remain recorded on a blockchain; the device protects the private keys and signs transactions without exposing those keys to a general-purpose computer or phone. This reduces some online attack paths, but it does not protect against every scam or mistake.",
+      "Buy directly from the manufacturer or an authorised seller. The device should generate a new recovery phrase during setup. Never use a phrase supplied on paper, revealed under a scratch panel, sent by support, or entered into a website. If the packaging or setup appears unusual, stop and verify the process with the manufacturer's official documentation.",
+      "Record the recovery phrase offline and store it somewhere resistant to theft, loss, fire, and water. Do not photograph it, email it, save it in cloud storage, or type it into a computer. Before transferring a meaningful amount, practise receiving and sending a small amount and make sure you understand how recovery works.",
+      "Read the destination address, network, amount, and contract action on the trusted device screen before approving a transaction. A hardware wallet cannot save you from authorising a malicious transaction. Keep long-term holdings separate from accounts used for unfamiliar apps, and review the recovery plan whenever access arrangements or responsible people change.",
+    ],
+    author: { name: "TechAgency Team", avatar: "/placeholder.png" },
+    readTime: 6,
+    slug: "hardware-wallet-safety-checklist",
+    date: "2026-09-02",
+    sources: [
+      { label: "Ledger: how hardware wallets work", href: "https://www.ledger.com/academy/topics/ledgersolutions/how-ledger-hardware-wallets-work" },
+      { label: "Ledger: hardware-wallet best practices", href: "https://www.ledger.com/academy/hardwarewallet/best-practices-when-using-a-hardware-wallet" },
+      { label: "Trezor: backup security", href: "https://trezor.io/learn/advanced/standards-proposals/what-is-shamir-backup" },
+    ],
+  },
   {
     image: "/placeholder.png",
     category: "Web Dev",
@@ -193,5 +256,9 @@ export const ALL_POSTS: BlogPost[] = [
   },
 ];
 
-/** Home page teaser — first 3 posts */
-export const FEATURED_POSTS: BlogPost[] = ALL_POSTS.slice(0, 3);
+/** Home page teaser — balanced across crypto safety and core product engineering. */
+export const FEATURED_POSTS: BlogPost[] = [
+  ALL_POSTS.find((post) => post.slug === "crypto-benefits-and-tradeoffs"),
+  ALL_POSTS.find((post) => post.slug === "crypto-scam-warning-signs"),
+  ALL_POSTS.find((post) => post.slug === "offline-first-low-bandwidth"),
+].filter((post): post is BlogPost => Boolean(post));
