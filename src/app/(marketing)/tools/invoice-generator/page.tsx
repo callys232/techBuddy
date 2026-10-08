@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { InvoiceGenerator } from "@/components/sections/InvoiceGenerator";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Invoice Generator — Professional PDF Invoices in Minutes",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "small business invoice template",
   ],
   openGraph: {
-    title: "Free Invoice Generator — Branded PDF in Minutes | TechAgency",
+    images: [OG_IMAGE],
+    title: "Free Invoice Generator — Branded PDF in Minutes | TechBuddy",
     description: "Line items, tax, multi-currency. Download a professional PDF invoice — free, no sign-up.",
   },
 };

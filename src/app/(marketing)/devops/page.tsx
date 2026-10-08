@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DEVOPS_SERVICES, DEVOPS_STACK } from "@/mock/services";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "DevOps & CI/CD — Production-Grade Infrastructure for Growing Systems",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "Terraform infrastructure", "site reliability engineering",
   ],
   openGraph: {
-    title: "DevOps & CI/CD Infrastructure for Growing Businesses | TechAgency",
+    images: [OG_IMAGE],
+    title: "DevOps & CI/CD Infrastructure for Growing Businesses | TechBuddy",
     description:
       "Ship faster and break nothing — automated pipelines, containers and full observability.",
   },

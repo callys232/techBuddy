@@ -4,6 +4,7 @@ import { PageVectors } from "@/components/bg/PageVectors";
 import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
 import { getUserLocation } from "@/lib/geo";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Project Cost Estimator — How Much Does a Website or App Cost?",
@@ -15,7 +16,8 @@ export const metadata: Metadata = {
     "software development cost Africa", "web app price estimator",
   ],
   openGraph: {
-    title: "Project Cost Estimator — Website & App Pricing | TechAgency",
+    images: [OG_IMAGE],
+    title: "Project Cost Estimator — Website & App Pricing | TechBuddy",
     description: "Instant cost estimates in Naira and USD, based on real project delivery data. Adjust for features and timeline.",
   },
 };

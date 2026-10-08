@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ALL_POSTS } from "@/mock/blog";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { OG_IMAGE } from "@/lib/og";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.title,
     description: post.excerpt,
     openGraph: {
+      images: [OG_IMAGE],
       title: post.title,
       description: post.excerpt,
       type: "article",
@@ -105,7 +107,7 @@ export default async function BlogPostPage({ params }: Props) {
 
         {/* Tags / related */}
         <div className="mt-12 flex flex-wrap gap-2">
-          {["Nigeria Tech", post.category, "TechAgency"].map((tag) => (
+          {["Nigeria Tech", post.category, "TechBuddy"].map((tag) => (
             <span
               key={tag}
               className="font-mono text-xs rounded-full border border-[var(--border)] px-3 py-1 text-[var(--ink)]/50"

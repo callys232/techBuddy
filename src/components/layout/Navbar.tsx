@@ -115,7 +115,7 @@ export function Navbar() {
       <div className="shell flex h-[68px] items-center justify-between">
         {/* Logo */}
         <Link href="/" aria-label="TechBuddy home" className="shrink-0">
-          <CatalystTechLogo size="md" />
+          <CatalystTechLogo size="lg" />
         </Link>
 
         {/* Desktop nav */}

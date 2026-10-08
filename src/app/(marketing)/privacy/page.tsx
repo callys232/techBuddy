@@ -4,7 +4,7 @@ import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How TechAgency collects, stores, and protects your personal data in compliance with the Nigeria Data Protection Act 2023.",
+  description: "How TechBuddy collects, stores, and protects your personal data in compliance with the Nigeria Data Protection Act 2023.",
 };
 
 const LAST_UPDATED = "1 June 2026";
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">1. Who we are</h2>
             <p>
-              TechAgency Africa ("we", "our", "us") is a digital product studio registered in Nigeria. We operate the website at techagency.africa and related subdomains. Our contact address is: hello@techagency.africa.
+              TechBuddy ("we", "our", "us") is a digital product studio registered in Nigeria. We operate the website at techagency.africa and related subdomains. Our contact address is: hello@techagency.africa.
             </p>
           </section>
 
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">9. Contact</h2>
             <p>
-              Data Controller: TechAgency Africa ·hello@techagency.africa ·Lagos, Nigeria<br />
+              Data Controller: TechBuddy ·hello@techagency.africa ·Lagos, Nigeria<br />
               Data Protection Officer: privacy@techagency.africa
             </p>
           </section>

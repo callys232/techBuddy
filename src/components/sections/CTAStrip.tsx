@@ -34,7 +34,7 @@ export function CTAStrip() {
             <IconArrowRight size={15} />
           </Link>
           <a
-            href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I'd like to discuss a project with TechAgency.")}`}
+            href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I'd like to discuss a project with TechBuddy.")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-9 py-4 text-[14px] font-semibold text-[var(--ink)]/65 hover:border-[#25D366]/60 hover:text-[#25D366] transition-all active:scale-[0.97]"

@@ -23,9 +23,9 @@ export async function POST(req: Request) {
     if (resend) {
       await resend.emails
         .send({
-          from: "TechAgency Africa <noreply@techbuddy.ng>",
+          from: "TechBuddy <noreply@techbuddy.ng>",
           to: data.email,
-          subject: "Welcome to the TechAgency newsletter",
+          subject: "Welcome to the TechBuddy newsletter",
           html: `
           <p>Welcome aboard 👋</p>
           <p>You'll hear from us roughly twice a month with:</p>
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
           </ul>
           <p>No spam. Unsubscribe any time by replying "unsubscribe" to any email.</p>
           <p>In the meantime, explore our <a href="${process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng"}/blog">blog</a> or get a <a href="${process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng"}/quote">free project quote</a>.</p>
-          <p>— TechAgency Africa</p>
+          <p>— TechBuddy</p>
         `,
         })
         .catch(() => null);

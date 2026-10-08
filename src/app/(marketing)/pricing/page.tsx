@@ -12,7 +12,7 @@ import { getUserLocation } from "@/lib/geo";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Pricing — What It Costs to Build with TechAgency",
+  title: "Pricing — What It Costs to Build with TechBuddy",
   description:
     "Transparent pricing for web apps, mobile products, AI integration, fintech, and maintenance — quoted in Naira, USD or GBP. No hidden fees.",
 };
@@ -249,7 +249,7 @@ export default async function PricingPage() {
           </p>
           <div className="card p-2 sm:p-4">
             <ComparisonTable
-              columns={["TechAgency", "Freelancer", "Big agency"]}
+              columns={["TechBuddy", "Freelancer", "Big agency"]}
               highlightColumn={0}
               rows={COMPARISON_ROWS}
             />

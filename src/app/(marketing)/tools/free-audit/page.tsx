@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FreeAuditForm } from "@/components/sections/FreeAuditForm";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Tech Audit — Performance, Security & SEO Review",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
     "free tech audit",
   ],
   openGraph: {
-    title: "Free Tech Audit — Performance, Security & SEO | TechAgency",
+    images: [OG_IMAGE],
+    title: "Free Tech Audit — Performance, Security & SEO | TechBuddy",
     description: "Submit your URL — get a manual engineer review of performance, security and SEO within 48 hours.",
   },
 };

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BuildVsBuyCalc } from "@/components/sections/BuildVsBuyCalc";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Build vs Buy Calculator — Should You Build Custom or Use a SaaS Tool?",
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
     "CRM build or buy", "helpdesk build or buy",
   ],
   openGraph: {
-    title: "Build vs Buy Calculator — Custom or SaaS? | TechAgency",
+    images: [OG_IMAGE],
+    title: "Build vs Buy Calculator — Custom or SaaS? | TechBuddy",
     description: "Compare 3-year total cost of custom software vs the best SaaS alternatives, with break-even analysis.",
   },
 };

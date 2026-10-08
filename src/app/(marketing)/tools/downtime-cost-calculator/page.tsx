@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DowntimeCostCalculator } from "@/components/sections/DowntimeCostCalculator";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Downtime Cost Calculator — What an Outage Actually Costs You",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "cost of an outage", "website downtime cost",
   ],
   openGraph: {
-    title: "Downtime Cost Calculator — What an Outage Costs | TechAgency",
+    images: [OG_IMAGE],
+    title: "Downtime Cost Calculator — What an Outage Costs | TechBuddy",
     description: "See what an hour of downtime costs in lost revenue and productivity, modelled by business type.",
   },
 };

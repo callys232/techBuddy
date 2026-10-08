@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { QrCodeGenerator } from "@/components/sections/QrCodeGenerator";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free QR Code Generator — Links, WiFi, WhatsApp & vCards",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "vcard qr code generator",
   ],
   openGraph: {
-    title: "Free QR Code Generator — Links, WiFi & vCards | TechAgency",
+    images: [OG_IMAGE],
+    title: "Free QR Code Generator — Links, WiFi & vCards | TechBuddy",
     description: "Custom-colour QR codes for links, WiFi, WhatsApp, and contact cards. Instant PNG/SVG download.",
   },
 };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NewsFeed } from "@/components/sections/NewsFeed";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Tech News — Global & African",
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
     "AI news africa",
   ],
   openGraph: {
-    title: "Tech News — Global & African | TechAgency",
+    images: [OG_IMAGE],
+    title: "Tech News — Global & African | TechBuddy",
     description:
       "Live-aggregated tech headlines covering Africa, fintech, AI, and global technology — curated for builders and founders.",
   },

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PortfolioContent } from "@/components/sections/PortfolioContent";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Portfolio — Product Design & Engineering Work",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
     "mobile app portfolio", "African startup software examples",
   ],
   openGraph: {
-    title: "Product Design & Engineering Portfolio | TechAgency",
+    images: [OG_IMAGE],
+    title: "Product Design & Engineering Portfolio | TechBuddy",
     description:
       "A preview of the platforms, apps and systems we design and build for serious, ambitious businesses.",
   },

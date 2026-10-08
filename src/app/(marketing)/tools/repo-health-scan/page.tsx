@@ -3,6 +3,7 @@ import Link from "next/link";
 import { RepoHealthScan } from "@/components/sections/RepoHealthScan";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Repo Health Scan — Instant GitHub Repo Health Score",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "is this repo maintained", "github repo checker",
   ],
   openGraph: {
-    title: "Repo Health Scan — Instant GitHub Health Score | TechAgency",
+    images: [OG_IMAGE],
+    title: "Repo Health Scan — Instant GitHub Health Score | TechBuddy",
     description: "Paste a repo URL, get an instant score on staleness, licensing, and issue backlog. Free.",
   },
 };

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HireRateCalculator } from "@/components/sections/HireRateCalculator";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Nigerian Tech Hire Rate Calculator — What to Budget by Role",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "software engineer salary nigeria", "tech hiring budget nigeria",
   ],
   openGraph: {
-    title: "Nigerian Tech Hire Rate Calculator | TechAgency",
+    images: [OG_IMAGE],
+    title: "Nigerian Tech Hire Rate Calculator | TechBuddy",
     description: "Typical monthly rates by role and seniority in the Lagos/Abuja tech market. Free, instant.",
   },
 };

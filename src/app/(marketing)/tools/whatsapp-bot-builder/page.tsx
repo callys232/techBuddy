@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { WhatsappBotBuilder } from "@/components/sections/WhatsappBotBuilder";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "WhatsApp Bot Flow Builder — Design Your Auto-Reply Menu Free",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     "whatsapp business api", "whatsapp chatbot flow",
   ],
   openGraph: {
-    title: "WhatsApp Bot Flow Builder — Design It Free | TechAgency",
+    images: [OG_IMAGE],
+    title: "WhatsApp Bot Flow Builder — Design It Free | TechBuddy",
     description: "Build your auto-reply menu with a live chat preview. We deploy it on WhatsApp Business API.",
   },
 };

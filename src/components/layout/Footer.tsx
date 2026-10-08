@@ -29,7 +29,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" aria-label="TechBuddy home">
-              <CatalystTechLogo size="md" />
+              <CatalystTechLogo size="lg" />
             </Link>
             <p className="mt-4 text-sm text-[var(--ink)]/50 max-w-xs leading-relaxed">
               End-to-end digital products for ambitious businesses — built in Africa, engineered to global standards.
@@ -77,7 +77,7 @@ export function Footer() {
           <div className="gradient-line mb-8" />
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-[11px] text-[var(--ink)]/30">
-              © {new Date().getFullYear()} TechAgency. All rights reserved. Built in Africa, for the world.
+              © {new Date().getFullYear()} TechBuddy. All rights reserved. Built in Africa, for the world.
             </p>
             <p className="text-[11px] text-[var(--ink)]/30">Lagos, Nigeria · Global remote team · {TEAM_EMAIL}</p>
           </div>

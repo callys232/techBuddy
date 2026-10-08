@@ -218,7 +218,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!title) return { title: "Service not found" };
   const detail = SERVICE_DETAIL[slug];
   return {
-    title: `${title} — TechAgency`,
+    title: `${title} — TechBuddy`,
     description: detail?.tagline ?? `Professional ${title} services for ambitious businesses everywhere.`,
   };
 }

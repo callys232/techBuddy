@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PremiumAudit } from "@/components/sections/PremiumAudit";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Premium Audit Report — Instant Automated Site Audit | TechBuddy Premium",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     "SEO audit tool", "website performance report",
   ],
   openGraph: {
-    title: "Premium Audit Report — Instant Site Deep-Dive | TechAgency",
+    images: [OG_IMAGE],
+    title: "Premium Audit Report — Instant Site Deep-Dive | TechBuddy",
     description: "Security headers, SEO signals, performance and best practices — as a branded PDF report.",
   },
 };

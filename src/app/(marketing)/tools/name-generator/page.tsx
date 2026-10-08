@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NameGenerator } from "@/components/sections/NameGenerator";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Business Name Generator — AI Names + Domain Check",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "company name generator Nigeria",
   ],
   openGraph: {
-    title: "Free Business Name Generator — AI Names | TechAgency",
+    images: [OG_IMAGE],
+    title: "Free Business Name Generator — AI Names | TechBuddy",
     description: "Describe your idea, get 12 AI name ideas with an instant domain availability check.",
   },
 };

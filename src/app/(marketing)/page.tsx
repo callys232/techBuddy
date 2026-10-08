@@ -11,6 +11,7 @@ import { RevealSection } from "@/components/ui/ScrollReveal";
 import { InvestTeaser } from "@/components/sections/InvestTeaser";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { AffiliateProducts } from "@/components/sections/AffiliateProducts";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Software Development Company in Nigeria — Web, Mobile, AI & Fintech",
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
     "AI development Nigeria", "fintech app development",
   ],
   openGraph: {
-    title: "Software Development in Nigeria | TechAgency",
+    images: [OG_IMAGE],
+    title: "Software Development in Nigeria | TechBuddy",
     description:
       "Web, mobile, AI, fintech, and DevOps engineering from a founder-led technology studio in Lagos, Nigeria.",
   },

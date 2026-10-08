@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BusinessPlanGenerator } from "@/components/sections/BusinessPlanGenerator";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "AI Business Plan Generator — Investor-Ready, in Minutes | TechBuddy Premium",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     "startup business plan generator", "investor pitch generator",
   ],
   openGraph: {
-    title: "AI Business Plan Generator — Investor-Ready | TechAgency",
+    images: [OG_IMAGE],
+    title: "AI Business Plan Generator — Investor-Ready | TechBuddy",
     description: "Turn your idea into a structured plan — market analysis, business model, go-to-market, financials.",
   },
 };

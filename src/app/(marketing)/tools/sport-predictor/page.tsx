@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SportPredictor } from "@/components/sections/SportPredictor";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Sport Predictor — Free Football & Basketball Match Analysis",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "match analysis free tool",
   ],
   openGraph: {
-    title: "Sport Predictor — Free Match Analysis | TechAgency",
+    images: [OG_IMAGE],
+    title: "Sport Predictor — Free Match Analysis | TechBuddy",
     description: "Win probability, form guide and head-to-head record for upcoming top-league fixtures — free.",
   },
 };

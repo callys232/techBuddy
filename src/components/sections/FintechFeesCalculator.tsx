@@ -84,7 +84,7 @@ export function FintechFeesCalculator() {
     if (!checkEmail()) return;
     captureToolLead({ tool: "fintech-fees-calculator", source: "whatsapp-click", email, selections: selectionsSummary(), result: resultSummary() });
     const msg = [
-      `Hi TechAgency! Fintech Fees Calculator result:`,
+      `Hi TechBuddy! Fintech Fees Calculator result:`,
       `Amount: ${fmt(amount)} (${cardType === "local" ? "local card" : "international card"})`,
       `Cheapest: ${cheapest.provider.name} at ${fmt(cheapest.perTx)}/tx`,
       `At ${txPerMonth} tx/month, that's ${fmt(monthlySavings)} saved vs ${priciest.provider.name}.`,

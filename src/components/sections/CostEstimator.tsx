@@ -102,7 +102,7 @@ export function CostEstimator() {
       email, selections: { ...selectionsSummary(), category }, result: resultSummary(),
     });
     const msg = [
-      `Hi TechAgency! Cost Estimator result:`,
+      `Hi TechBuddy! Cost Estimator result:`,
       `Project: ${PROJECT_TYPES.find((p) => p.id === projectType)?.label}`,
       features.length ? `Features: ${FEATURE_ADDONS.filter((f) => features.includes(f.id)).map((f) => f.label).join(", ")}` : null,
       `Timeline: ${TIMELINE_MULTIPLIERS.find((t) => t.id === timeline)?.label}`,

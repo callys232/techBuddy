@@ -18,14 +18,16 @@ import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 import { AppIconStage } from "@/components/ui/AppIconStage";
 import { APPS, type AppFeatureIcon } from "@/mock/apps";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Apps — Android & Windows Downloads",
   description:
-    "Free desktop and mobile apps built by TechAgency — starting with Device Cleaner, a privacy-first storage utility with no ads, no tracking, and no internet permission.",
+    "Free desktop and mobile apps built by TechBuddy — starting with Device Cleaner, a privacy-first storage utility with no ads, no tracking, and no internet permission.",
   keywords: ["device cleaner app", "free android app", "free windows app", "duplicate file finder"],
   openGraph: {
-    title: "Free Apps by TechAgency — Android & Windows",
+    images: [OG_IMAGE],
+    title: "Free Apps by TechBuddy — Android & Windows",
     description: "Privacy-first utility apps, free to download. No ads, no tracking.",
   },
 };

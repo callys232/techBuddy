@@ -79,7 +79,7 @@ export function DowntimeCostCalculator() {
     if (!checkEmail()) return;
     captureToolLead({ tool: "downtime-cost-calculator", source: "whatsapp-click", email, selections: selectionsSummary(), result: resultSummary() });
     const msg = [
-      `Hi TechAgency! Downtime Cost Calculator result:`,
+      `Hi TechBuddy! Downtime Cost Calculator result:`,
       `Business type: ${bt.label}`,
       `${hoursDown}h of downtime costs us ~${fmt(total)} (${fmt(revenueAtRisk)} revenue + ${fmt(teamCost)} team cost).`,
       `I'd like to talk about reducing this risk.`,

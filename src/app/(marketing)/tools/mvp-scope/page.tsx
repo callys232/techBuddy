@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MVPScopeGenerator } from "@/components/sections/MVPScopeGenerator";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "MVP Scope Generator — What Should I Build in Phase 1?",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "Phase 1 features startup",
   ],
   openGraph: {
-    title: "MVP Scope Generator — What To Build First | TechAgency",
+    images: [OG_IMAGE],
+    title: "MVP Scope Generator — What To Build First | TechBuddy",
     description: "8 questions. A prioritised Phase 1 feature list. What to build, what to cut, and what to do next.",
   },
 };

@@ -5,6 +5,7 @@ import { BlogContent } from "@/components/sections/BlogContent";
 import { NewsFeed } from "@/components/sections/NewsFeed";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Blog — Tech Insights for Founders & Builders Everywhere",
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
     "startup engineering",
   ],
   openGraph: {
-    title: "Tech Insights for Founders & Builders Everywhere | TechAgency Blog",
+    images: [OG_IMAGE],
+    title: "Tech Insights for Founders & Builders Everywhere | TechBuddy Blog",
     description:
       "Practical engineering guides, startup strategy and fintech deep-dives — from a team building across Africa and beyond.",
   },

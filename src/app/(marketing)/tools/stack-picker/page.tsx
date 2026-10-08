@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { StackPicker } from "@/components/sections/StackPicker";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Tech Stack Picker — Best Stack for Your Product",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
     "tech stack for startup",
   ],
   openGraph: {
-    title: "Tech Stack Picker — Best Stack for Your Product | TechAgency",
+    images: [OG_IMAGE],
+    title: "Tech Stack Picker — Best Stack for Your Product | TechBuddy",
     description: "4 questions. One recommended production stack, based on what actually ships in fast-growing markets.",
   },
 };

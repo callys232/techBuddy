@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NDPRChecker } from "@/components/sections/NDPRChecker";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "NDPR Compliance Checker — How Compliant Is Your Nigerian Product?",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "NDPR gap analysis", "data protection officer Nigeria",
   ],
   openGraph: {
-    title: "Free NDPR Compliance Checker | TechAgency Africa",
+    images: [OG_IMAGE],
+    title: "Free NDPR Compliance Checker | TechBuddy",
     description: "16 questions. Instant compliance score. Specific gaps and what to do about them.",
   },
 };

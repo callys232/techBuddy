@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CoverLetterGenerator } from "@/components/sections/CoverLetterGenerator";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Cover Letter Generator — AI-Written, Ready to Send",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "job application letter generator",
   ],
   openGraph: {
-    title: "Free AI Cover Letter Generator | TechAgency",
+    images: [OG_IMAGE],
+    title: "Free AI Cover Letter Generator | TechBuddy",
     description: "Tell us the role and your strengths — get a tailored, ready-to-send cover letter in seconds.",
   },
 };

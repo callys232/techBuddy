@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { TemplatesContent } from "@/components/sections/TemplatesContent";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Web Templates — Launch-Ready Starters for Growing Businesses",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "landing page template",
   ],
   openGraph: {
-    title: "Launch-Ready Web Templates for Growing Businesses | TechAgency",
+    images: [OG_IMAGE],
+    title: "Launch-Ready Web Templates for Growing Businesses | TechBuddy",
     description:
       "Pre-built, production-ready templates — customised to your brand, deployed in days.",
   },

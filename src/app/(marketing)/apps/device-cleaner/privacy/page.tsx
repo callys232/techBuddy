@@ -20,7 +20,7 @@ export default function DeviceCleanerPrivacyPage() {
         <div className="prose-custom space-y-10 text-[var(--ink)]/75 text-[15px] leading-[1.85]">
           <section>
             <p>
-              Device Cleaner (&quot;the app&quot;) is developed by TechAgency (&quot;we&quot;, &quot;us&quot;).
+              Device Cleaner (&quot;the app&quot;) is developed by TechBuddy (&quot;we&quot;, &quot;us&quot;).
               This policy explains how the app handles information.
             </p>
           </section>

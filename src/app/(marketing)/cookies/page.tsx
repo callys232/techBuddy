@@ -5,7 +5,7 @@ import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
-  description: "What cookies TechAgency uses, why, and how to control them.",
+  description: "What cookies TechBuddy uses, why, and how to control them.",
 };
 
 const LAST_UPDATED = "1 June 2026";

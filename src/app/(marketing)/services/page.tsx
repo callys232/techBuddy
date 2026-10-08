@@ -4,6 +4,7 @@ import { ServicesContent } from "@/components/sections/ServicesContent";
 import { PRICING_TIERS } from "@/mock/services";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Software Development Services in Nigeria — Web, Mobile, AI & Fintech",
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
     "Lagos app developer", "AI development services",
   ],
   openGraph: {
-    title: "Digital Services — Web, Mobile & Fintech Engineering | TechAgency",
+    images: [OG_IMAGE],
+    title: "Digital Services — Web, Mobile & Fintech Engineering | TechBuddy",
     description:
       "End-to-end engineering services for ambitious businesses everywhere. One studio, every layer of the stack.",
   },

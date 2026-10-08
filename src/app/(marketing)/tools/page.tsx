@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FREE_TOOLS } from "@/mock/tools";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free & Premium Tools — Resume Maker, Invoice Generator, QR Codes, AI Business Plans & More",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     "cover letter generator", "AI business plan generator",
   ],
   openGraph: {
+    images: [OG_IMAGE],
     title: "Free & Premium Tools for Builders Everywhere | TechBuddy",
     description: "Estimate your build cost, generate invoices and QR codes, write a cover letter, or get an AI business plan — most are free.",
   },

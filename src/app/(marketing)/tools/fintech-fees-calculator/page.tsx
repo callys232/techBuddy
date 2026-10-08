@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FintechFeesCalculator } from "@/components/sections/FintechFeesCalculator";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Fintech Fees Calculator — Paystack vs Flutterwave",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "paystack vs flutterwave", "payment gateway fees nigeria",
   ],
   openGraph: {
-    title: "Paystack vs Flutterwave Fees Calculator | TechAgency",
+    images: [OG_IMAGE],
+    title: "Paystack vs Flutterwave Fees Calculator | TechBuddy",
     description: "See the real per-transaction and monthly cost difference at your actual volume. Free, instant.",
   },
 };

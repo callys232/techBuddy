@@ -135,7 +135,7 @@ export function Hero() {
           {/* WhatsApp link */}
           <motion.div variants={item} className="mt-5 flex items-center gap-2">
             <a
-              href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi TechAgency! I'd like to discuss a project.")}`}
+              href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi TechBuddy! I'd like to discuss a project.")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-[12px] faint hover:text-[var(--brand)] transition-colors"

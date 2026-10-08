@@ -4,7 +4,7 @@ import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms governing the use of TechAgency's website, tools, and professional services.",
+  description: "Terms governing the use of TechBuddy's website, tools, and professional services.",
 };
 
 const LAST_UPDATED = "1 June 2026";
@@ -22,7 +22,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">1. Acceptance of terms</h2>
             <p>
-              By accessing techagency.africa or engaging TechAgency Africa for services, you agree to these Terms of Service. If you are accepting on behalf of a company or other legal entity, you represent that you have authority to bind that entity. These terms are governed by the laws of the Federal Republic of Nigeria.
+              By accessing techagency.africa or engaging TechBuddy for services, you agree to these Terms of Service. If you are accepting on behalf of a company or other legal entity, you represent that you have authority to bind that entity. These terms are governed by the laws of the Federal Republic of Nigeria.
             </p>
           </section>
 
@@ -30,7 +30,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">2. Services</h2>
             <p>
-              TechAgency provides digital product development services including web and mobile application development, DevOps infrastructure, UI/UX design, AI integration, and related professional services ("Services"). The specific scope, timeline, deliverables, and pricing for each engagement are set out in a separate Statement of Work (SoW) or Service Agreement.
+              TechBuddy provides digital product development services including web and mobile application development, DevOps infrastructure, UI/UX design, AI integration, and related professional services ("Services"). The specific scope, timeline, deliverables, and pricing for each engagement are set out in a separate Statement of Work (SoW) or Service Agreement.
             </p>
             <p className="mt-3">
               Use of our free tools (cost estimator, stack picker, free audit) is subject to these Terms. These tools provide estimates only and do not constitute a binding quote.
@@ -57,10 +57,10 @@ export default function TermsPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">4. Intellectual property</h2>
             <p>
-              Upon receipt of full payment, all custom code and assets created specifically for your project transfer to you as the client. This excludes: (a) open-source components used under their respective licences, (b) TechAgency's proprietary frameworks, boilerplates, and tooling which we license to you for use in your project but retain ownership of, and (c) third-party templates or assets licensed separately.
+              Upon receipt of full payment, all custom code and assets created specifically for your project transfer to you as the client. This excludes: (a) open-source components used under their respective licences, (b) TechBuddy's proprietary frameworks, boilerplates, and tooling which we license to you for use in your project but retain ownership of, and (c) third-party templates or assets licensed separately.
             </p>
             <p className="mt-3">
-              TechAgency retains the right to display the project in our portfolio and marketing materials unless you request confidentiality in writing before project commencement.
+              TechBuddy retains the right to display the project in our portfolio and marketing materials unless you request confidentiality in writing before project commencement.
             </p>
           </section>
           </RevealSection>
@@ -69,7 +69,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">5. Confidentiality</h2>
             <p>
-              Both parties agree to keep confidential any non-public information disclosed during the engagement. This obligation survives termination of the agreement for two years. TechAgency will sign an NDA upon request before any project discovery session.
+              Both parties agree to keep confidential any non-public information disclosed during the engagement. This obligation survives termination of the agreement for two years. TechBuddy will sign an NDA upon request before any project discovery session.
             </p>
           </section>
           </RevealSection>
@@ -78,7 +78,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">6. Limitation of liability</h2>
             <p>
-              To the maximum extent permitted by Nigerian law, TechAgency&apos;s total liability for any claim arising out of these Terms or any service engagement shall not exceed the total fees paid by you in the three months preceding the claim. TechAgency shall not be liable for indirect, incidental, consequential, or punitive damages.
+              To the maximum extent permitted by Nigerian law, TechBuddy&apos;s total liability for any claim arising out of these Terms or any service engagement shall not exceed the total fees paid by you in the three months preceding the claim. TechBuddy shall not be liable for indirect, incidental, consequential, or punitive damages.
             </p>
           </section>
           </RevealSection>
@@ -114,7 +114,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">10. Contact</h2>
             <p>
-              TechAgency Africa · hello@techagency.africa · Lagos, Nigeria<br />
+              TechBuddy · hello@techagency.africa · Lagos, Nigeria<br />
               For legal notices: legal@techagency.africa
             </p>
           </section>

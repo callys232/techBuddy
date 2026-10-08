@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TimelineEstimator } from "@/components/sections/TimelineEstimator";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Project Timeline Estimator — How Long Will My Build Take?",
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
     "web app development time",
   ],
   openGraph: {
-    title: "How Long Will Your Build Take? | TechAgency",
+    images: [OG_IMAGE],
+    title: "How Long Will Your Build Take? | TechBuddy",
     description: "Phase-by-phase timeline estimation, scoped in 5 questions.",
   },
 };

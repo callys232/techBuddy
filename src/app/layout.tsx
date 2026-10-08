@@ -4,12 +4,14 @@ import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { CurrencyProvider } from "@/components/providers/CurrencyProvider";
 import "./globals.css";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
+
 /* ── Root Metadata ──────────────────────────────────────────────────────────── */
 
 export const metadata: Metadata = {
   title: {
-    default: "TechAgency — Software Development Company in Nigeria",
-    template: "%s | TechAgency",
+    default: "TechBuddy — Software Development Company in Nigeria",
+    template: "%s | TechBuddy",
   },
   description:
     "Founder-led software development company in Lagos, Nigeria building web apps, mobile apps, AI tools, fintech platforms, and reliable cloud systems.",
@@ -26,23 +28,20 @@ export const metadata: Metadata = {
     "Lagos software developer",
     "AI development services",
   ],
-  authors: [{ name: "TechAgency", url: "https://techagency.africa" }],
-  creator: "TechAgency",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
-  ),
+  authors: [{ name: "TechBuddy", url: SITE_URL }],
+  creator: "TechBuddy",
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "en_NG",
-    siteName: "TechAgency",
-    title: "TechAgency — Software Development Company in Nigeria",
+    siteName: "TechBuddy",
+    title: "TechBuddy — Software Development Company in Nigeria",
     description:
       "Founder-led web, mobile, AI, fintech, and DevOps engineering for ambitious businesses in Nigeria and worldwide.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechAgency — Software Development Company in Nigeria",
+    title: "TechBuddy — Software Development Company in Nigeria",
     description:
       "Web, mobile, AI, fintech, and DevOps engineering from Lagos, Nigeria.",
   },
@@ -53,12 +52,10 @@ export const metadata: Metadata = {
   },
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
-
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "TechAgency",
+  name: "TechBuddy",
   url: SITE_URL,
   logo: `${SITE_URL}/logo-mark.png`,
   description:

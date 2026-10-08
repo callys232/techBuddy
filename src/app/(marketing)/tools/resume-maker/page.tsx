@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ResumeMaker } from "@/components/sections/ResumeMaker";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Resume Maker — Build a Professional Resume in Minutes",
@@ -15,7 +16,8 @@ export const metadata: Metadata = {
     "download resume PDF free",
   ],
   openGraph: {
-    title: "Free Resume Maker — ATS-Friendly PDF | TechAgency",
+    images: [OG_IMAGE],
+    title: "Free Resume Maker — ATS-Friendly PDF | TechBuddy",
     description: "Pick a template, fill in your details, and download a polished, ATS-friendly resume instantly.",
   },
 };

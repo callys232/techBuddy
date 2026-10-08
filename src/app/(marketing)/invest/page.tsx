@@ -3,6 +3,7 @@ import { InvestCard } from "@/components/ui/InvestCard";
 import { INVEST_SCHEMES } from "@/mock/invest";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Investment & Incubation — We Co-Build With Ambitious Founders",
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
     "African founder investment", "non-dilutive grant",
   ],
   openGraph: {
-    title: "We Invest in Ideas Worth Building | TechAgency",
+    images: [OG_IMAGE],
+    title: "We Invest in Ideas Worth Building | TechBuddy",
     description:
       "Equity, revenue share, incubation and advisory for ambitious founders building serious products.",
   },

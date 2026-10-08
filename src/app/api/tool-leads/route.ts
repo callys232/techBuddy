@@ -281,7 +281,7 @@ export async function POST(req: Request) {
   if (resend) {
     await resend.emails
       .send({
-        from: `TechAgency Tools <noreply@techbuddy.ng>`,
+        from: `TechBuddy Tools <noreply@techbuddy.ng>`,
         to: TEAM_EMAIL,
         subject: teamSubject,
         html: `
@@ -315,12 +315,12 @@ export async function POST(req: Request) {
 
       await resend.emails
         .send({
-          from: "TechAgency Africa <noreply@techbuddy.ng>",
+          from: "TechBuddy <noreply@techbuddy.ng>",
           to: email,
           subject: `Your ${toolLabel} estimate — keep it handy`,
           html: `
           <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#111">
-            <h2 style="color:#0ea5e9">Your estimate from TechAgency Africa</h2>
+            <h2 style="color:#0ea5e9">Your estimate from TechBuddy</h2>
             <p style="color:#555">Here's a complete copy of the estimate you just built on our ${toolLabel}.</p>
 
             ${summaryHtml}

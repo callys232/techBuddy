@@ -30,7 +30,7 @@ export function QuoteConfirmation({ name, calLink = "https://cal.com" }: QuoteCo
             Book a Discovery Call
           </Button>
           <Text style={{ color: "#F2F0EB40", fontSize: 12, marginTop: 32 }}>
-            TechAgency · Lagos, Nigeria · hello@techagency.africa
+            TechBuddy · Lagos, Nigeria · hello@techagency.africa
           </Text>
         </Container>
       </Body>

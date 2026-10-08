@@ -37,12 +37,12 @@ export async function POST(req: Request) {
     await Promise.all([
       /* Confirmation to applicant */
       resend.emails.send({
-        from: "TechAgency <noreply@techbuddy.ng>",
+        from: "TechBuddy <noreply@techbuddy.ng>",
         to: email,
         subject: "We received your investment application",
         html: `
           <p>Hi ${name},</p>
-          <p>Thank you for applying to partner with TechAgency Africa.</p>
+          <p>Thank you for applying to partner with TechBuddy.</p>
           <p>We review every application personally and will get back to you within <strong>5 business days</strong>.</p>
           <p>What happens next:</p>
           <ol>
@@ -51,12 +51,12 @@ export async function POST(req: Request) {
             <li>We agree on terms and start building</li>
           </ol>
           <p>Questions? Reply to this email or WhatsApp us directly.</p>
-          <p>— TechAgency Africa Team</p>
+          <p>— TechBuddy Team</p>
         `,
       }),
       /* Alert to team */
       resend.emails.send({
-        from: "TechAgency Applications <noreply@techbuddy.ng>",
+        from: "TechBuddy Applications <noreply@techbuddy.ng>",
         to: TEAM_EMAIL,
         subject: `New investment application: ${company ?? name}`,
         html: `

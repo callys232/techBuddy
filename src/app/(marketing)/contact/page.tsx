@@ -3,6 +3,7 @@ import { TeamCard } from "@/components/ui/TeamCard";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { TEAM_MEMBERS } from "@/mock/team";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Contact — Work With a Lagos-Born, Globally-Minded Product Studio",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     "Lagos software company contact", "book discovery call",
   ],
   openGraph: {
-    title: "Let's Build Together | Contact TechAgency",
+    images: [OG_IMAGE],
+    title: "Let's Build Together | Contact TechBuddy",
     description:
       "Lagos-born product studio, working worldwide. Book a call or drop a message — we reply within 24 hours.",
   },

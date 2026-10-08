@@ -13,7 +13,7 @@ interface Props {
 const SIZE: Record<NonNullable<Props["size"]>, string> = {
   sm: "h-5",
   md: "h-7",
-  lg: "h-9",
+  lg: "h-10",
 };
 
 export function CatalystTechLogo({ size = "md", className = "" }: Props) {

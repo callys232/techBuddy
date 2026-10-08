@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { STATS } from "@/mock/stats";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Talent Hub — Hire Vetted African Engineers, Anywhere",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     "African software engineers", "remote product designers",
   ],
   openGraph: {
+    images: [OG_IMAGE],
     title: "Africa's Vetted Tech Talent, Working Worldwide — Hire or Join | TechBuddy",
     description:
       "Pre-vetted African engineers available to hire, anywhere. Join a growing network of builders working on products that matter.",

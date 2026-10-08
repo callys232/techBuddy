@@ -15,7 +15,7 @@ const DESIGN_EXAMPLES = ALL_PROJECTS.filter((p) =>
 );
 
 export const metadata: Metadata = {
-  title: "About TechAgency — Who We Are",
+  title: "About TechBuddy — Who We Are",
   description:
     "How our Lagos-based product studio scopes, designs, builds, and supports reliable software for businesses in Nigeria and worldwide.",
 };
@@ -82,7 +82,7 @@ export default function AboutPage() {
             Software built around the realities of your business.
           </h1>
           <p className="mt-6 text-lg text-[var(--ink-muted)] max-w-2xl leading-relaxed">
-            We started TechAgency in Lagos with a simple observation: fast-growing businesses were being underserved by generic agencies that didn&apos;t understand payments infrastructure, data compliance, or what it means to build for a user on a 3G connection.
+            We started TechBuddy in Lagos with a simple observation: fast-growing businesses were being underserved by generic agencies that didn&apos;t understand payments infrastructure, data compliance, or what it means to build for a user on a 3G connection.
           </p>
           <p className="mt-4 text-lg text-[var(--ink-muted)] max-w-2xl leading-relaxed">
             Today that means a vetted network of engineers across fintech, logistics, healthcare, and e-commerce — built to take on work from Lagos to London, at whatever size the project needs.

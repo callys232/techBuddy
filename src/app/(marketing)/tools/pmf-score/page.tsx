@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PMFScorer } from "@/components/sections/PMFScorer";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Product-Market Fit Score — Do You Have PMF?",
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
     "Sean Ellis PMF survey online",
   ],
   openGraph: {
-    title: "Product-Market Fit Score — Do You Have PMF? | TechAgency",
+    images: [OG_IMAGE],
+    title: "Product-Market Fit Score — Do You Have PMF? | TechBuddy",
     description: "10 questions on retention and growth. An honest PMF score and the one thing to fix this week.",
   },
 };

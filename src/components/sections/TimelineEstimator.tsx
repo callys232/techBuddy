@@ -742,7 +742,7 @@ export function TimelineEstimator() {
                       result: { totalMin: result.totalMin, totalMax: result.totalMax },
                     });
                     const msg = [
-                      `Hi TechAgency! I just used the timeline estimator:`,
+                      `Hi TechBuddy! I just used the timeline estimator:`,
                       `Project: ${TIMELINE_PROJECT_TYPES.filter((t) => sel.projectTypes.includes(t.id)).map((t) => t.label).join(" + ")}`,
                       `Timeline: ${result.totalMin}–${result.totalMax} weeks`,
                       `Launch: ${result.normalLaunch.toLocaleDateString("en-GB")}`,

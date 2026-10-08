@@ -5,7 +5,7 @@ import { RevealSection } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "NDPR Compliance Statement",
-  description: "TechAgency's compliance with the Nigeria Data Protection Regulation (NDPR) and Nigeria Data Protection Act 2023.",
+  description: "TechBuddy's compliance with the Nigeria Data Protection Regulation (NDPR) and Nigeria Data Protection Act 2023.",
 };
 
 const LAST_UPDATED = "1 June 2026";
@@ -23,7 +23,7 @@ export default function NdprPage() {
 
           <div className="rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/5 p-5">
             <p className="text-sm text-[var(--ink)]/80">
-              This statement covers TechAgency Africa&apos;s compliance with the <strong className="text-[var(--ink)]">Nigeria Data Protection Regulation 2019 (NDPR)</strong> and the <strong className="text-[var(--ink)]">Nigeria Data Protection Act 2023 (NDPA)</strong>, which together form the primary data protection framework for Nigeria. We also build NDPR/NDPA compliance into every product we ship for clients.
+              This statement covers TechBuddy&apos;s compliance with the <strong className="text-[var(--ink)]">Nigeria Data Protection Regulation 2019 (NDPR)</strong> and the <strong className="text-[var(--ink)]">Nigeria Data Protection Act 2023 (NDPA)</strong>, which together form the primary data protection framework for Nigeria. We also build NDPR/NDPA compliance into every product we ship for clients.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function NdprPage() {
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">Contact</h2>
             <p>
               Data Protection Officer: <strong className="text-[var(--ink)]">privacy@techagency.africa</strong><br />
-              TechAgency Africa · Lagos, Nigeria
+              TechBuddy · Lagos, Nigeria
             </p>
           </section>
           </RevealSection>

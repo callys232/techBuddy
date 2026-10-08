@@ -76,7 +76,7 @@ export function HireRateCalculator() {
     if (!checkEmail()) return;
     captureToolLead({ tool: "hire-rate-calculator", source: "whatsapp-click", email, selections: selectionsSummary(), result: resultSummary() });
     const msg = [
-      `Hi TechAgency! Hire Rate Calculator result:`,
+      `Hi TechBuddy! Hire Rate Calculator result:`,
       `${seniorityObj.label} ${roleObj.label}: ${fmt(min)} – ${fmt(max)}/month`,
       `I'd like to talk about hiring through your talent network.`,
     ].join("\n");

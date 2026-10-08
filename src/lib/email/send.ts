@@ -4,7 +4,7 @@ import { QuoteAlert } from "./templates/QuoteAlert";
 import { QuoteConfirmation } from "./templates/QuoteConfirmation";
 import { ContactAlert } from "./templates/ContactAlert";
 
-const FROM = "TechAgency <noreply@techagency.africa>";
+const FROM = "TechBuddy <noreply@techagency.africa>";
 const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "hello@techagency.africa";
 
 export async function sendQuoteAlertToTeam(
