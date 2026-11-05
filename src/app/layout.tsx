@@ -10,11 +10,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
 
 export const metadata: Metadata = {
   title: {
-    default: "TechBuddy — Software Development Company in Nigeria",
+    default: "TechBuddy — Software Development Company",
     template: "%s | TechBuddy",
   },
   description:
-    "Founder-led software development company in Lagos, Nigeria building web apps, mobile apps, AI tools, fintech platforms, and reliable cloud systems.",
+    "Founder-led software development company in Lagos, Nigeria, building web apps, mobile apps, AI tools, fintech platforms, and reliable cloud systems.",
   keywords: [
     "digital product studio",
     "software agency",
@@ -35,13 +35,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_NG",
     siteName: "TechBuddy",
-    title: "TechBuddy — Software Development Company in Nigeria",
+    title: "TechBuddy — Software Development Company",
     description:
       "Founder-led web, mobile, AI, fintech, and DevOps engineering for ambitious businesses in Nigeria and worldwide.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechBuddy — Software Development Company in Nigeria",
+    title: "TechBuddy — Software Development Company",
     description:
       "Web, mobile, AI, fintech, and DevOps engineering from Lagos, Nigeria.",
   },
@@ -64,7 +64,7 @@ const organizationJsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
-    email: process.env.TEAM_EMAIL ?? "team@techbuddy.ng",
+    email: process.env.TEAM_EMAIL ?? "calebjella82@gmail.com touch",
     availableLanguage: ["en"],
   },
 };

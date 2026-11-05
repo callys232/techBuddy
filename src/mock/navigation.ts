@@ -14,15 +14,11 @@ export interface SocialLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Services",  href: "/services" },
-  { label: "Pricing",   href: "/pricing" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Tools",     href: "/tools" },
-  { label: "Blog",      href: "/blog" },
-  { label: "News",      href: "/news" },
-  { label: "Templates", href: "/templates" },
-  { label: "Invest",    href: "/invest" },
-  { label: "Contact",   href: "/contact" },
+  { label: "Services", href: "/services" },
+  { label: "How we work", href: "/about" },
+  { label: "Work", href: "/portfolio" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Resources", href: "/tools" },
 ];
 
 export const FOOTER_LINKS: FooterLinkGroup = {

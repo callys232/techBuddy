@@ -293,10 +293,10 @@ export function AgentWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="Open project scoping assistant"
-        className="fixed bottom-4 right-4 z-50 relative flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--page)] hover:scale-105 active:scale-95 transition-transform"
+        className="fixed bottom-5 right-5 z-[999] flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand)] text-[var(--page)] shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 transition-transform"
       >
-        <span className="absolute inset-0 rounded-full bg-[var(--brand)] animate-ping opacity-25" />
-        {open ? <IconX size={22} /> : <IconRobot size={22} />}
+        <span className="absolute inset-0 rounded-full bg-[var(--brand)] animate-ping opacity-25 pointer-events-none" />
+        {open ? <IconX size={22} /> : <IconRobot size={24} />}
       </button>
 
       {/* ── Chat panel ───────────────────────────────────────────────── */}
@@ -307,7 +307,7 @@ export function AgentWidget() {
             animate={{ opacity: 1, scale: 1,    y: 0  }}
             exit={{   opacity: 0, scale: 0.92, y: 16  }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed bottom-20 right-4 z-50 flex flex-col w-[400px] max-h-[600px] glass rounded-[24px] border border-[var(--border)] shadow-[0_24px_60px_rgba(0,0,0,0.4)] overflow-hidden"
+            className="fixed bottom-22 right-3 sm:right-5 z-[999] flex flex-col w-[calc(100vw-1.5rem)] sm:w-[400px] max-w-[420px] max-h-[calc(100dvh-7rem)] sm:max-h-[600px] glass rounded-[24px] border border-[var(--border)] shadow-[0_24px_60px_rgba(0,0,0,0.4)] overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border)] shrink-0">

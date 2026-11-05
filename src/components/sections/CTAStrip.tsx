@@ -6,7 +6,7 @@ const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
 export function CTAStrip() {
   return (
     <section className="relative overflow-hidden py-[var(--section-y)] text-center">
-      {/* Ambient glow — centred orb */}
+      {/* Ambient glow â€” centred orb */}
       <div aria-hidden className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_55%_65%_at_50%_50%,rgba(56,189,248,0.08)_0%,transparent_68%)]" />
 
       <div className="relative z-10 mx-auto max-w-3xl px-[var(--container-px)]">
@@ -19,7 +19,7 @@ export function CTAStrip() {
 
         <h2 className="font-heading font-extrabold text-[var(--ink)] leading-tight mb-4 tracking-[-0.02em]
                        text-[clamp(2rem,5vw,3.5rem)]">
-          Start with the problem.<br />
+          Start with what is not working.<br />
           <span className="text-[var(--brand)]">We&apos;ll help define the right build.</span>
         </h2>
 
@@ -30,7 +30,7 @@ export function CTAStrip() {
         {/* Two CTAs */}
         <div className="flex flex-wrap gap-4 justify-center mb-10">
           <Link href="/quote" className="btn-primary px-9 py-4 text-[14px]">
-            Discuss your project
+            Get a project estimate
             <IconArrowRight size={15} />
           </Link>
           <a
@@ -51,12 +51,12 @@ export function CTAStrip() {
             Reply within 24 hours
           </span>
           <span className="w-1 h-1 rounded-full bg-[var(--ink)]/20" />
-          <span>Free consultation · No obligation</span>
+          <span>Free consultation Â· No obligation</span>
           <span className="w-1 h-1 rounded-full bg-[var(--ink)]/20" />
           <span>NDPR compliant</span>
           <span className="w-1 h-1 rounded-full bg-[var(--ink)]/20" />
           <Link href="/pricing" className="hover:text-[var(--brand)] transition-colors">
-            View pricing →
+            View pricing â†’
           </Link>
         </div>
       </div>

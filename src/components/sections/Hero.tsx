@@ -1,154 +1,57 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
-import { IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-react";
-import { HERO_PAIN_CHIPS } from "@/mock/quote";
-import { HeroHub } from "@/components/ui/HeroHub";
+import { IconArrowRight, IconCircleCheck } from "@tabler/icons-react";
 
-/* Client-only, code-split — three.js/R3F never ships in the initial bundle
-   or on screens below lg where the layer is hidden anyway. */
-const Hero3D = dynamic(() => import("@/components/three/Hero3D").then((m) => m.Hero3D), {
-  ssr: false,
-  loading: () => null,
-});
-
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
-
-const container = {
-  hidden: {},
-  show:   { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 14 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
-};
+const outcomes = [
+  "Less manual work",
+  "A better customer experience",
+  "A reliable path to launch",
+];
 
 export function Hero() {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const toggle = (chip: string) =>
-    setSelected((p) => p.includes(chip) ? p.filter((c) => c !== chip) : [...p, chip]);
-
   return (
-    <section className="shell min-h-[92vh] flex items-center py-[var(--section-y)] relative overflow-hidden">
-      {/* Decorative 3D layer — desktop only, sits behind both panels */}
-      <div className="absolute inset-0 z-0 hidden lg:block" aria-hidden="true">
-        <Hero3D />
-      </div>
+    <section className="shell flex min-h-[76vh] items-center py-[var(--section-y)]">
+      <div className="grid w-full items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="max-w-3xl">
+          <p className="eyebrow mb-6">Software for growing businesses</p>
+          <h1 className="h-hero mb-6">
+            Make your business easier to run—and easier to grow.
+          </h1>
+          <p className="lead max-w-2xl mb-8">
+            We turn inefficient workflows and ambitious product ideas into dependable web and mobile software—from the first plan to launch and support.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/quote" className="btn-primary px-7 py-3.5 text-sm">
+              Get a project estimate <IconArrowRight size={15} />
+            </Link>
+            <Link href="/about" className="btn-ghost px-7 py-3.5 text-sm">
+              See how we work
+            </Link>
+          </div>
+          <p className="mt-5 text-xs text-[var(--ink-faint)]">Tell us what needs to work better. We’ll reply with a practical next step and budget range.</p>
+        </div>
 
-      {/* ── Two-panel layout — flex so the hub's animated collapse/expand
-         width actually reflows the left panel, unlike a fixed grid track ── */}
-      <div className="relative z-10 w-full flex flex-col lg:flex-row gap-5 lg:gap-6 items-stretch">
-
-        {/* ══ Left panel ══════════════════════════════════════════════ */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="card flex-1 min-w-0 flex flex-col items-center justify-center text-center px-8 py-10 lg:px-10 lg:py-12"
-        >
-          {/* Eyebrow */}
-          <motion.div variants={item} className="mb-6">
-            <span className="eyebrow">Product strategy, design, and engineering</span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1 variants={item} className="h-hero mb-5">
-            Make your business<br />
-            <span className="text-[var(--brand)]">easier to run</span> and<br />
-            easier to grow.
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p variants={item} className="lead max-w-lg mx-auto mb-7">
-            We design and build reliable software that removes busywork, improves
-            customer experiences, and gives your team more time for what matters.
-          </motion.p>
-
-          {/* Capability strip — concrete expertise without unsupported claims */}
-          <motion.div variants={item}
-            className="grid w-full max-w-2xl grid-cols-1 gap-3 border-b border-[var(--border)] pb-5 sm:grid-cols-3">
-            {[
-              ["01", "Product strategy"],
-              ["02", "Full-stack engineering"],
-              ["03", "Launch & support"],
-            ].map(([number, label]) => (
-              <div key={number} className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-left">
-                <span className="block font-mono text-[10px] text-[var(--brand)]">{number}</span>
-                <span className="mt-1 block text-xs font-semibold text-[var(--ink)]">{label}</span>
+        <aside className="proof-panel">
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand)]">What changes</p>
+          <div className="mt-6 space-y-5">
+            {outcomes.map((outcome, index) => (
+              <div key={outcome} className="flex gap-4">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--brand)]/25 bg-[var(--brand)]/8 font-mono text-xs text-[var(--brand)]">0{index + 1}</span>
+                <div>
+                  <h2 className="font-heading text-base font-semibold text-[var(--ink)]">{outcome}</h2>
+                  <p className="mt-1 text-sm leading-relaxed text-[var(--ink-muted)]">
+                    {index === 0 && "Replace disconnected tools, repetitive tasks, and spreadsheet workarounds."}
+                    {index === 1 && "Give customers clearer, faster ways to buy, book, pay, or get support."}
+                    {index === 2 && "Get a focused scope, visible progress, and support after the launch."}
+                  </p>
+                </div>
               </div>
             ))}
-          </motion.div>
-
-          {/* Concept example — explicitly labeled, matches the "Concept project" /
-             "Target outcome" disclosure convention on /portfolio. Not a claimed result. */}
-          <motion.div variants={item} className="mb-7 pt-4">
-            <Link href="/portfolio" className="group inline-flex items-center gap-2 text-xs text-[var(--ink-faint)] hover:text-[var(--brand)] transition-colors">
-              <span className="font-mono text-[9px] uppercase tracking-wide rounded-full border border-[var(--border)] px-2 py-0.5 shrink-0">Concept build</span>
-              <span className="italic">Explore the product thinking, interfaces, and technical choices behind the work →</span>
-            </Link>
-          </motion.div>
-
-          {/* Service chips */}
-          <motion.div variants={item} className="mb-8 w-full">
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] muted mb-3">
-              What are you building?
-            </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {HERO_PAIN_CHIPS.map((chip) => {
-                const on = selected.includes(chip);
-                return (
-                  <button
-                    key={chip}
-                    type="button"
-                    onClick={() => toggle(chip)}
-                    className={[
-                      "rounded-full border px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-150",
-                      on
-                        ? "border-[var(--brand)] bg-[var(--brand)]/8 text-[var(--brand)]"
-                        : "border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--brand)]/40 hover:text-[var(--ink)]",
-                    ].join(" ")}
-                  >
-                    {chip}
-                    {on && <span className="ml-1.5 text-[10px] opacity-70">✓</span>}
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-
-          {/* CTAs */}
-          <motion.div variants={item} className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link href="/quote" className="btn-primary px-7 py-3.5 text-[13px]">
-              Discuss your project
-              <IconArrowRight size={14} />
-            </Link>
-            <Link href="/about" className="btn-secondary px-7 py-3.5 text-[13px]">
-              See how we work <IconArrowRight size={13} />
-            </Link>
-          </motion.div>
-
-          {/* WhatsApp link */}
-          <motion.div variants={item} className="mt-5 flex items-center gap-2">
-            <a
-              href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi TechBuddy! I'd like to discuss a project.")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[12px] faint hover:text-[var(--brand)] transition-colors"
-            >
-              <IconBrandWhatsapp size={14} />
-              Chat on WhatsApp
-            </a>
-          </motion.div>
-        </motion.div>
-
-        {/* ══ Right panel — collapsible hub (articles/investments/predictions/tools) ══ */}
-        <HeroHub />
-
+          </div>
+          <div className="mt-7 border-t border-[var(--border)] pt-5 text-sm text-[var(--ink-muted)]">
+            <IconCircleCheck size={16} className="mr-2 inline text-[var(--brand)]" />
+            Strategy, design, engineering, and launch support in one team.
+          </div>
+        </aside>
       </div>
     </section>
   );

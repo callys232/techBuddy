@@ -2,9 +2,24 @@ import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 
+import { OG_IMAGE } from "@/lib/og";
+
 export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "Terms governing the use of TechBuddy's website, tools, and professional services.",
+  title: "Terms of Service — Client Engagement & Website Terms",
+  description: "Terms governing the use of TechBuddy's website, tools, and professional software engineering services.",
+  alternates: {
+    canonical: "/terms",
+  },
+  openGraph: {
+    title: "Terms of Service | TechBuddy",
+    description: "Terms governing the use of TechBuddy's website, tools, and professional software engineering services.",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms of Service | TechBuddy",
+    description: "Terms governing the use of TechBuddy's website, tools, and professional software engineering services.",
+  },
 };
 
 const LAST_UPDATED = "1 June 2026";

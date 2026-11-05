@@ -3,9 +3,24 @@ import { PageVectors } from "@/components/bg/PageVectors";
 import Link from "next/link";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 
+import { OG_IMAGE } from "@/lib/og";
+
 export const metadata: Metadata = {
-  title: "Cookie Policy",
-  description: "What cookies TechBuddy uses, why, and how to control them.",
+  title: "Cookie Policy — How TechBuddy Uses Cookies",
+  description: "Learn about the cookies TechBuddy uses, why they are used, and how to control your cookie preferences.",
+  alternates: {
+    canonical: "/cookies",
+  },
+  openGraph: {
+    title: "Cookie Policy | TechBuddy",
+    description: "Learn about the cookies TechBuddy uses, why they are used, and how to control your preferences.",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cookie Policy | TechBuddy",
+    description: "Learn about the cookies TechBuddy uses, why they are used, and how to control your preferences.",
+  },
 };
 
 const LAST_UPDATED = "1 June 2026";
@@ -90,7 +105,7 @@ export default function CookiesPage() {
             </p>
             <p className="mt-3">To opt out of analytics tracking, you can:</p>
             <ul className="mt-2 space-y-1.5 list-disc list-inside text-[var(--ink)]/65">
-              <li>Use your browser&apos;s "Do Not Track" setting (we honour this signal)</li>
+              <li>Use your browser&apos;s &ldquo;Do Not Track&rdquo; setting (we honour this signal)</li>
               <li>Install a browser ad blocker that blocks analytics scripts</li>
               <li>Email <strong className="text-[var(--ink)]">privacy@techagency.africa</strong> to request removal of your analytics data</li>
             </ul>

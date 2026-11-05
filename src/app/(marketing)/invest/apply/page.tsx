@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { useState } from "react";
 import Link from "next/link";
 import { IconCheck, IconArrowLeft } from "@tabler/icons-react";

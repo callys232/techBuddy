@@ -1,10 +1,25 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { PageVectors } from "@/components/bg/PageVectors";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 
+import { OG_IMAGE } from "@/lib/og";
+
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: "Privacy Policy — NDPA Compliant Data Protection",
   description: "How TechBuddy collects, stores, and protects your personal data in compliance with the Nigeria Data Protection Act 2023.",
+  alternates: {
+    canonical: "/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy | TechBuddy",
+    description: "How TechBuddy collects, stores, and protects personal data in compliance with the Nigeria Data Protection Act 2023.",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | TechBuddy",
+    description: "How TechBuddy collects, stores, and protects personal data in compliance with the Nigeria Data Protection Act 2023.",
+  },
 };
 
 const LAST_UPDATED = "1 June 2026";
@@ -23,7 +38,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">1. Who we are</h2>
             <p>
-              TechBuddy ("we", "our", "us") is a digital product studio registered in Nigeria. We operate the website at techagency.africa and related subdomains. Our contact address is: hello@techagency.africa.
+              TechBuddy (&ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) is a digital product studio registered in Nigeria. We operate the website at techagency.africa and related subdomains. Our contact address is: hello@techagency.africa.
             </p>
           </section>
 
@@ -101,7 +116,7 @@ export default function PrivacyPage() {
             <ul className="mt-3 space-y-2 list-disc list-inside text-[var(--ink)]/65">
               <li>Access the personal data we hold about you</li>
               <li>Correct inaccurate or incomplete data</li>
-              <li>Request erasure of your data ("right to be forgotten")</li>
+              <li>Request erasure of your data (&ldquo;right to be forgotten&rdquo;)</li>
               <li>Withdraw consent at any time (for consent-based processing)</li>
               <li>Object to processing based on legitimate interests</li>
               <li>Lodge a complaint with NITDA (Nigeria&apos;s data protection authority)</li>
@@ -114,7 +129,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-xl font-bold text-[var(--ink)] mb-3">8. Changes to this policy</h2>
             <p>
-              We may update this policy from time to time. We will notify subscribers by email of material changes at least 14 days before they take effect. The "last updated" date at the top of this page always reflects the current version.
+              We may update this policy from time to time. We will notify subscribers by email of material changes at least 14 days before they take effect. The &ldquo;last updated&rdquo; date at the top of this page always reflects the current version.
             </p>
           </section>
           </RevealSection>
