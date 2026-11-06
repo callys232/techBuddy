@@ -9,6 +9,11 @@ export interface BotFlow {
   welcomeMessage: string;
   options: BotOption[];
   fallbackMessage: string;
+  notificationsEnabled: boolean;
+  notificationChannels?: {
+    whatsapp: boolean;
+    email: boolean;
+  };
 }
 
 export function uid(): string {
@@ -24,4 +29,9 @@ export const DEFAULT_BOT_FLOW: BotFlow = {
     { id: uid(), label: "Talk to a human", reply: "Sure — one of our team will join this chat shortly." },
   ],
   fallbackMessage: "Sorry, I didn't understand that. Reply with a number from the menu above.",
+  notificationsEnabled: true,
+  notificationChannels: {
+    whatsapp: true,
+    email: true,
+  },
 };
