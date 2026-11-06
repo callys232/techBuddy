@@ -8,7 +8,7 @@ import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail } from "@/lib/validate";
 import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 import {
   TIMELINE_PROJECT_TYPES,
   TIMELINE_FEATURES,

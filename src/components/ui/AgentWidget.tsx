@@ -171,7 +171,7 @@ const GREETING: Message = {
     "Hi! I'm your project scoping assistant 🎯\n\nTell me: what problem are you trying to solve for your customers? (Don't tell me the solution yet — start with the problem.)",
 };
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 export function AgentWidget() {
   const [open,      setOpen]      = useState(false);

@@ -18,7 +18,7 @@ const SOCIAL_ICON_MAP: Record<string, ComponentType<{ size: number }>> = {
   facebook: IconBrandFacebook,
 };
 
-const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "hello@techagency.africa";
+const TEAM_EMAIL = process.env.TEAM_EMAIL ?? "calebjella82@gmail.com";
 
 export function Footer() {
   return (

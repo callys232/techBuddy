@@ -59,7 +59,7 @@ const NAV_DESC: Record<string, string> = {
   "/contact": "Book a call · 24 hr reply",
 };
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 /* ── Component ──────────────────────────────────────────────────────────────── */
 
@@ -113,8 +113,8 @@ export function Navbar() {
     >
       {/* ── Main bar ─────────────────────────────────────────────────────────── */}
       <div className="shell flex h-[68px] items-center justify-between">
-        {/* Logo */}
-        <Link href="/" aria-label="TechBuddy home" className="shrink-0">
+        {/* Logo — hidden on mobile, visible on tablet/desktop */}
+        <Link href="/" aria-label="TechBuddy home" className="shrink-0 hidden sm:block">
           <CatalystTechLogo size="lg" />
         </Link>
 
@@ -150,7 +150,7 @@ export function Navbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-auto sm:ml-0">
           <ThemeToggle />
 
           {/* Dashboard */}

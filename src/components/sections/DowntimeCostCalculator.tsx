@@ -8,7 +8,7 @@ import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail } from "@/lib/validate";
 import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 function fmt(n: number) {
   return "₦" + Math.round(n).toLocaleString("en-NG");

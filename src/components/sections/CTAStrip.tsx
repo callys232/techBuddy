@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IconBrandWhatsapp, IconArrowRight, IconClock } from "@tabler/icons-react";
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 export function CTAStrip() {
   return (

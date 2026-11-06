@@ -29,7 +29,7 @@ const NEXT_STEPS = [
 ];
 
 export default function QuoteConfirmPage() {
-  const waNumber  = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+  const waNumber  = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
   const waMessage = encodeURIComponent("Hi! I just submitted a quote request and would love to fast-track the discussion.");
 
   return (

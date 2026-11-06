@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { CurrencyProvider } from "@/components/providers/CurrencyProvider";
+import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://techbuddy.ng";
@@ -61,10 +62,21 @@ const organizationJsonLd = {
   description:
     "Founder-led software development company in Lagos building web applications, mobile apps, AI integrations, fintech platforms, and cloud systems.",
   areaServed: ["Nigeria", "Africa", "Worldwide"],
+  priceRange: "$$",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "48",
+  },
+  sameAs: [
+    "https://twitter.com/techbuddy_ng",
+    "https://linkedin.com/company/techbuddy-ng",
+    "https://github.com/techbuddy-ng"
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
-    email: process.env.TEAM_EMAIL ?? "calebjella82@gmail.com touch",
+    email: process.env.TEAM_EMAIL ?? "calebjella82@gmail.com",
     availableLanguage: ["en"],
   },
 };
@@ -94,7 +106,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="skip-link">Skip to content</a>
         <PostHogProvider>
           <ThemeProvider>
-            <CurrencyProvider>{children}</CurrencyProvider>
+            <CurrencyProvider>
+              {children}
+              <FloatingWhatsApp />
+            </CurrencyProvider>
           </ThemeProvider>
         </PostHogProvider>
       </body>

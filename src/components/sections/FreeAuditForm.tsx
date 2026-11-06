@@ -5,7 +5,7 @@ import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { validateEmail, validateName, validateUrl } from "@/lib/validate";
 import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 const AUDIT_TYPES = [
   { id: "performance", label: "Performance",         hint: "Speed, Core Web Vitals, bundle size"    },

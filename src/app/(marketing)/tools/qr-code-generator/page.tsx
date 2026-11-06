@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { QrCodeGenerator } from "@/components/sections/QrCodeGenerator";
+import { ShareTool } from "@/components/ui/ShareTool";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function QrCodeGeneratorPage() {
             Links, WiFi networks, WhatsApp chats, contact cards and more — generate a QR code instantly and download it as PNG or SVG.
           </p>
           <QrCodeGenerator />
+          <ShareTool toolName="QR Code Generator" className="mt-12" />
         </div>
       </section>
     </div>

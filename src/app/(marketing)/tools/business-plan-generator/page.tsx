@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BusinessPlanGenerator } from "@/components/sections/BusinessPlanGenerator";
+import { ShareTool } from "@/components/ui/ShareTool";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function BusinessPlanGeneratorPage() {
             Describe your idea — get a structured, investor-ready business plan with market analysis, business model, and go-to-market strategy.
           </p>
           <BusinessPlanGenerator />
+          <ShareTool toolName="AI Business Plan Generator" className="mt-12" />
         </div>
       </section>
     </div>

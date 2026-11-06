@@ -9,7 +9,7 @@ import { validateEmail } from "@/lib/validate";
 import { CategoryPicker, type Category } from "@/components/ui/CategoryPicker";
 import { CurrencyApprox } from "@/components/ui/CurrencyApprox";
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 function fmt(n: number) {
   return "₦" + Math.round(n).toLocaleString("en-NG");
@@ -96,18 +96,20 @@ export function CostEstimator() {
   };
 
   const handleWhatsApp = () => {
-    if (!checkEmail()) return;
-    captureToolLead({
-      tool: "cost-estimator", source: "whatsapp-click",
-      email, selections: { ...selectionsSummary(), category }, result: resultSummary(),
-    });
+    if (email && isEmailValid) {
+      captureToolLead({
+        tool: "cost-estimator", source: "whatsapp-click",
+        email, selections: { ...selectionsSummary(), category }, result: resultSummary(),
+      });
+    }
     const msg = [
-      `Hi TechBuddy! Cost Estimator result:`,
-      `Project: ${PROJECT_TYPES.find((p) => p.id === projectType)?.label}`,
-      features.length ? `Features: ${FEATURE_ADDONS.filter((f) => features.includes(f.id)).map((f) => f.label).join(", ")}` : null,
-      `Timeline: ${TIMELINE_MULTIPLIERS.find((t) => t.id === timeline)?.label}`,
-      `Estimate: ${fmt(low)} – ${fmt(high)}`,
-      `I'd like to get an exact quote.`,
+      `Hi TechBuddy! I calculated a project estimate on your website:`,
+      `• Project Type: ${PROJECT_TYPES.find((p) => p.id === projectType)?.label}`,
+      features.length ? `• Features: ${FEATURE_ADDONS.filter((f) => features.includes(f.id)).map((f) => f.label).join(", ")}` : null,
+      `• Timeline: ${TIMELINE_MULTIPLIERS.find((t) => t.id === timeline)?.label}`,
+      `• Estimated Budget: ${fmt(low)} – ${fmt(high)}`,
+      email ? `• My Email: ${email}` : null,
+      `Can we discuss moving forward with this?`,
     ].filter(Boolean).join("\n");
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
   };

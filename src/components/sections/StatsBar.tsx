@@ -8,11 +8,20 @@ export function StatsBar() {
   return (
     <section className="relative border-y border-[var(--border)] bg-[var(--surface)]">
       <div className="shell">
-        <div className="flex flex-wrap items-center justify-center divide-x divide-[var(--border)]">
-          {SHOWN.map((stat) => (
-            <div key={stat.id} className="flex items-center gap-3 px-8 py-6">
-              <p className="font-display font-semibold text-2xl text-[var(--brand)] leading-none">{stat.value}</p>
-              <p className="text-[12px] muted leading-snug max-w-[7rem]">{stat.label}</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-[var(--border)] sm:divide-x">
+          {SHOWN.map((stat, idx) => (
+            <div
+              key={stat.id}
+              className={`flex flex-col sm:flex-row items-center sm:items-center text-center sm:text-left gap-2 sm:gap-3.5 px-4 py-5 sm:px-8 sm:py-6 ${
+                idx % 2 === 1 ? "border-l border-[var(--border)] lg:border-l-0" : ""
+              }`}
+            >
+              <p className="font-display font-bold text-2xl sm:text-3xl text-[var(--brand)] leading-none">
+                {stat.value}
+              </p>
+              <p className="text-[11px] sm:text-[12px] text-[var(--ink-muted)] leading-tight max-w-[8rem]">
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>

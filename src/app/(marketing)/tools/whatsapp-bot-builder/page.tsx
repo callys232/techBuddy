@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { WhatsappBotBuilder } from "@/components/sections/WhatsappBotBuilder";
+import { ShareTool } from "@/components/ui/ShareTool";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function WhatsappBotBuilderPage() {
             Design your auto-reply menu — welcome message, options and replies — with a live preview. We deploy it live on WhatsApp Business API.
           </p>
           <WhatsappBotBuilder />
+          <ShareTool toolName="WhatsApp Bot Builder" className="mt-12" />
         </div>
       </section>
     </div>

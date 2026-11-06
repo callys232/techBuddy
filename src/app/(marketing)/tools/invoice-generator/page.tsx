@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { InvoiceGenerator } from "@/components/sections/InvoiceGenerator";
+import { ShareTool } from "@/components/ui/ShareTool";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default function InvoiceGeneratorPage() {
             Fill in your details, add line items, and download a professional PDF invoice — VAT-ready, multi-currency, no sign-up.
           </p>
           <InvoiceGenerator />
+          <ShareTool toolName="Invoice Generator" className="mt-12" />
         </div>
       </section>
     </div>

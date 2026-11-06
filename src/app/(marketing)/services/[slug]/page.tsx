@@ -206,7 +206,7 @@ const SERVICE_DETAIL: Record<string, {
   },
 };
 
-const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000";
+const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
 
 export async function generateStaticParams() {
   return Object.keys(SLUG_MAP).map((slug) => ({ slug }));

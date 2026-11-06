@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ResumeMaker } from "@/components/sections/ResumeMaker";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { ShareTool } from "@/components/ui/ShareTool";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function ResumeMakerPage() {
             Fill in your details, pick a template, and download a professional PDF resume at no cost. No watermarks.
           </p>
           <ResumeMaker />
+          <ShareTool toolName="Resume Maker" className="mt-12" />
         </div>
       </section>
     </div>

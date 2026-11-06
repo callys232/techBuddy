@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
+import { StatsBar } from "@/components/sections/StatsBar";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { AppShowcase } from "@/components/sections/AppShowcase";
+import { ToolsTeaser } from "@/components/sections/ToolsTeaser";
+import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { FAQS } from "@/mock/faqs";
-import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
+import { LeadMagnet } from "@/components/ui/LeadMagnet";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { OG_IMAGE } from "@/lib/og";
@@ -43,10 +47,14 @@ export default function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Hero />
+      <StatsBar />
       <RevealSection delay={0.05}><ServicesGrid /></RevealSection>
       <RevealSection delay={0.05}><AppShowcase /></RevealSection>
+      <RevealSection delay={0.05}><ToolsTeaser /></RevealSection>
       <RevealSection delay={0.05}><HomeCostEstimator /></RevealSection>
+      <RevealSection delay={0.05}><TestimonialsSection /></RevealSection>
       <RevealSection delay={0.05}><FAQSection /></RevealSection>
+      <RevealSection delay={0.05}><div className="shell my-12"><LeadMagnet /></div></RevealSection>
       <RevealSection delay={0.05}><CTAStrip /></RevealSection>
     </>
   );

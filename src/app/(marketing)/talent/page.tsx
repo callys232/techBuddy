@@ -220,7 +220,7 @@ export default function TalentPage() {
           Message us on WhatsApp and we&apos;ll help you figure out whether hiring or joining is the right fit.
         </p>
         <a
-          href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000"}?text=${encodeURIComponent("Hi! I'd like to know more about the talent network.")}`}
+          href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391"}?text=${encodeURIComponent("Hi! I'd like to know more about the talent network.")}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-12 items-center gap-2 rounded-full bg-emerald-500 px-8 font-semibold text-white hover:bg-emerald-600 transition-colors active:scale-95"

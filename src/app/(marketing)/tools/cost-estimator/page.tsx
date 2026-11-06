@@ -4,6 +4,7 @@ import { PageVectors } from "@/components/bg/PageVectors";
 import { CurrencyBanner } from "@/components/ui/CurrencyBanner";
 import { getUserLocation } from "@/lib/geo";
 import { RevealSection } from "@/components/ui/ScrollReveal";
+import { ShareTool } from "@/components/ui/ShareTool";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -41,6 +42,7 @@ export default async function CostEstimatorPage() {
             Select your project type, tick the features you need, and pick a timeline. We&apos;ll show you an estimated Naira range based on real projects we&apos;ve built.
           </p>
           <CostEstimator />
+          <ShareTool toolName="Project Cost Estimator" className="mt-12" />
         </div>
       </section>
 

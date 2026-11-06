@@ -74,7 +74,7 @@ export default async function TemplatePurchaseSuccessPage({ searchParams }: Prop
 
       <div className="flex flex-wrap gap-4 justify-center">
         <a
-          href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2348000000000"}?text=${waMessage}`}
+          href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391"}?text=${waMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-11 items-center gap-2 rounded-full bg-emerald-500 px-7 font-semibold text-white hover:bg-emerald-600 transition-colors active:scale-95"

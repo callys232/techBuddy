@@ -1,8 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
+import { IconAlertTriangle, IconRefresh, IconArrowLeft, IconBrandWhatsapp } from "@tabler/icons-react";
 
-export default function GlobalError({
+const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "2347070994391";
+
+export default function ErrorBoundary({
   error,
   reset,
 }: {
@@ -10,36 +14,64 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    console.error("Application error:", error);
   }, [error]);
 
+  const waHelpUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+    "Hi TechBuddy, I encountered an issue on your website."
+  )}`;
+
   return (
-    <html>
-      <body className="min-h-screen bg-[#060E1C] flex flex-col items-center justify-center px-6 text-center font-sans">
-        <p className="font-mono text-[#38BDF8] text-xs uppercase tracking-[0.3em] mb-4">
-          Unexpected Error
+    <div className="min-h-[80vh] flex flex-col items-center justify-center px-[var(--container-px)] text-center py-20 bg-[var(--page)]">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand)]/10 text-[var(--brand)] mb-6 shadow-sm border border-[var(--brand)]/20">
+        <IconAlertTriangle size={32} />
+      </div>
+
+      <p className="font-mono text-[var(--brand)] text-xs uppercase tracking-[0.25em] mb-3">
+        System Notice
+      </p>
+
+      <h1 className="h-display mb-4 text-3xl sm:text-4xl">
+        Something unexpected happened
+      </h1>
+
+      <p className="text-[var(--ink-muted)] max-w-md mb-8 leading-relaxed text-sm">
+        We encountered a momentary glitch. Our automated monitoring has logged this, but you can retry or reach out if you were in the middle of something important.
+      </p>
+
+      {error?.digest && (
+        <p className="font-mono text-[11px] text-[var(--ink-faint)] mb-8 bg-[var(--surface)] px-3 py-1 rounded-md border border-[var(--border)]">
+          Error Reference: {error.digest}
         </p>
-        <h1 className="text-4xl font-extrabold text-white mb-4">
-          Something broke
-        </h1>
-        <p className="text-white/50 max-w-sm mb-10 leading-relaxed">
-          An unexpected error occurred. Our team has been notified. Try again or reach out if it persists.
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <button
-            onClick={reset}
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-[#38BDF8] px-8 font-semibold text-[#060E1C] hover:opacity-90 transition-opacity active:scale-95"
-          >
-            Try again
-          </button>
-          <a
-            href="/contact"
-            className="inline-flex h-12 items-center gap-2 rounded-full border border-white/10 px-8 font-semibold text-white hover:border-[#38BDF8] hover:text-[#38BDF8] transition-all active:scale-95"
-          >
-            Contact Support
-          </a>
-        </div>
-      </body>
-    </html>
+      )}
+
+      <div className="flex flex-wrap gap-3 justify-center items-center">
+        <button
+          onClick={reset}
+          className="btn-primary h-11 px-6 text-sm inline-flex items-center gap-2"
+        >
+          <IconRefresh size={16} />
+          Try again
+        </button>
+
+        <Link
+          href="/"
+          className="btn-ghost h-11 px-6 text-sm inline-flex items-center gap-2"
+        >
+          <IconArrowLeft size={16} />
+          Return Home
+        </Link>
+
+        <a
+          href={waHelpUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-11 items-center gap-2 rounded-full border border-[#25D366]/40 bg-[#25D366]/5 px-5 font-heading font-semibold text-xs text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all active:scale-95"
+        >
+          <IconBrandWhatsapp size={16} />
+          Contact Support on WhatsApp
+        </a>
+      </div>
+    </div>
   );
 }
