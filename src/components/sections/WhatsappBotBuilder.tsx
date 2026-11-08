@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   IconPlus,
   IconTrash,
@@ -15,10 +15,35 @@ import {
   IconDeviceMobile,
   IconBell,
   IconBellOff,
+  IconCrown,
+  IconLock,
+  IconDeviceGamepad2,
+  IconSparkles,
 } from "@tabler/icons-react";
-import { type BotOption, type BotFlow, DEFAULT_BOT_FLOW, uid } from "@/types/whatsappBot";
+import {
+  type BotOption,
+  type BotFlow,
+  DEFAULT_BOT_FLOW,
+  BOT_TEMPLATES,
+  type BotTemplate,
+  uid,
+} from "@/types/whatsappBot";
 import { captureToolLead } from "@/lib/captureToolLead";
 import { validateEmail, validateName } from "@/lib/validate";
+import { UpgradeModal, type UpgradeFeatureCopy } from "@/components/ui/UpgradeModal";
+import { authFetch } from "@/lib/authFetch";
+
+const GAME_UPGRADE_COPY: UpgradeFeatureCopy = {
+  title: "Unlock WhatsApp Viral Game Engines & Production Code",
+  description:
+    "Deploy interactive WhatsApp games with automated scoreboards, streak tracking, and high-retention player mechanics.",
+  benefits: [
+    "Full production Express & Meta WhatsApp Cloud API game webhook source code",
+    "Includes Wordle emoji grid (🟩🟨⬛), Cyber Quest RPG, & Airtime Scratch-Card engines",
+    "Automated instant Admin Notifications for winners and high-score achievements",
+    "Full access to all 20+ TechBuddy premium tools & business generators",
+  ],
+};
 
 function resolveWelcome(flow: BotFlow): string {
   return flow.welcomeMessage.replace("{business}", flow.businessName || "our business");
@@ -28,6 +53,10 @@ function resolveWelcome(flow: BotFlow): string {
 
 function ChatMock({ flow }: { flow: BotFlow }) {
   const [selected, setSelected] = useState<BotOption | null>(null);
+
+  useEffect(() => {
+    setSelected(null);
+  }, [flow]);
 
   return (
     <div className="rounded-[28px] border-8 border-[#111827] bg-[#e5ddd5] w-full max-w-[300px] mx-auto overflow-hidden shadow-xl">
@@ -42,7 +71,7 @@ function ChatMock({ flow }: { flow: BotFlow }) {
       </div>
 
       <div className="p-3 space-y-2 min-h-[320px]">
-        <div className="bg-white rounded-lg rounded-tl-none px-3 py-2 max-w-[85%] text-[13px] text-[#111827] shadow-sm">
+        <div className="bg-white rounded-lg rounded-tl-none px-3 py-2 max-w-[85%] text-[13px] text-[#111827] shadow-sm whitespace-pre-line">
           {resolveWelcome(flow)}
           <div className="mt-2 space-y-1">
             {flow.options.map((o, i) => (
@@ -64,7 +93,7 @@ function ChatMock({ flow }: { flow: BotFlow }) {
                 {flow.options.findIndex((o) => o.id === selected.id) + 1}
               </div>
             </div>
-            <div className="bg-white rounded-lg rounded-tl-none px-3 py-2 max-w-[85%] text-[13px] text-[#111827] shadow-sm">
+            <div className="bg-white rounded-lg rounded-tl-none px-3 py-2 max-w-[85%] text-[13px] text-[#111827] shadow-sm whitespace-pre-line">
               {selected.reply}
             </div>
           </>
@@ -77,6 +106,7 @@ function ChatMock({ flow }: { flow: BotFlow }) {
 /* ── Builder ─────────────────────────────────────────────────────────────── */
 
 export function WhatsappBotBuilder() {
+  const [activeTemplateId, setActiveTemplateId] = useState<string>("standard-business");
   const [flow, setFlow] = useState<BotFlow>(DEFAULT_BOT_FLOW);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -85,14 +115,46 @@ export function WhatsappBotBuilder() {
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
 
+  // Template Filter: "all" | "free-games" | "paid-games"
+  const [categoryFilter, setCategoryFilter] = useState<"all" | "free-games" | "paid-games">("all");
+
+  // Premium status & Upgrade modal
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
   // Export states
   const [copiedAppText, setCopiedAppText] = useState(false);
-  const [showCodeModal, setShowCodeModal] = useState(false);
 
-  const set = <K extends keyof BotFlow>(key: K, value: BotFlow[K]) => setFlow((prev) => ({ ...prev, [key]: value }));
+  // Check subscription status on load
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await authFetch("/api/subscription/status");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.active) setIsSubscribed(true);
+        }
+      } catch {
+        // Not logged in or unauthenticated
+      }
+    })();
+  }, []);
 
-  const addOption = () => setFlow((prev) => ({ ...prev, options: [...prev.options, { id: uid(), label: "", reply: "" }] }));
-  const removeOption = (id: string) => setFlow((prev) => ({ ...prev, options: prev.options.filter((o) => o.id !== id) }));
+  const activeTemplate = BOT_TEMPLATES.find((t) => t.id === activeTemplateId) || BOT_TEMPLATES[0];
+
+  const handleSelectTemplate = (template: BotTemplate) => {
+    setActiveTemplateId(template.id);
+    setFlow(template.flow);
+  };
+
+  const set = <K extends keyof BotFlow>(key: K, value: BotFlow[K]) =>
+    setFlow((prev) => ({ ...prev, [key]: value }));
+
+  const addOption = () =>
+    setFlow((prev) => ({ ...prev, options: [...prev.options, { id: uid(), label: "", reply: "" }] }));
+  const removeOption = (id: string) =>
+    setFlow((prev) => ({ ...prev, options: prev.options.filter((o) => o.id !== id) }));
   const updateOption = (id: string, patch: Partial<BotOption>) =>
     setFlow((prev) => ({ ...prev, options: prev.options.map((o) => (o.id === id ? { ...o, ...patch } : o)) }));
 
@@ -112,17 +174,6 @@ export function WhatsappBotBuilder() {
     } catch (e) {
       console.error(e);
     }
-  };
-
-  const downloadJSON = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(flow, null, 2));
-    const downloadAnchor = document.createElement("a");
-    const filename = `${(flow.businessName || "whatsapp-bot").toLowerCase().replace(/[^a-z0-9]/g, "-")}-flow.json`;
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", filename);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
   };
 
   const generateNodeJsCode = () => {
@@ -199,15 +250,40 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
 `;
   };
 
+  const requireAccess = (action: () => void) => {
+    // If the template is a Paid Game layer and user is NOT subscribed, gate with UpgradeModal
+    if (activeTemplate.isPaid && !isSubscribed) {
+      setUserEmail(email || "guest@techbuddy.ng");
+      setShowUpgradeModal(true);
+    } else {
+      action();
+    }
+  };
+
+  const downloadJSON = () => {
+    requireAccess(() => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(flow, null, 2));
+      const downloadAnchor = document.createElement("a");
+      const filename = `${(flow.businessName || "whatsapp-bot").toLowerCase().replace(/[^a-z0-9]/g, "-")}-flow.json`;
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", filename);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    });
+  };
+
   const downloadNodeJsBot = () => {
-    const code = generateNodeJsCode();
-    const dataStr = "data:text/javascript;charset=utf-8," + encodeURIComponent(code);
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "whatsapp-bot-server.js");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+    requireAccess(() => {
+      const code = generateNodeJsCode();
+      const dataStr = "data:text/javascript;charset=utf-8," + encodeURIComponent(code);
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "whatsapp-bot-server.js");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    });
   };
 
   const submit = async () => {
@@ -223,8 +299,15 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
         tool: "whatsapp-bot-builder",
         source: "quote-click",
         email,
-        selections: { businessName: flow.businessName, welcomeMessage: resolveWelcome(flow), options: flow.options, contactName: name, contactPhone: phone },
-        result: { optionCount: flow.options.length },
+        selections: {
+          templateId: activeTemplate.id,
+          businessName: flow.businessName,
+          welcomeMessage: resolveWelcome(flow),
+          options: flow.options,
+          contactName: name,
+          contactPhone: phone,
+        },
+        result: { optionCount: flow.options.length, isGamePreset: activeTemplate.category !== "Business" },
       });
       await new Promise((r) => setTimeout(r, 400));
       setSent(true);
@@ -233,15 +316,144 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
     }
   };
 
+  const filteredTemplates = BOT_TEMPLATES.filter((t) => {
+    if (categoryFilter === "free-games") return t.id === "trivia-challenge" || t.id === "lucky-dice";
+    if (categoryFilter === "paid-games") return t.isPaid;
+    return true;
+  });
+
   return (
-    <div className="grid lg:grid-cols-[1.2fr_1fr] gap-6 items-start">
+    <div className="grid lg:grid-cols-[1.25fr_1fr] gap-8 items-start">
       {/* ── Builder form ─────────────────────────────────────────────────── */}
       <div className="space-y-6">
+
+        {/* ── Game Presets & Template Selector ────────────────────────────── */}
+        <div className="card p-6 border-2 border-[var(--border)]">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--brand)]/15 text-[var(--brand)]">
+                <IconDeviceGamepad2 size={16} />
+              </span>
+              <p className="font-heading font-bold text-sm text-[var(--ink)]">
+                Choose Bot Style &amp; Game Presets
+              </p>
+            </div>
+            
+            {/* Filter Pills */}
+            <div className="flex items-center gap-1.5 bg-[var(--surface-soft)] p-1 rounded-lg border border-[var(--border)] text-xs">
+              <button
+                type="button"
+                onClick={() => setCategoryFilter("all")}
+                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                  categoryFilter === "all"
+                    ? "bg-[var(--surface)] text-[var(--ink)] shadow-sm"
+                    : "text-[var(--ink-muted)] hover:text-[var(--ink)]"
+                }`}
+              >
+                All (6)
+              </button>
+              <button
+                type="button"
+                onClick={() => setCategoryFilter("free-games")}
+                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                  categoryFilter === "free-games"
+                    ? "bg-[var(--surface)] text-[var(--good)] shadow-sm"
+                    : "text-[var(--ink-muted)] hover:text-[var(--ink)]"
+                }`}
+              >
+                Free Games (2)
+              </button>
+              <button
+                type="button"
+                onClick={() => setCategoryFilter("paid-games")}
+                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                  categoryFilter === "paid-games"
+                    ? "bg-[var(--surface)] text-amber-500 shadow-sm"
+                    : "text-[var(--ink-muted)] hover:text-[var(--ink)]"
+                }`}
+              >
+                Paid Games (3) 👑
+              </button>
+            </div>
+          </div>
+
+          <p className="text-xs text-[var(--ink-muted)] mb-4 leading-relaxed">
+            Select a viral game or standard business menu. <strong className="text-[var(--ink)]">Trivia Challenge</strong> and <strong className="text-[var(--ink)]">Lucky Dice</strong> are 100% Free templates. Advanced games (Wordle, Cyber Quest, Airtime Scratch) are Paid Layers.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-3">
+            {filteredTemplates.map((t) => {
+              const isSelected = activeTemplateId === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => handleSelectTemplate(t)}
+                  className={`text-left p-3.5 rounded-xl border transition-all relative flex flex-col justify-between ${
+                    isSelected
+                      ? "border-[var(--brand)] bg-[var(--brand)]/5 ring-2 ring-[var(--brand)]/20"
+                      : "border-[var(--border)] bg-[var(--page)] hover:border-[var(--border-strong)]"
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">{t.icon}</span>
+                        <h4 className="font-heading font-semibold text-xs text-[var(--ink)]">
+                          {t.name}
+                        </h4>
+                      </div>
+                      <span
+                        className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full font-bold ${
+                          t.isPaid
+                            ? "bg-amber-500/15 text-amber-500 border border-amber-500/30"
+                            : "bg-emerald-500/15 text-emerald-500 border border-emerald-500/30"
+                        }`}
+                      >
+                        {t.tag}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[var(--ink-muted)] leading-relaxed">
+                      {t.description}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Banner if Paid Game is Active */}
+          {activeTemplate.isPaid && (
+            <div className="mt-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <IconCrown size={18} className="text-amber-500 shrink-0" />
+                <span className="text-[var(--ink)]">
+                  <strong>Paid Game Layer Active:</strong> Test in the live simulator freely. Exporting production webhook code requires TechBuddy Premium ($5/mo or ₦2,500/mo).
+                </span>
+              </div>
+              {!isSubscribed && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUserEmail(email || "guest@techbuddy.ng");
+                    setShowUpgradeModal(true);
+                  }}
+                  className="shrink-0 btn-primary h-7 px-2.5 text-[11px] bg-gradient-to-r from-amber-500 to-amber-600 border-0 text-white shadow-sm flex items-center gap-1"
+                >
+                  <IconSparkles size={12} />
+                  <span>Upgrade</span>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* ── Your Business / Flow Details ─────────────────────────────────── */}
         <div className="card p-6">
-          <p className="eyebrow mb-3">Your business</p>
+          <p className="eyebrow mb-3">Your Bot Details</p>
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Business name</label>
+              <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Bot / Business Name</label>
               <input
                 value={flow.businessName}
                 onChange={(e) => set("businessName", e.target.value)}
@@ -250,26 +462,27 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Welcome message</label>
+              <label className="block text-xs font-medium text-[var(--ink-muted)] mb-1">Welcome Message</label>
               <textarea
                 value={flow.welcomeMessage}
                 onChange={(e) => set("welcomeMessage", e.target.value)}
-                rows={2}
+                rows={3}
                 className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] py-2 px-3 resize-none focus:outline-none focus:border-[var(--brand)]"
               />
-              <p className="text-[11px] text-[var(--ink-faint)] mt-1">Use {"{business}"} to insert your business name.</p>
+              <p className="text-[11px] text-[var(--ink-faint)] mt-1">Use {"{business}"} to insert your bot/business name.</p>
             </div>
           </div>
         </div>
 
+        {/* ── Interactive Menu / Game Options ─────────────────────────────── */}
         <div className="card p-6">
           <div className="flex items-center justify-between mb-3">
-            <p className="eyebrow mb-0">Menu options</p>
+            <p className="eyebrow mb-0">Menu &amp; Game Interaction Choices</p>
             <button onClick={addOption} className="btn-ghost h-8 px-3 text-xs"><IconPlus size={13} />Add option</button>
           </div>
           <div className="space-y-3">
             {flow.options.map((o, i) => (
-              <div key={o.id} className="border border-[var(--border)] rounded-lg p-3">
+              <div key={o.id} className="border border-[var(--border)] rounded-lg p-3 bg-[var(--surface-soft)]">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-[var(--brand)]">Option {i + 1}</span>
                   <button onClick={() => removeOption(o.id)} className="text-[var(--ink-faint)] hover:text-[var(--bad)] transition-colors" aria-label="Remove option">
@@ -279,13 +492,13 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
                 <input
                   value={o.label}
                   onChange={(e) => updateOption(o.id, { label: e.target.value })}
-                  placeholder="Menu label (e.g. Our services)"
+                  placeholder="Choice Label (e.g. Roll 1 Die or Option 1)"
                   className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] py-2 px-3 mb-2 focus:outline-none focus:border-[var(--brand)]"
                 />
                 <textarea
                   value={o.reply}
                   onChange={(e) => updateOption(o.id, { reply: e.target.value })}
-                  placeholder="What the bot replies with"
+                  placeholder="What the bot replies with (supports emojis & results)"
                   rows={2}
                   className="w-full bg-[var(--page)] border border-[var(--border)] rounded-lg text-sm text-[var(--ink)] placeholder:text-[var(--ink-faint)] py-2 px-3 resize-none focus:outline-none focus:border-[var(--brand)]"
                 />
@@ -294,6 +507,7 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
           </div>
         </div>
 
+        {/* ── Fallback ────────────────────────────────────────────────────── */}
         <div className="card p-6">
           <p className="eyebrow mb-3">Fallback (unrecognised replies)</p>
           <textarea
@@ -329,7 +543,7 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
                   </span>
                 </div>
                 <p className="text-xs text-[var(--ink-muted)] mt-0.5 leading-relaxed">
-                  Every bot receives real-time customer interaction alerts by default unless manually turned off.
+                  Every bot receives real-time customer and winner interaction alerts by default unless manually turned off.
                 </p>
               </div>
             </div>
@@ -389,12 +603,20 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
 
         {/* ── Instant Export & Self-Serve Actions ─────────────────────────── */}
         <div className="card p-6 bg-gradient-to-br from-[var(--surface)] to-[var(--page)] border-2 border-[var(--brand)]/20">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand)]/15 text-[var(--brand)] font-mono text-xs font-bold">✓</span>
-            <p className="font-heading font-semibold text-sm text-[var(--ink)]">Export &amp; Run Your Bot Flow</p>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand)]/15 text-[var(--brand)] font-mono text-xs font-bold">✓</span>
+              <p className="font-heading font-semibold text-sm text-[var(--ink)]">Export &amp; Run Your Bot Flow</p>
+            </div>
+            {activeTemplate.isPaid && !isSubscribed && (
+              <span className="flex items-center gap-1 text-[11px] font-mono text-amber-500 font-semibold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                <IconLock size={12} />
+                <span>Paid Game Layer</span>
+              </span>
+            )}
           </div>
           <p className="text-xs text-[var(--ink-muted)] mb-4 leading-relaxed">
-            Choose how you want to deploy: copy the formatted text directly into your free WhatsApp Business App, download the structured JSON, or get ready-to-run Node.js webhook code.
+            Choose how you want to deploy: copy the formatted text directly into your free WhatsApp Business App, download JSON, or get ready-to-run Node.js webhook code.
           </p>
 
           <div className="grid sm:grid-cols-3 gap-2.5">
@@ -412,7 +634,7 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
               onClick={downloadJSON}
               className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--page)] px-3 py-2.5 text-xs font-semibold text-[var(--ink)] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-all active:scale-95 shadow-sm"
             >
-              <IconDownload size={14} />
+              {activeTemplate.isPaid && !isSubscribed ? <IconLock size={14} className="text-amber-500" /> : <IconDownload size={14} />}
               <span>Download JSON</span>
             </button>
 
@@ -421,7 +643,7 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
               onClick={downloadNodeJsBot}
               className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--page)] px-3 py-2.5 text-xs font-semibold text-[var(--ink)] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-all active:scale-95 shadow-sm"
             >
-              <IconCode size={14} />
+              {activeTemplate.isPaid && !isSubscribed ? <IconLock size={14} className="text-amber-500" /> : <IconCode size={14} />}
               <span>Node.js Server Code</span>
             </button>
           </div>
@@ -457,9 +679,20 @@ app.listen(PORT, () => console.log(\`WhatsApp Bot listening on port \${PORT}\`))
 
       {/* ── Live preview ─────────────────────────────────────────────────── */}
       <div className="lg:sticky lg:top-24">
-        <p className="text-xs text-[var(--ink-faint)] text-center mb-4">Live preview — tap a menu option</p>
+        <p className="text-xs text-[var(--ink-faint)] text-center mb-4">
+          Live WhatsApp game &amp; bot preview — tap any option to play
+        </p>
         <ChatMock flow={flow} />
       </div>
+
+      {/* ── Upgrade Modal ─────────────────────────────────────────────────── */}
+      {showUpgradeModal && (
+        <UpgradeModal
+          email={userEmail}
+          feature={GAME_UPGRADE_COPY}
+          onClose={() => setShowUpgradeModal(false)}
+        />
+      )}
     </div>
   );
 }

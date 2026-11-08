@@ -147,6 +147,15 @@ export const FREE_TOOLS: FreeTool[] = [
     href: "/tools/whatsapp-bot-builder",
   },
   {
+    slug: "telegram-bot-builder",
+    icon: "✈️",
+    title: "Telegram Bot Flow Builder",
+    desc: "Design interactive Telegram bots with slash commands, inline buttons, live preview, and instant alerts. Production Node & Python server exports.",
+    badge: "Premium",
+    href: "/tools/telegram-bot-builder",
+    premium: true,
+  },
+  {
     slug: "fintech-fees-calculator",
     icon: "💳",
     title: "Fintech Fees Calculator",

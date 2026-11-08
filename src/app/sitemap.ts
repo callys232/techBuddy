@@ -41,6 +41,7 @@ const routes: Array<{ path: string; freq: Freq; priority: number }> = [
   { path: "/tools/business-plan-generator", freq: "monthly", priority: 0.6 },
   { path: "/tools/premium-audit",           freq: "monthly", priority: 0.6 },
   { path: "/tools/whatsapp-bot-builder",    freq: "monthly", priority: 0.6 },
+  { path: "/tools/telegram-bot-builder",    freq: "monthly", priority: 0.6 },
 
   // Legal
   { path: "/privacy",                  freq: "yearly",  priority: 0.3 },

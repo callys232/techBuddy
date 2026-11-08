@@ -173,6 +173,26 @@ function selectionsSummaryHtml(
       </table>`;
   }
 
+  if (tool === "telegram-bot-builder") {
+    const botName = (sel.botName as string) ?? "—";
+    const botUsername = (sel.botUsername as string) ?? "—";
+    const welcome = (sel.welcomeMessage as string) ?? "—";
+    const commands = (sel.commands as { command: string; reply: string }[]) ?? [];
+    const commandRows = commands
+      .map(
+        (c) =>
+          `<tr><td style="padding:4px 0;color:#666;vertical-align:top"><code>${c.command}</code></td><td style="padding:4px 0">${c.reply}</td></tr>`,
+      )
+      .join("");
+    return `
+      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:6px 0;color:#666;width:160px">Bot Name</td><td style="padding:6px 0;font-weight:600">${botName} (${botUsername})</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Welcome message</td><td style="padding:6px 0">${welcome}</td></tr>
+        <tr style="border-top:1px solid #e5e7eb"><td colspan="2" style="padding:8px 0;color:#666;font-size:12px">Commands &amp; Replies</td></tr>
+        ${commandRows}
+      </table>`;
+  }
+
   return `<pre style="font-size:12px;color:#666">${JSON.stringify({ sel, res }, null, 2)}</pre>`;
 }
 
@@ -227,6 +247,8 @@ export async function POST(req: Request) {
                                   ? "Premium Audit Report"
                                   : tool === "whatsapp-bot-builder"
                                     ? "WhatsApp Bot Flow Builder"
+                                    : tool === "telegram-bot-builder"
+                                      ? "Telegram Bot Flow Builder"
                                     : tool === "fintech-fees-calculator"
                                       ? "Fintech Fees Calculator"
                                       : tool === "downtime-cost-calculator"

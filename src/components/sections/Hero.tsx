@@ -28,17 +28,6 @@ export function Hero() {
       <div className="shell relative z-10">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.18fr_0.82fr]">
           <div className="max-w-3xl">
-            {/* Live Availability Pill */}
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-[var(--ink)] mb-6 shadow-xs backdrop-blur-xs">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="font-mono text-[11px] text-[var(--ink-muted)]">Available for Q4 2026 builds</span>
-              <span className="text-[var(--border-strong)]">·</span>
-              <span className="text-[var(--brand)] font-semibold text-[11px]">5-day kickoff</span>
-            </div>
-
             <h1 className="h-hero mb-6 text-balance">
               Make your business easier to run—and easier to grow.
             </h1>
