@@ -66,10 +66,10 @@ const SERVICE_DETAIL: Record<string, {
   "fintech-payments": {
     tagline: "Accept money the way your customers actually pay",
     problem: "Card payments, bank transfers, USSD, and mobile money create different technical and operational requirements. We design the payment flow, webhook handling, reconciliation, and failure states as one system so customers can pay and your team can account for every transaction.",
-    deliverables: ["Paystack, Flutterwave or Stripe integration", "Virtual account / NUBAN generation", "USSD payment flow", "Webhook handling + reconciliation", "Transaction dashboard + reporting", "CBN/PCI-DSS compliance consultation", "Refund and dispute workflows"],
+    deliverables: ["Automated payment links & instant transfer verification (Paystack & Flutterwave)—no more chasing payment screenshots", "Paystack, Flutterwave or Stripe integration", "Virtual account / NUBAN generation", "USSD payment flow", "Webhook handling + reconciliation", "Transaction dashboard + reporting", "CBN/PCI-DSS compliance consultation", "Refund and dispute workflows"],
     whoFor: ["E-commerce platforms accepting customer payments", "SaaS companies billing subscribers globally", "Marketplaces handling seller payouts", "Fintech startups building payment products"],
     faqs: [
-      { q: "Paystack or Flutterwave?", a: "Paystack for Nigeria-focused products (better conversion rates, cleaner DX). Flutterwave for multi-country or international payouts. We can integrate both, alongside Stripe for global card processing." },
+      { q: "Paystack or Flutterwave?", a: "Paystack for Nigeria-focused products (better conversion rates, cleaner DX). Flutterwave for multi-country or international payouts. We can integrate both, alongside Stripe for global card processing. You can compare their fee differences with our free Fintech Fees Calculator at /tools/fintech-fees-calculator." },
       { q: "Can you handle subscription billing?", a: "Yes — recurring charges, failed payment retries, dunning emails, and pause/cancel flows are all in scope." },
       { q: "What about fraud prevention?", a: "We implement 3DS, velocity checks, IP geolocation, and device fingerprinting. We can also integrate Smile Identity for KYC." },
     ],
@@ -101,11 +101,12 @@ const SERVICE_DETAIL: Record<string, {
   },
   "whatsapp-api": {
     tagline: "Serve customers where they already are",
-    problem: "Customers across Africa and beyond don't download apps for every business they interact with. They use WhatsApp. A well-built WhatsApp bot handles order updates, support queries, OTP, and even payments — without an app download.",
-    deliverables: ["WhatsApp Business API setup (Meta-approved)", "Custom conversation flows", "OTP and 2FA integration", "Order tracking notifications", "AI-powered FAQ handling", "Webhook security (HMAC validation)", "Analytics and conversation dashboard"],
+    problem: "Customers across Africa and beyond don't download apps for every business they interact with. They use WhatsApp. A well-built WhatsApp bot handles order updates, support queries, OTP, and even automated payment links with instant transfer verification—without chasing customer screenshots.",
+    deliverables: ["Automated payment links & instant transfer verification (Paystack & Flutterwave)—no more chasing payment screenshots", "WhatsApp Business API setup (Meta-approved)", "Custom conversation flows", "OTP and 2FA integration", "Order tracking notifications", "AI-powered FAQ handling", "Webhook security (HMAC validation)", "Analytics and conversation dashboard"],
     whoFor: ["E-commerce businesses sending order updates", "Healthcare providers handling appointment booking", "Banks and fintechs sending OTP", "Any business with a high-volume customer support load"],
     faqs: [
       { q: "How long does WhatsApp API approval take?", a: "Meta's review takes 3–7 business days for most businesses. We handle the application and guide you through the verification." },
+      { q: "Can the bot accept payments directly?", a: "Yes — we integrate Paystack and Flutterwave dynamic payment links and bank transfer webhooks so customers pay and receive instant receipt verification inside the chat." },
       { q: "Can the bot handle complex conversations?", a: "Yes — we integrate Claude or GPT-4 for open-ended queries, with handoff to a human agent when the bot isn't confident." },
       { q: "What does it cost per message?", a: "Meta charges per conversation window (24-hour sessions). Most businesses at reasonable volume pay ₦15k–₦60k/month equivalent in platform fees. We don't mark this up." },
     ],

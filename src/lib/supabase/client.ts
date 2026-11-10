@@ -6,6 +6,10 @@ const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 let browserClient: SupabaseClient<Database> | undefined;
 
+export function isSupabaseConfigured(): boolean {
+  return Boolean(url && anonKey);
+}
+
 /** Lazy browser singleton — created on first real use, not at module load,
  *  so a build/prerender pass with no Supabase env vars configured doesn't crash. */
 export function getSupabase(): SupabaseClient<Database> {

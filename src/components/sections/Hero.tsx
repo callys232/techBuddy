@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { IconArrowRight, IconCircleCheck, IconShieldCheck, IconBolt } from "@tabler/icons-react";
 import { PageVectors } from "@/components/bg/PageVectors";
+import { HeroPlayground } from "@/components/sections/HeroPlayground";
 
 const outcomes = [
   {
@@ -59,49 +60,10 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Elevated Proof Panel */}
-          <aside className="rounded-2xl border border-[var(--border-strong)] bg-gradient-to-b from-[var(--surface)] to-[var(--surface-soft)]/50 p-6 sm:p-8 shadow-card backdrop-blur-sm relative">
-            <div className="flex items-center justify-between pb-4 border-b border-[var(--border)]">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand)]">
-                What changes with TechBuddy
-              </p>
-              <span className="font-mono text-[10px] text-[var(--ink-faint)] bg-[var(--surface-raised)] px-2 py-0.5 rounded-md border border-[var(--border)]">
-                Guaranteed
-              </span>
-            </div>
-
-            <div className="mt-6 space-y-6">
-              {outcomes.map((item, index) => (
-                <div key={item.title} className="flex gap-4 group">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[var(--brand)]/20 bg-[var(--brand)]/8 font-mono text-xs font-bold text-[var(--brand)] group-hover:bg-[var(--brand)] group-hover:text-white transition-colors duration-300">
-                    0{index + 1}
-                  </span>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <h2 className="font-heading text-base font-bold text-[var(--ink)]">
-                        {item.title}
-                      </h2>
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--brand)]/80 bg-[var(--brand)]/5 px-1.5 py-0.5 rounded">
-                        {item.badge}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-[var(--ink-muted)]">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-xl bg-[var(--surface-raised)] border border-[var(--border)] p-4 flex items-center gap-3 text-xs text-[var(--ink-muted)]">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
-                <IconCircleCheck size={16} />
-              </div>
-              <span>
-                <strong>End-to-end partner:</strong> Strategy, product design, engineering, and infrastructure all under one roof.
-              </span>
-            </div>
-          </aside>
+          {/* Interactive Live Architecture & Tool Playground */}
+          <div className="w-full">
+            <HeroPlayground />
+          </div>
         </div>
       </div>
     </section>

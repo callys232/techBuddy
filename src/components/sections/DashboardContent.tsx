@@ -22,7 +22,7 @@ import {
   IconUser,
   IconReceipt,
 } from "@tabler/icons-react";
-import { getSupabase } from "@/lib/supabase/client";
+import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { authFetch } from "@/lib/authFetch";
 import type { RewardId } from "@/lib/points";
 import { TOPUP_PRESETS_USD, POINTS_PER_USD } from "@/lib/points";
@@ -101,6 +101,10 @@ function SignInGate() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) { setError("Enter your email address."); return; }
+    if (!isSupabaseConfigured()) {
+      setError("Account services are temporarily undergoing maintenance. Please reach out to support on WhatsApp (+234 707 099 4391).");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -387,6 +391,33 @@ function DashboardBody({ email }: { email: string }) {
   };
 
   if (!summary) {
+    if (error) {
+      return (
+        <div className="card max-w-md mx-auto p-8 text-center space-y-4">
+          <div className="w-12 h-12 rounded-full bg-rose-500/10 flex items-center justify-center mx-auto text-[var(--bad)]">
+            <IconAlertCircle size={24} />
+          </div>
+          <p className="font-heading font-semibold text-[var(--ink)]">Unable to load account details</p>
+          <p className="text-sm text-[var(--ink-muted)]">{error}</p>
+          <div className="flex justify-center gap-3 pt-2">
+            <button onClick={load} className="btn-primary text-sm px-4 h-9">
+              Try again
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  await getSupabase().auth.signOut();
+                } catch {}
+                window.location.reload();
+              }}
+              className="btn-secondary text-sm px-4 h-9"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="flex items-center justify-center py-24 text-[var(--ink-faint)]">
         <IconLoader2 size={20} className="animate-spin" />
@@ -419,7 +450,7 @@ function DashboardBody({ email }: { email: string }) {
               <IconCrown size={20} className={active ? "text-[var(--brand)]" : "text-[var(--ink-faint)]"} />
             </div>
             <div>
-              <p className="font-heading font-semibold text-[var(--ink)]">{active ? (pass ? "TechBuddy Premium (Points)" : sub!.plan) : "Free plan"}</p>
+              <p className="font-heading font-semibold text-[var(--ink)]">{active ? (pass ? "TechBuddy Premium (Points)" : (sub?.plan ?? "TechBuddy Premium")) : "Free plan"}</p>
               <p className="text-xs text-[var(--ink-muted)]">
                 {active
                   ? (pass?.ends_at ?? sub?.current_period_end)
@@ -432,7 +463,7 @@ function DashboardBody({ email }: { email: string }) {
           {active && (
             <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--good)] bg-[var(--good)]/10 rounded-full px-3 py-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--good)]" />
-              {sub!.status === "active" ? "Active" : "Ending soon"}
+              {sub?.status === "active" ? "Active" : "Ending soon"}
             </span>
           )}
         </div>
@@ -445,7 +476,7 @@ function DashboardBody({ email }: { email: string }) {
 
       <div className="card p-6">
         <p className="eyebrow mb-3">Account settings</p><p className="text-sm text-[var(--ink)] mb-1">{summary.profile.display_name}</p><p className="text-xs text-[var(--ink-muted)] mb-5">{email} · {summary.profile.primary_goal}</p>
-        <div className="flex flex-wrap gap-2 mb-5"><button onClick={() => getSupabase().auth.signOut()} className="btn-secondary h-10 px-4 text-sm"><IconLogout size={15} />Sign out</button></div>
+        <div className="flex flex-wrap gap-2 mb-5"><button onClick={async () => { try { await getSupabase().auth.signOut(); } catch {} window.location.reload(); }} className="btn-secondary h-10 px-4 text-sm"><IconLogout size={15} />Sign out</button></div>
         <div className="border-t border-[var(--border)] pt-5"><p className="text-sm font-semibold text-[var(--ink)] mb-1">Request account deletion</p><p className="text-xs text-[var(--ink-muted)] mb-3">For your protection, deletion is reviewed and approved manually by an administrator. Submitting a request does not immediately remove your account.</p>
           {summary.deletionRequest?.status === "pending" ? <p className="text-sm text-amber-500">Deletion request pending admin review since {new Date(summary.deletionRequest.created_at).toLocaleDateString()}.</p> : <div className="flex gap-2 flex-wrap"><input value={deletionReason} onChange={(e) => setDeletionReason(e.target.value)} placeholder="Reason (optional)" className="flex-1 min-w-52 bg-[var(--page)] border border-[var(--border)] rounded-lg px-3 text-sm" /><button onClick={requestDeletion} className="btn-ghost h-10 px-4 text-sm text-[var(--bad)]"><IconTrash size={14} />Request deletion</button></div>}
           {accountMessage && <p className="text-xs text-[var(--ink-muted)] mt-2">{accountMessage}</p>}
@@ -567,16 +598,35 @@ export function DashboardContent() {
 
   useEffect(() => {
     let mounted = true;
-    (async () => {
-      try {
-        const { data } = await getSupabase().auth.getSession();
+    let subscription: { unsubscribe: () => void } | undefined;
+
+    if (!isSupabaseConfigured()) {
+      setEmail(null);
+      return;
+    }
+
+    try {
+      const supabase = getSupabase();
+      supabase.auth.getSession().then(({ data }) => {
         if (mounted) setEmail(data.session?.user.email ?? null);
-      } catch {
+      }).catch(() => {
         if (mounted) setEmail(null);
-      }
-    })();
-    const { data: listener } = getSupabase().auth.onAuthStateChange((_event, session) => setEmail(session?.user.email ?? null));
-    return () => { mounted = false; listener.subscription.unsubscribe(); };
+      });
+
+      const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (mounted) setEmail(session?.user.email ?? null);
+      });
+      subscription = listener.subscription;
+    } catch {
+      if (mounted) setEmail(null);
+    }
+
+    return () => {
+      mounted = false;
+      try {
+        subscription?.unsubscribe();
+      } catch {}
+    };
   }, []);
 
   if (email === undefined) {

@@ -132,7 +132,7 @@ export const ALL_SERVICES: ServiceItem[] = [
   {
     icon: "credit-card",
     title: "Fintech & Payments",
-    desc: "Secure Paystack and Flutterwave integrations, payment workflows, reconciliation, subscriptions, and fintech product engineering.",
+    desc: "Secure Paystack and Flutterwave integrations with automated payment links and instant transfer verification—no more chasing payment screenshots.",
     outcome: "Make it easier for customers to pay—and easier for your team to reconcile",
     tag: "Fintech",
     href: "/services/fintech-payments",
@@ -176,7 +176,7 @@ export const ALL_SERVICES: ServiceItem[] = [
   {
     icon: "device-mobile",
     title: "WhatsApp Business API",
-    desc: "WhatsApp Business API integration for support, lead qualification, OTPs, order updates, and guided customer workflows.",
+    desc: "WhatsApp Business API workflows with automated payment links and instant transfer verification (Paystack & Flutterwave)—no more chasing screenshots.",
     outcome: "Help customers get things done inside the app they already use every day",
     tag: "WhatsApp",
     href: "/services/whatsapp-api",

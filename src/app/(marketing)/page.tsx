@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { StatsBar } from "@/components/sections/StatsBar";
+import { WorkflowTransformation } from "@/components/sections/WorkflowTransformation";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
+import { QuickAuditWidget } from "@/components/sections/QuickAuditWidget";
 import { AppShowcase } from "@/components/sections/AppShowcase";
+import { TechBuddyArcade } from "@/components/sections/TechBuddyArcade";
 import { ToolsTeaser } from "@/components/sections/ToolsTeaser";
 import { HomeCostEstimator } from "@/components/sections/HomeCostEstimator";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -11,6 +14,7 @@ import { FAQS } from "@/mock/faqs";
 import { LeadMagnet } from "@/components/ui/LeadMagnet";
 import { RevealSection } from "@/components/ui/ScrollReveal";
 import { CTAStrip } from "@/components/sections/CTAStrip";
+import { AmbientCursorGlow } from "@/components/ui/AmbientCursorGlow";
 import { OG_IMAGE } from "@/lib/og";
 
 export const metadata: Metadata = {
@@ -46,10 +50,14 @@ export default function HomePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <AmbientCursorGlow />
       <Hero />
       <StatsBar />
+      <RevealSection delay={0.05}><WorkflowTransformation /></RevealSection>
       <RevealSection delay={0.05}><ServicesGrid /></RevealSection>
+      <RevealSection delay={0.05}><QuickAuditWidget /></RevealSection>
       <RevealSection delay={0.05}><AppShowcase /></RevealSection>
+      <RevealSection delay={0.05}><TechBuddyArcade /></RevealSection>
       <RevealSection delay={0.05}><ToolsTeaser /></RevealSection>
       <RevealSection delay={0.05}><HomeCostEstimator /></RevealSection>
       <RevealSection delay={0.05}><TestimonialsSection /></RevealSection>
