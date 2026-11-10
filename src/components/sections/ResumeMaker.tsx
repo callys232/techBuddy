@@ -31,7 +31,7 @@ import {
   IconCreditCard,
   IconStarFilled,
 } from "@tabler/icons-react";
-import { getSupabase } from "@/lib/supabase/client";
+import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { authFetch } from "@/lib/authFetch";
 import {
   type ResumeData,
@@ -142,6 +142,10 @@ function AuthModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !name.trim()) { setError("Please enter your name and email."); return; }
+    if (!isSupabaseConfigured()) {
+      setError("Account services are temporarily undergoing maintenance. Please reach out to support on WhatsApp (+234 707 099 4391).");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -151,7 +155,9 @@ function AuthModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () 
         options: { data: { full_name: name.trim() }, emailRedirectTo: typeof window !== "undefined" ? window.location.href : undefined },
       });
       if (signUpError) throw signUpError;
-      await supabase.from("resume_members").upsert({ email: email.trim(), name: name.trim() }, { onConflict: "email" });
+      try {
+        await supabase.from("resume_members").upsert({ email: email.trim(), name: name.trim() }, { onConflict: "email" });
+      } catch {}
       setSent(true);
       setTimeout(onSuccess, 3000);
     } catch (err: unknown) {
@@ -169,14 +175,14 @@ function AuthModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () 
           <div className="text-center py-4">
             <div className="w-12 h-12 rounded-full bg-[var(--brand)]/15 flex items-center justify-center mx-auto mb-4"><IconCheck size={24} className="text-[var(--brand)]" /></div>
             <p className="font-heading font-semibold text-[var(--ink)] mb-2">Check your email</p>
-            <p className="text-sm text-[var(--ink)]/50">We sent a magic link to <strong>{email}</strong>. Click it to verify and your PDF will download automatically.</p>
+            <p className="text-sm text-[var(--ink)]/50">We sent a magic link to <strong>{email}</strong>. Click it to verify your account.</p>
           </div>
         ) : (
           <>
             <div className="mb-5">
-              <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em] mb-2">Free to use</p>
-              <h2 className="font-heading font-bold text-[var(--ink)] text-lg mb-1">Download requires a free account</h2>
-              <p className="text-sm text-[var(--ink)]/50 leading-relaxed">Create your free account to download your resume as a PDF. No credit card needed.</p>
+              <p className="font-mono text-[var(--brand)] text-[10px] uppercase tracking-[0.2em] mb-2">Premium Feature</p>
+              <h2 className="font-heading font-bold text-[var(--ink)] text-lg mb-1">Sign in to unlock Premium</h2>
+              <p className="text-sm text-[var(--ink)]/50 leading-relaxed">Sign in or create an account to unlock premium designer resume templates and AI writing suggestions.</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-3">
               <Field label="Full name" value={name} onChange={setName} placeholder="Adaeze Okafor" icon={<IconUser size={14} />} />
@@ -184,7 +190,7 @@ function AuthModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () 
               {error && <div className="flex items-center gap-2 text-rose-400 text-xs"><IconAlertCircle size={14} className="shrink-0" /><span>{error}</span></div>}
               <button type="submit" disabled={busy} className="w-full bg-[var(--brand)] hover:bg-sky-400 disabled:opacity-60 text-white font-semibold text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
                 {busy ? <IconLoader2 size={16} className="animate-spin" /> : <IconMail size={16} />}
-                {busy ? "Creating account…" : "Create free account"}
+                {busy ? "Sending magic link…" : "Continue with Email"}
               </button>
               <p className="text-center text-[11px] text-[var(--ink)]/35">We&apos;ll send a magic link — no password needed.</p>
             </form>
@@ -369,6 +375,7 @@ export function ResumeMaker() {
   /* Pick up an already-authed session (magic link redirect) and check subscription */
   useEffect(() => {
     (async () => {
+      if (!isSupabaseConfigured()) return;
       try {
         const { data: sessionData } = await getSupabase().auth.getSession();
         const email = sessionData.session?.user.email ?? null;
@@ -471,15 +478,36 @@ export function ResumeMaker() {
 
   const handleDownload = async () => {
     setDownloadError(null);
-    try {
-      const { data: sessionData } = await getSupabase().auth.getSession();
-      const email = sessionData.session?.user.email ?? null;
-      if (!email) { setShowAuthModal(true); return; }
-      setUserEmail(email);
-    } catch (err: unknown) {
-      setDownloadError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-      return;
+    const meta = RESUME_TEMPLATES.find((m) => m.id === template);
+
+    // Only premium templates require signup / login verification
+    if (meta?.premium) {
+      if (!userEmail) {
+        if (isSupabaseConfigured()) {
+          try {
+            const { data: sessionData } = await getSupabase().auth.getSession();
+            const email = sessionData.session?.user.email ?? null;
+            if (email) {
+              setUserEmail(email);
+            } else {
+              setShowAuthModal(true);
+              return;
+            }
+          } catch {
+            setShowAuthModal(true);
+            return;
+          }
+        } else {
+          setShowAuthModal(true);
+          return;
+        }
+      }
+      if (!subscribed) {
+        setShowUpgradeModal(true);
+        return;
+      }
     }
+
     await triggerDownload();
   };
 
@@ -506,6 +534,20 @@ export function ResumeMaker() {
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+
+      // Async lead capture if email or phone is present (free tools don't require full sign up)
+      if (data.email || data.phone) {
+        fetch("/api/tool-leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tool: "resume-maker",
+            email: data.email || `${data.phone || "guest"}@lead.cataltech.space`,
+            inputs: { name: data.name, phone: data.phone, title: data.title, template },
+            results: { downloaded: true },
+          }),
+        }).catch(() => {});
+      }
     } catch (err: unknown) {
       setDownloadError(err instanceof Error ? err.message : "Failed to generate PDF");
     } finally {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { IconMail, IconLoader2, IconAlertCircle, IconCheck } from "@tabler/icons-react";
-import { getSupabase } from "@/lib/supabase/client";
+import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 
 /**
  * Real magic-link sign-in, not a trust-me email text field. Several premium
@@ -31,6 +31,10 @@ export function EmailAuthGate({ children }: { children: (email: string) => React
 
   const send = async () => {
     if (!inputEmail.trim()) { setError("Enter your email."); return; }
+    if (!isSupabaseConfigured()) {
+      setError("Account verification service is temporarily unavailable. Please reach out to support on WhatsApp (+234 707 099 4391).");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
