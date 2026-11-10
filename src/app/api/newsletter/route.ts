@@ -8,15 +8,19 @@ export async function POST(req: Request) {
     const body = await req.json();
     const data = newsletterSchema.parse(body);
 
-    const supabase = createServerClient();
-    const { error } = await supabase
-      .from("newsletter_subs")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .upsert(
-        { email: data.email, tags: data.tags ?? [], status: "active" } as any,
-        { onConflict: "email" },
-      );
-    if (error) throw error;
+    try {
+      const supabase = createServerClient();
+      const { error } = await supabase
+        .from("newsletter_subs")
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .upsert(
+          { email: data.email, tags: data.tags ?? [], status: "active" } as any,
+          { onConflict: "email" },
+        );
+      if (error) console.error("Supabase newsletter_subs error:", error);
+    } catch (dbErr) {
+      console.warn("Supabase newsletter storage warning:", dbErr);
+    }
 
     /* Welcome email */
     const resend = getResendClient();

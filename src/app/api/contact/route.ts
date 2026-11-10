@@ -8,9 +8,13 @@ export async function POST(req: Request) {
     const body = await req.json();
     const data = contactSchema.parse(body);
 
-    const supabase = createServerClient();
-    const { error } = await supabase.from("contact_messages").insert(data);
-    if (error) throw error;
+    try {
+      const supabase = createServerClient();
+      const { error } = await supabase.from("contact_messages").insert(data);
+      if (error) console.error("Supabase contact_messages error:", error);
+    } catch (dbErr) {
+      console.warn("Supabase contact storage warning:", dbErr);
+    }
 
     await sendContactAlertToTeam(data).catch(() => null);
 

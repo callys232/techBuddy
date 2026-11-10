@@ -97,10 +97,14 @@ export function QuoteWizard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error("Failed");
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(json.error || "Failed to submit quote");
+      }
       router.push("/quote/confirm");
-    } catch {
-      setToast({ type: "error", message: "Something went wrong. Please try again." });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setToast({ type: "error", message: msg });
       setSubmitting(false);
     }
   };
